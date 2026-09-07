@@ -1,0 +1,325 @@
+package com.example.tp_ncolso_android.ui.foundation.component
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.error
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
+import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
+
+@Composable
+fun AppTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    modifier: Modifier = Modifier,
+    placeholder: String = "",
+    required: Boolean = false,
+    enabled: Boolean = true,
+    readOnly: Boolean = false,
+    isError: Boolean = false,
+    supportingText: String? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    singleLine: Boolean = true,
+) {
+    val displayLabel = if (required) "$label *" else label
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier.fillMaxWidth().semantics {
+            if (isError && supportingText != null) error(supportingText)
+        },
+        label = { Text(displayLabel) },
+        placeholder = { Text(placeholder) },
+        enabled = enabled,
+        readOnly = readOnly,
+        isError = isError,
+        supportingText = supportingText?.let { { Text(it) } },
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        singleLine = singleLine,
+    )
+}
+
+@Composable
+fun AppPasswordField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    visible: Boolean,
+    onVisibilityChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    placeholder: String = "",
+    isError: Boolean = false,
+    supportingText: String? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    singleLine: Boolean = true,
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier.fillMaxWidth().testTag("password-field"),
+        label = { Text(label) },
+        placeholder = { Text(placeholder) },
+        isError = isError,
+        supportingText = supportingText?.let { { Text(it) } },
+        visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
+        trailingIcon = {
+            TextButton(onClick = { onVisibilityChange(!visible) }) {
+                Text(if (visible) "隱藏密碼" else "顯示密碼")
+            }
+        },
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        singleLine = singleLine,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun <T> AppSelectField(
+    selected: T?,
+    options: List<T>,
+    itemLabel: (T) -> String,
+    label: String,
+    onSelect: (T) -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    isError: Boolean = false,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { if (enabled) expanded = it },
+        modifier = modifier.fillMaxWidth(),
+    ) {
+        OutlinedTextField(
+            value = selected?.let(itemLabel).orEmpty(),
+            onValueChange = {},
+            readOnly = true,
+            enabled = enabled,
+            isError = isError,
+            label = { Text(label) },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled).fillMaxWidth(),
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+        ) {
+            options.forEach { item ->
+                DropdownMenuItem(
+                    text = { Text(itemLabel(item)) },
+                    onClick = {
+                        onSelect(item)
+                        expanded = false
+                    },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun <T> AppRadioGroup(
+    options: List<T>,
+    selected: T?,
+    onSelect: (T) -> Unit,
+    itemLabel: (T) -> String,
+    label: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    isError: Boolean = false,
+) {
+    Column(
+        modifier = modifier.selectableGroup().semantics {
+            contentDescription = label
+            if (isError) error("$label 選項錯誤")
+        },
+        verticalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
+    ) {
+        Text(text = label, style = AppThemeTokens.typography.fieldLabel)
+        options.forEach { option ->
+            val selectedOption = selected == option
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = AppThemeTokens.spacing.minimumTouchTarget)
+                    .selectable(
+                        selected = selectedOption,
+                        enabled = enabled,
+                        role = Role.RadioButton,
+                        onClick = { onSelect(option) },
+                    )
+                    .padding(horizontal = AppThemeTokens.spacing.sm),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
+            ) {
+                RadioButton(selected = selectedOption, enabled = enabled, onClick = null)
+                Text(itemLabel(option), style = AppThemeTokens.typography.body)
+            }
+        }
+    }
+}
+
+@Composable
+fun AppPrimaryButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    loading: Boolean = false,
+) {
+    Button(
+        onClick = onClick,
+        enabled = enabled && !loading,
+        modifier = modifier.heightIn(min = AppThemeTokens.spacing.minimumTouchTarget),
+    ) {
+        if (loading) {
+            CircularProgressIndicator(modifier = Modifier.padding(end = 8.dp), strokeWidth = 2.dp)
+        }
+        Text(text)
+    }
+}
+
+@Composable
+fun AppSecondaryButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+) {
+    OutlinedButton(
+        onClick = onClick,
+        enabled = enabled,
+        modifier = modifier.heightIn(min = AppThemeTokens.spacing.minimumTouchTarget),
+    ) {
+        Text(text)
+    }
+}
+
+@Composable
+fun AppIconButton(
+    icon: Painter,
+    contentDescription: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+) {
+    require(contentDescription.isNotBlank()) { "Icon-only actions require a nonblank content description." }
+    IconButton(
+        onClick = onClick,
+        enabled = enabled,
+        modifier = modifier.heightIn(min = AppThemeTokens.spacing.minimumTouchTarget),
+    ) {
+        Icon(painter = icon, contentDescription = contentDescription)
+    }
+}
+
+enum class AppStatusTone {
+    Neutral,
+    Success,
+    Warning,
+    Error,
+}
+
+@Composable
+fun AppStatusBadge(
+    label: String,
+    tone: AppStatusTone,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = label,
+        modifier = modifier.semantics { contentDescription = "$label $tone" },
+        style = AppThemeTokens.typography.supporting,
+    )
+}
+
+@Composable
+fun AppLoadingContent(message: String, modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier.padding(AppThemeTokens.spacing.md),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
+    ) {
+        CircularProgressIndicator()
+        Text(message, style = AppThemeTokens.typography.body)
+    }
+}
+
+@Composable
+fun AppEmptyContent(
+    title: String,
+    modifier: Modifier = Modifier,
+    body: String? = null,
+    action: (@Composable () -> Unit)? = null,
+) {
+    Column(modifier = modifier.padding(AppThemeTokens.spacing.md), verticalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm)) {
+        Text(title, style = AppThemeTokens.typography.sectionTitle)
+        body?.let { Text(it, style = AppThemeTokens.typography.body) }
+        action?.invoke()
+    }
+}
+
+@Composable
+fun AppErrorContent(
+    message: String,
+    modifier: Modifier = Modifier,
+    retry: (() -> Unit)? = null,
+) {
+    Column(modifier = modifier.padding(AppThemeTokens.spacing.md), verticalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm)) {
+        Text(message, color = AppThemeTokens.colors.error, style = AppThemeTokens.typography.body)
+        retry?.let { AppSecondaryButton(text = "重試", onClick = it) }
+    }
+}
+
+@Composable
+fun AppReadOnlyField(
+    label: String,
+    value: String,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.xs)) {
+        Text(label, style = AppThemeTokens.typography.fieldLabel, color = AppThemeTokens.colors.textSecondary)
+        Text(value, style = AppThemeTokens.typography.body)
+    }
+}

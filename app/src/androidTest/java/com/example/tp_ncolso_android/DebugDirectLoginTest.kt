@@ -1,0 +1,45 @@
+package com.example.tp_ncolso_android
+
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import com.example.tp_ncolso_android.ui.foundation.theme.AppTheme
+import org.junit.Rule
+import org.junit.Test
+
+class DebugDirectLoginTest {
+    @get:Rule
+    val composeRule = createComposeRule()
+
+    @Test
+    fun initialStateShowsDebugModeAndRoles() {
+        composeRule.setContent {
+            AppTheme {
+                AppEntry()
+            }
+        }
+
+        composeRule.onNodeWithText("開發模式").assertExists()
+        composeRule.onNodeWithText("調查人員").assertExists()
+        composeRule.onNodeWithText("內業人員").assertExists()
+        composeRule.onNodeWithText("管理者").assertExists()
+    }
+
+    @Test
+    fun directLoginAndLogoutReturnToSignedOut() {
+        composeRule.setContent {
+            AppTheme {
+                AppEntry()
+            }
+        }
+
+        composeRule.onNodeWithText("管理者").performClick()
+        composeRule.onNodeWithText("直接進入").performClick()
+        composeRule.onNodeWithText("已進入開發受保護內容").assertExists()
+        composeRule.onNodeWithText("使用者：開發測試人員").assertExists()
+        composeRule.onNodeWithText("角色：管理者").assertExists()
+
+        composeRule.onNodeWithText("登出開發模式").performClick()
+        composeRule.onNodeWithText("開發模式").assertExists()
+    }
+}
