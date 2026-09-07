@@ -2,8 +2,8 @@ task:
   id: UI-001-foundation
   type: feature
 
-phase: implementation
-status: implementation_complete
+phase: planning
+status: plan_in_progress
 
 knowledge:
   status: ready
@@ -13,10 +13,10 @@ knowledge:
   baseline_id: KB-UI-001-FOUNDATION-R2
 
 planning:
-  status: completed
+  status: in_progress
 
 plan_review:
-  status: approved
+  status: pending
 
 review:
   result: approved
@@ -57,4 +57,4 @@ release:
 blocking:
   - connectedDebugAndroidTest could not execute because ADB reported duplicate/offline device entries with unknown API level
   - Remote CI is not configured
-next_action: verification
+next_action: planning
