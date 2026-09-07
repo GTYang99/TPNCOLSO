@@ -29,6 +29,8 @@ data class AppColors(
     val surfaceMuted: Color,
     val error: Color,
     val onError: Color,
+    val fieldErrorBorder: Color,
+    val errorText: Color,
     val scrim: Color,
 )
 
@@ -62,15 +64,17 @@ object AppThemeTokens {
 }
 
 private val LightAppColors = AppColors(
-    brandPrimary = Color(0xFF006C4D),
+    brandPrimary = Color(0xFF0D23AC),
     onBrandPrimary = Color.White,
-    textPrimary = Color(0xFF17211C),
-    textSecondary = Color(0xFF5A665F),
-    borderDefault = Color(0xFFB8C7BF),
+    textPrimary = Color(0xFF303133),
+    textSecondary = Color(0xFF606266),
+    borderDefault = Color(0xFFDCDFE6),
     surface = Color(0xFFFFFBFE),
     surfaceMuted = Color(0xFFF0F5F2),
-    error = Color(0xFFBA1A1A),
+    error = Color(0xFFC8320A),
     onError = Color.White,
+    fieldErrorBorder = Color(0xFFC8320A),
+    errorText = Color(0xFFE00000),
     scrim = Color(0x99000000),
 )
 
@@ -84,6 +88,8 @@ private val DarkAppColors = AppColors(
     surfaceMuted = Color(0xFF1A211C),
     error = Color(0xFFFFB4AB),
     onError = Color(0xFF690005),
+    fieldErrorBorder = Color(0xFFFFB4AB),
+    errorText = Color(0xFFFFB4AB),
     scrim = Color(0xCC000000),
 )
 

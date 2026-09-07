@@ -68,3 +68,14 @@
 - Resolution: 以 TP_NCOLSO Android 9+、Kotlin、Compose Material 3、MVVM、feature ownership、debug/release isolation 與 deferred integration dependencies 建立新的 architecture baseline。
 - Next action: `plan_review`
 - Owner: Planning
+
+## PLN-UI001-005 — 現有 foundation 與正式 Login UI contract 不一致
+
+- Category: `planning_gap`
+- Priority: `P1`
+- Status: resolved
+- Impact: UI-002 直接重用現有 primitive 會產生浮動標籤、文字式密碼動作、錯誤色系，並缺少符合 14×14 視覺／48dp 選取目標的記住我、註冊 radio 與 select 共用能力。
+- Evidence: 正式 Figma Login nodes `2905:2679`、`4922:15312`、`4922:15370` 與 Registration nodes `4922:17227`、`4922:17493` 詳讀結果；`login-ui-requirement.md`、`registration-ui-requirement.md`；現有 `AppTheme.kt` 與 `FoundationComponents.kt`。
+- Resolution: Implementation 已新增 `AppCheckboxRow`、password visibility action disabled variant、field/global error semantic tokens，並將主要品牌色、文字色與邊框 token 對齊正式 design specification；對應 previews 與 Android UI test APK 編譯已通過。Connected device execution 另由 validation limitation 追蹤。
+- Next action: `verification`
+- Owner: Planning / UI-001

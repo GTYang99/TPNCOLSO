@@ -6,18 +6,17 @@ import androidx.compose.ui.test.performClick
 import com.example.tp_ncolso_android.ui.foundation.theme.AppTheme
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import androidx.test.ext.junit.runners.AndroidJUnit4
 
+@RunWith(AndroidJUnit4::class)
 class DebugDirectLoginTest {
     @get:Rule
     val composeRule = createComposeRule()
 
     @Test
     fun initialStateShowsDebugModeAndRoles() {
-        composeRule.setContent {
-            AppTheme {
-                AppEntry()
-            }
-        }
+        setTestContent()
 
         composeRule.onNodeWithText("開發模式").assertExists()
         composeRule.onNodeWithText("調查人員").assertExists()
@@ -27,11 +26,7 @@ class DebugDirectLoginTest {
 
     @Test
     fun directLoginAndLogoutReturnToSignedOut() {
-        composeRule.setContent {
-            AppTheme {
-                AppEntry()
-            }
-        }
+        setTestContent()
 
         composeRule.onNodeWithText("管理者").performClick()
         composeRule.onNodeWithText("直接進入").performClick()
@@ -41,5 +36,14 @@ class DebugDirectLoginTest {
 
         composeRule.onNodeWithText("登出開發模式").performClick()
         composeRule.onNodeWithText("開發模式").assertExists()
+    }
+
+    private fun setTestContent() {
+        composeRule.setContent {
+            AppTheme {
+                AppEntry()
+            }
+        }
+        composeRule.waitForIdle()
     }
 }

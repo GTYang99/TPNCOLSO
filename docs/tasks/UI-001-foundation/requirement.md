@@ -31,7 +31,7 @@
 - `AC-UI001-006`：unit／Compose UI tests 覆蓋三角色、單次登入、登出、記憶體 session 與 debug/release 邊界。
 - `AC-UI001-007`：`minSdk` 為 28，debug build、release build及既有 tests 均未因 foundation 變更失敗。
 - `AC-UI001-008`：UI-002 可只依 `ui.foundation.*` 與 `session` public contract 建立登入／註冊，不需複製 field、button、loading/error state 或 session model。
-- `AC-UI001-009`：foundation components 具 default 與適用的 loading／disabled／error／readonly Preview，並通過 semantics、click suppression、password masking、radio exclusivity與最小觸控尺寸測試。
+- `AC-UI001-009`：foundation components 具 default 與適用的 loading／disabled／error／readonly Preview，並通過 semantics、click suppression、password masking、radio exclusivity、checkbox selectable-row 與最小觸控尺寸測試。
 - `AC-UI001-010`：semantic color、typography、shape、spacing 與共用品牌 asset 均可追溯至 2026-09-07 核定的 Figma source；feature code 不散落 raw visual values，且視覺比對 evidence 註明基準 node／取得日期。
 
 ## Constraints

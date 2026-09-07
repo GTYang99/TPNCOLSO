@@ -1,6 +1,5 @@
 package com.example.tp_ncolso_android.ui.foundation.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,9 +8,11 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -71,6 +73,11 @@ fun AppTextField(
         enabled = enabled,
         readOnly = readOnly,
         isError = isError,
+        colors = OutlinedTextFieldDefaults.colors(
+            errorBorderColor = AppThemeTokens.colors.fieldErrorBorder,
+            errorLabelColor = AppThemeTokens.colors.fieldErrorBorder,
+            errorSupportingTextColor = AppThemeTokens.colors.errorText,
+        ),
         supportingText = supportingText?.let { { Text(it) } },
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
@@ -89,6 +96,7 @@ fun AppPasswordField(
     placeholder: String = "",
     isError: Boolean = false,
     supportingText: String? = null,
+    visibilityActionEnabled: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = true,
@@ -100,12 +108,21 @@ fun AppPasswordField(
         label = { Text(label) },
         placeholder = { Text(placeholder) },
         isError = isError,
+        colors = OutlinedTextFieldDefaults.colors(
+            errorBorderColor = AppThemeTokens.colors.fieldErrorBorder,
+            errorLabelColor = AppThemeTokens.colors.fieldErrorBorder,
+            errorSupportingTextColor = AppThemeTokens.colors.errorText,
+        ),
         supportingText = supportingText?.let { { Text(it) } },
         visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
-        trailingIcon = {
-            TextButton(onClick = { onVisibilityChange(!visible) }) {
-                Text(if (visible) "隱藏密碼" else "顯示密碼")
+        trailingIcon = if (visibilityActionEnabled) {
+            {
+                TextButton(onClick = { onVisibilityChange(!visible) }) {
+                    Text(if (visible) "隱藏密碼" else "顯示密碼")
+                }
             }
+        } else {
+            null
         },
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
@@ -137,6 +154,11 @@ fun <T> AppSelectField(
             readOnly = true,
             enabled = enabled,
             isError = isError,
+            colors = OutlinedTextFieldDefaults.colors(
+                errorBorderColor = AppThemeTokens.colors.fieldErrorBorder,
+                errorLabelColor = AppThemeTokens.colors.fieldErrorBorder,
+                errorSupportingTextColor = AppThemeTokens.colors.errorText,
+            ),
             label = { Text(label) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled).fillMaxWidth(),
@@ -197,6 +219,33 @@ fun <T> AppRadioGroup(
                 Text(itemLabel(option), style = AppThemeTokens.typography.body)
             }
         }
+    }
+}
+
+@Composable
+fun AppCheckboxRow(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    label: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = AppThemeTokens.spacing.minimumTouchTarget)
+            .toggleable(
+                value = checked,
+                enabled = enabled,
+                role = Role.Checkbox,
+                onValueChange = onCheckedChange,
+            )
+            .padding(horizontal = AppThemeTokens.spacing.sm),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
+    ) {
+        Checkbox(checked = checked, onCheckedChange = null, enabled = enabled)
+        Text(label, style = AppThemeTokens.typography.body)
     }
 }
 

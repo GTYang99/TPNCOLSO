@@ -4,7 +4,8 @@
 
 - Task ID: `UI-001-foundation`
 - Branch: `feature/UI-001-foundation-compose`
-- Implementation commit: `4950758`
+- Previous implementation commit: `4950758`
+- Current implementation update: pending commit
 - Implementation date: 2026-09-07
 - Plan reference: `docs/tasks/UI-001-foundation/plan.md`, revision 3
 
@@ -18,6 +19,7 @@
 - Added release-only unauthenticated entry with no debug bypass references.
 - Updated `minSdk` from 24 to 28 and declared `kotlinx-coroutines-core` directly for the public `StateFlow` contract.
 - Added asset traceability manifest for shared semantic tokens and consumer-owned feature assets.
+- Updated foundation to match the revised contract: Figma-aligned brand/text/border tokens, distinct field-error and global-error semantic colors, optional password visibility action, `AppCheckboxRow`, and corresponding previews/tests.
 
 ## Validation Evidence
 
@@ -26,13 +28,13 @@
 | `testDebugUnitTest` | PASS | Gradle build success on 2026-09-07 using Android Studio JBR | AC-UI001-002, AC-UI001-003, AC-UI001-006 |
 | `assembleDebug` | PASS | Gradle build success on 2026-09-07 using Android Studio JBR | AC-UI001-001, AC-UI001-007 |
 | `assembleRelease` | PASS | Gradle build success on 2026-09-07 using Android Studio JBR | AC-UI001-004, AC-UI001-007 |
-| `assembleDebugAndroidTest` | PASS | Android UI test APK compiled successfully | AC-UI001-006, AC-UI001-009 |
+| `assembleDebugAndroidTest` | PASS | Android UI test APK compiled successfully, including password visibility disabled and checkbox row tests | AC-UI001-006, AC-UI001-009 |
 | Release source isolation inspection | PASS | `rg "直接進入|開發模式|DebugSessionOwner|startDebugSession|開發測試人員" app/src/release app/src/main` returned no matches | AC-UI001-004 |
-| `connectedDebugAndroidTest` | NOT VERIFIED | ADB found duplicate/offline mDNS device entries and Gradle reported 0 compatible devices due unknown API level | AC-UI001-001, AC-UI001-002, AC-UI001-003, AC-UI001-009 |
+| `connectedDebugAndroidTest` | NOT VERIFIED | Tests started on `XQ-AU52 - 12`, but Compose test harness repeatedly failed to attach a Compose hierarchy on the physical device. Earlier run also observed duplicate/offline mDNS device entries. | AC-UI001-001, AC-UI001-002, AC-UI001-003, AC-UI001-009 |
 
 ## Limitations
 
-- Connected Compose UI tests compiled but did not execute because the connected device state was unstable: ADB property fetch timed out and Gradle skipped both detected entries as unknown API level.
+- Connected Compose UI tests compile but remain unverified on the current physical-device setup because the test harness could not attach a Compose hierarchy during instrumentation execution.
 - Remote CI is not configured in this workspace, so authoritative CI remains pending for later gates.
 
 ## Handoff

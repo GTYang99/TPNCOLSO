@@ -25,6 +25,10 @@
 
 ### Information architecture
 
+登入頁的精確 layout、tokens、assets 與三個 state requirements 詳見 [`UI-002-auth/login-ui-requirement.md`](../tasks/UI-002-auth/login-ui-requirement.md)。
+
+註冊頁的精確 layout、tokens、assets、empty／filled states 與密碼安全例外詳見 [`UI-002-auth/registration-ui-requirement.md`](../tasks/UI-002-auth/registration-ui-requirement.md)。
+
 ```text
 登入 ─┬─ 註冊
       └─ 圖台首頁 ─┬─ 漢堡選單 ─ 登出
@@ -118,6 +122,7 @@
 - 既有產品固定規則：三種底圖且電子地圖預設、兩個土地詳情頁籤、正好四張 4:3 現場照片、五種狀態只由指定動作流轉。
 - Figma「地形圖（圖片亂放的）」明示為暫放素材，不能視為可交付的實際地形圖內容；實作來源仍依介面規格的臺北市歷史圖資 WMTS。
 - 認證決策（2026-09-07 requester）：Token 效期永久；登入失敗文案為「帳號、密碼或驗證碼錯誤」；註冊成功返回登入頁；帳號限英數且最多 30 字元。
+- Login auth-error visual（2026-09-07 requester correction）：三個 credential field borders 使用 `#C8320A`，global error message 使用 `#E00000`；兩者為分離 semantic roles，不得統一。
 - Figma Copy `HRbRsw6HoNBUCtaieX8xUM`、入口 node `2905:2680` 及本文件 source index 所列節點，已由 requester 於 2026-09-07 核定為正式 UI，可作為實作與視覺驗收來源。核定綁定當日已取得的設計內容；後續 Figma 變更須重新確認 freshness 與影響範圍。
 
 ## Open Questions

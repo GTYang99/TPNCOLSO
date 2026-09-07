@@ -33,6 +33,8 @@
 - `surfaceMuted`
 - `error`
 - `onError`
+- `fieldErrorBorder` = `#C8320A`
+- `errorText` = `#E00000`
 - `scrim`
 
 ### Typography roles
@@ -59,9 +61,10 @@ Every component accepts `modifier` and exposes state through parameters; compone
 | Component | Required inputs | Required states / behavior |
 |---|---|---|
 | `AppTextField` | value, onValueChange, label, placeholder, required, enabled, readOnly, isError, supportingText, keyboardOptions, keyboardActions, singleLine | default, focused, disabled, readonly, required, error |
-| `AppPasswordField` | value, onValueChange, label, placeholder, visible, onVisibilityChange, isError, supportingText, keyboardOptions, keyboardActions, singleLine | masked by default; visibility action has content description |
+| `AppPasswordField` | value, onValueChange, label, placeholder, visible, onVisibilityChange, visibilityActionEnabled, isError, supportingText, keyboardOptions, keyboardActions, singleLine | masked by default; optional visibility action has content description; Registration disables the action because its approved states show no eye control |
 | `AppSelectField<T>` | selected, options, itemLabel, label, onSelect, enabled, isError | closed, open, selected, disabled, error |
 | `AppRadioGroup<T>` | options, selected, onSelect, label, enabled, isError | exactly zero or one selected; full row is clickable |
+| `AppCheckboxRow` | checked, onCheckedChange, label, enabled | visual checkbox may be smaller, but the full labeled row is a single selectable target of at least 48dp |
 | `AppPrimaryButton` | text, onClick, enabled, loading | blocks repeat action and exposes progress semantics while loading |
 | `AppSecondaryButton` | text, onClick, enabled | enabled, pressed, disabled |
 | `AppIconButton` | icon painter, contentDescription, onClick, enabled | mandatory nonblank content description |
@@ -138,7 +141,7 @@ interface AppSessionOwner {
 
 - Every foundation component has previews for default plus applicable loading／disabled／error／readonly states.
 - Preview data is deterministic and visibly fake; it contains no password, Token or personal data.
-- Foundation tests cover component semantics, disabled/loading click suppression, password masking, radio exclusivity and minimum interactive sizing.
+- Foundation tests cover component semantics, disabled/loading click suppression, password masking, password visibility action enabled/disabled variants, radio exclusivity and minimum interactive sizing.
 - Debug direct-login tests cover all three roles, single transition and clear.
 - Release checks compile the release variant and demonstrate that debug entry symbols／strings are absent.
 
@@ -158,3 +161,4 @@ interface AppSessionOwner {
 - Removing or renaming a component／token, changing loading click behavior, altering session state shape, or adding Token／API types is a breaking contract change and requires Planning plus regression updates for every consumer.
 - Feature code MUST NOT bypass this contract with duplicate primitives unless Plan Review records a documented mismatch.
 - Shared brand assets are owned by UI-001; feature-only illustrations remain feature-owned. Both MUST be registered with their Figma node and retrieval date rather than recreated from screenshots.
+- UI-001 owns the Login brand logo, password-visibility, captcha-reload and checkbox-check icons plus Registration back, dropdown and selected-radio icons at the exact source/runtime paths in `docs/assets/app-ui-assets.md`; UI-002 owns the Login city skyline, debug captcha fixture and Registration user illustration.

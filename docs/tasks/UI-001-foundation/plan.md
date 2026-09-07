@@ -47,7 +47,7 @@ Plan revision: 3 (post-infrastructure diagnosis)
 
 ## Test Plan
 - Unit：三角色 session 建立、重複 start、clear、無 Token／credential fields。
-- Foundation：component state Previews、semantics、required field、keyboard action／single-line behavior、loading／disabled click suppression、password masking、radio exclusivity、minimum touch target。
+- Foundation：component state Previews、semantics、required field、keyboard action／single-line behavior、loading／disabled click suppression、password masking 與 visibility action enabled/disabled variants、radio exclusivity、checkbox selectable-row、minimum touch target。
 - Compose UI：初始未登入、角色切換、直接進入、fake identity 顯示、登出返回。
 - Build：`assembleDebug`、`assembleRelease`、affected unit tests。
 - Git gate：repository root、authoritative provenance、task branch、commit ID 與 diff scope 均須可重現。
