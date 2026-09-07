@@ -3,7 +3,7 @@
 ## Background
 - Android 專案目前只有 Compose starter，正式 Auth API 尚未完成，後續 UI 畫面沒有可進入受保護區域的開發入口。
 - 本 Task 先建立可替換的 session／app-root 基礎與 debug-only 直接登入，正式登入仍由 `UI-002-auth`／`INT-001-auth-api` 負責。
-- 本 Task 採用已驗證的 `KB-UI-001-FOUNDATION-R1`，正式視覺來源為 requester 於 2026-09-07 核定的目前 Figma UI。
+- 本 Task 採用已驗證的 `KB-UI-001-FOUNDATION-R2`；專案為從零建立的 Compose MVVM app，正式視覺來源為 requester 於 2026-09-07 核定的目前 Figma UI。
 
 ## Goal
 - 建立後續 UI Tasks 可直接依賴的 Compose foundation contract，以及不依賴 API、只存在於 debug build 的直接登入方式與 session／app-root 邊界。

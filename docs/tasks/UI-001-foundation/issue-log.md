@@ -39,12 +39,12 @@
 
 - Category: `environment`
 - Priority: `P1`
-- Status: open
+- Status: resolved
 - Impact: 無法建立 task branch、提交 implementation revision、執行 commit-based review 或留下 CI traceability。
 - Evidence: 在 supplied workspace 執行 Git repository inspection 回報不是 Git repository。
 - Infrastructure diagnosis: Project files are present, `.git` is absent, Git root／remote／log checks all fail, and only unrelated sibling repositories were found；詳 `infrastructure.md`。
-- Resolution: 尚未解決；需提供 authoritative repository／完整 checkout，或由 repository owner 明確授權目前資料夾建立新的 canonical history與 remote／CI ownership。
-- Next action: `requirement_clarification`
+- Resolution: Requester 確認本案為從零建立的新專案；已建立 `chore/project-bootstrap`、root commit `5221898`、task branch `feature/UI-001-foundation-compose`，且 baseline unit test／debug build PASS。Remote CI 待 Release gate 前設定。
+- Next action: `plan_review`
 - Owner: Infrastructure
 
 ## REQ-UI001-001 — 正式 Figma revision 未提供
@@ -57,3 +57,14 @@
 - Resolution: Figma Copy `HRbRsw6HoNBUCtaieX8xUM`、入口 node `2905:2680` 與 design source index 所列節點升格為正式 visual baseline。
 - Next action: `plan_review`
 - Owner: Planning / Design
+
+## PLN-UI001-004 — Architecture 文件屬於其他專案
+
+- Category: `planning_gap`
+- Priority: `P1`
+- Status: resolved
+- Impact: 原 `docs/architecture/overview.md` 描述 TaoYuanGutter、ViewBinding、Room、CameraX 與 legacy activities，會讓新專案 UI-001 的 module／dependency 設計錯置。
+- Evidence: Requester 確認 TP_NCOLSO 是從零建立的新專案；repository 現況是單 Activity Compose starter。
+- Resolution: 以 TP_NCOLSO Android 9+、Kotlin、Compose Material 3、MVVM、feature ownership、debug/release isolation 與 deferred integration dependencies 建立新的 architecture baseline。
+- Next action: `plan_review`
+- Owner: Planning

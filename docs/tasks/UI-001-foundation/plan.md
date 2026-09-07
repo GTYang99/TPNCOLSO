@@ -30,7 +30,7 @@ Plan revision: 3 (post-infrastructure diagnosis)
 - `docs/tasks/UI-001-foundation/foundation-contract.md`
 
 ## Implementation Steps
-- 1. Infrastructure 恢復 authoritative Git checkout/baseline 後，確認 repository root、remote／provenance、clean isolation，並依 Git rule 建立 `feature/UI-001-foundation-compose`；任一檢查未通過即停止。
+- 1. 以 bootstrap commit `5221898` 與既有 `feature/UI-001-foundation-compose` 作為 implementation base，開始前確認 branch 與 working-tree isolation；任一檢查未通過即停止。
 - 2. 將 minSdk 調整為 28，並在 version catalog 與 app module 直接宣告 public `StateFlow` contract 使用的 coroutine dependency，確認 debug／release source sets 均可編譯。
 - 3. 依 `foundation-contract.md` 與核定 Figma 建立 semantic theme roles，記錄 source node／取得日期；consumer 不得存取 raw values。
 - 4. 建立共用 fields、buttons、selection、status、loading／empty／error／readonly components 與 `ContentState`，確保全部為 stateless public APIs。
@@ -100,5 +100,4 @@ Plan revision: 3 (post-infrastructure diagnosis)
 - 若 release artifact 發現 bypass，停止 Verification 並回到 Implementation。
 
 ## Open Questions
-- Repository provenance：應提供既有 authoritative repository／完整 checkout，或由 repository owner 明確授權目前資料夾建立新的 canonical Git history與 remote／CI ownership。
-- 正式 API schema、Navigation 與 DI 為後續 Task inputs；正式 Figma UI 已核定。
+- 無 Implementation blocker。Remote／CI provider 必須在 CI／Release gate 前設定；正式 API schema、Navigation 與 DI 為後續 Task inputs；正式 Figma UI 已核定。

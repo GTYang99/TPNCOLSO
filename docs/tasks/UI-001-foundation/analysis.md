@@ -30,9 +30,8 @@
 ## Risks
 - debug/release source-set 邊界若設計錯誤，可能讓 bypass 出現在 release，屬 blocking security finding。
 - 將 fake session 持久化或加入 Token 字段會讓開發捷徑污染正式認證架構。
-- 目前沒有 Git metadata，無法建立 task branch或提交可驗證 revision。
-- 若直接對目前資料夾執行 `git init`，可能建立與既有 upstream 無關的新歷史，破壞來源追溯；未取得 repository owner 授權前不得採用。
+- Git 已依 requester 的 new-project 決策建立 bootstrap commit 與 task branch；remote CI 尚未設定，Release 前仍須補齊 authoritative CI evidence。
 
 ## Unknowns
-- Authoritative Git provenance 尚未確定：需提供原始 repository／完整 checkout，或明確授權目前資料夾成為新的 canonical repository。
+- 無 Implementation-blocking unknown。Remote／CI provider 在 Verification/Release 前必須設定並產生 authoritative run evidence。
 - 正式 Navigation library 與 DI 留給後續 Task，不影響此基礎 contract。正式 visual source 已核定。

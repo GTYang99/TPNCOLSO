@@ -11,7 +11,7 @@
 
 - Working directory: `/Users/a10362/Desktop/TP_NCOLSO`
 - Project files present: Gradle wrapper、settings、app module、product/design/task documents。
-- `.git` entry in project root: absent。
+- `.git` entry in project root: created for this authorized new canonical project。
 - Nearby Git repositories: found only for unrelated sibling projects; none matches `TP_NCOLSO`。
 
 ## Reproduction Evidence
@@ -28,38 +28,31 @@
 - Category: `environment`
 - Root cause: The supplied directory is a project file tree without Git metadata, not a damaged Git command, permission failure, or nested checkout.
 - Product-code cause: No evidence; production code was not changed during diagnosis.
-- Status: unresolved。
+- Status: resolved for Implementation entry。
 
-## Safe Remediation
+## Executed Remediation
 
-Preferred:
+1. Requester confirmed `TP_NCOLSO` is a new project created from zero and therefore the current folder is the canonical starting source.
+2. Added ignore rules for Gradle/Kotlin/module build outputs and device-specific Android Studio state.
+3. Initialized Git on `chore/project-bootstrap` without committing directly to `main`.
+4. Ran baseline `testDebugUnitTest` and `assembleDebug` with Android Studio bundled JDK; both passed (`BUILD SUCCESSFUL`, 42 tasks).
+5. Created root bootstrap commit `5221898` (`chore(UI-001-foundation): establish project baseline`).
+6. Created and checked out dedicated task branch `feature/UI-001-foundation-compose`.
 
-1. Provide the authoritative repository URL or a complete checkout containing `.git`.
-2. Compare the supplied working tree with that checkout before moving any task artifacts.
-3. Preserve unrelated/user changes and establish dedicated branch `feature/UI-001-foundation-compose`.
-4. Re-run repository root、remote、branch、status and baseline build checks.
-5. Return to Plan Review for Implementation Readiness.
+## Check Result
 
-Alternative requiring explicit repository-owner authorization:
+- Git root: PASS — `/Users/a10362/Desktop/TP_NCOLSO`
+- Bootstrap branch/commit: PASS — `chore/project-bootstrap` / `5221898`
+- Task branch: PASS — `feature/UI-001-foundation-compose`
+- Baseline unit test/debug build: PASS
+- Remote CI execution: NOT VERIFIED — no remote/provider is configured; required before Release, not before local Implementation.
 
-1. Declare the current `TP_NCOLSO` folder to be a new canonical repository.
-2. Initialize Git、create an approved baseline commit and configure the authoritative remote／CI.
-3. Create the required task branch only after that baseline exists.
+## Remaining Follow-up
 
-The alternative is not assumed because it creates new project history and may discard provenance from an existing upstream repository.
-
-## Blocked Check
-
-- Task branch: NOT VERIFIED
-- Baseline commit: NOT VERIFIED
-- Commit-based Plan Review／Verification: NOT VERIFIED
-- CI revision traceability: NOT VERIFIED
-
-## Required Decision
-
-- Repository owner must provide the original repository/checkout, or explicitly authorize this folder as a new canonical Git repository and supply the intended remote／CI ownership.
+- Configure an authoritative remote and CI provider before the CI/Release gate.
+- Record the implementation commit and CI run identifier after UI-001 implementation.
 
 ## Return Route
 
-- After remediation: `plan_review`
-- Until remediation/authorization: `requirement_clarification`
+- Infrastructure remediation result: PASS for Implementation entry.
+- Return to: `plan_review`
