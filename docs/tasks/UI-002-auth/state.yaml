@@ -1,0 +1,50 @@
+task:
+  id: UI-002-auth
+  type: feature
+
+phase: plan_review
+status: blocked
+
+reason: environment_missing_git_metadata
+
+knowledge:
+  status: ready
+  collection: completed
+  resolution: completed
+  validation: passed
+  baseline_id: KB-UI-002-AUTH-R5
+
+planning:
+  status: completed
+
+plan_review:
+  status: blocked
+  result: BLOCKED
+  iteration: 6
+
+implementation:
+  status: pending
+
+validation:
+  status: pending
+
+git:
+  branch: ""
+  commit: ""
+  status: pending
+
+verification:
+  result: pending
+  category: null
+  failed_acceptance_criteria: []
+
+ci:
+  build: pending
+  test: pending
+
+release:
+  status: pending
+
+blocking:
+  - UI-001-foundation implementation and validation are blocked by unavailable Git metadata
+next_action: infrastructure

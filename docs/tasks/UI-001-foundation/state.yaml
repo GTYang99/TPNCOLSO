@@ -1,0 +1,55 @@
+task:
+  id: UI-001-foundation
+  type: feature
+
+phase: infrastructure
+status: blocked
+reason: environment_git_source_unresolved
+
+knowledge:
+  status: ready
+  collection: completed
+  resolution: completed
+  validation: passed
+  baseline_id: KB-UI-001-FOUNDATION-R1
+
+planning:
+  status: completed
+
+plan_review:
+  status: blocked
+
+review:
+  result: blocked
+  iteration: 3
+
+implementation:
+  status: pending
+
+validation:
+  status: pending
+
+git:
+  branch: ""
+  commit: ""
+  status: blocked
+
+verification:
+  result: pending
+  category: null
+  failed_acceptance_criteria: []
+
+ci:
+  build: pending
+  test: pending
+
+release:
+  status: pending
+
+blocking:
+  - id: ENV-UI001-001
+    category: environment
+    summary: Git metadata is absent and the authoritative repository source is not identifiable from the supplied workspace.
+    impact: A safe baseline, task branch, committed implementation revision, and CI evidence cannot be produced.
+    owner: repository_owner
+next_action: requirement_clarification

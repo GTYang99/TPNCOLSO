@@ -1,0 +1,47 @@
+task:
+  id: UI-ROADMAP-0907
+  type: docs
+
+phase: verification
+status: verification_not_verified
+
+knowledge:
+  status: ready
+  collection: completed
+  resolution: completed
+  validation: passed
+  baseline_id: KB-UI-ROADMAP-0907-R1
+
+planning:
+  status: completed
+
+plan_review:
+  status: approved
+
+implementation:
+  status: completed
+
+validation:
+  status: completed
+
+git:
+  branch: ""
+  commit: ""
+  status: blocked
+
+verification:
+  result: not_verified
+  category: environment
+  failed_acceptance_criteria: []
+
+ci:
+  build: not_applicable
+  test: not_verified
+
+release:
+  status: pending
+
+blocking:
+  - Git metadata is unavailable
+
+next_action: infrastructure

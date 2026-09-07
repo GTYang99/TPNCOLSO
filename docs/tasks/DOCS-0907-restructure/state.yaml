@@ -1,0 +1,47 @@
+task:
+  id: DOCS-0907-RESTRUCTURE
+  type: docs
+
+phase: verification
+status: verification_not_verified
+
+knowledge:
+  status: ready
+  collection: completed
+  resolution: completed
+  validation: passed
+  baseline_id: KB-DOCS-0907-R1
+
+planning:
+  status: completed
+
+plan_review:
+  status: approved
+
+implementation:
+  status: completed
+
+validation:
+  status: completed
+
+git:
+  branch: ""
+  commit: ""
+  status: blocked
+  reason: git_metadata_unavailable
+
+verification:
+  result: not_verified
+  category: environment
+  failed_acceptance_criteria: []
+
+ci:
+  build: not_applicable
+  test: not_verified
+
+release:
+  status: pending
+
+blocking:
+  - Git metadata is unavailable in the workspace
+next_action: infrastructure

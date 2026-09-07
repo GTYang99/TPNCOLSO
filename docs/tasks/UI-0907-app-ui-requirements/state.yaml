@@ -1,0 +1,49 @@
+task:
+  id: UI-0907-app-ui-requirements
+  type: feature
+
+phase: knowledge
+status: blocked
+
+knowledge:
+  status: blocked
+  collection: pending
+  resolution: blocked
+  validation: pending
+  baseline_id: null
+
+planning:
+  status: pending
+
+plan_review:
+  status: pending
+
+implementation:
+  status: pending
+
+validation:
+  status: pending
+
+git:
+  branch: ""
+  commit: ""
+  status: pending
+
+verification:
+  result: pending
+  category: null
+  failed_acceptance_criteria: []
+
+ci:
+  build: pending
+  test: pending
+
+release:
+  status: pending
+
+blocking:
+  - APP edit permissions are not consistently defined by role and survey status
+  - Figma return notifications have no approved product or API contract
+  - Figma Copy is a development version and is not approved for final visual verification
+  - Git metadata is unavailable
+next_action: requirement_clarification

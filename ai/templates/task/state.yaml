@@ -1,0 +1,45 @@
+task:
+  id: ""
+  type: feature
+
+phase: planning
+status: plan_in_progress
+
+knowledge:
+  status: not_required
+  collection: not_required
+  resolution: not_required
+  validation: not_required
+  baseline_id: null
+
+planning:
+  status: in_progress
+
+plan_review:
+  status: pending
+
+implementation:
+  status: pending
+
+validation:
+  status: pending
+
+git:
+  branch: ""
+  commit: ""
+  status: pending
+
+verification:
+  result: pending
+  category: null
+  failed_acceptance_criteria: []
+
+ci:
+  build: pending
+  test: pending
+
+release:
+  status: pending
+
+blocking: []
+next_action: planning
