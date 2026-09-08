@@ -8,6 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -38,9 +43,26 @@ fun LoginScreen(
     captchaVisual: @Composable () -> Unit = { Text(state.captchaImageKey, color = AppThemeTokens.colors.textSecondary) },
 ) {
     Box(modifier.fillMaxSize().background(Brush.verticalGradient(listOf(AppThemeTokens.colors.surface, AppThemeTokens.colors.surfaceMuted)))) {
+    Image(
+        painter = painterResource(com.example.tp_ncolso_android.R.drawable.login_city_skyline),
+        contentDescription = "城市剪影",
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier
+            .align(Alignment.BottomCenter)
+            .offset(x = 29.dp, y = 7.dp)
+            .size(width = 736.dp, height = 246.dp),
+    )
     Column(Modifier.fillMaxSize()) {
     Column(Modifier.padding(horizontal = 24.dp, vertical = 32.dp).verticalScroll(rememberScrollState()).fillMaxWidth().weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text("新工處土地占用\n調查圖台系統", style = AppThemeTokens.typography.screenTitle)
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+            Image(
+                painter = painterResource(com.example.tp_ncolso_android.R.drawable.login_brand_logo),
+                contentDescription = "品牌標誌",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.size(width = 96.dp, height = 65.dp),
+            )
+            Text("新工處土地占用\n調查圖台系統", style = AppThemeTokens.typography.screenTitle)
+        }
         val authError = state.requestError != null
         AppTextField(state.account, { onEvent(AuthEvent.LoginAccountChanged(it)) }, "帳號", placeholder = "請輸入", isError = authError || state.fieldErrors.containsKey(LoginField.ACCOUNT), supportingText = state.fieldErrors[LoginField.ACCOUNT], modifier = Modifier.testTag("login-account"))
         AppPasswordField(state.password, { onEvent(AuthEvent.LoginPasswordChanged(it)) }, "密碼", visible = false, onVisibilityChange = {}, placeholder = "請輸入", isError = authError || state.fieldErrors.containsKey(LoginField.PASSWORD), supportingText = state.fieldErrors[LoginField.PASSWORD], modifier = Modifier.testTag("login-password"))

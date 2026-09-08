@@ -5,7 +5,7 @@
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed implementation head: pending four-failure fix commit
+- Reviewed implementation head: pending Figma visual integration commit
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 ## Verification Round 2 — 2026-09-08
@@ -50,7 +50,7 @@
 
 - Authoritative composite: SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c`.
 - Login/Register screens currently implement light surfaces, gradient/scroll behavior and interactive field structure.
-- Source assets and checksums are now available. The debug captcha fixture and approved registration illustration are runtime-consumed. Exact logo/skyline runtime treatment, geometry comparison and crop-based evidence remain pending.
+- Figma node `2997:11541` was re-read through Figma MCP. The exact exported logo and skyline are now runtime-consumed at the approved 96×65 header and 736×246 bottom placement; runtime asset SHA-256 values are recorded in the asset manifest. Pixel comparison evidence remains pending.
 
 ## Overall Result
 
@@ -58,4 +58,4 @@
 
 ## Next Action
 
-The four reproducible instrumented failures are fixed and the emulator suite is green. Complete the remaining approved Login skyline/logo runtime treatment and UIR mappings; CI remains intentionally deferred by requester decision. Physical-device testing is out of scope.
+The four reproducible instrumented failures are fixed and the emulator suite is green. Capture and compare the emulator Login empty/filled/error renders against the approved composite to close the pixel-comparison gate; CI remains intentionally deferred by requester decision. Physical-device testing is out of scope.
