@@ -28,7 +28,7 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: e5ed94c
+  commit: 2259f83
   status: committed
 
 verification:
@@ -38,7 +38,7 @@ verification:
 
 ci:
   build: PASS (local JBR Gradle)
-  test: PASS (testDebugUnitTest; Android test compiled only)
+  test: PASS (testDebugUnitTest; connectedDebugAndroidTest 17/17 on emulator)
 
 release:
   status: pending
