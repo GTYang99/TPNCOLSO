@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -21,8 +23,9 @@ import com.example.tp_ncolso_android.ui.foundation.component.AppTextField
 import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
 
 @Composable
-fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEvent: (AuthEvent) -> Unit, modifier: Modifier = Modifier) {
+fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEvent: (AuthEvent) -> Unit, modifier: Modifier = Modifier, illustration: @Composable () -> Unit = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.register_user_illustration), contentDescription = "註冊插圖") }) {
     Column(modifier.fillMaxWidth().background(AppThemeTokens.colors.surface).padding(24.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        illustration()
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             androidx.compose.material3.TextButton(onClick = { onEvent(AuthEvent.BackToLogin) }) { Text("返回登入頁") }
             Text("註冊")

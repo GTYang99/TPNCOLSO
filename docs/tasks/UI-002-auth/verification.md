@@ -5,7 +5,7 @@
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed implementation head: current UI-002 asset integration revision
+- Reviewed implementation head: pending debug-fix commit
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 ## Acceptance Criteria
@@ -21,7 +21,7 @@
 | AC-UI002-007 | NOT VERIFIED | Scroll containers exist, but narrow-width, font-scale and IME behavior has no executed device evidence. |
 | AC-UI002-008 | PARTIAL | Debug Preview matrix and Compose test sources exist; connected execution was started but produced no result and was terminated. |
 | AC-UI002-009 | NOT VERIFIED | Login UIR mapping and composite pixel/asset comparison are not complete. |
-| AC-UI002-010 | NOT VERIFIED | Registration UIR mapping and composite pixel/asset comparison are not complete. |
+| AC-UI002-010 | PARTIAL | Approved registration illustration is now a runtime VectorDrawable consumed by RegisterScreen; connected rendering and composite pixel comparison remain unverified. |
 | AC-UI002-011 | PARTIAL | Logout coordinator/idempotency unit evidence exists; UI-003 drawer contract integration is not executed. |
 
 ## Build and Test Evidence
@@ -41,7 +41,7 @@
 
 - Authoritative composite: SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c`.
 - Login/Register screens currently implement light surfaces, gradient/scroll behavior and interactive field structure.
-- Source assets and checksums are now available. The debug captcha fixture is rendered by the Login implementation; exact logo/skyline/registration SVG runtime rendering, geometry comparison and crop-based evidence remain pending.
+- Source assets and checksums are now available. The debug captcha fixture and approved registration illustration are runtime-consumed. Exact logo/skyline runtime treatment, geometry comparison and crop-based evidence remain pending.
 
 ## Overall Result
 
@@ -49,4 +49,4 @@
 
 ## Next Action
 
-Complete the remaining approved SVG runtime treatment and UIR-LOGIN/UIR-REG mappings, then rerun the non-device checks and, when an approved emulator is available, connected Compose tests with exact runtime evidence. Physical-device/ADB testing is intentionally out of scope for this pass.
+Complete the remaining approved Login skyline/logo runtime treatment and UIR mappings, then rerun the non-device checks and, when an approved emulator is available, connected Compose tests with exact runtime evidence. Physical-device/ADB testing is intentionally out of scope for this pass.

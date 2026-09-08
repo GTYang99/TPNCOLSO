@@ -6,8 +6,8 @@ This debug re-entry addresses the Verification findings for the committed UI-002
 
 ## Findings
 
-- The local logic/build evidence passes, but the approved Login skyline and Register illustration exist only as source SVG files under `docs/assets/source/`; production Compose screens do not consume them.
-- The debug route consumes only the captcha PNG through an injected slot. The remaining approved visual assets therefore cannot produce runtime evidence.
+- The local logic/build evidence passes, but the approved Login skyline and Register illustration initially existed only as source SVG files under `docs/assets/source/`; production Compose screens did not consume them.
+- The debug route consumed only the captcha PNG through an injected slot. The Register illustration is now runtime-consumed through a VectorDrawable; the Login skyline remains unresolved.
 - Connected Compose, narrow-width, font-scale, IME, accessibility, and pixel comparison findings are evidence gaps. They are not converted into PASS by build or unit-test results.
 - Physical-device testing remains out of scope by user instruction. Emulator validation is still the approved alternative when the Android runtime is available.
 
