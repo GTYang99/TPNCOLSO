@@ -109,3 +109,22 @@
 - Verification result: `PASS`; AC-UI001-001–010 are recorded as PASS in `verification.md`.
 - The earlier physical-device limitation was resolved by the isolated `emulator-5554` run, which completed all 12 instrumentation tests.
 - CI build/test remains `not_verified` and is deferred to the later Release gate; this does not change the recorded Verification result.
+
+## CI Evidence Follow-up
+
+- Date: 2026-09-08 (Asia/Taipei)
+- Branch: `UI-002feat`
+- Revision: `64c1d61`
+- Runtime: Android Studio JBR, OpenJDK 25.0.3
+- Gradle: 9.6.0 via the project wrapper
+- Command: `JAVA_HOME='/Applications/Android Studio.app/Contents/jbr/Contents/Home' ./gradlew testDebugUnitTest assembleDebug assembleRelease assembleDebugAndroidTest`
+- Result: `BUILD SUCCESSFUL` (7s; 119 actionable tasks, 5 executed, 114 up-to-date)
+
+| Local CI-equivalent check | Result |
+|---|---|
+| `testDebugUnitTest` | PASS |
+| `assembleDebug` | PASS |
+| `assembleRelease` | PASS |
+| `assembleDebugAndroidTest` | PASS |
+
+This is reproducible local build/test evidence only. No `.github/workflows` or other authoritative CI provider configuration exists in the repository, so UI-001 `ci.build` and `ci.test` remain `not_verified`; local results must not be represented as authoritative CI PASS.
