@@ -1,50 +1,29 @@
-# Infrastructure Rules
+# Infrastructure
 
-## Objective
+## Purpose
 
-Diagnose and resolve environment, CI, SDK, toolchain, device, credential, or service conditions that prevent an otherwise valid task phase from running.
+Diagnose and restore tools, repository, SDK, device, build, CI, credential access, or environment capability without changing product behavior.
 
-Infrastructure work does not change product behavior or production code.
+## Entry and Load
 
-## Required Inputs
+- `next_action: infrastructure`
+- failing command/operation, environment details, originating phase, and available logs
 
-- latest `state.yaml`
-- failing command and complete relevant output
-- environment details
-- originating phase and required check
-- related issue record
+Read only the configuration and evidence needed to reproduce the environment failure.
 
-## Process
+For Gradle, Android JDK, or toolchain work, read and follow [Runtime](./runtime.md).
 
-- reproduce or confirm the environmental failure
-- distinguish repository failure from environment failure
-- record the minimum safe remediation
-- rerun the blocked check when remediation is available
-- return to the originating phase rather than assuming success
+## Output
 
-## State Updates
+Record symptom, reproduction, classification evidence, affected gates, action taken, result, limitations, and return route in `infrastructure.md` or the issue log.
 
-While investigating:
+## Exit
 
-```yaml
-phase: infrastructure
-status: infrastructure_in_progress
-next_action: infrastructure
-```
-
-When resolved, set `next_action` to the phase whose check was blocked, normally `implementation` or `verification`.
-
-When unresolved, keep the task blocked and record concrete missing access, service, tool, or environment evidence.
+- Restored: return to the phase that was blocked.
+- Product change caused failure: route to Implementation/Debug.
+- Cause unknown: `investigation`.
+- External owner/action required: remain blocked with the exact request.
 
 ## Restrictions
 
-- Do not change application behavior to make an environmental check pass.
-- Do not report the blocked check as PASS.
-- Do not expose or store credentials in task artifacts.
-
-## Definition of Done
-
-- the environmental cause is evidenced
-- remediation is recorded
-- the blocked check is rerun or remains explicitly blocked
-- state returns to the owning phase
+No production behavior changes, destructive cleanup, secret exposure, bypassed gates, or false PASS. Environment recovery does not prove product correctness.

@@ -3,48 +3,48 @@
 ## Inputs
 - Collection artifact: `docs/tasks/UI-002-auth/knowledge-collection.md`
 - Resolution artifact: `docs/tasks/UI-002-auth/knowledge-resolution.md`
-- Candidate baseline ID: `KB-UI-002-AUTH-R5`
+- Candidate baseline ID: `KB-UI-002-AUTH-R10`
 - Validator: Codex (same Agent; no independent validator available at Planning preparation)
 - Validation date: 2026-09-07 (Asia/Taipei)
-- Independence note: 同一 Agent 執行 Collection／Resolution／Validation；關鍵欄位與邊界均重新對照 product chapters、repository 與公開 Figma canvas。
+- Independence note: same-Agent limitation is recorded. The current requester PNG was inspected directly and bound to exact dimensions, color profile and SHA-256; requester answers, normalized requirements and product rules were cross-checked.
 
 ## Validation Checklist
 
 | Check | Result | Evidence | Finding / Route |
 |---|---|---|---|
-| Collection scope and source coverage | PASS | 已覆蓋 user、product、design、API、repository、tests、roadmap。 | None |
-| Source identity and version | PASS | 文件以 working tree 2026-09-07 綁定；使用者指定 Figma Copy file/node 已重新開啟，並於同日核定目前內容即正式 UI。 | Git commit unavailable；Figma 後續內容變更會觸發 revalidation。 |
-| Domain authority | PASS | Product、Design、API、Repository 與 Process 各自限於其 domain。 | None |
-| Freshness and supersession | PASS | 現有 sources 均為當日 working tree；Figma 關鍵子節點已取得 structured context，並由 requester 核定當日內容。 | Revalidate when Figma content or approval scope changes。 |
-| Claim-to-source traceability | PASS | KCL-AUTH-001–007 皆連至 source IDs。 | None |
-| Requirement / AC traceability | PASS | UI-only AC 與 parent AC portion 在 Resolution 與 Requirement 中明列。 | Full AC-016 deferred to UI-003/INT-001。 |
-| Conflict resolution and approval | PASS | Requester 已核定四項 auth behavior 與目前 Figma 正式 UI；產品與 design 規格已同步。 | None |
-| Assumption safety and expiry | PASS | KA-AUTH-001–003 可逆、具 owner 與 trigger。 | None |
-| Baseline completeness and consistency | PASS | Screen、state、ownership、security、responsive 與 test boundary 完整。 | None |
-| Downstream impact and revalidation triggers | PASS | UI-001、UI-003、INT-001 handoff 及 triggers 已列。 | None |
-| Planning handoff readiness | PASS | Auth 行為與正式視覺來源均已確定。 | Implementation must wait for UI-001 implementation delivery。 |
+| Collection scope and source coverage | PASS | User decisions, composite, product, design, API, repository, roadmap and tests are registered. | None |
+| Source identity and version | PASS | SRC-015 is PNG 7904×2916, sRGB, SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c`. | Any byte or approval-scope change triggers revalidation. |
+| Domain authority | PASS | Requester owns visual/product decisions; repository/process/API sources remain limited to their domains. | None |
+| Freshness and supersession | PASS | Requester explicitly made SRC-015 the replacement source for all Login／Register／Logout visuals. SRC-002 and SRC-014 are marked superseded, not silently deleted. | None |
+| Claim-to-source traceability | PASS | KCL-AUTH-001–015 and KD-AUTH-012 connect the composite and six requester decisions to the three detailed requirements. | None |
+| Requirement / AC traceability | PASS | UIR-LOGIN-001–010, UIR-REG-001–011 and UIR-LOGOUT-001–006 map to AC-UI002-001–011. | Drawer visual acceptance remains UI-003-only. |
+| Conflict resolution and approval | PASS | Composite sole authority, outer-chrome exclusion, Register null-required work type, plaintext/no-eye passwords and immediate Logout are explicit requester decisions. | Prior plan/review approvals are stale. |
+| Assumption safety and expiry | PASS | Remaining assumptions concern replaceable component names, fake vendor data and asset handoff only. | None |
+| Baseline completeness and consistency | PASS | Three Login panels, two Register panels, derived states, Logout boundary, responsive rules, sensitive-state controls and task ownership are explicit. | Exact candidate assets require composite comparison at Implementation gate. |
+| Downstream impact and revalidation triggers | PASS | UI-001 component variants, UI-003 drawer handoff and INT-001 remote logout are identified. | None |
+| Planning handoff readiness | PASS | No material product/UI choice remains open for Planning. | Production implementation still waits for UI-001 completion. |
 
 ## Findings
 
 | Finding ID | Category | Severity | Evidence | Impact | Owner | Route | Status |
 |---|---|---|---|---|---|---|---|
-| KV-AUTH-001 | environment | Minor | Figma 額度恢復後，頂層及三個關鍵子節點 structured context 已成功取得。 | 原工具限制已解除；僅剩 design approval metadata 未知。 | Design owner | infrastructure | resolved |
-| KV-AUTH-002 | decision | Major | Requester decision, 2026-09-07；KCF-AUTH-001–004 | 認證行為衝突已解決並同步至 product docs。 | Requester | knowledge_resolution | resolved |
-| KV-AUTH-003 | decision | Major | Requester 於 2026-09-07 明確表示目前 Figma 就是正式版 UI，正式提供時不會有差異。 | 正式視覺實作與 pixel-level verification 已有核定來源。 | Requester / Design owner | knowledge_resolution | resolved by KD-AUTH-006 |
+| KV-AUTH-008 | source supersession | Major | SRC-015 plus requester answers | R9, Login requirement revision 2, Registration Figma authority and plan revision 12 cannot authorize implementation. | Requester / Planning | knowledge_resolution → planning | resolved by KD-AUTH-012 and plan revision 13; iteration 12 review required |
+| KV-AUTH-009 | behavior decision | Major | Requester answers 2, 3 and 5 | Register and Logout would be observably wrong under the old default/masking/session assumptions. | Requester / Planning | knowledge_resolution → planning | resolved in R10 requirements and plan |
+| KV-AUTH-010 | ownership decision | Major | Requester answers 4 and 6 | Drawer must not be duplicated in UI-002. | UI-002 / UI-003 | planning | resolved by Logout interface contract and explicit scope exclusion |
 
 ## Baseline Decision
 - Result: PASS
-- Active baseline ID: `KB-UI-002-AUTH-R5`
-- Supersedes: `KB-UI-002-AUTH-R4`
-- Activation or rejection reason: requester 已核定所有 auth behavior 與目前 Figma 正式 UI；visual authority 與 revalidation trigger 均已明確。
+- Active baseline ID: `KB-UI-002-AUTH-R10`
+- Supersedes: `KB-UI-002-AUTH-R9`
+- Activation reason: SRC-015 has immutable identity and current requester authority; every visual and behavior delta is normalized without inventing API or drawer behavior.
 
 ## Blocking Items
-- None for Planning。
-- `UI-001-foundation` 完成前不得開始 UI-002 production implementation。
+- None for Planning.
+- `UI-001-foundation` must complete its source-change Knowledge Resolution, revised plan/review, implementation and verified handoff before UI-002 production implementation.
 
 ## Planning Handoff
 - Ready for Planning: yes
-- Decisions and constraints to cite: KD-AUTH-001–006；Android 9+；Compose；fake state 集中；UI-003／INT-001 ownership；正式 Figma visual baseline。
-- Required follow-up evidence: UI-001 reusable component/token/asset catalog；正式 auth schema。
-- Revalidation triggers: UI-001 output、Figma content/approval scope、auth API schema 或 repository architecture change。
+- Decisions and constraints to cite: KD-AUTH-001–012; SRC-015 identity and outer-chrome exclusion; all UIR-LOGIN／REG／LOGOUT criteria; Android 9+; Compose MVVM; debug/test-only fake sources; UI-003 drawer ownership; INT-001 remote/API ownership.
+- Required follow-up evidence: UI-001 reusable component/token/asset catalog; exact archived composite and panel crops; formal auth schema for INT-001.
+- Revalidation triggers: UI-001 output, SRC-015 bytes/approval scope, Register privacy behavior, Logout behavior, auth API schema or repository/navigation architecture change.
 - Next action: planning

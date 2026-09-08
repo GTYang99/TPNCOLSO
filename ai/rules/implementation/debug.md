@@ -1,125 +1,43 @@
-# Implementation Debug Guidelines
+# Debug
 
-## Objective
+## Purpose
 
-Resolve verification failures by identifying the root cause and applying the minimum required fix.
+Identify the root cause of a classified implementation failure and define the minimum safe fix.
 
-Debugging MUST preserve approved requirements.
+## Entry
 
----
+- `next_action: debug`
+- failed AC and reproducible evidence exist
+- failure category is implementation
 
-## Required Inputs
+## Load
 
-- verification.md
-- requirement.md
-- plan.md
-- Git Diff
-- CI Results
-- Logs
-- Stack Trace (if available)
+- failed requirement/AC
+- Verification finding and relevant test/log/stack trace
+- plan and changed diff for the failing revision
+- related issue
 
----
+## Output
 
-## Required Outputs
+- `root-cause.md`
+- `fix-plan.md`
+- updated issue/execution evidence and `state.yaml`
 
-Developer MUST create or update:
+## Procedure
 
-- root-cause.md
-- fix-plan.md
-- execution-report.md (if validation is limited)
-- state.yaml
-- related issue record or issue log entry
+1. Reproduce or bound the failure.
+2. Map it to AC, code, tests, and revision.
+3. Separate root cause from symptoms.
+4. Define the minimum fix and regression checks.
+5. Obtain Plan Review when the fix changes approved design or scope.
 
----
+## Exit
 
-## Update state.yaml
+- Root cause and fix scope established: `implementation_debug`.
+- Requirement/planning cause discovered: route there instead.
+- Environment cause: `infrastructure`.
+- Still unclassified: `investigation`.
 
-When debug starts:
-```yaml
-phase: debug
-status: debug_in_progress
+## Restrictions
 
-debug:
-  status: investigating
-
-next_action: debug
-```
-
-```yaml
-phase: debug
-status: debug_complete
-
-debug:
-  status: completed
-  root_cause: identified
-
-next_action: implementation_debug
-```
-
----
-
-## Block rule
-
-Developer MUST NOT start re-implementation until:
-
-- root cause is identified
-- failed AC is mapped
-- minimum fix scope is documented
-
-
----
-
-## Debug Process
-
-Review verification findings
-↓
-Map failed AC to code/tests
-↓
-Identify root cause
-↓
-Collect evidence
-↓
-Define minimum fix
-↓
-Document fix-plan
-↓
-Update state.yaml
-↓
-Re-enter implementation
-
----
-
-## Root Cause Analysis
-
-Developer MUST identify:
-
-- Why the issue occurred
-- Which files are affected
-- Whether regression risk exists
-- Which issue_id the debug work is resolving, if available
-
-Developer MUST NOT fix symptoms without identifying the root cause.
-
----
-
-## Debug Rules
-
-Developer MUST:
-
-- fix one issue at a time
-- preserve unrelated functionality
-- minimize code changes
-- update tests if behavior changes
-- keep the fix scope aligned with the issue priority
-
----
-
-## Definition of Done
-
-Debug completes ONLY IF:
-
-- Root cause identified
-- Failed acceptance criteria mapped to code/tests
-- Minimum fix scope documented in fix-plan.md
-- state.yaml updated to `next_action: implementation_debug`
-- Ready for re-implementation
+Debug analysis does not modify production code. Re-implementation starts only after the fix plan is sufficient and authorized.

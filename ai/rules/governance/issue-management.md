@@ -1,99 +1,28 @@
 # Issue Management
 
-## Objective
+Read this policy when a blocker, regression, mismatch, or enhancement is detected.
 
-Issue Management tracks blockers, regressions, and requirement mismatches without mixing them into the task lifecycle itself.
+## Record
 
-Task state records the main workflow.
-Issue records explain what went wrong, how urgent it is, and which phase should handle it next.
+Use `issue-log.md`; keep `state.yaml` for the main Task route. Record:
 
----
+- stable ID, title, category, priority, status
+- expected/actual behavior and affected AC
+- reproducible evidence and impact
+- owner, route, resolution, and verification
 
-## Issue Lifecycle
+## Categories and Routes
 
-```
-Detected
-↓
-Triage
-↓
-Classified
-↓
-Prioritized
-↓
-Assigned to Phase
-↓
-Resolved
-↓
-Verified
-↓
-Closed
-```
+| Category | Route |
+|---|---|
+| `requirement_gap` | Knowledge or Planning by cause |
+| `planning_gap` | Planning |
+| `implementation_regression` | Debug |
+| `verification_failure` | classify root cause first |
+| `environment` | Infrastructure |
+| `unknown` | Investigation |
+| `enhancement_request` | backlog/separate Task |
 
----
+Priority: P0 data/security/core-flow risk; P1 major blocker; P2 local/edge degradation; P3 non-blocking improvement.
 
-## Issue Types
-
-- `requirement_gap`
-- `planning_gap`
-- `implementation_regression`
-- `verification_failure`
-- `environment`
-- `unknown`
-- `enhancement_request`
-
----
-
-## Priority Rules
-
-- `P0`: core function broken, data risk, or broad regression
-- `P1`: major flow blocked, but workaround exists
-- `P2`: local defect, edge case, or UI degradation
-- `P3`: cleanup, polish, or non-blocking improvement
-
----
-
-## Phase Routing
-
-- `requirement_gap` -> `knowledge_collection` when sources are missing or stale; `knowledge_resolution` when authoritative sources conflict; otherwise `planning`
-- `planning_gap` -> `planning`
-- `implementation_regression` -> `debug`
-- `verification_failure` -> classify the root cause, then use the matching route
-- `environment` -> `infrastructure`
-- `unknown` -> `investigation`
-- `enhancement_request` -> backlog or a separate task
-
----
-
-## Recommended Fields
-
-```yaml
-issue_id: ISS-001
-task_id: TYG-205
-phase: implementation
-category: implementation_regression
-priority: P0
-title: Main button stopped working
-status: open
-impact: Core workflow blocked
-repro_steps:
-  - Open main screen
-  - Tap primary button
-expected: Button should navigate to form
-actual: No response
-evidence:
-  - screenshot
-  - logcat
-next_action: debug
-owner: developer
-```
-
----
-
-## Usage Notes
-
-- Keep `state.yaml` focused on the task's main phase.
-- Record issue details in a separate issue log when a problem appears.
-- Always classify before changing code.
-- Do not treat a requirement mismatch as a code fix.
-- `verification_failure` describes where an issue was detected, not its root cause; classify it as requirement, planning, implementation, environment, or unknown before routing.
-- Keep issue priority separate from failure category. Priority expresses impact; category determines ownership.
+Resolve only with evidence; close only after the resolution is verified. Priority expresses impact; category determines route.

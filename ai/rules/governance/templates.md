@@ -1,13 +1,11 @@
-# Template Rules
+# Template Policy
 
-Every task artifact MUST be generated from the corresponding template.
+Read this policy only when creating or changing a Task artifact.
 
-Template structure is the canonical minimum structure.
-
-Agents MAY add a section only when an approved requirement or phase rule needs evidence that the template does not already represent. Do not remove required sections.
-
-`ai/templates/task/state.yaml` is the single source of truth for state shape. Phase rules define the allowed values and transitions.
-
-Examples are illustrative and MUST NOT override templates, approved requirements, or `AGENTS.md`.
-
----
+- Use the matching file under `ai/templates/`.
+- Templates define the canonical minimum shape; Rules define phase behavior.
+- Add sections only when an approved requirement or Rule needs evidence.
+- Do not remove required sections or copy full Rule text into artifacts.
+- `ai/templates/task/state.yaml` is the only state schema.
+- Keep only current evidence in canonical Task filenames; move superseded versions to `history/<baseline-or-revision>/`.
+- Examples and Tutorial never override templates, Rules, AGENTS, or approved requirements.

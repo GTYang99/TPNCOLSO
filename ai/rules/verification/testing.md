@@ -1,46 +1,27 @@
-# Testing Rules
+# Testing Policy
 
-## Objective
+Read this policy only when selecting, writing, running, or evaluating tests.
 
-Produce proportionate, reproducible evidence that changed behavior works and existing behavior has not regressed.
+Before any Gradle command, read and follow [Runtime](../operations/runtime.md).
 
-## Test Selection
+## Selection
 
-Use the smallest sufficient validation set without sacrificing required coverage:
+Choose the smallest set that proves the changed behavior and nearby regression risk:
 
-1. targeted unit tests for changed logic
-2. affected module build and static checks
-3. UI or integration tests for changed user or API flows
-4. regression checks for adjacent behavior
-5. a smoke test when the complete suite is impractical
-
-Every acceptance criterion MUST map to at least one test or another concrete form of evidence.
-
-## Result Vocabulary
-
-- `PASS`: executed evidence demonstrates the expected result
-- `FAIL`: executed evidence contradicts the expected result
-- `NOT VERIFIED`: evidence is unavailable, incomplete, or could not be executed
-
-An unexecuted check is never PASS. `NOT VERIFIED` blocks Release until sufficient evidence is produced.
+- unit tests for logic and state transitions
+- Compose UI/instrumented tests for interaction, semantics, navigation, lifecycle, and device behavior
+- integration tests for repository, persistence, API mapping, retry, and error handling
+- build, lint/static, and release-variant checks where affected
+- manual smoke/UAT only when automation cannot represent the requirement
 
 ## Evidence
 
-Record:
+Record command/check, environment/device, revision, result, failures, and limitation. A test proves only what it asserts against the exact artifact/revision.
 
-- command or manual procedure
-- environment or device when relevant
-- expected result
-- actual result
-- related acceptance criteria
-- failure output or limitation
+## Rules
 
-## Regression Rules
-
-For bug fixes and refactors, include a test that would fail before the change when practical. Refactors MUST demonstrate behavior preservation at the affected public boundaries.
-
-## Definition of Done
-
-- all required checks have a result
-- failures and unverified checks are visible
-- results are reproducible from the recorded evidence
+- Map each AC to executed evidence.
+- Include error, empty/loading, permission, lifecycle, duplicate-action, and recovery cases when relevant.
+- Do not delete/weaken tests to pass.
+- A skipped, stale, flaky, unavailable, or unexecuted required check is `NOT VERIFIED`.
+- Classify failures before changing code.

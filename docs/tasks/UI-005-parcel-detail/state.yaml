@@ -1,0 +1,35 @@
+task:
+  id: UI-005-parcel-detail
+  type: feature
+phase: knowledge
+status: knowledge_resolved
+knowledge:
+  status: validating
+  collection: completed
+  resolution: completed
+  validation: pending
+  baseline_id: null
+planning:
+  status: pending
+plan_review:
+  status: pending
+implementation:
+  status: pending
+validation:
+  status: pending
+git:
+  branch: ""
+  commit: ""
+  status: pending
+verification:
+  result: pending
+  category: null
+  failed_acceptance_criteria: []
+ci:
+  build: pending
+  test: pending
+release:
+  status: pending
+blocking:
+  - UI-003 and UI-004 prerequisite handoffs are not complete
+next_action: knowledge_validation

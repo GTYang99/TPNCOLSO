@@ -1,0 +1,47 @@
+task:
+  id: UI-003-map-shell
+  type: feature
+
+phase: knowledge
+status: knowledge_resolved
+
+knowledge:
+  status: validating
+  collection: completed
+  resolution: completed
+  validation: pending
+  baseline_id: null
+
+planning:
+  status: pending
+
+plan_review:
+  status: pending
+
+implementation:
+  status: pending
+
+validation:
+  status: pending
+
+git:
+  branch: ""
+  commit: ""
+  status: pending
+
+verification:
+  result: pending
+  category: null
+  failed_acceptance_criteria: []
+
+ci:
+  build: pending
+  test: pending
+
+release:
+  status: pending
+
+blocking:
+  - UI-001 foundation remains unresolved and UI-002 auth has not completed the prerequisite handoff into authenticated content
+
+next_action: knowledge_validation

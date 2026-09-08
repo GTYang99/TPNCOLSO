@@ -94,3 +94,18 @@
 - Review branch: `feature/UI-001-foundation-compose`
 - Review-fix commit: `1482f7d`.
 - The revision is ready for reviewer re-review; Verification remains pending until review disposition is updated.
+
+## Code Review Revision 9 Disposition
+
+- Review result: `APPROVED`
+- Reviewed revision: `1482f7d`
+- The Revision 8 findings were re-reviewed and confirmed resolved: `AppIconButton` now accepts `ImageVector`, `AppPasswordField` exposes required/enabled/read-only/error behavior, and foundation accessibility coverage was added for select/status/loading/error/read-only/icon components.
+- No remaining implementation findings were identified in the approved UI-001 scope.
+- Verification remains pending because CI is not configured and the `XQ-AU52 - 12` connected Compose run remains `NOT VERIFIED`.
+
+## Verification Follow-up
+
+- Reviewed and verified handoff commit: `1482f7d756330705ac31c60321403c68c6bf4786` on `feature/UI-001-foundation-compose`.
+- Verification result: `PASS`; AC-UI001-001–010 are recorded as PASS in `verification.md`.
+- The earlier physical-device limitation was resolved by the isolated `emulator-5554` run, which completed all 12 instrumentation tests.
+- CI build/test remains `not_verified` and is deferred to the later Release gate; this does not change the recorded Verification result.

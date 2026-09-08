@@ -1,303 +1,41 @@
-# Verification Rules
+# Verification
 
-## Objective
+## Purpose
 
-Verification Agent MUST verify that the implementation satisfies the approved requirements and implementation plan.
+Independently evaluate the approved acceptance criteria against the reviewed, committed revision and CI evidence.
 
-Verification MUST be evidence-based.
+## Entry
 
-Never trust Developer claims without verification.
+- `next_action: verification`
+- implementation/developer validation complete
+- revision, diff, review, and required CI evidence available or explicitly `NOT VERIFIED`
 
-Verification MUST route implementation failures to Debug before any new code changes begin.
+## Load
 
-Developer MUST NOT directly patch a failed implementation without debug evidence.
+- current requirement/AC, plan, and state
+- implementation revision/diff and execution report
+- code-review and CI results
+- only tests/source evidence needed per AC
+- [Testing](./testing.md)
 
----
+## Output
 
-## File Path
+Create/update `verification.md` from its template with revision, environment, per-AC evidence/result, regression/non-functional results, findings, limitations, and overall result.
 
-docs/tasks/[開發編號]/
+## Decision
 
----
+- PASS only when every required AC and gate has reproducible passing evidence.
+- FAIL when evidence proves nonconformance; classify cause.
+- NOT VERIFIED when required evidence cannot be obtained.
 
-## Required Inputs
+Include applicable Android compatibility, lifecycle, permission, accessibility, localization, security/privacy, performance, persistence/API compatibility, retry, and recovery checks.
 
-Verification MUST read:
+## Exit
 
-- AGENTS.md
-- requirement.md
-- analysis.md
-- plan.md
-- state.yaml
-- verification-rules.md
-- Git Diff
-- CI Results
-- Existing Tests
-- testing-rules.md
-
----
-
-## Required Outputs
-
-Verification MUST create or update:
-
-- verification.md
-- state.yaml
-
-Verification SHOULD include supporting evidence.
-
----
-
-## Verification Process
-
-Verification MUST perform the following steps:
-
-Requirement
-↓
-
-Acceptance Criteria
-↓
-
-Implementation Review
-↓
-
-Test Review
-↓
-
-Regression Review
-↓
-
-Evidence Collection
-↓
-
-Final Result
-
----
-
-## Acceptance Criteria Review
-
-Every Acceptance Criteria MUST be evaluated individually.
-
-Each Acceptance Criteria MUST be marked as:
-
-- PASS
-- FAIL
-- NOT VERIFIED
-
-Verification MUST explain the reason.
-
----
-
-## Evidence Rules
-
-Every verification result MUST include evidence.
-
-Evidence may include:
-
-- Unit Test
-- UI Test
-- CI Result
-- Source Code
-- Git Diff
-- Log
-- Screenshot
-
-Verification MUST NOT assume success without evidence.
-
----
-
-## Verification Rules
-
-Verification MUST:
-
-- verify all Acceptance Criteria
-- verify implementation follows plan.md
-- verify tests are sufficient
-- verify regression risks
-- verify CI results
-- identify missing test coverage
-- identify implementation deviations
-- classify any blocking issue with priority and category
-- reference or create a related issue record when verification fails
-
----
-
-## Regression Rules
-
-Verification MUST verify:
-
-- Existing functionality
-- Modified functionality
-- Related modules
-- Edge cases
-- Error handling
-
-Regression MUST be included in verification.md.
-
----
-
-## Verification Result
-
-The final result MUST be one of:
-
-PASS
-
-FAIL
-
-NOT VERIFIED
-
-`NOT VERIFIED` is not PASS and MUST NOT advance to Release.
-
-If FAIL, Verification MUST:
-
-- classify the failure category
-- identify failed acceptance criteria
-- provide concrete evidence
-- recommend the next action
-- determine whether debug is required before re-implementation
-
-If NOT VERIFIED, Verification MUST:
-
-- identify the missing or unavailable evidence
-- record the affected acceptance criteria
-- classify an environmental blocker as `environment` when applicable
-- route to `infrastructure` or keep `next_action: verification` until evidence is available
-
----
-
-## Update state.yaml
-
-When verification starts:
-
-```yaml
-phase: verification
-
-status: verification_in_progress
-
-next_action: verification
-```
-
-When verification passes:
-
-```yaml
-phase: verification
-
-status: verification_passed
-
-verification:
-  result: pass
-
-next_action: release
-```
-
-When verification fails because of implementation:
-
-```yaml
-phase: verification
-status: verification_failed
-
-verification:
-  result: fail
-  category: implementation
-  failed_acceptance_criteria:
-    - AC-003
-
-next_action: debug
-```
-
-When verification fails because requirements or authoritative sources are incomplete, stale, or conflicting:
-
-```yaml
-phase: verification
-status: verification_failed
-
-verification:
-  result: fail
-  category: requirement
-  failed_acceptance_criteria:
-    - AC-003
-
-next_action: knowledge_resolution
-```
-
-Use `next_action: knowledge_collection` when material sources are missing, stale, superseded, or not registered. Use `next_action: knowledge_resolution` when collected sources conflict or a Knowledge decision is invalid. Use `next_action: planning` when the Knowledge baseline is valid and only the task requirement or acceptance criteria need Planning ownership.
-
-When verification cannot be completed because evidence is unavailable:
-
-```yaml
-phase: verification
-status: verification_not_verified
-
-verification:
-  result: not_verified
-  category: environment
-  failed_acceptance_criteria: []
-  not_verified_acceptance_criteria:
-    - AC-003
-
-blocking:
-  - Required device test was not available
-
-next_action: infrastructure
-```
-
-When evidence can be gathered without infrastructure work, keep `next_action: verification` and record the missing evidence.
-
-```yaml
-phase: verification
-status: verification_failed
-
-verification:
-  result: fail
-  category: planning
-
-next_action: planning
-```
-
-```yaml
-phase: verification
-status: verification_failed
-
-verification:
-  result: fail
-  category: environment
-
-next_action: infrastructure
-```
-
-```yaml
-phase: verification
-status: verification_failed
-
-verification:
-  result: fail
-  category: unknown
-
-next_action: investigation
-```
-
----
+- PASS: `release`.
+- requirement/planning/implementation/environment/unknown failure: canonical route.
+- NOT VERIFIED: remain blocked; never advance to Release.
 
 ## Restrictions
 
-Verification MUST NOT:
-
-- modify production code
-- modify requirements
-- rewrite implementation plan
-- modify test evidence
-- ignore failed Acceptance Criteria
-- assume implementation is correct
-
----
-
-## Definition of Done
-
-Verification completes ONLY IF:
-
-- verification.md completed
-- Every Acceptance Criteria evaluated
-- Evidence attached
-- state.yaml updated
-- Final verification result generated
-- no `NOT VERIFIED` result is represented as PASS
+No production-code fixes, requirement edits, lowered AC, merge, or deployment.

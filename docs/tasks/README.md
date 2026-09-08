@@ -17,9 +17,10 @@
 | 4 | `UI-004-parcel-search` | 土地查詢／摘要 | 搜尋、查無資料、結果定位狀態、土地摘要 Sheet | 使用 fake parcel list |
 | 5 | `UI-005-parcel-detail` | 土地詳情 | 固定摘要、雙頁籤、唯讀欄位、狀態顯示 | 使用 fake parcel detail |
 | 6 | `UI-006-survey-form` | 調查填報 | 表單、條件欄位、驗證、dirty state、送出狀態 | 本機驗證；不送 API |
-| 7 | `UI-007-photo-camera` | 相機／照片 | CameraX 入口、4:3 拍攝、四張限制、縮圖、刪除確認 | 本機 URI；不上傳 |
-| 8 | `UI-008-return-flow` | 退回通知／修正 | 通知清單、退回 banner、修正表單、確認修正 | 使用 fake notification/parcel |
+| 7 | `UI-007-photo-camera` | 相機／照片 | CameraX 入口、4:3 拍攝、四張限制、縮圖 | 本機 URI；不上傳 |
+| 8 | `UI-008-alerts` | 刪除提醒／編輯提醒 Alert | Android Alert、取消／確認、刪除與捨棄編輯 | 本機狀態；不呼叫 API |
 | 9 | `UI-009-ui-hardening` | 跨畫面品質 | Android 9+、字級、IME、無障礙、旋轉與狀態恢復 | 不依賴 API |
+| 10 | `UI-010-return-flow` | 退回通知／修正 | 通知清單、退回 banner、修正表單、確認修正 | 使用 fake notification/parcel |
 
 ## Deferred Integration Queue
 

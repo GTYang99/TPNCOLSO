@@ -2,8 +2,8 @@ task:
   id: UI-001-foundation
   type: feature
 
-phase: implementation
-status: implementation_in_progress
+phase: verification
+status: passed
 
 knowledge:
   status: ready
@@ -19,11 +19,11 @@ plan_review:
   status: approved
 
 review:
-  result: CHANGES_REQUESTED
-  iteration: 8
+  result: APPROVED
+  iteration: 9
 
 implementation:
-  status: pending
+  status: completed
   build:
     debug: passed
     release: passed
@@ -34,7 +34,7 @@ implementation:
     connected: not_verified
 
 validation:
-  status: pending
+  status: completed
 
 git:
   branch: feature/UI-001-foundation-compose
@@ -42,7 +42,7 @@ git:
   status: committed
 
 verification:
-  result: pending
+  result: PASS
   category: null
   failed_acceptance_criteria: []
 
@@ -54,4 +54,4 @@ release:
   status: pending
 
 blocking: []
-next_action: code_review
+next_action: release

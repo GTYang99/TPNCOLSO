@@ -1,267 +1,43 @@
-# Plan Critic Rules
+# Plan Review
 
-## Objective
+## Purpose
 
-Plan Critic Agent MUST review the implementation plan before coding begins.
+Decide whether the current plan and technical design can safely enter Implementation.
 
-The objective is to discover risks, incorrect assumptions, missing analysis, and incomplete planning.
+## Entry
 
-Plan Critic MUST NOT modify production code.
+- `next_action: plan_review`
+- current requirement, analysis, plan, and state exist
 
-The goal is to determine implementation readiness.
+## Load
 
----
+- `requirement.md`, `analysis.md`, `plan.md`, `state.yaml`
+- active Knowledge handoff when a reviewed decision depends on it
+- exact architecture/API/design evidence needed for a finding
 
-## File Path
+## Output
 
-docs/tasks/[開發編號]/
+Create/update `plan-review.md` from its template. Record checklist, blocking findings, suggestions, responses, iteration, reviewed baseline/plan identity, and one result:
 
----
+- `APPROVED`
+- `REQUEST_CHANGES`
+- `BLOCKED`
 
-## Review Principle
+## Review
 
-The objective is to determine whether implementation can safely begin.
+Check requirement/AC completeness, repository analysis, architecture ownership, dependencies, implementation steps, test/regression strategy, risks, security/data/lifecycle concerns, scope, rollback, and unresolved questions.
 
-The objective is NOT to produce the perfect implementation plan.
+Do not seek perfection; block only material implementation-readiness gaps. Suggestions do not block.
 
-Plan Critic MUST distinguish:
+## Exit
 
-Blocking Issues
+- APPROVED: `implementation`
+- REQUEST_CHANGES: `planning`
+- BLOCKED by missing authority/source: matching Knowledge or clarification route
+- Environment blocker: `infrastructure`
 
-from
-
-Improvement Suggestions.
-
----
-
-## Required Inputs
-
-Plan Critic MUST read:
-
-- AGENTS.md
-- requirement.md
-- analysis.md
-- plan.md
-- state.yaml
-- plan-critic-rules.md
-
----
-
-## Required Outputs
-
-Plan Critic MUST create or update:
-
-- plan-review.md
-- state.yaml
-
-Review comments MUST be documented.
-
----
-## Review comments
-
-### Finding 1
-Severity: Major
-Category: Regression Plan
-Description:
-...
-Recommendation:
-...
-
-### Finding 2
-Severity: Suggestion
-Category: Naming
-Description:
-...
-Recommendation:
-...
-
-## Finding 3
-
-Severity:
-Major
-
-Category:
-Regression Plan
-
-Description:
-Regression tests are incomplete.
-
-Recommendation:
-Add regression tests for upload retry.
-
-Planning Response:
-Added regression tests in plan.md Section 6.
-
-Status:
-Resolved
-
----
-
-## Review Process
-
-Requirement Review
-↓
-
-Acceptance Criteria Review
-↓
-
-Repository Analysis Review
-↓
-
-Architecture Review
-↓
-
-Implementation Plan Review
-↓
-
-Risk Review
-↓
-
-Decision
-
----
-
-## Review Checklist
-
-Plan Critic MUST verify:
-
-- Requirements are fully understood
-- Acceptance Criteria are complete
-- Repository analysis is complete
-- Affected modules are correct
-- Dependencies are identified
-- Risks are evaluated
-- Test Plan is complete
-- Regression Plan is complete
-- Open Questions are documented
-- Implementation steps are actionable
-- Scope is appropriate
-- Task size is appropriate
-- Rollback strategy exists (if applicable)
-
----
-
-## Decision
-
-The final review result MUST be one of:
-
-APPROVED
-
-REQUEST_CHANGES
-
-BLOCKED
-
----
-
-### REQUEST_CHANGES
-
-Planning Agent can reasonably resolve the identified Blocking Issues.
-
-### BLOCKED
-
-Planning Agent cannot resolve the identified Blocking Issues without external clarification or decision.
-
----
-
-## Update state.yaml
-
-When review starts:
-
-```yaml
-phase: plan_review
-
-status: review_in_progress
-
-next_action: plan_review
-```
-
-When approved:
-
-```yaml
-phase: plan_review
-
-status: approved
-
-next_action: implementation
-```
-
-When changes are required:
-
-```yaml
-phase: plan_review
-
-status: changes_requested
-
-next_action: planning
-```
-
-```yaml
-When blocked:
-
-phase: plan_review
-
-status: blocked
-
-reason: requirement_unclear
-
-next_action: requirement_clarification
-```
-
----
+Approval applies only to the identified baseline and plan revision; later material changes invalidate it.
 
 ## Restrictions
 
-Plan Critic MUST NOT:
-
-- modify production code
-- modify requirements
-- lower Acceptance Criteria
-- implement features
-
----
-
-## Definition of Done
-
-Blocking Issues documented.
-
-Suggestions documented separately.
-
-Plan Review completes ONLY IF:
-
-- All checklist items reviewed
-- Decision documented
-- state.yaml updated
-
----
-
-## Issue Severity
-
-Every finding MUST be classified as one of:
-
-Critical
-
-Major
-
-Minor
-
-Suggestion
-
----
-
-## Review Flow
-
-Planning
-    │
-    ▼
-Plan Review
-    │
- ┌──┼─────────────┐
- │  │             │
- │  │             │
- ▼  ▼             ▼
-APPROVED    REQUEST_CHANGES   BLOCKED
- │              │               │
- ▼              ▼               ▼
-Developer     Planning      Requirement
-                               Clarification
-                            or Human Review
+No production code or requirement modification.

@@ -1,0 +1,47 @@
+task:
+  id: DOCS-0907-context-budget
+  type: docs
+
+phase: verification
+status: verification_not_verified
+
+knowledge:
+  status: not_required
+  collection: not_required
+  resolution: not_required
+  validation: not_required
+  baseline_id: null
+
+planning:
+  status: completed
+
+plan_review:
+  status: approved
+
+implementation:
+  status: completed
+
+validation:
+  status: completed
+
+git:
+  branch: feature/UI-001-foundation-compose
+  commit: ""
+  status: blocked
+
+verification:
+  result: not_verified
+  category: environment
+  failed_acceptance_criteria: []
+
+ci:
+  build: not_applicable
+  test: not_verified
+
+release:
+  status: pending
+
+blocking:
+  - Current branch contains unrelated UI-001 and UI-002 working-tree changes; this docs task will not commit them
+
+next_action: infrastructure
