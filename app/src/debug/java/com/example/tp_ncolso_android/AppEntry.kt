@@ -1,6 +1,7 @@
 package com.example.tp_ncolso_android
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,13 +20,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
 import com.example.tp_ncolso_android.session.AppIdentity
 import com.example.tp_ncolso_android.session.AppRole
 import com.example.tp_ncolso_android.ui.foundation.component.AppPrimaryButton
 import com.example.tp_ncolso_android.ui.foundation.component.AppRadioGroup
 import com.example.tp_ncolso_android.ui.foundation.component.AppSecondaryButton
 import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
-import com.example.tp_ncolso_android.feature.auth.AuthRoute
 import com.example.tp_ncolso_android.feature.auth.AuthHost
 import com.example.tp_ncolso_android.feature.auth.AuthViewModel
 import com.example.tp_ncolso_android.feature.auth.DebugAuthDataSource
@@ -40,14 +42,34 @@ fun AppEntry() {
     AppRoot(
         sessionState = sessionState,
         signedOutContent = {
-            AuthHost(
-                viewModel = authViewModel,
-                onLoginSucceeded = { coordinator.login(AppRole.INVESTIGATOR) },
-                onLogoutRequested = coordinator::logout,
+            DebugSignedOutHost(
+                authContent = {
+                    AuthHost(
+                        viewModel = authViewModel,
+                        onLoginSucceeded = { coordinator.login(AppRole.INVESTIGATOR) },
+                        onLogoutRequested = coordinator::logout,
+                    )
+                },
+                directLoginContent = { DebugDirectLogin(onLogin = coordinator::login) },
             )
         },
-        signedInContent = { identity -> DebugAuthenticatedContent(identity = identity, onLogout = sessionOwner::clear) },
+        signedInContent = { identity -> DebugAuthenticatedContent(identity = identity, onLogout = coordinator::logout) },
     )
+}
+
+@Composable
+private fun DebugSignedOutHost(
+    authContent: @Composable () -> Unit,
+    directLoginContent: @Composable () -> Unit,
+) {
+    var showDirectLogin by rememberSaveable { mutableStateOf(false) }
+    Box(Modifier.fillMaxSize()) {
+        if (showDirectLogin) directLoginContent() else authContent()
+        TextButton(
+            onClick = { showDirectLogin = !showDirectLogin },
+            modifier = Modifier.padding(top = 4.dp, end = 4.dp),
+        ) { Text(if (showDirectLogin) "返回登入頁" else "開發模式") }
+    }
 }
 
 @Composable
