@@ -25,6 +25,7 @@ import com.example.tp_ncolso_android.ui.foundation.component.AppRadioGroup
 import com.example.tp_ncolso_android.ui.foundation.component.AppSecondaryButton
 import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
 import com.example.tp_ncolso_android.feature.auth.AuthRoute
+import com.example.tp_ncolso_android.feature.auth.AuthHost
 import com.example.tp_ncolso_android.feature.auth.AuthViewModel
 import com.example.tp_ncolso_android.feature.auth.DebugAuthDataSource
 import com.example.tp_ncolso_android.feature.auth.DebugCaptchaProvider
@@ -34,14 +35,15 @@ fun AppEntry() {
     val sessionOwner = remember { DebugSessionOwner() }
     val sessionState by sessionOwner.state.collectAsState()
     val authViewModel = remember { AuthViewModel(DebugAuthDataSource(), DebugCaptchaProvider()) }
+    val coordinator = remember { DebugAuthSessionCoordinator(sessionOwner, authViewModel) }
 
     AppRoot(
         sessionState = sessionState,
         signedOutContent = {
-            AuthRoute(
+            AuthHost(
                 viewModel = authViewModel,
-                onLoginSucceeded = { sessionOwner.startDebugSession(AppRole.INVESTIGATOR) },
-                onLogoutRequested = sessionOwner::clear,
+                onLoginSucceeded = { coordinator.login(AppRole.INVESTIGATOR) },
+                onLogoutRequested = coordinator::logout,
             )
         },
         signedInContent = { identity -> DebugAuthenticatedContent(identity = identity, onLogout = sessionOwner::clear) },
