@@ -2,7 +2,7 @@ task:
   id: UI-002-auth
   type: feature
 
-phase: debug
+phase: verification
 status: in_progress
 
 knowledge:
@@ -28,7 +28,7 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: f6fc98b
+  commit: e5ed94c
   status: committed
 
 verification:
@@ -44,4 +44,4 @@ release:
   status: pending
 
 blocking: []
-next_action: debug
+next_action: verification
