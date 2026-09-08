@@ -38,7 +38,7 @@ validation:
 
 git:
   branch: feature/UI-001-foundation-compose
-  commit: ec6a1a3
+  commit: cbe3d0a
   status: committed
 
 verification:
