@@ -2,7 +2,7 @@ task:
   id: UI-002-auth
   type: feature
 
-phase: verification
+phase: debug
 status: in_progress
 
 knowledge:
@@ -44,4 +44,4 @@ release:
   status: pending
 
 blocking: []
-next_action: verification
+next_action: debug

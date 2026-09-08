@@ -35,6 +35,17 @@
 - Required resolution: complete SVG runtime treatment for the approved logo/skyline/registration illustration as applicable, then run the approved visual/runtime verification path.
 - Owner: UI-002 / Design asset handoff
 
+## DBG-AUTH-010 — Approved SVG assets are collected but not runtime-consumed
+
+- Category: `implementation_failure`
+- Priority: `P1`
+- Status: `in_progress`
+- Evidence: Verification reports AC-UI002-009 and AC-UI002-010 as `NOT VERIFIED`; `docs/assets/source/auth/login-city-skyline.svg` and `register-user-illustration.svg` exist, but `LoginScreen` and `RegisterScreen` have no runtime asset slots. Only the debug captcha PNG is currently injected.
+- Root cause: asset collection was completed after the initial screen implementation, so the screens retained structural placeholders instead of consuming the approved visual source.
+- Fix plan: `root-cause.md` and `fix-plan.md`; add runtime-consumable approved asset resources/slots, then rerun local regression evidence.
+- Limitation: connected runtime and pixel comparison remain separately blocked by `INF-AUTH-009` until an approved emulator is available.
+- Owner: UI-002 implementation
+
 ## INF-AUTH-009 — ADB runtime unavailable in current environment
 
 - Category: `infrastructure`
