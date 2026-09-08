@@ -5,8 +5,17 @@
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed implementation head: pending debug-fix commit
+- Reviewed implementation head: pending four-failure fix commit
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
+
+## Verification Round 2 — 2026-09-08
+
+- Device: `Medium_Phone (AVD) - 14`, ADB serial `emulator-5554`
+- Command: `JAVA_HOME='/Applications/Android Studio.app/Contents/jbr/Contents/Home' ./gradlew connectedDebugAndroidTest`
+- Result after fix: `PASS`; 17 tests executed, 0 failed, 0 errors, 0 skipped.
+- Passing groups: `FoundationComponentTest` 9/9; `AuthScreenTest` 5/5; `DebugDirectLoginTest` 2/2; app context 1/1.
+- Previous four failures were reproduced and fixed: direct-login tests now enter the existing Debug mode first; Login keeps the remember/register action row visible in the viewport and uses a width-safe checkbox layout.
+- Evidence: [connected test report](../../app/build/reports/androidTests/connected/debug/index.html) and `app/build/outputs/androidTest-results/connected/debug/TEST-Medium_Phone(AVD) - 14.xml`.
 
 ## Acceptance Criteria
 
@@ -34,7 +43,7 @@
 | `assembleDebugAndroidTest` | PASS |
 | Current full local regression (`testDebugUnitTest assembleDebug assembleRelease assembleDebugAndroidTest`) | PASS; `BUILD SUCCESSFUL` on 2026-09-08 |
 | Release isolation scan | PASS |
-| `connectedDebugAndroidTest` | NOT VERIFIED; targeted `AuthScreenTest` execution reports `No connected devices` |
+| `connectedDebugAndroidTest` | PASS; executed on `Medium_Phone (AVD) - 14` / API 34; 17 of 17 tests passed |
 | Authoritative CI | NOT VERIFIED; repository has no configured CI workflow/provider |
 
 ## Visual Evidence
@@ -49,4 +58,4 @@
 
 ## Next Action
 
-Complete the remaining approved Login skyline/logo runtime treatment and UIR mappings, then rerun the non-device checks and, when an approved emulator is available, connected Compose tests with exact runtime evidence. Physical-device/ADB testing is intentionally out of scope for this pass.
+The four reproducible instrumented failures are fixed and the emulator suite is green. Complete the remaining approved Login skyline/logo runtime treatment and UIR mappings; CI remains intentionally deferred by requester decision. Physical-device testing is out of scope.

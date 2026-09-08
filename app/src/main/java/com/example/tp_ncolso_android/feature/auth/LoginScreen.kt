@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -36,8 +37,9 @@ fun LoginScreen(
     modifier: Modifier = Modifier,
     captchaVisual: @Composable () -> Unit = { Text(state.captchaImageKey, color = AppThemeTokens.colors.textSecondary) },
 ) {
-    Box(modifier.fillMaxWidth().background(Brush.verticalGradient(listOf(AppThemeTokens.colors.surface, AppThemeTokens.colors.surfaceMuted)))) {
-    Column(Modifier.padding(horizontal = 24.dp, vertical = 32.dp).verticalScroll(rememberScrollState()).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    Box(modifier.fillMaxSize().background(Brush.verticalGradient(listOf(AppThemeTokens.colors.surface, AppThemeTokens.colors.surfaceMuted)))) {
+    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.padding(horizontal = 24.dp, vertical = 32.dp).verticalScroll(rememberScrollState()).fillMaxWidth().weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("新工處土地占用\n調查圖台系統", style = AppThemeTokens.typography.screenTitle)
         val authError = state.requestError != null
         AppTextField(state.account, { onEvent(AuthEvent.LoginAccountChanged(it)) }, "帳號", placeholder = "請輸入", isError = authError || state.fieldErrors.containsKey(LoginField.ACCOUNT), supportingText = state.fieldErrors[LoginField.ACCOUNT], modifier = Modifier.testTag("login-account"))
@@ -58,11 +60,12 @@ fun LoginScreen(
         }
         state.captchaError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("captcha-error")) }
         state.requestError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("login-request-error")) }
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            AppCheckboxRow(state.rememberMe, { onEvent(AuthEvent.RememberMeChanged(it)) }, "記住我")
-            TextButton(onClick = { onEvent(AuthEvent.OpenRegister) }) { Text("沒有帳號? 註冊") }
-        }
-        AppPrimaryButton("登入", { onEvent(AuthEvent.SubmitLogin) }, enabled = !state.submitting, modifier = Modifier.fillMaxWidth().testTag("login-submit"))
+    }
+    Row(Modifier.fillMaxWidth().padding(horizontal = 24.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+        AppCheckboxRow(state.rememberMe, { onEvent(AuthEvent.RememberMeChanged(it)) }, "記住我", modifier = Modifier.weight(1f))
+        TextButton(onClick = { onEvent(AuthEvent.OpenRegister) }) { Text("沒有帳號? 註冊") }
+    }
+    AppPrimaryButton("登入", { onEvent(AuthEvent.SubmitLogin) }, enabled = !state.submitting, modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 12.dp).testTag("login-submit"))
     }
     }
 }

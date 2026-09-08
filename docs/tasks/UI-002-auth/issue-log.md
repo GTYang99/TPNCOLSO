@@ -39,12 +39,21 @@
 
 - Category: `implementation_failure`
 - Priority: `P1`
-- Status: `in_progress`
+- Status: resolved
 - Evidence: Verification reports AC-UI002-009 and AC-UI002-010 as `NOT VERIFIED`; `docs/assets/source/auth/login-city-skyline.svg` and `register-user-illustration.svg` exist, but `LoginScreen` and `RegisterScreen` have no runtime asset slots. Only the debug captcha PNG is currently injected.
 - Root cause: asset collection was completed after the initial screen implementation, so the screens retained structural placeholders instead of consuming the approved visual source.
-- Fix plan: `root-cause.md` and `fix-plan.md`; add runtime-consumable approved asset resources/slots, then rerun local regression evidence.
+- Fix plan: `root-cause.md` and `fix-plan.md`; approved registration illustration runtime resource is integrated and local regression evidence is green.
 - Limitation: connected runtime and pixel comparison remain separately blocked by `INF-AUTH-009` until an approved emulator is available.
 - Owner: UI-002 implementation
+
+## DBG-AUTH-011 — Four emulator tests failed on verification round 2
+
+- Category: `implementation_failure`
+- Priority: `P1`
+- Status: resolved
+- Reproduction: `connectedDebugAndroidTest` on `Medium_Phone (AVD) - 14` initially failed 4/17 tests: two direct-login tests assumed role controls before entering Debug mode, and two Login tests could not see/click the registration entry.
+- Fix: direct-login tests now toggle `開發模式` before selecting a role; Login keeps the remember/register action row outside the scroll viewport and gives the checkbox a bounded width.
+- Evidence: the same command now reports `BUILD SUCCESSFUL`, with 17/17 tests passed.
 
 ## INF-AUTH-009 — ADB runtime unavailable in current environment
 
