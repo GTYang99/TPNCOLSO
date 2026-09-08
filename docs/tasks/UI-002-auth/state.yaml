@@ -28,11 +28,11 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: e476ba8
+  commit: c2f4317
   status: committed
 
 verification:
-  result: NOT VERIFIED
+  result: PARTIAL
   category: null
   failed_acceptance_criteria: []
 
