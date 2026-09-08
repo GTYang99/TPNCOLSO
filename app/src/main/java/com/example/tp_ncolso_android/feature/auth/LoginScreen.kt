@@ -1,10 +1,16 @@
 package com.example.tp_ncolso_android.feature.auth
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -21,7 +27,8 @@ import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
 
 @Composable
 fun LoginScreen(state: LoginFormState, onEvent: (AuthEvent) -> Unit, modifier: Modifier = Modifier) {
-    Column(modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    Box(modifier.fillMaxWidth().background(Brush.verticalGradient(listOf(Color.White, AppThemeTokens.colors.surfaceMuted)))) {
+    Column(Modifier.padding(horizontal = 24.dp, vertical = 32.dp).verticalScroll(rememberScrollState()).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("新工處土地占用\n調查圖台系統", style = AppThemeTokens.typography.screenTitle)
         AppTextField(state.account, { onEvent(AuthEvent.LoginAccountChanged(it)) }, "帳號", placeholder = "請輸入", isError = state.fieldErrors.containsKey(LoginField.ACCOUNT), supportingText = state.fieldErrors[LoginField.ACCOUNT], modifier = Modifier.testTag("login-account"))
         AppPasswordField(state.password, { onEvent(AuthEvent.LoginPasswordChanged(it)) }, "密碼", visible = false, onVisibilityChange = {}, placeholder = "請輸入", isError = state.fieldErrors.containsKey(LoginField.PASSWORD), supportingText = state.fieldErrors[LoginField.PASSWORD], modifier = Modifier.testTag("login-password"))
@@ -35,5 +42,6 @@ fun LoginScreen(state: LoginFormState, onEvent: (AuthEvent) -> Unit, modifier: M
             TextButton(onClick = { onEvent(AuthEvent.OpenRegister) }) { Text("沒有帳號? 註冊") }
         }
         AppPrimaryButton("登入", { onEvent(AuthEvent.SubmitLogin) }, enabled = !state.submitting, modifier = Modifier.fillMaxWidth().testTag("login-submit"))
+    }
     }
 }
