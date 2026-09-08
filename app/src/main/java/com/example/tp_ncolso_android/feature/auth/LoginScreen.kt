@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -32,7 +31,7 @@ import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
 
 @Composable
 fun LoginScreen(state: LoginFormState, onEvent: (AuthEvent) -> Unit, modifier: Modifier = Modifier) {
-    Box(modifier.fillMaxWidth().background(Brush.verticalGradient(listOf(Color.White, AppThemeTokens.colors.surfaceMuted)))) {
+    Box(modifier.fillMaxWidth().background(Brush.verticalGradient(listOf(AppThemeTokens.colors.surface, AppThemeTokens.colors.surfaceMuted)))) {
     Column(Modifier.padding(horizontal = 24.dp, vertical = 32.dp).verticalScroll(rememberScrollState()).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("新工處土地占用\n調查圖台系統", style = AppThemeTokens.typography.screenTitle)
         val authError = state.requestError != null
