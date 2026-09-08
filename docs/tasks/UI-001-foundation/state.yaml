@@ -38,8 +38,8 @@ validation:
 
 git:
   branch: feature/UI-001-foundation-compose
-  commit: ""
-  status: pending
+  commit: 1482f7d
+  status: committed
 
 verification:
   result: pending

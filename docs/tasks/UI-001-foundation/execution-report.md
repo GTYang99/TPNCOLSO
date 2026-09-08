@@ -92,5 +92,5 @@
 ### Traceability
 
 - Review branch: `feature/UI-001-foundation-compose`
-- Review-fix commit: pending until the reviewer-response diff is committed.
-- Current checkout before commit is intentionally not Verification-ready.
+- Review-fix commit: `1482f7d`.
+- The revision is ready for reviewer re-review; Verification remains pending until review disposition is updated.
