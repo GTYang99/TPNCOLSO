@@ -11,8 +11,8 @@
 
 | Asset | Owner | Source node | Source archive path | Runtime path | Checksum evidence | Status |
 |---|---|---|---|---|---|---|
-| Semantic color and typography roles | UI-001 | Current composite auth panels | `docs/design/evidence/auth/auth-reference-2026-09-07.png` | `app/src/main/java/com/example/tp_ncolso_android/ui/foundation/theme/AppTheme.kt` | composite checksum, token mapping and committed implementation revision | Planned |
-| Material/system icon policy | UI-001 | Android／Material defaults | N/A | Material Icons / platform controls used by foundation components | dependency/source inspection plus semantics and 48dp target tests | Planned |
+| Semantic color and typography roles | UI-001 | Current composite auth panels | `docs/design/evidence/auth/auth-reference-2026-09-07.png` | `app/src/main/java/com/example/tp_ncolso_android/ui/foundation/theme/AppTheme.kt` | composite checksum, token mapping and committed implementation revision | Implemented |
+| Material/system icon policy | UI-001 | Android／Material defaults | N/A | Material Icons / platform controls used by foundation components | dependency/source inspection plus semantics and 48dp target tests | Implemented |
 | Password visibility affordance | UI-001 | Material default visibility icon | N/A | `AppPasswordField` icon slot | no custom asset checksum; verify masked Login behavior, content description and click target | Planned |
 | Captcha reload affordance | UI-001 | Material default refresh icon | N/A | `AppIconButton` / consumer icon slot | no custom asset checksum; verify content description and click target | Planned |
 | Checkbox checked affordance | UI-001 | Android／Material checkbox default | N/A | `AppCheckboxRow` | no custom asset checksum; verify selectable row semantics and checked state | Planned |

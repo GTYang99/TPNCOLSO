@@ -34,11 +34,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.error
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -94,6 +96,9 @@ fun AppPasswordField(
     onVisibilityChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
+    required: Boolean = false,
+    enabled: Boolean = true,
+    readOnly: Boolean = false,
     isError: Boolean = false,
     supportingText: String? = null,
     visibilityActionEnabled: Boolean = true,
@@ -101,12 +106,17 @@ fun AppPasswordField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = true,
 ) {
+    val displayLabel = if (required) "$label *" else label
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier.fillMaxWidth().testTag("password-field"),
-        label = { Text(label) },
+        modifier = modifier.fillMaxWidth().testTag("password-field").semantics {
+            if (isError && supportingText != null) error(supportingText)
+        },
+        label = { Text(displayLabel) },
         placeholder = { Text(placeholder) },
+        enabled = enabled,
+        readOnly = readOnly,
         isError = isError,
         colors = OutlinedTextFieldDefaults.colors(
             errorBorderColor = AppThemeTokens.colors.fieldErrorBorder,
@@ -287,7 +297,7 @@ fun AppSecondaryButton(
 
 @Composable
 fun AppIconButton(
-    icon: Painter,
+    icon: ImageVector,
     contentDescription: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -299,7 +309,7 @@ fun AppIconButton(
         enabled = enabled,
         modifier = modifier.heightIn(min = AppThemeTokens.spacing.minimumTouchTarget),
     ) {
-        Icon(painter = icon, contentDescription = contentDescription)
+        Icon(imageVector = icon, contentDescription = contentDescription)
     }
 }
 
@@ -326,7 +336,12 @@ fun AppStatusBadge(
 @Composable
 fun AppLoadingContent(message: String, modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier.padding(AppThemeTokens.spacing.md),
+        modifier = modifier
+            .padding(AppThemeTokens.spacing.md)
+            .semantics {
+                contentDescription = "載入中：$message"
+                liveRegion = LiveRegionMode.Polite
+            },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
     ) {
@@ -342,7 +357,11 @@ fun AppEmptyContent(
     body: String? = null,
     action: (@Composable () -> Unit)? = null,
 ) {
-    Column(modifier = modifier.padding(AppThemeTokens.spacing.md), verticalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm)) {
+    Column(
+        modifier = modifier
+            .padding(AppThemeTokens.spacing.md),
+        verticalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
+    ) {
         Text(title, style = AppThemeTokens.typography.sectionTitle)
         body?.let { Text(it, style = AppThemeTokens.typography.body) }
         action?.invoke()
@@ -355,7 +374,15 @@ fun AppErrorContent(
     modifier: Modifier = Modifier,
     retry: (() -> Unit)? = null,
 ) {
-    Column(modifier = modifier.padding(AppThemeTokens.spacing.md), verticalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm)) {
+    Column(
+        modifier = modifier
+            .padding(AppThemeTokens.spacing.md)
+            .semantics {
+                error(message)
+                liveRegion = LiveRegionMode.Polite
+            },
+        verticalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
+    ) {
         Text(message, color = AppThemeTokens.colors.error, style = AppThemeTokens.typography.body)
         retry?.let { AppSecondaryButton(text = "重試", onClick = it) }
     }

@@ -3,7 +3,7 @@ task:
   type: feature
 
 phase: implementation
-status: implementation_complete
+status: implementation_in_progress
 
 knowledge:
   status: ready
@@ -19,11 +19,11 @@ plan_review:
   status: approved
 
 review:
-  result: APPROVED
-  iteration: 7
+  result: CHANGES_REQUESTED
+  iteration: 8
 
 implementation:
-  status: completed
+  status: pending
   build:
     debug: passed
     release: passed
@@ -31,15 +31,15 @@ implementation:
     status: passed
   android_test:
     compile: passed
-    connected: passed
+    connected: not_verified
 
 validation:
-  status: completed
+  status: pending
 
 git:
   branch: feature/UI-001-foundation-compose
-  commit: cbe3d0a
-  status: committed
+  commit: ""
+  status: pending
 
 verification:
   result: pending
