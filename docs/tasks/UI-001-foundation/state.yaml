@@ -3,7 +3,7 @@ task:
   type: feature
 
 phase: implementation
-status: ready
+status: implementation_complete
 
 knowledge:
   status: ready
