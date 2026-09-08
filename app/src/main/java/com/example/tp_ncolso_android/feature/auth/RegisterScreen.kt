@@ -32,6 +32,7 @@ fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEven
         AppTextField(state.confirmPassword, { onEvent(AuthEvent.RegisterConfirmChanged(it)) }, "確認密碼", placeholder = "請輸入", isError = state.fieldErrors.containsKey(RegisterField.CONFIRM_PASSWORD), supportingText = state.fieldErrors[RegisterField.CONFIRM_PASSWORD])
         AppSelectField(state.vendor, vendors, VendorOption::displayName, "廠商名稱", { onEvent(AuthEvent.VendorSelected(it)) }, isError = state.fieldErrors.containsKey(RegisterField.VENDOR))
         AppRadioGroup(WorkType.entries, state.workType, { onEvent(AuthEvent.WorkTypeSelected(it)) }, { if (it == WorkType.FIELD) "外業人員" else "內業人員" }, "作業性質")
+        state.fieldErrors[RegisterField.WORK_TYPE]?.let { Text(it, color = androidx.compose.material3.MaterialTheme.colorScheme.error, modifier = Modifier.testTag("register-work-type-error")) }
         AppTextField(state.name, { onEvent(AuthEvent.RegisterNameChanged(it)) }, "姓名(請輸入真實姓名)", placeholder = "請輸入", isError = state.fieldErrors.containsKey(RegisterField.NAME), supportingText = state.fieldErrors[RegisterField.NAME])
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth()) {
             AppSecondaryButton("取消", { onEvent(AuthEvent.CancelRegister) }, modifier = Modifier.weight(1f))

@@ -52,4 +52,11 @@ class AuthScreenTest {
         composeRule.onNodeWithText("取消").performClick()
         assert(event == AuthEvent.CancelRegister)
     }
+
+    @Test fun registerShowsWorkTypeValidationMessage() {
+        composeRule.setContent {
+            AppTheme { RegisterScreen(RegisterFormState(fieldErrors = mapOf(RegisterField.WORK_TYPE to "請選擇作業性質")), emptyList(), {}) }
+        }
+        composeRule.onNodeWithText("請選擇作業性質").assertIsDisplayed()
+    }
 }
