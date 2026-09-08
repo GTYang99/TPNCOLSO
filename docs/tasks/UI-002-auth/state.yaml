@@ -27,9 +27,9 @@ validation:
   status: pending
 
 git:
-  branch: ""
-  commit: ""
-  status: pending
+  branch: UI-002feat
+  commit: d788ec7
+  status: committed
 
 verification:
   result: pending
