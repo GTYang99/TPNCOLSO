@@ -6,6 +6,7 @@ data class LoginFormState(
     val captcha: String = "",
     val rememberMe: Boolean = false,
     val captchaImageKey: String = "default",
+    val captchaError: String? = null,
     val fieldErrors: Map<LoginField, String> = emptyMap(),
     val requestError: String? = null,
     val submitting: Boolean = false,

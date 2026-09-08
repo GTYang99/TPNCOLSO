@@ -68,7 +68,19 @@ class AuthViewModelTest {
         assertTrue(!viewModel.state.value.login.rememberMe)
     }
 
+    @Test fun captchaRefreshFailureRetainsFormAndExposesRetryError() = runTest {
+        val viewModel = AuthViewModel(RecordingAuthSource(), FailingCaptchaProvider())
+        viewModel.onEvent(AuthEvent.LoginAccountChanged("account"))
+        viewModel.onEvent(AuthEvent.RememberMeChanged(true))
+        viewModel.onEvent(AuthEvent.RefreshCaptcha)
+        advanceUntilIdle()
+        assertEquals("account", viewModel.state.value.login.account)
+        assertTrue(viewModel.state.value.login.rememberMe)
+        assertEquals("驗證碼更新失敗，請重試", viewModel.state.value.login.captchaError)
+    }
+
     private class FixedCaptchaProvider : CaptchaProvider { override suspend fun refresh() = "next" }
+    private class FailingCaptchaProvider : CaptchaProvider { override suspend fun refresh(): String = error("fixture failure") }
 
     private class RecordingAuthSource(private val loginResult: Boolean = true) : AuthDataSource {
         var loginCalls = 0

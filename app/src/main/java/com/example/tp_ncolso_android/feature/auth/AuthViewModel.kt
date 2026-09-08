@@ -71,8 +71,9 @@ class AuthViewModel(
 
     private fun refreshCaptcha() {
         viewModelScope.launch {
-            val imageKey = captchaProvider.refresh()
-            updateLogin { copy(captchaImageKey = imageKey) }
+            runCatching { captchaProvider.refresh() }
+                .onSuccess { imageKey -> updateLogin { copy(captchaImageKey = imageKey, captchaError = null) } }
+                .onFailure { updateLogin { copy(captchaError = "驗證碼更新失敗，請重試") } }
         }
     }
     private fun loadVendors() { viewModelScope.launch { mutableState.value = mutableState.value.copy(vendors = dataSource.vendors()) } }

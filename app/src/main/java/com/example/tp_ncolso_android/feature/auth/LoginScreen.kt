@@ -36,6 +36,7 @@ fun LoginScreen(state: LoginFormState, onEvent: (AuthEvent) -> Unit, modifier: M
             AppTextField(state.captcha, { onEvent(AuthEvent.LoginCaptchaChanged(it)) }, "驗證碼", placeholder = "請輸入", keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), isError = state.fieldErrors.containsKey(LoginField.CAPTCHA), supportingText = state.fieldErrors[LoginField.CAPTCHA], modifier = Modifier.weight(1f).testTag("login-captcha"))
             TextButton(onClick = { onEvent(AuthEvent.RefreshCaptcha) }, modifier = Modifier.testTag("captcha-refresh")) { Text("重整") }
         }
+        state.captchaError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("captcha-error")) }
         state.requestError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("login-request-error")) }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             AppCheckboxRow(state.rememberMe, { onEvent(AuthEvent.RememberMeChanged(it)) }, "記住我")
