@@ -28,12 +28,23 @@
 
 - Category: `knowledge_collection`
 - Priority: `P1`
-- Status: open
-- Evidence: `find app/src docs/assets docs/design` found only launcher assets and the composite evidence PNG; no approved logo, skyline, captcha fixture, or registration illustration runtime files exist.
-- Impact: UIR-LOGIN-001/002/004/009 and UIR-REG-002/010 cannot be declared PASS without exact asset identity and runtime comparison. Creating approximations would violate the approved asset policy.
-- Safe action taken: implemented interactive/state behavior and light surface geometry; left missing visual assets explicitly `NOT VERIFIED`.
-- Required resolution: provide approved candidate asset bytes or authorize a documented system-default treatment, then record source/runtime paths and SHA-256 before visual verification.
+- Status: resolved for asset collection; runtime visual verification remains open
+- Evidence: approved Figma exports are now recorded in `docs/assets/app-ui-assets.md`, with source files under `docs/assets/source/`, debug captcha fixture at `app/src/debug/res/drawable-nodpi/login_captcha_fixture.png`, and SHA-256 evidence. The debug Login route now renders the captcha fixture through an injected visual slot.
+- Impact: asset identity and source provenance are no longer blocked. UIR-LOGIN-001/002/004/009 and UIR-REG-002/010 still require runtime rendering and comparison evidence before PASS.
+- Safe action taken: integrated the captcha fixture without inventing replacement artwork; retained `NOT VERIFIED` for device/runtime and pixel comparison gates.
+- Required resolution: complete SVG runtime treatment for the approved logo/skyline/registration illustration as applicable, then run the approved visual/runtime verification path.
 - Owner: UI-002 / Design asset handoff
+
+## INF-AUTH-009 — ADB runtime unavailable in current environment
+
+- Category: `infrastructure`
+- Priority: `P1`
+- Status: open
+- Evidence: `adb devices` could not start the daemon; ADB reported `could not install smartsocket listener: Operation not permitted` and `cannot connect to daemon`.
+- Impact: Connected Compose tests cannot execute, so UI-002 runtime semantics, layout, IME and accessibility evidence remain `NOT VERIFIED`.
+- Safe action taken: retained `assembleDebugAndroidTest` as APK compile evidence; no runtime PASS claimed.
+- Required resolution: restore a permitted ADB daemon/device or provide equivalent approved Android test execution evidence.
+- Owner: Android runtime / environment
 
 ## REQ-AUTH-001 — 認證 Figma 核定狀態
 

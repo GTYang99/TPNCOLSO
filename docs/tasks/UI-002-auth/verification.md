@@ -5,7 +5,7 @@
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed implementation head: `bba6e33`
+- Reviewed implementation head: current UI-002 asset integration revision
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 ## Acceptance Criteria
@@ -41,7 +41,7 @@
 
 - Authoritative composite: SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c`.
 - Login/Register screens currently implement light surfaces, gradient/scroll behavior and interactive field structure.
-- Exact logo, skyline, captcha fixture, registration illustration, geometry comparison and crop-based evidence remain pending.
+- Source assets and checksums are now available. The debug captcha fixture is rendered by the Login implementation; exact logo/skyline/registration SVG runtime rendering, geometry comparison and crop-based evidence remain pending.
 
 ## Overall Result
 
@@ -49,4 +49,4 @@
 
 ## Next Action
 
-Complete feature-owned visual assets and UIR-LOGIN/UIR-REG implementation mappings, then rerun connected Compose tests and update this report with exact device/runtime evidence.
+Complete the remaining approved SVG runtime treatment and UIR-LOGIN/UIR-REG mappings, then rerun the non-device checks and, when an approved emulator is available, connected Compose tests with exact runtime evidence. Physical-device/ADB testing is intentionally out of scope for this pass.

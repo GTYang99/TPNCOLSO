@@ -4,7 +4,7 @@
 
 - Task: `UI-002-auth`
 - Branch: `UI-002feat`
-- Current implementation commits: `7dcde3f`, `e0f1d3a`, `7afc677`, `955ab7f`, `1d986fa`, `29464a1`
+- Current implementation commits: `7dcde3f`, `e0f1d3a`, `7afc677`, `955ab7f`, `1d986fa`, `29464a1`, plus the current asset integration revision
 - Date: 2026-09-08 (Asia/Taipei)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
@@ -30,7 +30,7 @@
 
 ## Known Gaps
 
-- Composite PNG visual comparison and asset checksum/runtime evidence are not complete.
+- Figma asset exports and SHA-256 evidence are now recorded in `docs/assets/app-ui-assets.md`; the debug captcha fixture is wired into Login through an injected visual slot. Composite PNG comparison, SVG runtime treatment, and connected runtime evidence remain incomplete.
 - Connected Compose runtime evidence is unavailable; APK compilation is not runtime PASS.
 - UI-003 drawer fixture and INT-001 production token/remote logout integration are outside this task.
 - Authoritative CI provider is not configured; local Gradle results are not CI evidence.

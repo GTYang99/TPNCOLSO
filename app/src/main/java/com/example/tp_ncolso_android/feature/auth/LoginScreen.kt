@@ -30,7 +30,12 @@ import com.example.tp_ncolso_android.ui.foundation.component.AppTextField
 import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
 
 @Composable
-fun LoginScreen(state: LoginFormState, onEvent: (AuthEvent) -> Unit, modifier: Modifier = Modifier) {
+fun LoginScreen(
+    state: LoginFormState,
+    onEvent: (AuthEvent) -> Unit,
+    modifier: Modifier = Modifier,
+    captchaVisual: @Composable () -> Unit = { Text(state.captchaImageKey, color = AppThemeTokens.colors.textSecondary) },
+) {
     Box(modifier.fillMaxWidth().background(Brush.verticalGradient(listOf(AppThemeTokens.colors.surface, AppThemeTokens.colors.surfaceMuted)))) {
     Column(Modifier.padding(horizontal = 24.dp, vertical = 32.dp).verticalScroll(rememberScrollState()).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("新工處土地占用\n調查圖台系統", style = AppThemeTokens.typography.screenTitle)
@@ -47,7 +52,7 @@ fun LoginScreen(state: LoginFormState, onEvent: (AuthEvent) -> Unit, modifier: M
                     .testTag("captcha-image"),
                 contentAlignment = Alignment.Center,
             ) {
-                Text(state.captchaImageKey, color = AppThemeTokens.colors.textSecondary)
+                captchaVisual()
             }
             TextButton(onClick = { onEvent(AuthEvent.RefreshCaptcha) }, modifier = Modifier.testTag("captcha-refresh")) { Text("重整") }
         }

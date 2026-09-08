@@ -5,7 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 
 @Composable
-fun AuthRoute(viewModel: AuthViewModel, onLoginSucceeded: () -> Unit = {}, onRegistrationSucceeded: () -> Unit = {}, onLogoutRequested: () -> Unit = {}) {
+fun AuthRoute(viewModel: AuthViewModel, onLoginSucceeded: () -> Unit = {}, onRegistrationSucceeded: () -> Unit = {}, onLogoutRequested: () -> Unit = {}, captchaVisual: @Composable () -> Unit = {}) {
     val state by viewModel.state.collectAsState()
     androidx.compose.runtime.LaunchedEffect(viewModel) {
         viewModel.effect.collect { effect ->
@@ -17,7 +17,7 @@ fun AuthRoute(viewModel: AuthViewModel, onLoginSucceeded: () -> Unit = {}, onReg
         }
     }
     when (state.screen) {
-        AuthScreen.Login -> LoginScreen(state.login, viewModel::onEvent)
+        AuthScreen.Login -> LoginScreen(state.login, viewModel::onEvent, captchaVisual = captchaVisual)
         AuthScreen.Register -> RegisterScreen(state.register, state.vendors, viewModel::onEvent)
     }
 }

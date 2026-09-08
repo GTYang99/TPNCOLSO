@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -48,6 +50,7 @@ fun AppEntry() {
                         viewModel = authViewModel,
                         onLoginSucceeded = { coordinator.login(AppRole.INVESTIGATOR) },
                         onLogoutRequested = coordinator::logout,
+                        captchaVisual = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片") },
                     )
                 },
                 directLoginContent = { DebugDirectLogin(onLogin = coordinator::login) },

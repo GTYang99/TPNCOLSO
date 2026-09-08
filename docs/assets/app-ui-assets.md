@@ -5,7 +5,7 @@
 - Task: `UI-001-foundation`
 - Formal visual sources: Login／Register／Logout context use composite PNG SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c` for layout, state and semantic token evidence; v0.1 iconography uses Android／Material defaults instead of custom visual asset matching. Remaining UI uses Figma file `HRbRsw6HoNBUCtaieX8xUM`, entry node `2905:2680`.
 - Approval date: 2026-09-07
-- Retrieval date: 2026-09-07
+- Retrieval date: 2026-09-08 (Figma MCP asset export)
 
 ## Shared Foundation Visual Inputs
 
@@ -25,9 +25,13 @@
 | Consumer | Asset type | Ownership note |
 |---|---|---|
 | `UI-002-auth` | Auth composite evidence | Archive original bytes at `docs/design/evidence/auth/auth-reference-2026-09-07.png`; checksum must equal `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c`. Gray board and headings are excluded from panel comparison. |
-| `UI-002-auth` | City skyline / decorative media | Deferred from UI-001. If required by UI-002, plan as feature-owned decorative media or replace with approved Android/Material/system-default treatment; do not block UI-001 foundation on custom skyline asset matching. |
-| `UI-002-auth` | Captcha Preview/test fixture | Current screenshot supplies visual evidence; runtime `app/src/debug/res/drawable/login_captcha_fixture.png`; never shipped or treated as production captcha data. |
-| `UI-002-auth` | Registration user illustration / decorative media | Deferred from UI-001. If required by UI-002, plan as feature-owned decorative media or replace with approved Android/Material/system-default treatment. |
+| `UI-001` | Login brand logo | Figma node `I2997:11541;4987:4624`, exported SVG from approved composite Login instance | `docs/assets/source/shared/login-brand-logo.svg` | UI-001 shared asset; consumer reference only | `c8584340fbf083f63e1c70d8e13f585d62d82a570e9e77e89676d9d6e4c92e6f` | Retrieved 2026-09-08 |
+| `UI-002-auth` | City skyline / decorative media | Figma node `I2997:11541;4917:14613`, exported SVG from approved composite Login instance | `docs/assets/source/auth/login-city-skyline.svg` | UI-002 feature-owned source; runtime integration remains Implementation scope | `64a394cd0278f01708fc7e312ce86044319cb535c411d61248234e43b324818c` | Retrieved 2026-09-08 |
+| `UI-002-auth` | Captcha Preview/test fixture | Figma Login image layer `螢幕擷取畫面 2026-08-27 135856 1`, exported PNG from approved composite Login instance | `app/src/debug/res/drawable-nodpi/login_captcha_fixture.png` | Debug/test only; never shipped or treated as production captcha data | `bbb0f26fa3a141de5a07ee7bca3216253311ba837b1b5ad3e3f637e2344b6494` | Retrieved 2026-09-08 |
+| `UI-002-auth` | Registration user illustration / decorative media | Figma node `4922:15640`, exported SVG from approved composite Registration instance | `docs/assets/source/auth/register-user-illustration.svg` | UI-002 feature-owned source; runtime integration remains Implementation scope | `2991eaf6a40bca7832725ba1f301e8a0806fd5ec78e3c1335e3eebac50731731` | Retrieved 2026-09-08 |
+| `UI-001` | Registration back chevron | Figma node `4922:15635` / `chevron-right 2`, candidate export only | `docs/assets/source/shared/register-back-chevron.svg` | Do not use if UI-001 Material default treatment remains authoritative | `1ed4c0f1ac8c0b041c28c741b5903691d16135ecebaff66db73d3420446dda9c` | Candidate, not required |
+| `UI-001` | Registration dropdown arrow | Figma node `4922:16850`, candidate export only | `docs/assets/source/shared/register-dropdown-arrow.svg` | Do not use if UI-001 Material default treatment remains authoritative | `c67678e68e10a1a2c878451bdea64e3189aee00f84f08b49c2dcb304b8d49b32` | Candidate, not required |
+| `UI-001` | Registration radio glyph | No independent Figma asset layer; rendered as radio geometry | N/A | Use `AppRadioGroup` / Material default; no custom source required | N/A | Material default selected |
 | `UI-003-map-shell` | Map shell and drawer-specific icons | Must be exported or implemented by UI-003; not provided by UI-001. |
 
 ## Constraints
