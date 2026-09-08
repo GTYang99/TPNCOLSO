@@ -53,7 +53,8 @@ fun LoginScreen(
     Canvas(
         modifier = Modifier
             .align(Alignment.BottomCenter)
-            .offset(x = 29.dp, y = 7.dp)
+            // Figma places the 736x246 skyline with its bottom edge 7dp above the viewport.
+            .offset(x = 29.dp, y = (-7).dp)
             .size(width = 736.dp, height = 246.dp),
     ) { drawImage(skyline, dstSize = IntSize(size.width.toInt(), size.height.toInt()), blendMode = BlendMode.Multiply) }
     Column(
