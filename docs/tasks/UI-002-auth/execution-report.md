@@ -4,7 +4,7 @@
 
 - Task: `UI-002-auth`
 - Branch: `UI-002feat`
-- Current implementation commits: `7dcde3f`, `e0f1d3a`, `7afc677`, `955ab7f`
+- Current implementation commits: `7dcde3f`, `e0f1d3a`, `7afc677`, `955ab7f`, `1d986fa`, `29464a1`
 - Date: 2026-09-08 (Asia/Taipei)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
@@ -26,6 +26,7 @@
 | `assembleRelease` | PASS | Release APK assembled without debug auth source wiring. |
 | `assembleDebugAndroidTest` | PASS | Auth Compose test APK compiled. |
 | `connectedDebugAndroidTest` | NOT VERIFIED | Run started on `XQ-AU52 - 12` and `Medium_Phone(AVD) - 14` but produced no result for over one minute and was terminated. |
+| Release isolation scan | PASS | No debug auth source, direct-login fixture, coordinator, or fixture credential symbols found in `app/src/main` or `app/src/release`. |
 
 ## Known Gaps
 
