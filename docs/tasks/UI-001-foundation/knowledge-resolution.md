@@ -6,10 +6,14 @@
 - Out of scope: production API／Token、map UI、feature navigation implementation。
 
 ## Candidate Knowledge Baseline
-- Baseline ID: `KB-UI-001-FOUNDATION-R2`
-- Created date: 2026-09-07 (Asia/Taipei)
-- Supersedes: `KB-UI-001-FOUNDATION-R1`（Git provenance unresolved and copied architecture still present）
-- Status: validated
+- Baseline ID: `KB-UI-001-FOUNDATION-R5`
+- Created date: 2026-09-08 (Asia/Taipei)
+- Supersedes: `KB-UI-001-FOUNDATION-R3` (rejected after REQ-UI001-002 contract mismatch)
+- Status: draft
+
+> Re-resolution update, 2026-09-08: `REQ-UI001-002` contract fix is present in the working tree; compile/test evidence remains pending because Java Runtime is unavailable.
+
+> Re-resolution update, 2026-09-08: requester selected Android／Material system icons and platform controls for UI-001 v0.1; custom icon asset extraction and pixel matching are out of scope.
 
 ## Source Register
 
@@ -22,6 +26,9 @@
 | SRC-UI001-005 | Current Android repository | implementation evidence | Repository | bootstrap `5221898`; branch `feature/UI-001-foundation-compose` | authoritative for current behavior | current | current state | New Compose starter; baseline unit test/debug build PASS. |
 | SRC-UI001-006 | UI roadmap baseline | process decision | Process / repository | 2026-09-07 | authoritative for sequencing | current | consumer handoff | UI-001 precedes auth and map shell. |
 | SRC-UI001-007 | `docs/architecture/overview.md` | initial architecture baseline | Architecture / requester + Planning | 2026-09-07 | authoritative | current | all implementation AC | New single-module Compose MVVM project; supersedes unrelated copied architecture. |
+| SRC-UI001-008 | `app/src/debug/java/com/example/tp_ncolso_android/DebugSessionController.kt` and updated `DebugSessionOwner.kt` | implementation evidence | Repository / UI-001 | working tree 2026-09-08 | current | current | debug-only contract | Interface now matches foundation contract; compile evidence not verified. |
+| SRC-UI001-009 | `docs/tasks/UI-001-foundation/foundation-contract.md` | foundation contract | Architecture / UI-001 | working tree 2026-09-08 | authoritative candidate | current | tokens, components, session and AppRoot handoff | Defines consumer-facing boundaries; validation remains pending. |
+| SRC-UI001-010 | Current requester decision | authorized design/implementation decision | Product／Design / requester | 2026-09-08 | authoritative | current | icon policy, AC-UI001-010 | UI-001 v0.1 uses Android／Material defaults; no custom icon asset matching. |
 
 ## Material Claims and Traceability
 
@@ -32,6 +39,8 @@
 | KCL-UI001-003 | Debug direct login may create only an in-memory fake identity and must be absent from release. | SRC-UI001-001, SRC-UI001-004 | None | high | AC-UI001-001–006 | resolved |
 | KCL-UI001-004 | New-project authorization permits a canonical bootstrap commit and dedicated task branch without recovering legacy history. | SRC-UI001-001, 005 | Earlier unknown provenance | repository / high | implementation readiness | resolved by Infrastructure |
 | KCL-UI001-005 | This is a new Compose MVVM project with no legacy architecture to preserve. | SRC-UI001-001, 005, 007 | Superseded TaoYuanGutter architecture text | Product/Architecture / high | plan architecture and affected files | resolved |
+| KCL-UI001-006 | Debug source exposes `DebugSessionController : AppSessionOwner`, and `DebugSessionOwner` implements it with `override startDebugSession`. | SRC-UI001-008 | Previous working-tree implementation | Architecture / high | AC-UI001-005, 008 | resolved in source; compile evidence pending |
+| KCL-UI001-007 | UI-001 v0.1 icon affordances use Android／Material defaults; custom icon assets are out of scope. | SRC-UI001-009–010 | Prior custom icon asset plan | Product/Design / high | FR-UI001-006, AC-UI001-009–010 | resolved |
 
 ## Conflicts and Gaps
 
@@ -40,6 +49,7 @@
 | KCF-UI001-001 | Historical development-only Figma label vs current formal approval | Design authority | P1 visual implementation | wait for duplicate revision / approve current snapshot | Requester | resolved by SRC-UI001-001 |
 | KCF-UI001-002 | Shared vs feature-only asset ownership | Architecture | P2 duplicate assets | foundation owns all / consumer owns all / split by reuse | Planning | resolved by KD-UI001-003 |
 | KCF-UI001-003 | Copied TaoYuanGutter/ViewBinding architecture vs new Compose MVVM repository | Architecture | P1 wrong implementation direction | preserve legacy text / establish TP_NCOLSO baseline | Requester + Planning | resolved by KD-UI001-004 |
+| KCF-UI001-004 | Foundation contract required a named debug interface absent from prior source. | Implementation contract | P1 UI-002 handoff | Add interface and implement it; verify compile/tests | UI-001 / Planning | resolved in working tree; verification pending |
 
 ## Decision Records
 
@@ -87,6 +97,23 @@
 - Supersedes: previous `docs/architecture/overview.md` content.
 - Revalidation trigger: approved module or architecture strategy changes.
 
+### KD-UI001-005
+
+- Decision: Accept the explicit debug-only `DebugSessionController : AppSessionOwner` interface and `DebugSessionOwner` implementation as the corrected R4 contract evidence. Compile readiness remains unverified until Java-enabled build/test passes.
+- Source / Conflict IDs: SRC-UI001-008; KCF-UI001-004
+- Rationale: Source now matches the documented debug boundary while preserving main/release isolation.
+- Approver and date: Requester correction, 2026-09-08.
+- Revalidation trigger: interface signature, source-set placement or session ownership changes.
+
+### KD-UI001-006
+
+- Decision: UI-001 v0.1 uses Android／Material default icons and platform controls; custom icon asset extraction and pixel matching are not part of UI-001.
+- Source / Conflict IDs: SRC-UI001-009–010, KCL-UI001-007
+- Rationale: Requester explicitly selected system-provided iconography while retaining semantics, state behavior and 48dp target requirements.
+- Approver and date: Requester, 2026-09-08.
+- Affected requirements / AC / artifacts: FR-UI001-006, AC-UI001-009–010, requirement, plan revision 5, foundation contract and asset manifest.
+- Revalidation trigger: requester/design decision to require custom iconography or a breaking component API change.
+
 ## Assumptions
 
 | Assumption ID | Statement / Evidence | Confidence | Impact if Wrong | Owner | Validation Method | Expiry / Trigger | Safe for Planning |
@@ -116,9 +143,9 @@
 - Repository branch, architecture, minSdk or dependency state changes.
 
 ## Validation Handoff
-- Candidate baseline: `KB-UI-001-FOUNDATION-R2`
+- Candidate baseline: `KB-UI-001-FOUNDATION-R5`
 - Decisions and constraints Validation must check: KD-UI001-001–004, formal Figma authority, new-project Compose MVVM architecture, debug/release isolation, asset ownership.
 - Safe assumptions: KA-UI001-001.
 - Required follow-up evidence: exact asset retrieval, implementation tests, Git branch/commit/CI evidence.
-- Material blockers: no for Planning or local Implementation; remote CI remains required before Release.
+- Material blockers: no Knowledge claim blocker; compile/test evidence remains `NOT VERIFIED` because Java Runtime is unavailable.
 - Ready for Validation: yes

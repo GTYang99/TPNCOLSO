@@ -42,3 +42,29 @@
 
 - `UI-002-auth` can consume `AppRoot`, `session`, and `ui.foundation` public contracts without referencing debug source.
 - Feature-only auth assets remain owned by `UI-002-auth` and must be exported from approved Figma nodes before visual verification.
+
+## Current Validation Run
+
+- Date: 2026-09-08 (Asia/Taipei)
+- JDK: Android Studio JBR, OpenJDK 25.0.3
+- Gradle: 9.6.0 via `GRADLE_USER_HOME=/private/tmp/tp-ncolso-gradle`
+- Revision state: working tree on `feature/UI-001-foundation-compose`; no implementation commit created by this run.
+
+| Check | Result | Evidence | Acceptance criteria |
+|---|---|---|---|
+| `testDebugUnitTest` | PASS | `./gradlew testDebugUnitTest assembleDebug assembleRelease assembleDebugAndroidTest` completed successfully. | AC-UI001-002, AC-UI001-003, AC-UI001-006 |
+| `assembleDebug` | PASS | Debug APK assembled successfully. | AC-UI001-001, AC-UI001-007 |
+| `assembleRelease` | PASS | Release APK assembled successfully. | AC-UI001-004, AC-UI001-007 |
+| `assembleDebugAndroidTest` | PASS | Android test APK compiled successfully. | AC-UI001-006, AC-UI001-009 |
+| Release source isolation inspection | PASS | No matches for direct-login strings/classes in `app/src/main` or `app/src/release`. | AC-UI001-004 |
+| `connectedDebugAndroidTest` | PASS | All tests passed on `XQ-AU52 - 12` and `Medium_Phone(AVD) - 14`. | AC-UI001-001, AC-UI001-002, AC-UI001-003, AC-UI001-006, AC-UI001-009 |
+
+### Test correction
+
+- Corrected `FoundationComponentTest.checkboxRowUsesFullSelectableRow` to assert `ToggleableState.Off`, which matches the component's `toggleable` semantics. The component implementation and full-row interaction were unchanged.
+
+### Remaining gates
+
+- `git commit`: pending; only approved UI-001 scope may be staged.
+- Code Review and authoritative CI: pending.
+- Verification: pending until a reviewed committed revision is available.

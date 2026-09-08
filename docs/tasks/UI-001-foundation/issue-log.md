@@ -79,3 +79,14 @@
 - Resolution: Implementation 已新增 `AppCheckboxRow`、password visibility action disabled variant、field/global error semantic tokens，並將主要品牌色、文字色與邊框 token 對齊正式 design specification；對應 previews 與 Android UI test APK 編譯已通過。Connected device execution 另由 validation limitation 追蹤。
 - Next action: `verification`
 - Owner: Planning / UI-001
+
+## REQ-UI001-002 — Auth visual source 更換使 foundation evidence 過期
+
+- Category: `requirement_gap`
+- Priority: `P1`
+- Status: resolved
+- Impact: UI-001 commit `bc78382` 與原 Plan Review 無法證明 tokens/assets、Login masked＋eye、Register plaintext＋no-eye 與 null-selection radio 符合 current composite；R3 曾發現 `DebugSessionController` interface 尚未落實，現已在 working tree 補上，仍待驗證。
+- Evidence: Requester 於 2026-09-07 將 composite SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c` 設為全部 auth visual 唯一權威；`KD-AUTH-012`、Login revision 3、Register revision 2。
+- Resolution: `KB-UI-001-FOUNDATION-R4` Knowledge Validation PASS；R2 PASS 已取消，R4 已重新確認 current composite、token／asset ownership、password／selection variants、debug-only controller boundary 與 Planning handoff。Java Runtime unavailable 導致 build/test evidence 仍屬後續 gate，不作為 Knowledge PASS 依據。
+- Next action: `plan_review`
+- Owner: UI-001 Knowledge / Planning

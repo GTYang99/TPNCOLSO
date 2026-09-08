@@ -3,14 +3,14 @@
 ## Purpose
 
 - 定義 UI-002 至 UI-009 可直接依賴的 Compose theme、元件、狀態、app-root、session、semantics 與測試邊界。
-- 本 contract 固定 API ownership 與行為；semantic token 與共用品牌 asset 值須追溯至 requester 於 2026-09-07 核定的正式 Figma UI。
+- 本 contract 固定 API ownership 與行為；auth semantic tokens 與 component variants 須追溯至 current composite，iconography 改用 Android／Material 預設 icon，不以自有 icon asset 比對 current composite。
 
 ## Package Ownership
 
 | Package | Owns | Must not own |
 |---|---|---|
 | `ui.foundation.theme` | `AppTheme`、semantic colors、typography、shape、spacing accessors | feature-specific colors、raw Figma values |
-| `ui.foundation.component` | 共用輸入、按鈕、選項、狀態與只讀元件 | Login、Parcel、Survey 等業務流程 |
+| `ui.foundation.component` | 共用輸入、按鈕、選項、狀態、只讀元件與 Material/system icon slots | Login、Parcel、Survey 等業務流程或自有 icon asset catalog |
 | `ui.foundation.state` | 通用 loading/content/empty/error presentation state | HTTP status、API DTO |
 | `ui.foundation.preview` | deterministic preview fixtures／containers | production data、credentials |
 | `session` | `AppSessionState`、`AppIdentity`、`AppRole`、session owner interface | Token schema、Retrofit、persistent storage |
@@ -52,7 +52,9 @@
 - Spacing: `xs`, `sm`, `md`, `lg`, `xl`.
 - Interactive size: `minimumTouchTarget` MUST be at least 48dp.
 
-Token values MUST map to the approved Figma source through semantic roles. A later approved design change MAY replace token values but MUST NOT change feature component signatures unless a new Plan Review approves a breaking contract change.
+Token values MUST map to the approved owning visual source through semantic roles. A later approved design change MAY replace token values but MUST NOT change feature component signatures unless a new Plan Review approves a breaking contract change.
+
+For Login, `surface` and `surfaceMuted` must reproduce the current composite's continuous white-to-pale-blue background when composed by UI-002. Former screenshots/Figma cannot override it; exact rules live in `login-ui-requirement.md` revision 3.
 
 ## Component Contract
 
@@ -61,13 +63,13 @@ Every component accepts `modifier` and exposes state through parameters; compone
 | Component | Required inputs | Required states / behavior |
 |---|---|---|
 | `AppTextField` | value, onValueChange, label, placeholder, required, enabled, readOnly, isError, supportingText, keyboardOptions, keyboardActions, singleLine | default, focused, disabled, readonly, required, error |
-| `AppPasswordField` | value, onValueChange, label, placeholder, visible, onVisibilityChange, visibilityActionEnabled, isError, supportingText, keyboardOptions, keyboardActions, singleLine | masked by default; optional visibility action has content description; Registration disables the action because its approved states show no eye control |
+| `AppPasswordField` | value, onValueChange, label, placeholder, visualTransformation, visible, onVisibilityChange, visibilityActionEnabled, isError, supportingText, keyboardOptions, keyboardActions, singleLine | Login supports masked＋eye; Registration supports plaintext＋no-eye; sensitive value is caller-owned and never saved by the component |
 | `AppSelectField<T>` | selected, options, itemLabel, label, onSelect, enabled, isError | closed, open, selected, disabled, error |
 | `AppRadioGroup<T>` | options, selected, onSelect, label, enabled, isError | exactly zero or one selected; full row is clickable |
 | `AppCheckboxRow` | checked, onCheckedChange, label, enabled | visual checkbox may be smaller, but the full labeled row is a single selectable target of at least 48dp |
 | `AppPrimaryButton` | text, onClick, enabled, loading | blocks repeat action and exposes progress semantics while loading |
 | `AppSecondaryButton` | text, onClick, enabled | enabled, pressed, disabled |
-| `AppIconButton` | icon painter, contentDescription, onClick, enabled | mandatory nonblank content description |
+| `AppIconButton` | Material/system icon imageVector, contentDescription, onClick, enabled | mandatory nonblank content description; no custom drawable source is required |
 | `AppStatusBadge` | label, tone | status is conveyed by text, never color alone |
 | `AppLoadingContent` | message | announces loading without duplicate announcements |
 | `AppEmptyContent` | title, optional body/action | readable empty state |
@@ -114,7 +116,15 @@ interface AppSessionOwner {
 
 - `StateFlow` is part of the public contract, so `kotlinx-coroutines-core` MUST be declared directly rather than supplied only by a transitive dependency.
 - Main contract has no `login()` method: production login belongs to Auth integration.
-- Debug source set may extend the owner with `startDebugSession(role)`; release source set cannot reference that extension.
+- Debug source set exposes the exact extension boundary below; release/main source sets cannot reference it:
+
+```kotlin
+interface DebugSessionController : AppSessionOwner {
+    fun startDebugSession(role: AppRole)
+}
+```
+
+- `DebugSessionOwner` implements `DebugSessionController`. UI-002 composition-root coordinator may depend on this debug-only interface; AuthViewModel, AuthHost and screens may not.
 - `AppRoot` receives `sessionState`, `signedOutContent`, and `signedInContent(identity)` slots.
 - `AppRoot` does not know Login, Map, Navigation Compose, Retrofit, Token, or persistence.
 
@@ -141,7 +151,7 @@ interface AppSessionOwner {
 
 - Every foundation component has previews for default plus applicable loading／disabled／error／readonly states.
 - Preview data is deterministic and visibly fake; it contains no password, Token or personal data.
-- Foundation tests cover component semantics, disabled/loading click suppression, password masking, password visibility action enabled/disabled variants, radio exclusivity and minimum interactive sizing.
+- Foundation tests cover component semantics, disabled/loading click suppression, Login masked＋eye and Register plaintext＋no-eye password variants, radio zero-or-one/exclusivity and minimum interactive sizing.
 - Debug direct-login tests cover all three roles, single transition and clear.
 - Release checks compile the release variant and demonstrate that debug entry symbols／strings are absent.
 
@@ -160,5 +170,5 @@ interface AppSessionOwner {
 - Changing token values after approved design is compatible when signatures and semantic roles remain unchanged.
 - Removing or renaming a component／token, changing loading click behavior, altering session state shape, or adding Token／API types is a breaking contract change and requires Planning plus regression updates for every consumer.
 - Feature code MUST NOT bypass this contract with duplicate primitives unless Plan Review records a documented mismatch.
-- Shared brand assets are owned by UI-001; feature-only illustrations remain feature-owned. Both MUST be registered with their Figma node and retrieval date rather than recreated from screenshots.
-- UI-001 owns the Login brand logo, password-visibility, captcha-reload and checkbox-check icons plus Registration back, dropdown and selected-radio icons at the exact source/runtime paths in `docs/assets/app-ui-assets.md`; UI-002 owns the Login city skyline, debug captcha fixture and Registration user illustration.
+- UI-001 does not own custom icon/logo drawable assets for v0.1. Password visibility, reload, checkbox, back, dropdown and selected-radio affordances MUST use Android／Material defaults through stable foundation component APIs with Traditional Chinese semantics and at least 48dp targets.
+- Feature-specific illustrative media, if later approved, remains feature-owned and must be planned by that feature. UI-002 owns auth composite evidence and any non-icon decorative media it still requires; UI-001 does not require crop/scale proof for custom icon assets because those assets are out of scope.

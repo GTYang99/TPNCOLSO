@@ -1,74 +1,125 @@
 # Plan Review
 
-## Review Metadata
+Task: `UI-001-foundation`
+Reviewer: Codex Plan Review
+Review Iteration: 7
+Review Date: 2026-09-08 (Asia/Taipei)
+Reviewed Plan: revision 5
+Reviewed Baseline: `KB-UI-001-FOUNDATION-R5`
+Reviewed Branch: `feature/UI-001-foundation-compose`
 
-- Task: `UI-001-foundation`
-- Reviewer: Codex Plan Review
-- Review date: 2026-09-07
-- Plan version or commit: Plan revision 3 on `feature/UI-001-foundation-compose`, bootstrap `5221898`
-- Review iteration: 4
-- Knowledge baseline: `KB-UI-001-FOUNDATION-R2` (PASS)
+---
 
-## Decision
+# Summary
 
-- Result: APPROVED
-- Approval basis: Requester 確認本案為從零建立的新專案；Infrastructure 已建立 canonical bootstrap commit、dedicated task branch，baseline unit test／debug build PASS。正式 Figma、architecture、foundation contract、AC traceability、test／rollback plan 均已解析，Implementation 可開始。
+## Review Result
 
-## Traceability Check
+- [x] APPROVED
+- [ ] REQUEST_CHANGES
+- [ ] BLOCKED
 
-| Requirement / AC | Planned step | Test / verification | Result |
-|---|---|---|---|
-| AC-UI001-001 | 6, 7, 9 | Debug Compose UI initial-state test | PASS |
-| AC-UI001-002 | 5, 7, 11 | Three-role and single-start tests | PASS |
-| AC-UI001-003 | 5, 7, 11 | Logout and process-relaunch tests | PASS |
-| AC-UI001-004 | 8, 12 | Release assemble plus source/artifact inspection | PASS |
-| AC-UI001-005 | 5, 6 | AppRoot contract unit/Compose test | PASS |
-| AC-UI001-006 | 11, 12 | Unit and instrumented test reports | PASS |
-| AC-UI001-007 | 2, 12 | Gradle config check and debug/release builds | PASS |
-| AC-UI001-008 | 3–6, 14 | Contract compile fixture and UI-002 handoff review | PASS |
-| AC-UI001-009 | 3, 4, 11, 12 | Preview inventory and foundation component UI tests | PASS |
-| AC-UI001-010 | 3, 10, 11, 14 | Token/asset traceability and visual comparison evidence | PASS |
+## Summary
 
-## Findings
+Plan revision 5 is implementation-ready for the approved UI-001 scope. It incorporates the requester decision to use Android／Material system icons and platform controls, updates the foundation contract and asset manifest, and aligns with Knowledge baseline R5, the requirement and acceptance criteria, the Compose MVVM architecture, and the debug/release source-set boundary.
 
-### Critical
+Java/device/remote-CI evidence remains a downstream validation gate. It is `NOT VERIFIED` and must not later be reported as PASS without fresh evidence.
 
-- None. `ENV-UI001-001` 已由 new-project authorization、bootstrap `5221898` 與 dedicated task branch 解決。
+---
 
-### Major
+# Review Checklist
 
-- `PLN-UI001-002`：已在本輪解決；coroutine direct dependency 已明列於 plan 與 contract。
-- `PLN-UI001-003`：已在本輪解決；共用 field/button contract 已涵蓋 UI-002 所需的 state、keyboard 與 accessibility inputs。
-- `PLN-UI001-004`：已在本輪解決；已移除不屬本案的 TaoYuanGutter legacy architecture，建立 TP_NCOLSO Compose MVVM baseline。
+| Item | Result | Notes |
+|------|--------|------|
+| Requirement understood | PASS | Scope, exclusions, debug-only entry and release behavior are explicit. |
+| Acceptance Criteria complete | PASS | AC-UI001-001 through AC-UI001-010 are observable and traced. |
+| Repository analysis complete | PASS | Current Compose starter, source sets, minSdk gap and affected modules are identified. |
+| Architecture impact reasonable | PASS | AppRoot/session slots and `ui.foundation.*` ownership match R4. |
+| Affected modules identified | PASS | Gradle, main/debug/release, tests, assets and task artifacts are listed. |
+| Dependencies identified | PASS | Direct coroutine dependency, Compose stack, consumers and deferred API work are addressed. |
+| Risks evaluated | PASS | Release leakage, persistence, visual traceability and environment limits are covered. |
+| Test Plan complete | PASS | Unit, Compose UI, build, isolation, semantics and asset checks cover the ACs. |
+| Regression Plan complete | PASS | MainActivity stability, consumer reuse and debug dependency leakage are specified. |
+| Open Questions documented | PASS | No product or implementation blocker remains. |
+| Implementation steps actionable | PASS | Contracts are established before consumers and scope is preserved. |
+| Task size appropriate | PASS | Auth API, navigation, map and feature behavior remain out of scope. |
+| Rollback strategy (if applicable) | PASS | Reverting the implementation commit restores the starter. |
 
-### Minor
+---
 
-- None.
+# Findings
 
-### Suggestions
+## Finding 1
 
-- None. Requester 已於 2026-09-07 核定目前 Figma 為正式 UI；visual token／asset reconciliation 已納入本 plan。
+Severity:
+- [ ] Critical
+- [ ] Major
+- [ ] Minor
+- [x] Suggestion
 
-## Required Changes
+Category: Validation sequencing
 
-- None before Implementation.
-- Remote／CI provider configuration remains required before CI and Release can pass; until then CI is `NOT VERIFIED`.
+Description: Java Runtime, connected-device execution and authoritative remote CI are not available in the current evidence; system-icon policy is revalidated in Knowledge baseline R5.
 
-## Review Checklist
+Recommendation: Preserve these as `NOT VERIFIED` until the relevant downstream gates produce fresh evidence; do not weaken AC-UI001-006 or AC-UI001-007.
 
-- [x] Requirements and acceptance criteria are complete and traceable.
-- [x] Repository analysis is evidence-based and current for the supplied files.
-- [x] Architecture, modules, interfaces, and dependencies are explicit.
-- [x] Risks, edge cases, and failure behavior are addressed.
-- [x] Test, regression, and verification plans cover the acceptance criteria.
-- [x] Scope, affected files, and exclusions are bounded.
-- [x] The plan is actionable by a developer on the dedicated task branch.
-- [x] Rollback or recovery is defined where applicable.
-- [x] The local environment can produce branch, commit, build and test evidence required to begin Implementation.
+Planning Response: Already recorded in plan risks, failure behavior and Knowledge handoff. No plan change required.
 
-## Final Handoff
+Status:
+- [ ] Open
+- [x] Resolved
 
-- Approved plan reference: `docs/tasks/UI-001-foundation/plan.md`, revision 3.
-- Remaining non-blocking questions: None.
-- Implementation authorization: Granted for the approved UI-001 scope on `feature/UI-001-foundation-compose`.
-- Next action: `implementation`；不得擴張到 UI-002、production API／Token、map 或 release deployment。
+---
+
+# Blocking Issues
+
+None.
+
+---
+
+# Improvement Suggestions
+
+- During Implementation, capture current-composite checksum/panel evidence for token and layout claims, and verify Android／Material default icon affordances through source inspection, semantics, state behavior and 48dp target tests before claiming AC-UI001-010.
+- Preserve unrelated working-tree changes and bind implementation evidence to the eventual commit revision.
+
+---
+
+# Decision
+
+## APPROVED
+
+Implementation may begin for the approved UI-001 scope only. This approval applies to plan revision 5 and baseline `KB-UI-001-FOUNDATION-R5`; material changes to the session contract, source-set boundary, visual source, icon policy, minSdk, dependency strategy or scope require a new Plan Review.
+
+---
+
+# Next Action
+
+- [ ] Planning
+- [x] Implementation
+- [ ] Requirement Clarification
+- [ ] Human Review
+
+---
+
+# State Update
+
+```yaml
+phase: implementation
+status: ready
+plan_review:
+  status: approved
+review:
+  result: APPROVED
+  iteration: 7
+next_action: implementation
+```
+
+---
+
+# Definition of Done
+
+- [x] All checklist items reviewed
+- [x] Findings documented
+- [x] Blocking Issues identified (none)
+- [x] Improvement Suggestions separated
+- [x] Decision recorded
+- [x] State update recorded

@@ -6,7 +6,8 @@ import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsToggleable
-import androidx.compose.ui.test.assertIsNotSelected
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -23,6 +24,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.state.ToggleableState
 
 @RunWith(AndroidJUnit4::class)
 class FoundationComponentTest {
@@ -132,7 +135,10 @@ class FoundationComponentTest {
             }
         }
 
-        composeRule.onNodeWithText("記住我").assertHasClickAction().assertIsToggleable().assertIsNotSelected()
+        composeRule.onNodeWithText("記住我")
+            .assertHasClickAction()
+            .assertIsToggleable()
+            .assert(SemanticsMatcher.expectValue(SemanticsProperties.ToggleableState, ToggleableState.Off))
         composeRule.onNodeWithText("記住我").performClick()
         assertTrue(checked.value)
     }
