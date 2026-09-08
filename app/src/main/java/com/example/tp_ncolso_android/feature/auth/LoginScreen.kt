@@ -12,6 +12,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.Canvas
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.height
@@ -44,15 +49,13 @@ fun LoginScreen(
     captchaVisual: @Composable () -> Unit = { Text(state.captchaImageKey, color = AppThemeTokens.colors.textSecondary) },
 ) {
     Box(modifier.fillMaxSize().background(Brush.verticalGradient(listOf(AppThemeTokens.colors.surface, AppThemeTokens.colors.surfaceMuted)))) {
-    Image(
-        painter = painterResource(com.example.tp_ncolso_android.R.drawable.login_city_skyline),
-        contentDescription = "城市剪影",
-        contentScale = ContentScale.FillBounds,
+    val skyline = ImageBitmap.imageResource(com.example.tp_ncolso_android.R.drawable.login_city_skyline)
+    Canvas(
         modifier = Modifier
             .align(Alignment.BottomCenter)
             .offset(x = 29.dp, y = 7.dp)
             .size(width = 736.dp, height = 246.dp),
-    )
+    ) { drawImage(skyline, dstSize = IntSize(size.width.toInt(), size.height.toInt()), blendMode = BlendMode.Multiply) }
     Column(
         Modifier
             .width(320.dp)
