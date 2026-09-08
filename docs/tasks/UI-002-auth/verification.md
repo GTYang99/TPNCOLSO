@@ -56,9 +56,9 @@
 
 - Reference: Figma file `HRbRsw6HoNBUCtaieX8xUM`, section `2905:2680`, Login empty frame `2905:2679`, natural size `402×874`.
 - Runtime capture: API 34 `Medium_Phone (AVD)`, serial `emulator-5554`, screenshot `1080×2400`, captured after installing the current debug APK from `2eab95a`; evidence file `docs/design/evidence/auth/figma-export-2026-09-08/runtime-login-after-composition.png`, SHA-256 `6f7309921aa90159bd863c6869694464d151e3ba8cb61c34ace9258813b8cb86`.
-- Method: visual observation after scaling the emulator capture to the Figma reference frame; system status-bar area and the debug-only mode affordance are recorded separately from product UI.
-- Observed differences: debug-only `開發模式` text is visible above the product canvas; the brand header is substantially larger and higher than the Figma reference; input controls are taller/wider relative to the 402×874 reference; the remember/register row and submit button are pushed into the lower skyline region; a large white block interrupts the lower background and skyline composition; the skyline is not visually aligned to the Figma bottom placement.
-- Result: `PARTIAL`. The emulator capture now proves the exact logo, skyline and centered 320dp composition are rendered. A strict pixel-diff is still not claimed because the capture includes Android system chrome and the debug-only `開發模式` affordance; normalized crop tooling/evidence remains pending.
+- Method: cropped emulator capture from system chrome and resized to the Figma reference frame `402×874`; normalized evidence: `docs/design/evidence/auth/figma-export-2026-09-08/runtime-login-normalized-402x874.png`, SHA-256 `38d9c9f0914b53fc88d3d9c6055a3101b9c28071ddba5db7e0d265897a0d6e3b`.
+- Observed differences: Android system chrome is removed, but debug-only `開發模式` remains inside the app canvas at the top-left and is explicitly excluded from product comparison. The logo, centered 320-wide form, action row, button and skyline are now visibly aligned to the Figma composition; the skyline crop still requires a content-only mask for strict pixel scoring.
+- Result: `PARTIAL`. Normalized crop evidence is now available. A numeric strict pixel diff is not claimed because the debug-only affordance is inside the captured app canvas and no authoritative content-only mask has been applied.
 
 ## Overall Result
 
