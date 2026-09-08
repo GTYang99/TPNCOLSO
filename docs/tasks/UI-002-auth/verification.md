@@ -5,7 +5,7 @@
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed implementation head: `5fe9b2d`
+- Reviewed implementation head: `bba6e33`
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 ## Acceptance Criteria
@@ -32,6 +32,7 @@
 | `assembleDebug` | PASS |
 | `assembleRelease` | PASS |
 | `assembleDebugAndroidTest` | PASS |
+| Current full local regression (`testDebugUnitTest assembleDebug assembleRelease assembleDebugAndroidTest`) | PASS; `BUILD SUCCESSFUL` on 2026-09-08 |
 | Release isolation scan | PASS |
 | `connectedDebugAndroidTest` | NOT VERIFIED; runtime produced no result on two detected devices and was terminated |
 | Authoritative CI | NOT VERIFIED; repository has no configured CI workflow/provider |
