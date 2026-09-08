@@ -24,6 +24,17 @@
 - Next action: `plan_review`
 - Owner: Planning / Design
 
+## IMP-AUTH-008 — Approved auth visual assets absent from repository
+
+- Category: `knowledge_collection`
+- Priority: `P1`
+- Status: open
+- Evidence: `find app/src docs/assets docs/design` found only launcher assets and the composite evidence PNG; no approved logo, skyline, captcha fixture, or registration illustration runtime files exist.
+- Impact: UIR-LOGIN-001/002/004/009 and UIR-REG-002/010 cannot be declared PASS without exact asset identity and runtime comparison. Creating approximations would violate the approved asset policy.
+- Safe action taken: implemented interactive/state behavior and light surface geometry; left missing visual assets explicitly `NOT VERIFIED`.
+- Required resolution: provide approved candidate asset bytes or authorize a documented system-default treatment, then record source/runtime paths and SHA-256 before visual verification.
+- Owner: UI-002 / Design asset handoff
+
 ## REQ-AUTH-001 — 認證 Figma 核定狀態
 
 - Category: `requirement_gap`
