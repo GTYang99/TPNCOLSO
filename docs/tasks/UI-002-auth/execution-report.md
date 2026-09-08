@@ -25,7 +25,7 @@
 | `assembleDebug` | PASS | Debug APK assembled with auth flow. |
 | `assembleRelease` | PASS | Release APK assembled without debug auth source wiring. |
 | `assembleDebugAndroidTest` | PASS | Auth Compose test APK compiled. |
-| `connectedDebugAndroidTest` | NOT VERIFIED | Run started on `XQ-AU52 - 12` and `Medium_Phone(AVD) - 14` but produced no result for over one minute and was terminated. |
+| `connectedDebugAndroidTest` | NOT VERIFIED | Targeted `AuthScreenTest` execution reports `No connected devices`; prior full run also produced no result on detected devices and was terminated. |
 | Release isolation scan | PASS | No debug auth source, direct-login fixture, coordinator, or fixture credential symbols found in `app/src/main` or `app/src/release`. |
 
 ## Known Gaps

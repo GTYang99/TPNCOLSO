@@ -34,7 +34,7 @@
 | `assembleDebugAndroidTest` | PASS |
 | Current full local regression (`testDebugUnitTest assembleDebug assembleRelease assembleDebugAndroidTest`) | PASS; `BUILD SUCCESSFUL` on 2026-09-08 |
 | Release isolation scan | PASS |
-| `connectedDebugAndroidTest` | NOT VERIFIED; runtime produced no result on two detected devices and was terminated |
+| `connectedDebugAndroidTest` | NOT VERIFIED; targeted `AuthScreenTest` execution reports `No connected devices` |
 | Authoritative CI | NOT VERIFIED; repository has no configured CI workflow/provider |
 
 ## Visual Evidence
