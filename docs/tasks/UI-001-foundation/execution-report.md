@@ -48,7 +48,7 @@
 - Date: 2026-09-08 (Asia/Taipei)
 - JDK: Android Studio JBR, OpenJDK 25.0.3
 - Gradle: 9.6.0 via `GRADLE_USER_HOME=/private/tmp/tp-ncolso-gradle`
-- Revision state: working tree on `feature/UI-001-foundation-compose`; no implementation commit created by this run.
+- Revision state: committed revision `ec6a1a3` on `feature/UI-001-foundation-compose`.
 
 | Check | Result | Evidence | Acceptance criteria |
 |---|---|---|---|
@@ -65,6 +65,6 @@
 
 ### Remaining gates
 
-- `git commit`: pending; only approved UI-001 scope may be staged.
+- `git commit`: PASS; commit `ec6a1a3` contains only the staged UI-001 foundation, test, asset and task-evidence scope.
 - Code Review and authoritative CI: pending.
 - Verification: pending until a reviewed committed revision is available.
