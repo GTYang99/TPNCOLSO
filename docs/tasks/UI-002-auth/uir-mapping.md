@@ -8,8 +8,8 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 | UIR-LOGIN-002 | `LoginScreen.kt` 96×65 logo/title row; `login_brand_logo.png` checksum in asset manifest. | PASS |
 | UIR-LOGIN-003 | Account/password `AppTextField`/`AppPasswordField`; `AuthScreenTest.loginRendersRequiredEntryPoints`; geometry covered by normalized capture. | PARTIAL |
 | UIR-LOGIN-004 | Captcha input/image/reload row and `DebugCaptchaProvider`; connected auth tests pass. | PARTIAL |
-| UIR-LOGIN-005 | Empty/filled/error runtime captures exist; normalized composite comparison is complete for Login empty only. | PARTIAL |
-| UIR-LOGIN-006 | `LoginScreen.kt` maps field/request errors to all credential controls and accessible supporting text; exact visual error capture is not recorded. | PARTIAL |
+| UIR-LOGIN-005 | Empty/filled/error runtime captures exist; normalized composite comparison is complete for Login empty, filled and error. | PARTIAL |
+| UIR-LOGIN-006 | `LoginScreen.kt` maps field/request errors to all credential controls and accessible supporting text; current runtime error capture shows retained values and global error. | PARTIAL |
 | UIR-LOGIN-007 | Remember-me row and register action exist; `AuthScreenTest.loginRegisterEntryDispatchesEvent`; target-size/device evidence incomplete. | PARTIAL |
 | UIR-LOGIN-008 | `AppPrimaryButton` and `submitting` guard; connected tests pass; exact button pixel evidence is included only in composite diff. | PARTIAL |
 | UIR-LOGIN-009 | Figma export, exact skyline asset, logo, captcha and SHA-256 records are in asset/evidence files. | PASS |
