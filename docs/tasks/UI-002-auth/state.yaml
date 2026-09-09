@@ -28,7 +28,7 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: c2f4317
+  commit: a088424
   status: committed
 
 verification:
@@ -43,5 +43,7 @@ ci:
 release:
   status: pending
 
-blocking: []
-next_action: verification
+blocking:
+  - category: infrastructure
+    detail: API 34 Medium_Phone emulator exits before ADB becomes available; post-exact-skyline runtime capture and numeric diff are NOT VERIFIED.
+next_action: infrastructure
