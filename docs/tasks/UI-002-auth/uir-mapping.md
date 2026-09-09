@@ -15,7 +15,7 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 | UIR-LOGIN-009 | Supporting Figma export, composite-compatible skyline asset, logo, captcha and SHA-256 records are in asset/evidence files; Figma-only skyline candidate was rejected by silhouette comparison. | PARTIAL |
 | UIR-LOGIN-010 | Scroll container is implemented; emulator evidence covers narrow width, IME and font-scale 1.3, while the full approved device matrix remains incomplete. | PARTIAL |
 | UIR-REG-001 | `RegisterScreen.kt` now uses 24dp padding, 36dp main group spacing and scroll; post-layout-fix empty normalized comparison MAE `15.5036`, RMSE `47.7196`, over-20 ratio `0.340352`. | PARTIAL |
-| UIR-REG-002 | Balanced 48dp top-bar slots and 80dp illustration slot implemented; exact back asset and filled-state comparison remain incomplete. | PARTIAL |
+| UIR-REG-002 | Balanced 48dp top-bar slots, 80dp illustration slot, and a 24dp vector-style back arrow inside the 48dp control implemented; filled-state comparison remains incomplete. | PARTIAL |
 | UIR-REG-003 | Six controls and labels implemented; `AuthScreenTest.registerRendersSixFieldsAndUnselectedWorkType`. | PASS |
 | UIR-REG-004 | Plaintext fields are implemented; post-layout-fix empty capture is recorded, while filled-state strict comparison remains pending. | PARTIAL |
 | UIR-REG-005 | `AppSelectField` receives injected vendor options; selection behavior is covered by ViewModel validation tests. | PARTIAL |
