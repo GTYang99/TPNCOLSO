@@ -5,7 +5,7 @@
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed implementation/evidence revision: `c2f4317` (`test(UI-002): record skyline anchor pixel diff`)
+- Reviewed implementation/evidence revision: `a5f19d8` (`verify(UI-002): complete normalized diff and UIR mapping`)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 ## Verification Round 3 — 2026-09-08
@@ -29,8 +29,8 @@
 | AC-UI002-006 | PARTIAL | Debug coordinator and direct-login/logout tests pass on API 34; UI-003 drawer integration remains out of scope. |
 | AC-UI002-007 | NOT VERIFIED | Scroll containers exist, but narrow-width, font-scale and IME behavior has no executed device evidence. |
 | AC-UI002-008 | PASS (executed test scope) | Preview matrix and connected auth screen tests are present; full visual state matrix evidence remains pending. |
-| AC-UI002-009 | PARTIAL | Login empty normalized comparison is substantially aligned, but skyline clipping/white lower block differs and filled/error plus full UIR mapping remain incomplete. |
-| AC-UI002-010 | PARTIAL | Register empty/filled runtime captures now exist; complete UIR mapping and strict composite comparison remain incomplete. |
+| AC-UI002-009 | PARTIAL | Composite-based Login empty/filled/error normalized comparisons are now recorded; measured diff remains above visual PASS and auth-error implementation/state evidence still needs resolution. |
+| AC-UI002-010 | PARTIAL | UIR mapping is complete and Register empty has a post-layout-fix normalized comparison; Register filled strict comparison and remaining accessibility/privacy/device evidence remain incomplete. |
 | AC-UI002-011 | PARTIAL | Logout coordinator/idempotency unit evidence exists; UI-003 drawer contract integration is not executed. |
 
 ## Build and Test Evidence
@@ -54,9 +54,9 @@
 
 ## Visual Comparison — Figma vs Emulator
 
-- Reference: Figma file `HRbRsw6HoNBUCtaieX8xUM`, section `2905:2680`, Login empty frame `2905:2679`, natural size `402×874`.
+- Reference: archived authoritative composite `docs/design/evidence/auth/auth-reference-2026-09-07.png`, SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c`; Figma node `2905:2679` is supporting asset evidence only.
 - Runtime capture: API 34 `Medium_Phone (AVD)`, serial `emulator-5554`, screenshot `1080×2400`, captured after installing the current debug APK from `2eab95a`; evidence file `docs/design/evidence/auth/figma-export-2026-09-08/runtime-login-after-composition.png`, SHA-256 `6f7309921aa90159bd863c6869694464d151e3ba8cb61c34ace9258813b8cb86`.
-- Method: cropped emulator capture from system chrome and resized to the Figma reference frame `402×874`; normalized evidence: `docs/design/evidence/auth/figma-export-2026-09-08/runtime-login-normalized-402x874.png`, SHA-256 `38d9c9f0914b53fc88d3d9c6055a3101b9c28071ddba5db7e0d265897a0d6e3b`.
+- Method: crop each runtime screenshot from system chrome and resize to the authoritative composite panel frame `402×874`; system chrome is removed before comparison and debug-only region `(0,0,175,48)` is excluded by `login-content-only-mask.json`.
 - Observed differences: Android system chrome is removed, but debug-only `開發模式` remains inside the captured app canvas and is excluded from product comparison. The logo, centered form, action row and button are substantially aligned; the lower white block and skyline clipping/placement still differ from Figma.
 - Result: `PARTIAL`. The skyline white block was removed with a multiply-blended runtime render and a new Login empty capture confirms the background continues behind the skyline. Runtime captures now exist for Login empty/filled/error and Register empty/filled. A reproducible content-only mask is now defined at `docs/design/evidence/auth/figma-export-2026-09-08/login-content-only-mask.json`: Android system chrome is removed during normalization, and the debug-only `開發模式` region `(x=0,y=0,w=175,h=48)` is excluded. Strict RGB comparison of the normalized Login capture against the 402×874 Figma reference measured MAE `29.2499`, RMSE `70.1947`, and over-threshold ratio `0.580866` at threshold 20 across `1,028,844` channel samples. This is numeric evidence, but not a visual PASS; the remaining composition differences require Debug/implementation follow-up.
 - Re-capture after skyline anchor fix: runtime evidence `runtime-login-empty-after-skyline-anchor-fix.png` (SHA-256 `52f82e53e2ffe46e94a805120a158dbf9a8ceb43942724720f716d9863199067`) and normalized evidence `runtime-login-normalized-after-skyline-anchor-fix-402x874.png` (SHA-256 `e2ae5e08aabee38534540b3d0cd33098032ab4881148c253600bf506030be8db`). Using the same content-only mask and threshold `20`, strict RGB comparison measured MAE `28.9438`, RMSE `63.9785`, and over-threshold ratio `0.684666` across `1,028,844` channel samples. MAE and RMSE improved versus the prior capture, but the over-threshold ratio increased; visual verification therefore remains `PARTIAL`, not PASS.
@@ -80,4 +80,4 @@
 
 ## Next Action
 
-Resolve the remaining visual comparison deltas and complete UIR-LOGIN/UIR-REG mapping; CI remains intentionally deferred by requester decision. Physical-device testing is out of scope.
+Resolve the remaining pixel-diff deltas and complete responsive／IME／logout evidence; UIR-LOGIN/UIR-REG mapping is now recorded. CI remains intentionally deferred by requester decision. Physical-device testing is out of scope.

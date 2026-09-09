@@ -14,10 +14,10 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 | UIR-LOGIN-008 | `AppPrimaryButton` and `submitting` guard; connected tests pass; exact button pixel evidence is included only in composite diff. | PARTIAL |
 | UIR-LOGIN-009 | Figma export, exact skyline asset, logo, captcha and SHA-256 records are in asset/evidence files. | PASS |
 | UIR-LOGIN-010 | Scroll container is implemented; narrow/insets/IME/font-scale matrix is not executed. | PARTIAL |
-| UIR-REG-001 | `RegisterScreen.kt` surface/padding/scroll structure; normalized Register capture exists, strict comparison pending. | PARTIAL |
-| UIR-REG-002 | Register top bar and runtime illustration slot implemented; screenshot comparison pending. | PARTIAL |
+| UIR-REG-001 | `RegisterScreen.kt` now uses 24dp padding, 36dp main group spacing and scroll; post-layout-fix empty normalized comparison MAE `15.5036`, RMSE `47.7196`, over-20 ratio `0.340352`. | PARTIAL |
+| UIR-REG-002 | Balanced 48dp top-bar slots and 80dp illustration slot implemented; exact back asset and filled-state comparison remain incomplete. | PARTIAL |
 | UIR-REG-003 | Six controls and labels implemented; `AuthScreenTest.registerRendersSixFieldsAndUnselectedWorkType`. | PASS |
-| UIR-REG-004 | Plaintext fields and empty/filled captures exist; strict comparison pending. | PARTIAL |
+| UIR-REG-004 | Plaintext fields are implemented; post-layout-fix empty capture is recorded, while filled-state strict comparison remains pending. | PARTIAL |
 | UIR-REG-005 | `AppSelectField` receives injected vendor options; selection behavior is covered by ViewModel validation tests. | PARTIAL |
 | UIR-REG-006 | Null/required work-type error and radio group implemented; `registerShowsWorkTypeValidationMessage`. | PASS |
 | UIR-REG-007 | Cancel/complete buttons and submit guard implemented; full navigation-race evidence pending. | PARTIAL |
