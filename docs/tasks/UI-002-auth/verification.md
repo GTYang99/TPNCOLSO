@@ -5,7 +5,7 @@
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed implementation/evidence revision: `a088ad0` (`test(UI-002): cover auth error and register privacy states`)
+- Reviewed implementation/evidence revision: `dabdedc` (`docs(UI-002): record responsive emulator evidence`)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 ## Verification Round 3 — 2026-09-08
@@ -29,7 +29,7 @@
 | AC-UI002-006 | PARTIAL | Debug coordinator and direct-login/logout tests pass on API 34; UI-003 drawer integration remains out of scope. |
 | AC-UI002-007 | PARTIAL | Emulator evidence now covers 720×2400 narrow width, font scale 1.3, and IME-open state; the header was corrected to constrain the title with weighted remaining width. Evidence remains emulator-only and needs the full approved device matrix before PASS. |
 | AC-UI002-008 | PASS (executed test scope) | Preview matrix and connected auth screen tests are present; full visual state matrix evidence remains pending. |
-| AC-UI002-009 | PARTIAL | Composite-based Login empty/filled/error normalized comparisons are recorded; measured diff remains above visual PASS. Auth-error retention and accessible global error are covered by the current connected Compose test, but latest runtime screenshot evidence is still missing. |
+| AC-UI002-009 | PARTIAL | Composite-based Login empty/filled/error normalized comparisons are recorded; measured diff remains above visual PASS. Auth-error retention, accessible global error, and current runtime evidence are complete. |
 | AC-UI002-010 | PARTIAL | UIR mapping is complete; Register empty and filled normalized comparisons are recorded. Remaining accessibility/privacy/device-matrix evidence is incomplete. |
 | AC-UI002-011 | PARTIAL | Logout coordinator/idempotency unit evidence exists; UI-003 drawer contract integration is not executed. |
 
@@ -50,7 +50,7 @@
 
 - Authoritative composite: SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c`.
 - Login/Register screens currently implement light surfaces, gradient/scroll behavior and interactive field structure.
-- Figma node `2997:11541` was re-read through Figma MCP. The exact exported logo and skyline are now runtime-consumed at the approved 96×65 header and 736×246 bottom placement; runtime asset SHA-256 values are recorded in the asset manifest. Pixel comparison evidence remains pending.
+- Figma node `2997:11541` was re-read through Figma MCP as supporting asset evidence. The runtime uses the composite-compatible skyline asset (SHA-256 `706d8030f380f99f2eebff389a0a91c9f84c82e142938da621fbe01fb9195213`) at the approved 736×246 placement; the Figma-only skyline candidate was rejected because its silhouette did not match the authoritative composite.
 
 ## Visual Comparison — Figma vs Emulator
 
@@ -65,7 +65,7 @@
 - The Figma-only skyline candidate was rejected because its silhouette did not match the authoritative composite. The composite-compatible skyline asset was restored (SHA-256 `706d8030f380f99f2eebff389a0a91c9f84c82e142938da621fbe01fb9195213`). After the shared external-label field fix, latest Login empty normalized evidence `runtime-login-empty-after-field-fix-normalized-402x874.png` (SHA-256 `5db8f4a30f3c84f6b3f0929260bedadf68f6a8cf263cb5d5b5351ccc67330b7f`) measures MAE `32.5681`, RMSE `70.8088`, and over-threshold ratio `0.236735` against the archived composite crop using threshold `20` and the content-only mask.
 - Latest `b368f6c` typography revision evidence: Login empty `runtime-login-empty-after-typography-fix-normalized-402x874.png` measures MAE `36.5524`, RMSE `78.0503`, over-threshold ratio `0.240123`; Register empty measures MAE `16.0203`, RMSE `48.9439`, over-threshold ratio `0.118302`; Register filled measures MAE `17.1337`, RMSE `51.3162`, over-threshold ratio `0.122850`. All use archived composite crops, RGB threshold `20`, and the normalized content-only comparison process.
 - Responsive evidence after the current Login implementation: narrow 720×2400 capture `runtime-login-narrow-fixed-720x2400.png` SHA-256 `a39b9f8fdb6b06688073dd4b3d3e58919fcd3faf0b0035c1b41b41ad1655aff8`; font-scale 1.3 capture `runtime-login-fontscale-1.3.png` SHA-256 `8c81bcaf0d2f87f26840e8974a5d725790f1a533718ddd499e33f3d74c9fb229`; IME-open capture `runtime-login-ime.png` SHA-256 `a0d22d44c937b42f3c45a814f59148cabebf5793cf15fd44e8b51baadb664939`. Emulator settings were restored to 1080×2400 and font scale 1.0 after capture.
-- Current implementation revision `fca464f` adds connected coverage for Login auth-error value retention and accessible global error semantics, Register filled plaintext-field privacy behavior, and debug logout returning to the Login route. The connected suite remains PASS (17/17); this behavioral evidence does not replace the missing latest runtime Login auth-error screenshot.
+- Current implementation revision `fca464f` adds connected coverage for Login auth-error value retention and accessible global error semantics, Register filled plaintext-field privacy behavior, and debug logout returning to the Login route. The connected suite remains PASS (17/17).
 - Latest valid emulator Login filled capture was obtained from `com.example.tp_ncolso_android/.MainActivity` after installing the current debug APK. Full capture `runtime-login-filled-current-revision.png` SHA-256 `590d3f875ba1708c6107896c9661f13e3c9c55b15094694ca670c04d5ebd07be`; normalized crop `runtime-login-filled-current-revision-normalized-402x874.png` SHA-256 `86e56b6e42ebf9d2f97f0b6a770bd42d6f1e5d33b8c493e9a3982b3ce4be1b77`. The screenshot confirms retained account/password/captcha values.
 - Latest valid Login auth-error capture was obtained with `wronguser` / non-matching credentials and the current debug APK. Full capture `runtime-login-error-current-revision.png` SHA-256 `644d25608cb67cb583c962be4308818ee37bdb5df42e4b4d14ccc2d62c4daba0`; normalized crop `runtime-login-error-current-revision-normalized-402x874.png` SHA-256 `f40b3fe00cdd6d4cc912c78ffdd5c78f7d4b0a8c281a5e125883fe4fe0f3b59f`. With the content-only mask and RGB threshold `20`, strict comparison measured MAE `41.0997`, RMSE `84.0536`, and over-threshold ratio `0.260942` across `1,028,844` channel samples. The runtime state visibly retains all submitted values and shows the global error message; the numeric result remains visual `PARTIAL`, not PASS.
 - After typography rollback in `98435c7`, the refreshed Login empty／filled／error captures are `runtime-login-empty-98435c7.png`, `runtime-login-filled-98435c7.png`, and `runtime-login-error-98435c7.png`; normalized crop SHA-256 values are `509401cf6a90e68f9b144d4ba7f27f8f580654c116acf11e397bb8dc5c97bc2a`, `a4b6a6c63be8414a520c9272d40c1bfe4a6b9a23eb3abf54096bb9bac187d6f9`, and `8625efe5210ed95e484428747b94c9e5c7bb09c3166226188d53bef9fd8e6bf4`. Login auth-error strict masked diff improved to MAE `39.5739`, RMSE `82.2692`, over-threshold ratio `0.249671` across `1,028,844` channels; it remains `PARTIAL`.

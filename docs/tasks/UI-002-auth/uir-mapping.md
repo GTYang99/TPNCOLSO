@@ -12,8 +12,8 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 | UIR-LOGIN-006 | `LoginScreen.kt` maps field/request errors to all credential controls and accessible supporting text; current runtime error capture shows retained values and global error. | PARTIAL |
 | UIR-LOGIN-007 | Remember-me row and register action exist; `AuthScreenTest.loginRegisterEntryDispatchesEvent`; target-size/device evidence incomplete. | PARTIAL |
 | UIR-LOGIN-008 | `AppPrimaryButton` and `submitting` guard; connected tests pass; exact button pixel evidence is included only in composite diff. | PARTIAL |
-| UIR-LOGIN-009 | Figma export, exact skyline asset, logo, captcha and SHA-256 records are in asset/evidence files. | PASS |
-| UIR-LOGIN-010 | Scroll container is implemented; narrow/insets/IME/font-scale matrix is not executed. | PARTIAL |
+| UIR-LOGIN-009 | Supporting Figma export, composite-compatible skyline asset, logo, captcha and SHA-256 records are in asset/evidence files; Figma-only skyline candidate was rejected by silhouette comparison. | PARTIAL |
+| UIR-LOGIN-010 | Scroll container is implemented; emulator evidence covers narrow width, IME and font-scale 1.3, while the full approved device matrix remains incomplete. | PARTIAL |
 | UIR-REG-001 | `RegisterScreen.kt` now uses 24dp padding, 36dp main group spacing and scroll; post-layout-fix empty normalized comparison MAE `15.5036`, RMSE `47.7196`, over-20 ratio `0.340352`. | PARTIAL |
 | UIR-REG-002 | Balanced 48dp top-bar slots and 80dp illustration slot implemented; exact back asset and filled-state comparison remain incomplete. | PARTIAL |
 | UIR-REG-003 | Six controls and labels implemented; `AuthScreenTest.registerRendersSixFieldsAndUnselectedWorkType`. | PASS |
@@ -24,7 +24,7 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 | UIR-REG-008 | Back/cancel/success events are implemented in auth coordinator; full state-clearing runtime evidence pending. | PARTIAL |
 | UIR-REG-009 | Validation and plaintext boundary unit tests exist; log/SavedState/rememberSaveable audit evidence pending. | PARTIAL |
 | UIR-REG-010 | Illustration asset is runtime-consumed and asset traceability exists; strict composite comparison pending. | PARTIAL |
-| UIR-REG-011 | Scroll support exists; narrow/insets/IME/font-scale matrix is not executed. | PARTIAL |
+| UIR-REG-011 | Scroll support exists; Login responsive evidence is present, but the equivalent Register device matrix remains incomplete. | PARTIAL |
 
 ## Login numeric diff revision
 
