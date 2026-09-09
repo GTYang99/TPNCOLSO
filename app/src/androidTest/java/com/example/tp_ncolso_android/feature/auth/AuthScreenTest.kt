@@ -4,6 +4,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
@@ -34,6 +36,20 @@ class AuthScreenTest {
         assert(event == AuthEvent.OpenRegister)
     }
 
+    @Test fun loginAuthErrorKeepsValuesAndShowsAccessibleGlobalMessage() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(account = "sunrise000", password = "********", captcha = "0926", rememberMe = true, requestError = "帳號、密碼或驗證碼錯誤"),
+                    {},
+                )
+            }
+        }
+        composeRule.onNodeWithText("sunrise000").assertIsDisplayed()
+        composeRule.onNodeWithText("帳號、密碼或驗證碼錯誤").assertIsDisplayed()
+        composeRule.onNodeWithTag("login-request-error").assertIsDisplayed()
+    }
+
     @Test fun registerRendersSixFieldsAndUnselectedWorkType() {
         composeRule.setContent { AppTheme { RegisterScreen(RegisterFormState(), listOf(VendorOption("1", "廠商")), {}) } }
         composeRule.onNodeWithText("帳號").assertIsDisplayed()
@@ -58,5 +74,21 @@ class AuthScreenTest {
             AppTheme { RegisterScreen(RegisterFormState(fieldErrors = mapOf(RegisterField.WORK_TYPE to "請選擇作業性質")), emptyList(), {}) }
         }
         composeRule.onNodeWithText("請選擇作業性質").assertIsDisplayed()
+    }
+
+    @Test fun registerFilledStateUsesPlaintextFieldsWithoutVisibilityAction() {
+        composeRule.setContent {
+            AppTheme {
+                RegisterScreen(
+                    RegisterFormState(account = "sunrise1234", password = "sfk;wfj1~", confirmPassword = "sfk;wfj1~", vendor = VendorOption("1", "日陞"), workType = WorkType.FIELD, name = "劉大君"),
+                    listOf(VendorOption("1", "日陞")),
+                    {},
+                )
+            }
+        }
+        composeRule.onNodeWithText("sunrise1234").assertIsDisplayed()
+        composeRule.onAllNodesWithText("sfk;wfj1~").assertCountEquals(2)
+        composeRule.onNodeWithText("顯示密碼").assertDoesNotExist()
+        composeRule.onNodeWithText("外業人員").assertIsDisplayed()
     }
 }
