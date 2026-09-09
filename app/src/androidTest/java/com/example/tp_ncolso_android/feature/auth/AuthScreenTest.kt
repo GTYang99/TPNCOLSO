@@ -1,9 +1,12 @@
 package com.example.tp_ncolso_android.feature.auth
 
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.performClick
@@ -12,6 +15,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.tp_ncolso_android.ui.foundation.theme.AppTheme
+import androidx.test.platform.app.InstrumentationRegistry
+import java.io.File
+import java.io.FileOutputStream
 
 @RunWith(AndroidJUnit4::class)
 class AuthScreenTest {
@@ -90,5 +96,23 @@ class AuthScreenTest {
         composeRule.onAllNodesWithText("sfk;wfj1~").assertCountEquals(2)
         composeRule.onNodeWithText("顯示密碼").assertDoesNotExist()
         composeRule.onNodeWithText("外業人員").assertIsDisplayed()
+    }
+
+    @Test fun captureRegisterFilledStateForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                RegisterScreen(
+                    RegisterFormState(account = "sunrise1234", password = "sfk;wfj1~", confirmPassword = "sfk;wfj1~", vendor = VendorOption("1", "日陞"), workType = WorkType.FIELD, name = "劉大君"),
+                    listOf(VendorOption("1", "日陞")),
+                    {},
+                )
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "register-filled-compose.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        check(output.length() > 0)
     }
 }
