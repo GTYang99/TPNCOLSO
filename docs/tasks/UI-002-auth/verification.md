@@ -63,16 +63,17 @@
 - Figma MCP re-read confirmed the skyline source is the exact `736×246` vector asset (`figma-89efaa36-f383-42a9-8937-bf07022c332d.svg`), replacing the prior `402×239` raster approximation. It was rasterized at native dimensions for Android runtime consumption (SHA-256 `424ba33c8da0a8cdc29e8ee1c4559f459d9ee28bb93137e07ad7ce416f03f`). Post-replacement capture succeeded on API 34 after emulator recovery: `runtime-login-empty-after-exact-skyline.png`, 1080×2400, SHA-256 `8c18cfdc6c3d3fe3d05464e8c5af9305546c11e189bab88fbbcea8291f47362c`. Visual inspection confirms the lower background is continuous and the skyline is present without the prior white block.
 - Exact-skyline revision normalized evidence: `runtime-login-normalized-exact-skyline-402x874.png`, SHA-256 `8b0f4ee8dce1869c06130ef3bcb5ba6083f4189cab8e051d872173e79c6e7311`. With the same content-only mask and RGB threshold `20`, the comparison measured MAE `28.1656`, RMSE `68.1859`, and over-threshold ratio `0.566433` across `1,028,844` channel samples. The revision numeric diff is complete; visual acceptance remains `PARTIAL`.
 - Complete UIR traceability for `UIR-LOGIN-001–010` and `UIR-REG-001–011` is recorded in `docs/tasks/UI-002-auth/uir-mapping.md`, with implementation/test/evidence references and explicit `PASS` or `PARTIAL` status for every requirement.
+- Current-revision state comparisons against the archived composite crops are now recorded: Login filled MAE `37.4054`, RMSE `79.9405`, over-threshold ratio `0.702739`; Login auth-error MAE `38.8138`, RMSE `81.2323`, over-threshold ratio `0.737983`; Register empty after layout fix MAE `15.5036`, RMSE `47.7196`, over-threshold ratio `0.340352`; Register filled after layout fix MAE `16.5684`, RMSE `50.0627`, over-threshold ratio `0.353985`. These results are evidence of the remaining visual mismatch, not PASS claims.
 
 ## State Comparison Captures
 
 | State | Evidence |
 |---|---|
 | Login empty | `runtime-login-empty-after-skyline-fix.png` — SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
-| Login filled | `runtime-login-filled.png` — SHA-256 `67949df8e6007729d5e52eb341b263f633167734f4cf314458006385d9e76c6b` |
-| Login error | `runtime-login-error.png` — SHA-256 `fb663587adde5c3d57bc50a30212df38c68b7de7b201696c4fe126b9bcc321f4` |
-| Register empty | `runtime-register-empty.png` — SHA-256 `859832c06f3016d218c36d5e897ea4951d24810752156c765eb19d01226e3295` |
-| Register filled | `runtime-register-filled.png` — SHA-256 `4e922a1e83c4c737d5a17225e23d1041f56eb3642a9d3f8fdbfd6b2ae0482712` |
+| Login filled | `runtime-login-filled-after-exact-skyline-normalized-402x874.png` — SHA-256 `322f7a1def11dfc26080dfb301302f6897df595ff1fa6d8e0563ec9428e5e754` |
+| Login error | `runtime-login-error-after-exact-skyline-normalized-402x874.png` — SHA-256 `708fdfa04806b062ae8449b55d342c342d681b305b0243d19737ba046a4b894d` |
+| Register empty | `runtime-register-empty-after-layout-fix-normalized-402x874.png` — SHA-256 `b60dadf8566ffcd31a13dd83906c17dba2775b512333db38ab4b66ab40211b8d` |
+| Register filled | `runtime-register-filled-after-layout-fix-normalized-402x874.png` — SHA-256 `457b6b1beeef8c172a17e818c77b0b67133bf0669f0438724dfb6406093a647a` |
 
 ## Overall Result
 
