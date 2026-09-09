@@ -5,7 +5,7 @@
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed implementation/evidence revision: `a5f19d8` (`verify(UI-002): complete normalized diff and UIR mapping`)
+- Reviewed implementation/evidence revision: `a088ad0` (`test(UI-002): cover auth error and register privacy states`)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 ## Verification Round 3 — 2026-09-08
@@ -29,8 +29,8 @@
 | AC-UI002-006 | PARTIAL | Debug coordinator and direct-login/logout tests pass on API 34; UI-003 drawer integration remains out of scope. |
 | AC-UI002-007 | NOT VERIFIED | Scroll containers exist, but narrow-width, font-scale and IME behavior has no executed device evidence. |
 | AC-UI002-008 | PASS (executed test scope) | Preview matrix and connected auth screen tests are present; full visual state matrix evidence remains pending. |
-| AC-UI002-009 | PARTIAL | Composite-based Login empty/filled/error normalized comparisons are now recorded; measured diff remains above visual PASS and auth-error implementation/state evidence still needs resolution. |
-| AC-UI002-010 | PARTIAL | UIR mapping is complete and Register empty has a post-layout-fix normalized comparison; Register filled strict comparison and remaining accessibility/privacy/device evidence remain incomplete. |
+| AC-UI002-009 | PARTIAL | Composite-based Login empty/filled/error normalized comparisons are recorded; measured diff remains above visual PASS. Auth-error retention and accessible global error are covered by the current connected Compose test, but latest runtime screenshot evidence is still missing. |
+| AC-UI002-010 | PARTIAL | UIR mapping is complete; Register empty and filled normalized comparisons are recorded. Remaining accessibility/privacy/device-matrix evidence is incomplete. |
 | AC-UI002-011 | PARTIAL | Logout coordinator/idempotency unit evidence exists; UI-003 drawer contract integration is not executed. |
 
 ## Build and Test Evidence
@@ -64,6 +64,7 @@
 - Exact-skyline revision normalized evidence: `runtime-login-normalized-exact-skyline-402x874.png`, SHA-256 `8b0f4ee8dce1869c06130ef3bcb5ba6083f4189cab8e051d872173e79c6e7311`. With the same content-only mask and RGB threshold `20`, the comparison measured MAE `28.1656`, RMSE `68.1859`, and over-threshold ratio `0.566433` across `1,028,844` channel samples. The revision numeric diff is complete; visual acceptance remains `PARTIAL`.
 - The Figma-only skyline candidate was rejected because its silhouette did not match the authoritative composite. The composite-compatible skyline asset was restored (SHA-256 `706d8030f380f99f2eebff389a0a91c9f84c82e142938da621fbe01fb9195213`). After the shared external-label field fix, latest Login empty normalized evidence `runtime-login-empty-after-field-fix-normalized-402x874.png` (SHA-256 `5db8f4a30f3c84f6b3f0929260bedadf68f6a8cf263cb5d5b5351ccc67330b7f`) measures MAE `32.5681`, RMSE `70.8088`, and over-threshold ratio `0.236735` against the archived composite crop using threshold `20` and the content-only mask.
 - Latest `b368f6c` typography revision evidence: Login empty `runtime-login-empty-after-typography-fix-normalized-402x874.png` measures MAE `36.5524`, RMSE `78.0503`, over-threshold ratio `0.240123`; Register empty measures MAE `16.0203`, RMSE `48.9439`, over-threshold ratio `0.118302`; Register filled measures MAE `17.1337`, RMSE `51.3162`, over-threshold ratio `0.122850`. All use archived composite crops, RGB threshold `20`, and the normalized content-only comparison process.
+- Current implementation revision `a088ad0` adds connected coverage for Login auth-error value retention and accessible global error semantics, and Register filled plaintext-field privacy behavior. The connected suite remains PASS (17/17); this behavioral evidence does not replace the missing latest runtime Login filled/error screenshots.
 - Complete UIR traceability for `UIR-LOGIN-001–010` and `UIR-REG-001–011` is recorded in `docs/tasks/UI-002-auth/uir-mapping.md`, with implementation/test/evidence references and explicit `PASS` or `PARTIAL` status for every requirement.
 - Current-revision state comparisons against the archived composite crops are now recorded: Login filled MAE `37.4054`, RMSE `79.9405`, over-threshold ratio `0.702739`; Login auth-error MAE `38.8138`, RMSE `81.2323`, over-threshold ratio `0.737983`; Register empty after layout fix MAE `15.5036`, RMSE `47.7196`, over-threshold ratio `0.340352`; Register filled after layout fix MAE `16.5684`, RMSE `50.0627`, over-threshold ratio `0.353985`. These results are evidence of the remaining visual mismatch, not PASS claims.
 
