@@ -38,6 +38,8 @@ class DebugDirectLoginTest {
 
         composeRule.onNodeWithText("登出開發模式").performClick()
         composeRule.onNodeWithText("開發模式").assertExists()
+        composeRule.onNodeWithText("帳號").assertExists()
+        composeRule.onNodeWithText("登入").assertExists()
     }
 
     private fun setTestContent() {
