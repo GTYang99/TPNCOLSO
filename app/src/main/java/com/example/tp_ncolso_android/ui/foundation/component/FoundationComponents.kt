@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -40,11 +41,13 @@ import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.error
+import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
 
 @Composable
@@ -64,27 +67,29 @@ fun AppTextField(
     singleLine: Boolean = true,
 ) {
     val displayLabel = if (required) "$label *" else label
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = modifier.fillMaxWidth().semantics {
-            if (isError && supportingText != null) error(supportingText)
-        },
-        label = { Text(displayLabel) },
-        placeholder = { Text(placeholder) },
-        enabled = enabled,
-        readOnly = readOnly,
-        isError = isError,
-        colors = OutlinedTextFieldDefaults.colors(
-            errorBorderColor = AppThemeTokens.colors.fieldErrorBorder,
-            errorLabelColor = AppThemeTokens.colors.fieldErrorBorder,
-            errorSupportingTextColor = AppThemeTokens.colors.errorText,
-        ),
-        supportingText = supportingText?.let { { Text(it) } },
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
-        singleLine = singleLine,
-    )
+    Column(modifier.fillMaxWidth()) {
+        Text(displayLabel, style = AppThemeTokens.typography.fieldLabel, modifier = Modifier.semantics { if (!enabled) disabled() })
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = Modifier.fillMaxWidth().height(48.dp).semantics {
+                if (isError && supportingText != null) error(supportingText)
+            },
+            placeholder = { Text(placeholder) },
+            enabled = enabled,
+            readOnly = readOnly,
+            isError = isError,
+            colors = OutlinedTextFieldDefaults.colors(
+                errorBorderColor = AppThemeTokens.colors.fieldErrorBorder,
+                errorLabelColor = AppThemeTokens.colors.fieldErrorBorder,
+                errorSupportingTextColor = AppThemeTokens.colors.errorText,
+            ),
+            supportingText = supportingText?.let { { Text(it) } },
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
+            singleLine = singleLine,
+        )
+    }
 }
 
 @Composable
@@ -107,37 +112,40 @@ fun AppPasswordField(
     singleLine: Boolean = true,
 ) {
     val displayLabel = if (required) "$label *" else label
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = modifier.fillMaxWidth().testTag("password-field").semantics {
-            if (isError && supportingText != null) error(supportingText)
-        },
-        label = { Text(displayLabel) },
-        placeholder = { Text(placeholder) },
-        enabled = enabled,
-        readOnly = readOnly,
-        isError = isError,
-        colors = OutlinedTextFieldDefaults.colors(
-            errorBorderColor = AppThemeTokens.colors.fieldErrorBorder,
-            errorLabelColor = AppThemeTokens.colors.fieldErrorBorder,
-            errorSupportingTextColor = AppThemeTokens.colors.errorText,
-        ),
-        supportingText = supportingText?.let { { Text(it) } },
-        visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
-        trailingIcon = if (visibilityActionEnabled) {
-            {
-                TextButton(onClick = { onVisibilityChange(!visible) }) {
-                    Text(if (visible) "隱藏密碼" else "顯示密碼")
+    Column(modifier.fillMaxWidth()) {
+        Text(displayLabel, style = AppThemeTokens.typography.fieldLabel, modifier = Modifier.semantics { if (!enabled) disabled() })
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = Modifier.fillMaxWidth().height(48.dp).testTag("password-field").semantics {
+                if (isError && supportingText != null) error(supportingText)
+            },
+            placeholder = { Text(placeholder) },
+            enabled = enabled,
+            readOnly = readOnly,
+            isError = isError,
+            colors = OutlinedTextFieldDefaults.colors(
+                errorBorderColor = AppThemeTokens.colors.fieldErrorBorder,
+                errorLabelColor = AppThemeTokens.colors.fieldErrorBorder,
+                errorSupportingTextColor = AppThemeTokens.colors.errorText,
+            ),
+            supportingText = supportingText?.let { { Text(it) } },
+            visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = if (visibilityActionEnabled) {
+                {
+                    TextButton(onClick = { onVisibilityChange(!visible) }) {
+                        androidx.compose.foundation.layout.Box(contentAlignment = Alignment.Center) {
+                            Text(if (visible) "隱藏密碼" else "顯示密碼", color = androidx.compose.ui.graphics.Color.Transparent)
+                            Text("◉", fontSize = 14.sp)
+                        }
+                    }
                 }
-            }
-        } else {
-            null
-        },
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
-        singleLine = singleLine,
-    )
+            } else null,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
+            singleLine = singleLine,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
