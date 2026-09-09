@@ -5,7 +5,7 @@
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed implementation head: `2eab95a` (`fix(ui-002): align login composition with figma`)
+- Reviewed implementation/evidence revision: `c2f4317` (`test(UI-002): record skyline anchor pixel diff`)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 ## Verification Round 3 — 2026-09-08
@@ -30,7 +30,7 @@
 | AC-UI002-007 | NOT VERIFIED | Scroll containers exist, but narrow-width, font-scale and IME behavior has no executed device evidence. |
 | AC-UI002-008 | PASS (executed test scope) | Preview matrix and connected auth screen tests are present; full visual state matrix evidence remains pending. |
 | AC-UI002-009 | PARTIAL | Login empty normalized comparison is substantially aligned, but skyline clipping/white lower block differs and filled/error plus full UIR mapping remain incomplete. |
-| AC-UI002-010 | PARTIAL | Approved registration illustration is now a runtime VectorDrawable consumed by RegisterScreen; connected rendering and composite pixel comparison remain unverified. |
+| AC-UI002-010 | PARTIAL | Register empty/filled runtime captures now exist; complete UIR mapping and strict composite comparison remain incomplete. |
 | AC-UI002-011 | PARTIAL | Logout coordinator/idempotency unit evidence exists; UI-003 drawer contract integration is not executed. |
 
 ## Build and Test Evidence
@@ -60,6 +60,7 @@
 - Observed differences: Android system chrome is removed, but debug-only `開發模式` remains inside the captured app canvas and is excluded from product comparison. The logo, centered form, action row and button are substantially aligned; the lower white block and skyline clipping/placement still differ from Figma.
 - Result: `PARTIAL`. The skyline white block was removed with a multiply-blended runtime render and a new Login empty capture confirms the background continues behind the skyline. Runtime captures now exist for Login empty/filled/error and Register empty/filled. A reproducible content-only mask is now defined at `docs/design/evidence/auth/figma-export-2026-09-08/login-content-only-mask.json`: Android system chrome is removed during normalization, and the debug-only `開發模式` region `(x=0,y=0,w=175,h=48)` is excluded. Strict RGB comparison of the normalized Login capture against the 402×874 Figma reference measured MAE `29.2499`, RMSE `70.1947`, and over-threshold ratio `0.580866` at threshold 20 across `1,028,844` channel samples. This is numeric evidence, but not a visual PASS; the remaining composition differences require Debug/implementation follow-up.
 - Re-capture after skyline anchor fix: runtime evidence `runtime-login-empty-after-skyline-anchor-fix.png` (SHA-256 `52f82e53e2ffe46e94a805120a158dbf9a8ceb43942724720f716d9863199067`) and normalized evidence `runtime-login-normalized-after-skyline-anchor-fix-402x874.png` (SHA-256 `e2ae5e08aabee38534540b3d0cd33098032ab4881148c253600bf506030be8db`). Using the same content-only mask and threshold `20`, strict RGB comparison measured MAE `28.9438`, RMSE `63.9785`, and over-threshold ratio `0.684666` across `1,028,844` channel samples. MAE and RMSE improved versus the prior capture, but the over-threshold ratio increased; visual verification therefore remains `PARTIAL`, not PASS.
+- Figma MCP re-read confirmed the skyline source is the exact `736×246` vector asset (`figma-89efaa36-f383-42a9-8937-bf07022c332d.svg`), replacing the prior `402×239` raster approximation. It was rasterized at native dimensions for Android runtime consumption (SHA-256 `424ba33c8da0a8cdc29e8ee1c4559f459d9ee28bb93137e07ad7ce416f03f`); a post-replacement runtime capture is blocked because the API 34 emulator exits before becoming available to ADB. Numeric validation after this asset replacement is `NOT VERIFIED` pending emulator recovery.
 
 ## State Comparison Captures
 
@@ -77,4 +78,4 @@
 
 ## Next Action
 
-Complete normalized Login filled/error and Register empty/filled captures, resolve the remaining skyline composition difference, and rerun visual comparison. CI remains intentionally deferred by requester decision. Physical-device testing is out of scope.
+Resolve the remaining visual comparison deltas and complete UIR-LOGIN/UIR-REG mapping; CI remains intentionally deferred by requester decision. Physical-device testing is out of scope.
