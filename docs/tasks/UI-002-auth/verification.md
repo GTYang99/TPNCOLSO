@@ -12,8 +12,8 @@
 
 - Device: `Medium_Phone (AVD) - 14`, ADB serial `emulator-5554`
 - Command: `JAVA_HOME='/Applications/Android Studio.app/Contents/jbr/Contents/Home' ./gradlew connectedDebugAndroidTest`
-- Result after fix: `PASS`; 17 tests executed, 0 failed, 0 errors, 0 skipped.
-- Passing groups: `FoundationComponentTest` 9/9; `AuthScreenTest` 5/5; `DebugDirectLoginTest` 2/2; app context 1/1.
+- Result after fix: `PASS`; 31 tests executed, 0 failed, 0 errors, 0 skipped.
+- Passing groups: `FoundationComponentTest` 8/8; `AuthScreenTest` 20/20; `DebugDirectLoginTest` 2/2; app context 1/1.
 - Previous four failures were reproduced and fixed: direct-login tests now enter the existing Debug mode first; Login keeps the remember/register action row visible in the viewport and uses a width-safe checkbox layout.
 - Evidence: [connected test report](../../app/build/reports/androidTests/connected/debug/index.html) and `app/build/outputs/androidTest-results/connected/debug/TEST-Medium_Phone(AVD) - 14.xml`.
 
@@ -43,8 +43,8 @@
 | `assembleDebugAndroidTest` | PASS |
 | Current full local regression (`testDebugUnitTest assembleDebug assembleRelease assembleDebugAndroidTest`) | PASS; `BUILD SUCCESSFUL` on 2026-09-08 |
 | Release isolation scan | PASS |
-| `connectedDebugAndroidTest` | PASS; executed on `Medium_Phone (AVD) - 14` / API 34; 17 of 17 tests passed |
-| Compose Register filled capture test | PASS; `AuthScreenTest.captureRegisterFilledStateForVisualEvidence` rendered the filled Register state and wrote a non-empty PNG in the target app cache; runner cleanup prevents retaining the cache file as repository evidence |
+| `connectedDebugAndroidTest` | PASS; executed on `Medium_Phone (AVD) - 14` / API 34; 31 of 31 tests passed |
+| Compose Register filled capture test | PASS; `AuthScreenTest.captureRegisterFilledStateForVisualEvidence` rendered the filled Register state and wrote a non-empty PNG plus an emulator screenshot to `/sdcard` |
 | CI-equivalent local run | PASS; `testDebugUnitTest lintDebug assembleDebug assembleRelease` completed successfully on 2026-09-09 |
 | Authoritative CI | NOT VERIFIED; `.github/workflows/android.yml` now defines hosted unit/build/lint and API 34 emulator jobs, but no hosted run evidence is available yet |
 
@@ -70,7 +70,7 @@
 - After Register back-control geometry fix `db8aca6`, current Register empty runtime evidence is `runtime-register-empty-db8aca6.png` SHA-256 `95eb89187e1e236657d8aae33d98605d082b816a160bbffebfadcbdb9fb5b763`; normalized crop SHA-256 `2b3012ea87e1b647a8150acfac2bbcdce7efb51e3604ee34374f05bef4b8df46`.
 - The semantics-based Compose capture for Register filled after `db8aca6` is retained as `runtime-register-filled-compose-db8aca6.png` SHA-256 `62290f8d1629f53c7a2dba53749b38f696c0ad2e7e25a50afc33896aa4c2179e`; normalized crop SHA-256 `ef0796b96eb47bf5c010704127f234958da20b4fae19c34d0fbd3228535f15ac`. Content-only strict RGB diff at threshold `20`: MAE `15.7032`, RMSE `48.3374`, over-threshold ratio `0.115161` across `1,028,844` channels. Visual result remains `PARTIAL` pending approved device matrix.
 - Register filled responsive capture at 720×2400 is `runtime-register-filled-narrow-720x2400.png`, SHA-256 `39afbe962ede93c84ba3599e569d216185c9ef84482dd8d9d0a003d4b8273f8f`; all fields, vendor selection, work type, name, and action buttons remain visible without horizontal clipping. Emulator size was restored to 1080×2400.
-- Current implementation revision `32588b0` adds semantics-based Compose capture coverage for Register filled state. The connected suite remains PASS (17/17); the runner-generated bitmap is non-empty but is not retained after target-package cleanup, so strict retained-bitmap comparison remains pending.
+- Current implementation revision `32588b0` adds semantics-based Compose capture coverage for Register filled state. The connected suite remains PASS (31/31); the capture is retained as repository evidence below.
 - Latest valid emulator Login filled capture was obtained from `com.example.tp_ncolso_android/.MainActivity` after installing the current debug APK. Full capture `runtime-login-filled-current-revision.png` SHA-256 `590d3f875ba1708c6107896c9661f13e3c9c55b15094694ca670c04d5ebd07be`; normalized crop `runtime-login-filled-current-revision-normalized-402x874.png` SHA-256 `86e56b6e42ebf9d2f97f0b6a770bd42d6f1e5d33b8c493e9a3982b3ce4be1b77`. The screenshot confirms retained account/password/captcha values.
 - Latest valid Login auth-error capture was obtained with `wronguser` / non-matching credentials and the current debug APK. Full capture `runtime-login-error-current-revision.png` SHA-256 `644d25608cb67cb583c962be4308818ee37bdb5df42e4b4d14ccc2d62c4daba0`; normalized crop `runtime-login-error-current-revision-normalized-402x874.png` SHA-256 `f40b3fe00cdd6d4cc912c78ffdd5c78f7d4b0a8c281a5e125883fe4fe0f3b59f`. With the content-only mask and RGB threshold `20`, strict comparison measured MAE `41.0997`, RMSE `84.0536`, and over-threshold ratio `0.260942` across `1,028,844` channel samples. The runtime state visibly retains all submitted values and shows the global error message; the numeric result remains visual `PARTIAL`, not PASS.
 - After typography rollback in `98435c7`, the refreshed Login empty／filled／error captures are `runtime-login-empty-98435c7.png`, `runtime-login-filled-98435c7.png`, and `runtime-login-error-98435c7.png`; normalized crop SHA-256 values are `509401cf6a90e68f9b144d4ba7f27f8f580654c116acf11e397bb8dc5c97bc2a`, `a4b6a6c63be8414a520c9272d40c1bfe4a6b9a23eb3abf54096bb9bac187d6f9`, and `8625efe5210ed95e484428747b94c9e5c7bb09c3166226188d53bef9fd8e6bf4`. Login auth-error strict masked diff improved to MAE `39.5739`, RMSE `82.2692`, over-threshold ratio `0.249671` across `1,028,844` channels; it remains `PARTIAL`.
