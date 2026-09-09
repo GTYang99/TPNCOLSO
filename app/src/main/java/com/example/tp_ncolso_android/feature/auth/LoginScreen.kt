@@ -73,7 +73,12 @@ fun LoginScreen(
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier.size(width = 96.dp, height = 65.dp),
             )
-            Text("新工處土地占用\n調查圖台系統", style = AppThemeTokens.typography.screenTitle)
+            Text(
+                "新工處土地占用\n調查圖台系統",
+                style = AppThemeTokens.typography.screenTitle,
+                modifier = Modifier.weight(1f),
+                softWrap = true,
+            )
         }
         val authError = state.requestError != null
         Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
