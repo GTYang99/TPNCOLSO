@@ -24,7 +24,7 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 | UIR-REG-008 | Back/cancel/success events are implemented in auth coordinator; full state-clearing runtime evidence pending. | PARTIAL |
 | UIR-REG-009 | Validation and plaintext boundary unit tests exist; log/SavedState/rememberSaveable audit evidence pending. | PARTIAL |
 | UIR-REG-010 | Illustration asset is runtime-consumed and asset traceability exists; strict composite comparison pending. | PARTIAL |
-| UIR-REG-011 | Scroll support exists; Login responsive evidence is present, but the equivalent Register device matrix remains incomplete. | PARTIAL |
+| UIR-REG-011 | Scroll support exists; Register filled 720×2400 evidence confirms fields and actions remain usable without horizontal clipping, while the full approved device matrix remains incomplete. | PARTIAL |
 
 ## Login numeric diff revision
 
