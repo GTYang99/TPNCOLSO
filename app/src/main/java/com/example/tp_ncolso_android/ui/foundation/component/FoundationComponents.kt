@@ -46,6 +46,7 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
@@ -65,10 +66,11 @@ fun AppTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = true,
+    labelStyle: TextStyle = AppThemeTokens.typography.fieldLabel,
 ) {
     val displayLabel = if (required) "$label *" else label
     Column(modifier.fillMaxWidth()) {
-        Text(displayLabel, style = AppThemeTokens.typography.fieldLabel, modifier = Modifier.semantics { if (!enabled) disabled() })
+        Text(displayLabel, style = labelStyle, modifier = Modifier.semantics { if (!enabled) disabled() })
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
@@ -110,10 +112,11 @@ fun AppPasswordField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = true,
+    labelStyle: TextStyle = AppThemeTokens.typography.fieldLabel,
 ) {
     val displayLabel = if (required) "$label *" else label
     Column(modifier.fillMaxWidth()) {
-        Text(displayLabel, style = AppThemeTokens.typography.fieldLabel, modifier = Modifier.semantics { if (!enabled) disabled() })
+        Text(displayLabel, style = labelStyle, modifier = Modifier.semantics { if (!enabled) disabled() })
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
