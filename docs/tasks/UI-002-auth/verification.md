@@ -5,7 +5,7 @@
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed implementation/evidence revision: `2d5d6a7` (`fix(UI-002): match Login captcha row geometry`)
+- Reviewed implementation/evidence revision: `6550a9a` (`fix(UI-002): use Figma password eye asset`)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 ## Verification Round 3 — 2026-09-08
