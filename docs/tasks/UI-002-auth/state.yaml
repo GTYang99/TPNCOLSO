@@ -28,7 +28,7 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: pending-captcha-row-commit
+  commit: 2e86548
   status: committed
 
 verification:
