@@ -28,7 +28,7 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: 2e86548
+  commit: pending-checkbox-fix-commit
   status: committed
 
 verification:
