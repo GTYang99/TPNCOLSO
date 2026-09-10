@@ -5,7 +5,7 @@
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed implementation/evidence revision: `c8ca939` (`fix(UI-002): use exact Figma skyline geometry`)
+- Reviewed implementation/evidence revision: `9809b1c` (`fix(UI-002): align skyline in viewport coordinates`)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 ## Verification Round 3 — 2026-09-08
