@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -35,6 +36,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.tp_ncolso_android.ui.foundation.component.AppCheckboxRow
 import com.example.tp_ncolso_android.ui.foundation.component.AppPasswordField
 import com.example.tp_ncolso_android.ui.foundation.component.AppPrimaryButton
@@ -72,12 +74,15 @@ fun LoginScreen(
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier.size(width = 96.dp, height = 65.dp),
             )
-            Text(
-                "新工處土地占用\n調查圖台系統",
-                style = AppThemeTokens.typography.screenTitle,
-                modifier = Modifier.weight(1f),
-                softWrap = true,
-            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text("新工處土地占用", style = AppThemeTokens.typography.screenTitle, maxLines = 1)
+                Text(
+                    "調查圖台系統",
+                    style = AppThemeTokens.typography.screenTitle.copy(letterSpacing = 5.sp),
+                    maxLines = 1,
+                    textAlign = TextAlign.Start,
+                )
+            }
         }
         val authError = state.requestError != null
         Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
