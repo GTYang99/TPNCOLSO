@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
@@ -55,6 +54,9 @@ fun LoginScreen(
         modifier = Modifier
             .align(Alignment.BottomCenter)
             // Figma places the 736x246 skyline with its bottom edge 7dp above the viewport.
+            // The asset is aligned in the centered canvas coordinate space; with this
+            // source geometry 29dp reproduces the approved composite's visible bridge
+            // and Taipei 101 placement without clipping the tower.
             .offset(x = 29.dp, y = (-7).dp)
             .size(width = 736.dp, height = 246.dp),
     ) { drawImage(skyline, dstSize = IntSize(size.width.toInt(), size.height.toInt()), blendMode = BlendMode.Multiply) }

@@ -24,6 +24,17 @@
 - Next action: `plan_review`
 - Owner: Planning / Design
 
+## VER-AUTH-012 — Skyline offset wording and runtime asset coordinate space conflict
+
+- Category: `verification_failure`
+- Priority: `P1`
+- Status: open
+- Impact: Applying the literal `-138dp` offset to the current 736×246 runtime asset clips Taipei 101 at the left edge and visibly diverges from the approved composite, even though the numeric ratio changes.
+- Evidence: Emulator capture `runtime-login-empty-skyline-anchor-minus138.png` shows the clipped tower; the visually aligned implementation uses the centered-canvas `29dp` offset. Connected regression remains 31/31 PASS.
+- Expected: Resolve the coordinate-space definition against the authoritative composite/Figma export, then rerun all Login state pixel comparisons with the resolved anchor.
+- Route: `knowledge_resolution` (material source-coordinate conflict; do not lower visual acceptance criteria).
+- Owner: UI-002 Planning / Design
+
 ## IMP-AUTH-008 — Approved auth visual assets absent from repository
 
 - Category: `knowledge_collection`

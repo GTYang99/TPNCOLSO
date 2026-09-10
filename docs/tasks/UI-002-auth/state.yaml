@@ -33,7 +33,7 @@ git:
 
 verification:
   result: PARTIAL
-  category: null
+  category: verification_failure
   failed_acceptance_criteria: []
 
 ci:
@@ -44,4 +44,4 @@ release:
   status: pending
 
 blocking: []
-next_action: verification
+next_action: knowledge_resolution
