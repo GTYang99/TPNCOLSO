@@ -17,7 +17,7 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 | UIR-REG-001 | `RegisterScreen.kt` now uses 24dp padding, 36dp main group spacing and scroll; post-layout-fix empty normalized comparison MAE `15.5036`, RMSE `47.7196`, over-20 ratio `0.340352`. | PARTIAL |
 | UIR-REG-002 | Balanced 48dp top-bar slots, 80dp illustration slot, and a 24dp vector-style back arrow inside the 48dp control implemented; filled-state comparison remains incomplete. | PARTIAL |
 | UIR-REG-003 | Six controls and labels implemented; `AuthScreenTest.registerRendersSixFieldsAndUnselectedWorkType`. | PASS |
-| UIR-REG-004 | Plaintext fields are implemented; post-layout-fix empty capture and semantics-based Compose filled-state capture test are recorded, while retained bitmap numeric comparison remains pending. | PARTIAL |
+| UIR-REG-004 | Plaintext fields are implemented; post-layout-fix empty capture, semantics-based Compose filled-state capture, retained bitmap, and strict numeric comparison are recorded. Device-matrix coverage remains incomplete. | PARTIAL |
 | UIR-REG-005 | `AppSelectField` receives injected vendor options; selection behavior is covered by ViewModel validation tests. | PARTIAL |
 | UIR-REG-006 | Null/required work-type error and radio group implemented; `registerShowsWorkTypeValidationMessage`. | PASS |
 | UIR-REG-007 | Cancel/complete buttons and submit guard implemented; full navigation-race evidence pending. | PARTIAL |

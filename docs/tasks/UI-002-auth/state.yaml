@@ -28,7 +28,7 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: 8167ad2
+  commit: 173b2ec
   status: committed
 
 verification:
@@ -38,7 +38,7 @@ verification:
 
 ci:
   build: PASS (local JBR Gradle)
-  test: PASS (testDebugUnitTest; connectedDebugAndroidTest 17/17 on emulator after Figma visual integration)
+  test: PASS (testDebugUnitTest; connectedDebugAndroidTest 31/31 on emulator after Figma visual integration)
 
 release:
   status: pending
