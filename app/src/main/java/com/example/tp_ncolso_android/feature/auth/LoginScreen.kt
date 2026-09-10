@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.IntSize
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -89,16 +91,24 @@ fun LoginScreen(
             AppTextField(state.account, { onEvent(AuthEvent.LoginAccountChanged(it)) }, "帳號", placeholder = "請輸入", isError = authError || state.fieldErrors.containsKey(LoginField.ACCOUNT), supportingText = state.fieldErrors[LoginField.ACCOUNT], modifier = Modifier.testTag("login-account"))
             AppPasswordField(state.password, { onEvent(AuthEvent.LoginPasswordChanged(it)) }, "密碼", visible = false, onVisibilityChange = {}, placeholder = "請輸入", isError = authError || state.fieldErrors.containsKey(LoginField.PASSWORD), supportingText = state.fieldErrors[LoginField.PASSWORD], modifier = Modifier.testTag("login-password"))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                AppTextField(state.captcha, { onEvent(AuthEvent.LoginCaptchaChanged(it)) }, "驗證碼", placeholder = "請輸入", keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), isError = authError || state.fieldErrors.containsKey(LoginField.CAPTCHA), supportingText = state.fieldErrors[LoginField.CAPTCHA], modifier = Modifier.weight(1f).testTag("login-captcha"))
+                AppTextField(state.captcha, { onEvent(AuthEvent.LoginCaptchaChanged(it)) }, "驗證碼", placeholder = "請輸入", keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), isError = authError || state.fieldErrors.containsKey(LoginField.CAPTCHA), supportingText = state.fieldErrors[LoginField.CAPTCHA], modifier = Modifier.width(133.dp).testTag("login-captcha"))
                 Box(
                     modifier = Modifier
-                        .weight(1f)
+                        .width(139.dp)
                         .height(56.dp)
                         .semantics { contentDescription = "驗證碼圖片" }
                         .testTag("captcha-image"),
                     contentAlignment = Alignment.Center,
                 ) { captchaVisual() }
-                TextButton(onClick = { onEvent(AuthEvent.RefreshCaptcha) }, modifier = Modifier.testTag("captcha-refresh")) { Text("重整") }
+                Box(
+                    modifier = Modifier
+                        .width(32.dp)
+                        .height(48.dp)
+                        .clickable(role = Role.Button) { onEvent(AuthEvent.RefreshCaptcha) }
+                        .semantics { contentDescription = "重整" }
+                        .testTag("captcha-refresh"),
+                    contentAlignment = Alignment.Center,
+                ) { Text("重整", color = AppThemeTokens.colors.brandPrimary) }
             }
             state.captchaError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("captcha-error")) }
             state.requestError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("login-request-error").semantics { error(it) }) }
