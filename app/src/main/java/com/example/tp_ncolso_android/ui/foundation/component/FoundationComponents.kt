@@ -39,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -143,7 +144,11 @@ fun AppPasswordField(
                     TextButton(onClick = { onVisibilityChange(!visible) }) {
                         androidx.compose.foundation.layout.Box(contentAlignment = Alignment.Center) {
                             Text(if (visible) "隱藏密碼" else "顯示密碼", color = androidx.compose.ui.graphics.Color.Transparent)
-                            Text("◉", fontSize = 14.sp)
+                            androidx.compose.foundation.Image(
+                                painter = painterResource(com.example.tp_ncolso_android.R.drawable.ic_password_visibility_off),
+                                contentDescription = null,
+                                modifier = Modifier.size(14.dp, 11.dp),
+                            )
                         }
                     }
                 }
