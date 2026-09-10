@@ -38,7 +38,7 @@ verification:
 
 ci:
   build: PASS (local JBR Gradle)
-  test: PASS (testDebugUnitTest; connectedDebugAndroidTest 31/31 on emulator after Figma visual integration)
+  test: PASS (testDebugUnitTest; connectedDebugAndroidTest 33/33 on emulator after Figma visual integration)
 
 release:
   status: pending

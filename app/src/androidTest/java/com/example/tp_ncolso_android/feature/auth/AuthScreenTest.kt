@@ -10,6 +10,8 @@ import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.performClick
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -115,6 +117,48 @@ class AuthScreenTest {
         }
         InstrumentationRegistry.getInstrumentation().uiAutomation
             .executeShellCommand("screencap -p /sdcard/register-filled-compose.png")
+            .close()
+        check(output.length() > 0)
+    }
+
+    @Test fun captureLoginFilledStateForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(account = "sunrise000", password = "password", captcha = "0926", rememberMe = true),
+                    {},
+                    captchaVisual = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片") },
+                )
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-filled-compose.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        InstrumentationRegistry.getInstrumentation().uiAutomation
+            .executeShellCommand("screencap -p /sdcard/login-filled-compose.png")
+            .close()
+        check(output.length() > 0)
+    }
+
+    @Test fun captureLoginAuthErrorStateForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(account = "sunrise000", password = "password", captcha = "0926", rememberMe = true, requestError = "帳號、密碼或驗證碼錯誤"),
+                    {},
+                    captchaVisual = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片") },
+                )
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-error-compose.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        InstrumentationRegistry.getInstrumentation().uiAutomation
+            .executeShellCommand("screencap -p /sdcard/login-error-compose.png")
             .close()
         check(output.length() > 0)
     }
