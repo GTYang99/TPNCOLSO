@@ -28,7 +28,7 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: pending-typography-fix-commit
+  commit: fd2de52
   status: committed
 
 verification:
