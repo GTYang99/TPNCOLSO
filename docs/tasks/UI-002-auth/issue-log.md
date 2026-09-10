@@ -28,11 +28,12 @@
 
 - Category: `verification_failure`
 - Priority: `P1`
-- Status: open
+- Status: resolved
 - Impact: Applying the literal `-138dp` offset to the current 736×246 runtime asset clips Taipei 101 at the left edge and visibly diverges from the approved composite, even though the numeric ratio changes.
 - Evidence: Emulator capture `runtime-login-empty-skyline-anchor-minus138.png` shows the clipped tower; the visually aligned implementation uses the centered-canvas `29dp` offset. Connected regression remains 31/31 PASS.
 - Expected: Resolve the coordinate-space definition against the authoritative composite/Figma export, then rerun all Login state pixel comparisons with the resolved anchor.
-- Route: `knowledge_resolution` (material source-coordinate conflict; do not lower visual acceptance criteria).
+- Resolution: Figma MCP node `2997:11541` confirms `left=-138`, `bottom=-7`; replaced the mismatched runtime PNG with the exact Figma raster and reran the Login empty comparison. The remaining diff is a separate visual mismatch, not an unresolved coordinate-source conflict.
+- Route: `verification`
 - Owner: UI-002 Planning / Design
 
 ## IMP-AUTH-008 — Approved auth visual assets absent from repository
