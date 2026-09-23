@@ -4,7 +4,7 @@
 
 - Task: `UI-002-auth`
 - Branch: `UI-002feat`
-- Current implementation commits: `7dcde3f`, `e0f1d3a`, `7afc677`, `955ab7f`, `1d986fa`, `29464a1`, `d76cc43`, `5581b96`, `20a2342`, `73434c9`, `0894cd0`, `e9bac82`, `afcd107`, `c98291b`, `088e54d`, `a46b9f2`, `7bfd75c`, `52d0524`
+- Current implementation commits: `7dcde3f`, `e0f1d3a`, `7afc677`, `955ab7f`, `1d986fa`, `29464a1`, `d76cc43`, `5581b96`, `20a2342`, `73434c9`, `0894cd0`, `e9bac82`, `afcd107`, `c98291b`, `088e54d`, `a46b9f2`, `7bfd75c`, `52d0524`, `df5339d`
 - Date: 2026-09-08 (Asia/Taipei)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
@@ -33,6 +33,7 @@
 | Figma form/captcha geometry | PASS | Shared fields now use the Figma 8dp label-control gap; captcha callback receives an explicit 139×48dp visual bound and the row is 48dp high. |
 | Figma skyline vertical crop | PASS | Skyline y offset was tuned from `-7dp` to `7dp` against the direct frame export; full unit/connected regression remains green. |
 | Figma header composition | PASS | Header now matches the Figma `justify-center` + shrink-to-content structure; the centered natural-width revision has the lowest measured Login empty diff. |
+| Figma captcha bounds contract | PASS | `AuthScreenTest.loginCaptchaVisualUsesFigmaBounds` asserts captcha image 139×48dp and reload slot 32×48dp on the emulator. |
 | Release isolation scan | PASS | No debug auth source, direct-login fixture, coordinator, or fixture credential symbols found in `app/src/main` or `app/src/release`. |
 
 ## Known Gaps
