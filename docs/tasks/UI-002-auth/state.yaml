@@ -28,7 +28,7 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: 63a2379
+  commit: 842e290
   status: committed
 
 verification:
@@ -44,6 +44,6 @@ release:
   status: pending
 
 blocking:
-  - Current-revision visual captures and normalized numeric comparisons are not yet bound to the post-fix revision 63a2379.
-  - No hosted/authoritative CI run evidence is available; the recorded test run is local emulator evidence.
+  - Current-revision visual captures and normalized numeric comparisons are not yet bound to post-fix revision 842e290.
+  - No hosted/authoritative CI run evidence is available; the recorded test run is local JBR/emulator evidence.
 next_action: verification

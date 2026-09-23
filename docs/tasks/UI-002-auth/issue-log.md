@@ -1,14 +1,26 @@
 # Issue Log
 
+## IMP-AUTH-014 — Post-fix Registration accessibility and Back asset orientation remain nonconforming
+
+- Category: `implementation_failure`
+- Priority: `P1`
+- Status: resolved_pending_verification
+- Revision: `63a23794e70edb5cd00203a617afca7715be57b9` (fixed in `842e290`)
+- Evidence: prior revision `RegisterScreen.kt:36` exposed the decorative illustration as `註冊插圖`; `ic_register_back_chevron.xml` used `M12,8 L20,16 L12,24` without rotation, so the committed vector pointed right. Revision `842e290` removes the label and applies 180° rotation.
+- Requirement: `registration-ui-requirement.md` requires the illustration to remain decorative and the exact approved Back chevron to be rotated toward the left inside the `48 × 48` target.
+- Impact: Source-level mismatches are fixed; current-revision visual comparison and hosted CI evidence remain separate limitations before formal PASS.
+- Route: `verification`
+- Owner: UI-002 implementation
+
 ## IMP-AUTH-013 — Reviewed revision violates approved auth accessibility and asset clauses
 
 - Category: `implementation_failure`
 - Priority: `P1`
-- Status: open
+- Status: resolved
 - Revision: `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`
 - Evidence: `LoginScreen.kt:78` exposes the decorative logo as `品牌標誌`; `LoginScreen.kt:106–112` gives captcha reload a `32dp × 48dp` clickable bounds and description `重整`; `RegisterScreen.kt:42–47` draws a Canvas chevron instead of consuming the approved Back asset.
 - Requirement: `login-ui-requirement.md` requires no duplicate spoken logo label, reload description `重新產生驗證碼`, and an effective `48 × 48` reload target; `registration-ui-requirement.md` requires the exact approved Back asset in the `48 × 48` target.
-- Impact: The reviewed revision fails approved accessibility/asset requirements even though local unit/build/lint checks pass. Current visual captures and hosted CI evidence are separately incomplete.
+- Impact: The reviewed revision failed approved accessibility/asset requirements; the Login logo/reload and custom-Canvas Back findings were fixed by `63a2379`. Current visual captures and hosted CI evidence are separately incomplete.
 - Route: `debug`
 - Owner: UI-002 implementation
 

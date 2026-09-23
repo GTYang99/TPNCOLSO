@@ -1,6 +1,6 @@
 # UI-002 Verification Report
 
-## Current Verification Provenance — 2026-09-23
+## Current Verification Provenance — 2026-09-23, post-fix round
 
 This section supersedes the older round summaries for the current formal decision. Historical `PARTIAL` labels are retained as historical progress records only; the current formal result is restricted to `PASS`, `FAIL`, or `NOT VERIFIED`.
 
@@ -8,52 +8,55 @@ This section supersedes the older round summaries for the current formal decisio
 |---|---|---|
 | Requirement baseline | `KB-UI-002-AUTH-R10`; Plan Review iteration 16 `APPROVED` | PASS |
 | Previous failed implementation revision | Branch `UI-002feat`; `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; `docs(UI-002): normalize implementation handoff` | FAIL; superseded by the post-fix revision |
-| Post-fix candidate revision | Branch `UI-002feat`; `63a2379`; `fix(UI-002): restore auth accessibility and back asset contracts` | NOT VERIFIED pending formal re-evaluation |
-| Verification record revisions | `5fc0486` and follow-up `9f7b0e4` (`docs(UI-002): normalize verification provenance` / `docs(UI-002): distinguish verification revision provenance`) | PASS |
+| Previous failed implementation revision | Branch `UI-002feat`; `63a2379`; `fix(UI-002): restore auth accessibility and back asset contracts` | FAIL; superseded by post-fix revision |
+| Post-fix candidate revision | Branch `UI-002feat`; `842e290`; `fix(UI-002): correct registration accessibility and back direction` | NOT VERIFIED pending formal re-evaluation |
+| Verification handoff revision | `b30781b`; task state and verification handoff only | PASS; does not change reviewed production revision |
 | Unit test evidence | `testDebugUnitTest`; five XML suites, 13 tests, 0 failures/errors/skips; latest timestamp `2026-09-23T06:47:13Z` | PASS |
-| Connected test evidence | `connectedDebugAndroidTest`; 24 tests, 0 failures/errors/skips; `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`; latest timestamp `2026-09-23T06:46:53` | PASS |
+| Connected test evidence | `connectedDebugAndroidTest`; 24 tests, 0 failures/errors/skips; `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`; timestamp `2026-09-23T07:09:50` | PASS |
 | Developer-validation commands | `JAVA_HOME='/Applications/Android Studio.app/Contents/JBR/Contents/Home' ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest` and `./gradlew :app:connectedDebugAndroidTest` | PASS |
 | Visual primary authority | Requester-approved composite `docs/design/evidence/auth/auth-reference-2026-09-07.png`, SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c` | PASS |
 | Figma authority role | Figma file `HRbRsw6HoNBUCtaieX8xUM`, nodes `2905:2679` / `2997:11541`, direct export SHA-256 `bfde10cd297feb639ecc2b3fc4bc4964258bc4541174032e392c0a104e4ed2e5`; supporting design evidence, not the primary auth acceptance authority | PASS |
 | Comparison normalization | System chrome removed; debug-only `開發模式` region excluded by `login-content-only-mask.json` | PASS |
-| Current-revision visual comparison | Existing captures/diffs are from earlier implementation revisions or are not bound to post-fix `63a2379`; Login filled/error and Register empty/filled current-state evidence is therefore not sufficient for this formal revision | NOT VERIFIED |
+| Current-revision visual comparison | The connected capture tests executed, but no newly retrieved/current-revision image bytes or normalized diffs were bound to `842e290`; existing captures are from earlier revisions | NOT VERIFIED |
 | Hosted CI | No hosted/authoritative CI run is available; local JBR Gradle and emulator evidence only | NOT VERIFIED |
 | Physical device | Explicitly out of scope by requester; emulator coverage is the applicable environment | NOT APPLICABLE |
 
-### Previous formal decision — revision `0815e6b`
+### Previous formal decision — revision `63a2379`
 
 `FAIL`
 
-The current revision has passing local unit/build/lint evidence, but source inspection proves nonconformance against approved Login accessibility and Registration asset requirements. Current-revision visual captures and authoritative hosted CI evidence are also incomplete, so the task cannot advance to Release.
+The post-fix revision passes local build, unit, lint, and API 34 connected tests, and it fixes the three findings from `0815e6b`. However, source inspection proves two remaining Registration accessibility/asset mismatches: the illustration is exposed as a spoken `註冊插圖` label even though it is decorative, and the committed Back vector points right without the required left rotation. Current-revision visual comparisons and hosted CI evidence also remain incomplete, so the task cannot advance to Release.
 
-### Verified implementation findings
+### Verified implementation findings — current revision
 
 | Finding | Reviewed revision evidence | Requirement | Result |
 |---|---|---|---|
-| Login logo exposes a duplicate spoken label | `app/src/main/.../LoginScreen.kt:78` sets `contentDescription = "品牌標誌"` | `login-ui-requirement.md` requires the decorative logo to have no duplicate spoken label while logo/title form one heading | FAIL; `AC-UI002-001`, `AC-UI002-009` |
-| Captcha reload semantics and target are nonconforming | `LoginScreen.kt:106–112` uses a `32.dp × 48.dp` clickable Box and description `重整` | Reload requires exact description `重新產生驗證碼` and an effective target of at least `48 × 48` without changing the `32dp` layout allocation | FAIL; `AC-UI002-001`, `AC-UI002-009` |
-| Registration Back is drawn instead of consuming the approved asset | `app/src/main/.../RegisterScreen.kt:42–47` draws a custom Canvas chevron | `registration-ui-requirement.md` requires the exact approved Back asset in the `48 × 48` target | FAIL; `AC-UI002-010` |
+| Login logo semantics | `LoginScreen.kt:77–82` now declares one heading row and `contentDescription = null`; `AuthScreenTest.loginRendersRequiredEntryPoints` confirms no `品牌標誌` node | Decorative logo has no duplicate spoken label while logo/title form one heading | PASS for source/Compose scope |
+| Captcha reload semantics and target | `LoginScreen.kt:109–117` keeps the `32dp × 48dp` allocation and exposes `重新產生驗證碼` through a required `48dp × 48dp` target; focused connected assertions pass | Exact description and effective target of at least `48 × 48` | PASS for source/Compose scope |
+| Registration illustration remains exposed to accessibility | `RegisterScreen.kt:36` default illustration sets `contentDescription = "註冊插圖"` | `registration-ui-requirement.md` states the user illustration is decorative unless future product copy gives it independent meaning | FAIL; `AC-UI002-010` |
+| Registration Back asset orientation | `app/src/main/res/drawable/ic_register_back_chevron.xml` uses path `M12,8 L20,16 L12,24` and `RegisterScreen.kt:42–44` applies no rotation; the vector therefore points right | Registration requires the exact approved chevron asset rotated toward the left inside the `48 × 48` target | FAIL; `AC-UI002-010` |
 
-These findings are implementation failures bound to reviewed revision `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; they are not inferred from screenshots.
+These findings are implementation failures bound to reviewed revision `63a23794e70edb5cd00203a617afca7715be57b9`; they are not inferred from screenshots. The earlier Login/logo/reload and custom-Canvas findings are fixed in this revision.
 
-### Post-fix candidate decision — revision `63a2379`
+### Post-fix candidate decision — revision `842e290`
 
 `NOT VERIFIED`
 
-The three source-proven implementation findings have been fixed and developer validation passes, but formal Verification must be rerun against this new committed revision. Current-revision visual evidence and hosted CI evidence remain outstanding.
+The Registration illustration is now decorative and the approved candidate vector is rotated left in Compose. Unit, lint, and API 34 connected validation pass. Formal Verification must reevaluate `AC-UI002-010` against this new committed revision; current-revision visual comparison and hosted CI remain outstanding.
 
 ## Verification Run Evidence — 2026-09-23
 
 - Figma file `HRbRsw6HoNBUCtaieX8xUM` was read through nodes `2905:2680`, `2905:2679`, and `2997:11541`. `2905:2680` contains Login empty/filled/error, Registration empty/filled, and Logout context; `2905:2679` is a `402 × 874` Login frame; `2997:11541` exposes the `320dp` auth column and `736 × 246` skyline at `x=-138`, `y=635`. This is `visual_observation` supporting evidence only; the approved composite PNG remains the primary visual authority.
 - Local developer validation: `JAVA_HOME="/Applications/Android Studio.app/Contents/JBR/Contents/Home" ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest` — `BUILD SUCCESSFUL`; JBR `25.0.3`; 13 unit tests passed with 0 failures/errors/skips.
-- Connected runtime validation: `JAVA_HOME="/Applications/Android Studio.app/Contents/JBR/Contents/Home" ./gradlew :app:connectedDebugAndroidTest` — `BUILD SUCCESSFUL`; 24 tests passed with 0 failures/errors/skips on `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`, timestamp `2026-09-23T06:46:53`.
+- Connected runtime validation: `JAVA_HOME="/Applications/Android Studio.app/Contents/JBR/Contents/Home" ./gradlew :app:connectedDebugAndroidTest` — `BUILD SUCCESSFUL`; 24 tests passed with 0 failures/errors/skips on `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`, timestamp `2026-09-23T07:09:50`.
+- The connected suite re-executed the focused semantics assertions: no `品牌標誌` node, reload `重新產生驗證碼` at `48dp × 48dp` while the layout slot remains `32dp × 48dp`, and Register Back `48dp × 48dp`/`返回登入頁`. No test asserts that the Back vector is left-facing or that the decorative illustration has no content description; those remain source-proven failures.
 
 ## Inputs
 
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed revision for the post-fix formal round: `63a2379` (`fix(UI-002): restore auth accessibility and back asset contracts`)
+- Reviewed revision for the post-fix formal round: `842e290` (`fix(UI-002): correct registration accessibility and back direction`)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 The older round below is retained as historical evidence and is not the reviewed revision for the current formal decision.
@@ -71,16 +74,16 @@ The older round below is retained as historical evidence and is not the reviewed
 
 | AC | Current result | Evidence / limitation |
 |---|---|---|
-| AC-UI002-001 | FAIL | Connected entry-point evidence exists, but reviewed source exposes a duplicate spoken logo label and a nonconforming reload semantics/target contract. |
+| AC-UI002-001 | PASS (source/Compose scope) | Current source and focused API 34 Compose assertions cover the required entry points, decorative logo semantics, reload semantics, and effective target. |
 | AC-UI002-002 | PASS (unit scope) | `AuthValidationTest` and `AuthViewModelTest` cover required fields, captcha format and submit rejection. |
 | AC-UI002-003 | PASS (unit scope) | ViewModel tests cover success effect, sensitive clearing and auth-error retention; debug coordinator guards duplicate session start. |
 | AC-UI002-004 | PASS (connected scope) | Register route, six fields, Back and Cancel events pass `AuthScreenTest` on API 34. |
 | AC-UI002-005 | PASS (unit scope) | Pure validation tests cover account, password, confirmation, vendor, work type and Chinese name rules. |
 | AC-UI002-006 | NOT VERIFIED | Debug coordinator evidence exists, but the complete cross-task logout contract is not executed in the current revision. |
-| AC-UI002-007 | NOT VERIFIED | Historical emulator evidence covers narrow width, font scale 1.3 and IME, but current-revision visual/runtime evidence is not bound to `0815e6b`. |
+| AC-UI002-007 | NOT VERIFIED | Historical emulator evidence covers narrow width, font scale 1.3 and IME, but current-revision visual/runtime evidence is not bound to `842e290`. |
 | AC-UI002-008 | NOT VERIFIED | Preview and test fixtures exist, but the complete current-revision visual state matrix is not evidenced. |
-| AC-UI002-009 | FAIL | The Login UIR set contains source-proven accessibility nonconformance; current-revision visual evidence is also incomplete. |
-| AC-UI002-010 | FAIL | Registration uses a custom Canvas Back chevron instead of the approved Back asset; current-revision visual evidence is also incomplete. |
+| AC-UI002-009 | NOT VERIFIED | Login source/accessibility findings are fixed and connected assertions pass, but the required complete current-revision visual evidence matrix is not bound to `842e290`. |
+| AC-UI002-010 | NOT VERIFIED | Source fixes are present in `842e290`; formal current-revision visual comparison and final AC re-evaluation remain pending. |
 | AC-UI002-011 | NOT VERIFIED | Coordinator/idempotency evidence exists, but UI-003 contract integration is not executed in the current revision. |
 
 ## Build and Test Evidence
@@ -158,8 +161,8 @@ The older round below is retained as historical evidence and is not the reviewed
 
 `NOT VERIFIED`
 
-The previous formal result for `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08` was `FAIL` and routed to debug. The post-fix committed revision `63a2379` has passing developer validation, but formal Verification is not complete until the current revision is reevaluated with visual evidence and the remaining CI provenance limitation recorded.
+The previous formal result for `63a2379` was `FAIL` and routed to debug. The post-fix committed revision `842e290` contains the AC-UI002-010 source fixes and passes developer validation; formal Verification remains `NOT VERIFIED` until current-revision visual evidence and final AC re-evaluation are complete.
 
 ## Next Action
 
-Run formal Verification for `63a2379`, including current-revision Login/Register visual comparisons and AC re-evaluation. Hosted CI remains an additional gate; physical-device testing remains out of scope.
+Run formal Verification against `842e290`, including current-revision visual comparison and final AC re-evaluation. Hosted CI remains a required additional gate; physical-device testing remains out of scope.

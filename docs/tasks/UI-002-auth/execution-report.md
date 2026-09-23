@@ -19,11 +19,11 @@
 
 ## Verification-Failure Debug Fix — 2026-09-23
 
-- Scope: `IMP-AUTH-013` only; no requirement, visual authority, API, persistence, navigation, or drawer contract changes.
+- Scope: `IMP-AUTH-013` and `IMP-AUTH-014` only; no requirement, visual authority, API, persistence, navigation, or drawer contract changes.
 - Login logo is now decorative (`contentDescription = null`) and the brand row declares one heading semantics node.
 - Captcha reload retains the approved `32dp` row allocation while exposing the exact description `重新產生驗證碼` through a required `48dp × 48dp` interaction target.
-- Registration Back now consumes the approved `register-back-chevron.svg` geometry through `ic_register_back_chevron.xml` inside the existing `48dp` target; the custom Canvas drawing was removed.
-- Added Compose assertions for the decorative logo, reload description/target, and Register Back target/description.
+- Registration illustration is decorative (`contentDescription = null`), and Registration Back now consumes the approved `register-back-chevron.svg` geometry through `ic_register_back_chevron.xml`, rotated 180° toward the left inside the existing `48dp` target; the custom Canvas drawing was removed.
+- Added Compose assertions for the decorative logo/illustration, reload description/target, and Register Back target/description.
 - The first connected attempt exposed a test/layout constraint mismatch: a nested `size(48.dp)` was constrained to the outer `32dp` allocation, and merged TextButton semantics reported the 48dp Back target. The implementation was corrected with `requiredSize(48.dp)` and target-level assertions.
 
 ### Debug-fix validation
@@ -34,7 +34,7 @@
 | `:app:connectedDebugAndroidTest` | PASS | 24/24 tests, 0 failures/errors/skips on `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`; rerun after the constraint fix. |
 | Focused semantics/asset assertions | PASS | Login logo has no `品牌標誌` node; reload exposes `重新產生驗證碼` at 48dp × 48dp while the row tag remains 32dp × 48dp; Register Back target remains 48dp and uses the approved drawable. |
 
-The fix is ready to return to formal Verification with a new committed implementation revision. Hosted CI remains unavailable and physical-device testing remains out of scope.
+The fix is committed as `842e290` and ready to return to formal Verification. Hosted CI remains unavailable and physical-device testing remains out of scope.
 
 ## Implemented Scope
 

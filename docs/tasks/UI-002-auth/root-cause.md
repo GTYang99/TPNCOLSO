@@ -2,13 +2,13 @@
 
 ## Scope
 
-This debug re-entry addresses the source-proven Verification findings for reviewed revision `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08` on branch `UI-002feat`.
+This debug re-entry addresses the source-proven Verification findings for reviewed revision `63a23794e70edb5cd00203a617afca7715be57b9` on branch `UI-002feat`.
 
 ## Reproducible findings
 
-1. `LoginScreen.kt` assigns `contentDescription = "品牌標誌"` to the decorative logo, conflicting with the approved Login accessibility contract that the logo must not create a duplicate spoken label.
-2. The captcha reload action is a `32.dp × 48.dp` Foundation clickable region with description `重整`; the approved contract requires `重新產生驗證碼` and an effective `48 × 48` target while retaining the `32dp` layout allocation.
-3. `RegisterScreen.kt` draws the Back chevron with `Canvas` lines instead of consuming the approved Back asset required by the Registration contract.
+1. The earlier Login findings were fixed: the logo is now decorative, the brand row exposes one heading, and captcha reload has the exact description/effective target.
+2. `RegisterScreen.kt:36` still assigns `contentDescription = "註冊插圖"` to an illustration explicitly defined as decorative.
+3. `ic_register_back_chevron.xml` defines a right-facing path (`M12,8 L20,16 L12,24`) and `RegisterScreen.kt` applies no rotation, conflicting with the required left-facing Back asset.
 
 ## Classification
 
@@ -18,7 +18,7 @@ These are implementation failures. The requirements are approved and unambiguous
 
 Figma file `HRbRsw6HoNBUCtaieX8xUM`, nodes `2905:2680`, `2905:2679`, and `2997:11541`, was inspected on 2026-09-23 as supporting visual evidence. The requester-approved composite PNG remains the primary visual authority. The findings above are established from the reviewed source revision and do not depend on screenshot inference.
 
-The Registration reference frames `4922:17227` and `4922:17493` expose a 48dp Back slot containing a 32dp `chevron-right 2` vector (`I4922:17286;4922:15635` / `I4922:17494;4922:17424`) and an 80dp illustration frame. This bounds the approved asset target for the planned fix.
+The Registration reference frames `4922:17227` and `4922:17493` expose a 48dp Back slot containing a 32dp `chevron-right 2` vector (`I4922:17286;4922:15635` / `I4922:17494;4922:17424`) that must be rotated toward the left, plus an 80dp decorative illustration frame. This bounds the approved asset and semantics target for the planned fix.
 
 ## Debug exit condition
 
