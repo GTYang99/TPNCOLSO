@@ -9,6 +9,8 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.assertWidthIsEqualTo
+import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.performClick
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
@@ -20,6 +22,7 @@ import com.example.tp_ncolso_android.ui.foundation.theme.AppTheme
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import java.io.FileOutputStream
+import androidx.compose.ui.unit.dp
 
 @RunWith(AndroidJUnit4::class)
 class AuthScreenTest {
@@ -49,6 +52,20 @@ class AuthScreenTest {
         composeRule.setContent { AppTheme { LoginScreen(LoginFormState(), { event = it }) } }
         composeRule.onNodeWithText("沒有帳號? 註冊").performClick()
         assert(event == AuthEvent.OpenRegister)
+    }
+
+    @Test fun loginCaptchaVisualUsesFigmaBounds() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(),
+                    {},
+                    captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
+                )
+            }
+        }
+        composeRule.onNodeWithTag("captcha-image").assertWidthIsEqualTo(139.dp).assertHeightIsEqualTo(48.dp)
+        composeRule.onNodeWithTag("captcha-refresh").assertWidthIsEqualTo(32.dp).assertHeightIsEqualTo(48.dp)
     }
 
     @Test fun loginAuthErrorKeepsValuesAndShowsAccessibleGlobalMessage() {
