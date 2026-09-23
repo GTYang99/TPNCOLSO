@@ -13,6 +13,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
@@ -30,7 +31,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -319,11 +319,27 @@ fun <T> AppRadioGroup(
                         role = Role.RadioButton,
                         onClick = { onSelect(option) },
                     )
-                    .padding(horizontal = AppThemeTokens.spacing.sm),
+                    .padding(horizontal = AppThemeTokens.spacing.lg),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
             ) {
-                RadioButton(selected = selectedOption, enabled = enabled, onClick = null)
+                androidx.compose.foundation.layout.Box(
+                    modifier = Modifier
+                        .size(14.dp)
+                        .background(Color.White, CircleShape)
+                        .border(
+                            width = 2.dp,
+                            color = if (selectedOption) AppThemeTokens.colors.brandPrimary else Color(0xFFCDD0D6),
+                            shape = CircleShape,
+                        ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    if (selectedOption) {
+                        androidx.compose.foundation.layout.Box(
+                            modifier = Modifier.size(10.dp).background(AppThemeTokens.colors.brandPrimary, CircleShape),
+                        )
+                    }
+                }
                 Text(itemLabel(option), style = AppThemeTokens.typography.body)
             }
         }
