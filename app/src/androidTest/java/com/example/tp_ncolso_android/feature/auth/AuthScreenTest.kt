@@ -25,6 +25,13 @@ import java.io.FileOutputStream
 class AuthScreenTest {
     @get:Rule val composeRule = createComposeRule()
 
+    private fun exportComposeCapture(output: File, remoteName: String) {
+        val packageName = InstrumentationRegistry.getInstrumentation().targetContext.packageName
+        InstrumentationRegistry.getInstrumentation().uiAutomation
+            .executeShellCommand("run-as $packageName cat ${output.absolutePath} > /sdcard/$remoteName")
+            .close()
+    }
+
     @Test fun loginRendersRequiredEntryPoints() {
         composeRule.setContent {
             AppTheme { LoginScreen(LoginFormState(), {},) }
@@ -136,9 +143,26 @@ class AuthScreenTest {
         FileOutputStream(output).use { stream ->
             composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
         }
-        InstrumentationRegistry.getInstrumentation().uiAutomation
-            .executeShellCommand("screencap -p /sdcard/login-filled-compose.png")
-            .close()
+        exportComposeCapture(output, "login-filled-compose-root.png")
+        check(output.length() > 0)
+    }
+
+    @Test fun captureLoginEmptyStateForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(),
+                    {},
+                    captchaVisual = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片") },
+                )
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-empty-compose.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "login-empty-compose-root.png")
         check(output.length() > 0)
     }
 
@@ -157,9 +181,7 @@ class AuthScreenTest {
         FileOutputStream(output).use { stream ->
             composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
         }
-        InstrumentationRegistry.getInstrumentation().uiAutomation
-            .executeShellCommand("screencap -p /sdcard/login-error-compose.png")
-            .close()
+        exportComposeCapture(output, "login-error-compose-root.png")
         check(output.length() > 0)
     }
 }
