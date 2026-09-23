@@ -72,14 +72,14 @@ fun LoginScreen(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
             Image(
                 painter = painterResource(com.example.tp_ncolso_android.R.drawable.login_brand_logo),
                 contentDescription = "品牌標誌",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier.size(width = 96.dp, height = 65.dp),
             )
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 Text("新工處土地占用", style = AppThemeTokens.typography.screenTitle, maxLines = 1)
                 Text(
                     "調查圖台系統",
