@@ -140,9 +140,7 @@ class AuthScreenTest {
         FileOutputStream(output).use { stream ->
             composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
         }
-        InstrumentationRegistry.getInstrumentation().uiAutomation
-            .executeShellCommand("screencap -p /sdcard/register-filled-compose.png")
-            .close()
+        exportComposeCapture(output, "register-filled-compose-root.png")
         check(output.length() > 0)
     }
 
