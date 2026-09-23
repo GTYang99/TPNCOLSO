@@ -2,7 +2,7 @@ task:
   id: UI-002-auth
   type: feature
 
-phase: implementation
+phase: verification
 status: in_progress
 
 knowledge:
@@ -28,20 +28,22 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: 322ba84
+  commit: 0815e6b
   status: committed
 
 verification:
-  result: PARTIAL
+  result: NOT VERIFIED
   category: null
   failed_acceptance_criteria: []
 
 ci:
   build: PASS (local JBR Gradle)
-  test: PASS (testDebugUnitTest; connectedDebugAndroidTest 35/35 on emulator after Figma visual integration)
+  test: PASS (13/13 unit; 24/24 connected on Medium_Phone (AVD) - 14, API 34; local evidence only)
 
 release:
   status: pending
 
-blocking: []
+blocking:
+  - Current-revision visual captures and normalized numeric comparisons are not yet bound to reviewed revision 0815e6b.
+  - No hosted/authoritative CI run evidence is available; the recorded test run is local emulator evidence.
 next_action: verification

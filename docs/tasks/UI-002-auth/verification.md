@@ -1,12 +1,38 @@
 # UI-002 Verification Report
 
+## Current Verification Provenance — 2026-09-23
+
+This section supersedes the older round summaries for the current formal decision. Historical `PARTIAL` labels are retained as historical progress records only; the current formal result is restricted to `PASS`, `FAIL`, or `NOT VERIFIED`.
+
+| Provenance item | Current evidence | Classification |
+|---|---|---|
+| Requirement baseline | `KB-UI-002-AUTH-R10`; Plan Review iteration 16 `APPROVED` | PASS |
+| Reviewed revision | Branch `UI-002feat`; HEAD `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; `docs(UI-002): normalize implementation handoff` | PASS |
+| Unit test evidence | `testDebugUnitTest`; five XML suites, 13 tests, 0 failures/errors/skips; latest timestamp `2026-09-23T03:22:57Z` | PASS |
+| Connected test evidence | `connectedDebugAndroidTest`; 24 tests, 0 failures/errors/skips; `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`; latest timestamp `2026-09-23T03:23:40` | PASS |
+| Test command | `JAVA_HOME='/Applications/Android Studio.app/Contents/JBR/Contents/Home' ./gradlew :app:testDebugUnitTest :app:connectedDebugAndroidTest` | PASS |
+| Visual primary authority | Requester-approved composite `docs/design/evidence/auth/auth-reference-2026-09-07.png`, SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c` | PASS |
+| Figma authority role | Figma file `HRbRsw6HoNBUCtaieX8xUM`, nodes `2905:2679` / `2997:11541`, direct export SHA-256 `bfde10cd297feb639ecc2b3fc4bc4964258bc4541174032e392c0a104e4ed2e5`; supporting design evidence, not the primary auth acceptance authority | PASS |
+| Comparison normalization | System chrome removed; debug-only `開發模式` region excluded by `login-content-only-mask.json` | PASS |
+| Current-revision visual comparison | Existing captures/diffs are from earlier implementation revisions or are not bound to HEAD `0815e6b`; Login filled/error and Register empty/filled current-state evidence is therefore not sufficient for this formal revision | NOT VERIFIED |
+| Hosted CI | No hosted/authoritative CI run is available; local JBR Gradle and emulator evidence only | NOT VERIFIED |
+| Physical device | Explicitly out of scope by requester; emulator coverage is the applicable environment | NOT APPLICABLE |
+
+### Current formal decision
+
+`NOT VERIFIED`
+
+The current revision has passing local test evidence, but required current-revision visual evidence and authoritative hosted CI evidence are not available as a complete provenance chain. There is no proven current-revision nonconformance, so this is not `FAIL`; the missing evidence prevents `PASS`.
+
 ## Inputs
 
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed implementation/evidence revision: `6550a9a` (`fix(UI-002): use Figma password eye asset`)
+- Reviewed revision for this formal round: `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08` (`docs(UI-002): normalize implementation handoff`)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
+
+The older round below is retained as historical evidence and is not the reviewed revision for the current formal decision.
 
 ## Verification Round 3 — 2026-09-08
 
@@ -106,8 +132,10 @@
 
 ## Overall Result
 
-`PARTIAL`; the exact-skyline Login revision has complete normalized numeric evidence and complete UIR traceability, but the measured diff and several state/device-matrix requirements remain below PASS.
+`NOT VERIFIED`
+
+The formal result for the reviewed revision `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08` is `NOT VERIFIED`. The local test run is reproducible and passing, but the current-revision normalized visual comparisons and hosted CI provenance are incomplete. Historical `PARTIAL` labels above do not constitute the current final result.
 
 ## Next Action
 
-Resolve the remaining pixel-diff deltas and complete responsive／IME／logout evidence; UIR-LOGIN/UIR-REG mapping is now recorded. CI remains intentionally deferred by requester decision. Physical-device testing is out of scope.
+Obtain current-HEAD visual captures and normalized numeric comparisons for Login empty/filled/error and Register empty/filled, then obtain or explicitly record the authoritative CI result and rerun formal Verification. Physical-device testing remains out of scope.
