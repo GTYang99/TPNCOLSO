@@ -4,7 +4,7 @@
 
 - Task: `UI-002-auth`
 - Branch: `UI-002feat`
-- Current implementation commits: `7dcde3f`, `e0f1d3a`, `7afc677`, `955ab7f`, `1d986fa`, `29464a1`, plus the current asset integration revision
+- Current implementation commits: `7dcde3f`, `e0f1d3a`, `7afc677`, `955ab7f`, `1d986fa`, `29464a1`, `d76cc43`, `5581b96`, `20a2342`
 - Date: 2026-09-08 (Asia/Taipei)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
@@ -25,16 +25,16 @@
 | `assembleDebug` | PASS | Debug APK assembled with auth flow. |
 | `assembleRelease` | PASS | Release APK assembled without debug auth source wiring. |
 | `assembleDebugAndroidTest` | PASS | Auth Compose test APK compiled. |
-| `connectedDebugAndroidTest` | NOT VERIFIED | Targeted `AuthScreenTest` execution reports `No connected devices`; prior full run also produced no result on detected devices and was terminated. |
+| `connectedDebugAndroidTest` | PASS | Full local run completed on `Medium_Phone` API 34 after the Login action-row correction; 33/33 connected tests pass. |
 | Release isolation scan | PASS | No debug auth source, direct-login fixture, coordinator, or fixture credential symbols found in `app/src/main` or `app/src/release`. |
 
 ## Known Gaps
 
 - Figma asset exports and SHA-256 evidence are now recorded in `docs/assets/app-ui-assets.md`; the debug captcha fixture is wired into Login through an injected visual slot. Composite PNG comparison, SVG runtime treatment, and connected runtime evidence remain incomplete.
-- Connected Compose runtime evidence is unavailable; APK compilation is not runtime PASS.
+- ADB screenshot retrieval outside the instrumentation runner is environment-sensitive; the latest standalone pull returned a blank system-chrome frame, so it is not used as visual evidence.
 - UI-003 drawer fixture and INT-001 production token/remote logout integration are outside this task.
 - Authoritative CI provider is not configured; local Gradle results are not CI evidence.
 
 ## Status
 
-Implementation is in progress. The task must not be declared PASS or Done until the visual UIR mappings, runtime/Compose evidence, full logout contract evidence and required handoff artifacts are complete.
+Implementation is in progress. The task must not be declared PASS or Done until the visual UIR mappings, refreshed content-only numeric evidence, full logout contract evidence and required handoff artifacts are complete.
