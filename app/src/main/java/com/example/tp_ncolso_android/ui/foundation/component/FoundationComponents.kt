@@ -188,48 +188,56 @@ fun <T> AppSelectField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isError: Boolean = false,
+    supportingText: String? = null,
 ) {
     var expanded by remember { mutableStateOf(false) }
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { if (enabled) expanded = it },
-        modifier = modifier.fillMaxWidth(),
-    ) {
-        OutlinedTextField(
-            value = selected?.let(itemLabel).orEmpty(),
-            onValueChange = {},
-            readOnly = true,
-            enabled = enabled,
-            isError = isError,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                focusedBorderColor = AppThemeTokens.colors.brandPrimary,
-                unfocusedBorderColor = AppThemeTokens.colors.borderDefault,
-                focusedLabelColor = AppThemeTokens.colors.textPrimary,
-                unfocusedLabelColor = AppThemeTokens.colors.textPrimary,
-                focusedPlaceholderColor = Color(0xFFA8ABB2),
-                unfocusedPlaceholderColor = Color(0xFFA8ABB2),
-                errorBorderColor = AppThemeTokens.colors.fieldErrorBorder,
-                errorLabelColor = AppThemeTokens.colors.fieldErrorBorder,
-                errorSupportingTextColor = AppThemeTokens.colors.errorText,
-            ),
-            label = { Text(label) },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled).fillMaxWidth(),
-        )
-        ExposedDropdownMenu(
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(label, style = AppThemeTokens.typography.fieldLabel)
+        ExposedDropdownMenuBox(
             expanded = expanded,
-            onDismissRequest = { expanded = false },
+            onExpandedChange = { if (enabled) expanded = it },
+            modifier = Modifier.fillMaxWidth(),
         ) {
-            options.forEach { item ->
-                DropdownMenuItem(
-                    text = { Text(itemLabel(item)) },
-                    onClick = {
-                        onSelect(item)
-                        expanded = false
+            OutlinedTextField(
+                value = selected?.let(itemLabel).orEmpty(),
+                onValueChange = {},
+                readOnly = true,
+                enabled = enabled,
+                isError = isError,
+                placeholder = { Text("請選擇") },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    focusedBorderColor = AppThemeTokens.colors.brandPrimary,
+                    unfocusedBorderColor = AppThemeTokens.colors.borderDefault,
+                    focusedPlaceholderColor = Color(0xFFA8ABB2),
+                    unfocusedPlaceholderColor = Color(0xFFA8ABB2),
+                    errorBorderColor = AppThemeTokens.colors.fieldErrorBorder,
+                    errorSupportingTextColor = AppThemeTokens.colors.errorText,
+                ),
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                supportingText = supportingText?.let { { Text(it) } },
+                modifier = Modifier
+                    .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled)
+                    .fillMaxWidth()
+                    .height(48.dp)
+                    .semantics {
+                        if (isError && supportingText != null) error(supportingText)
                     },
-                )
+            )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+            ) {
+                options.forEach { item ->
+                    DropdownMenuItem(
+                        text = { Text(itemLabel(item)) },
+                        onClick = {
+                            onSelect(item)
+                            expanded = false
+                        },
+                    )
+                }
             }
         }
     }

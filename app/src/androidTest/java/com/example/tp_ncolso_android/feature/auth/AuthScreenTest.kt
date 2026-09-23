@@ -12,6 +12,7 @@ import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import org.junit.Rule
@@ -97,7 +98,7 @@ class AuthScreenTest {
     @Test fun registerCancelDispatchesBackToLogin() {
         var event: AuthEvent? = null
         composeRule.setContent { AppTheme { RegisterScreen(RegisterFormState(), emptyList(), { event = it }) } }
-        composeRule.onNodeWithText("取消").performClick()
+        composeRule.onNodeWithText("取消").performScrollTo().performClick()
         assert(event == AuthEvent.CancelRegister)
     }
 
