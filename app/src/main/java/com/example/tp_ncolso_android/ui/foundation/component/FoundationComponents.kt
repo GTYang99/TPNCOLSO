@@ -238,23 +238,13 @@ fun <T> AppSelectField(
             onExpandedChange = { if (enabled) expanded = it },
             modifier = Modifier.fillMaxWidth(),
         ) {
-            OutlinedTextField(
+            AppOutlinedTextField(
                 value = selected?.let(itemLabel).orEmpty(),
                 onValueChange = {},
                 readOnly = true,
                 enabled = enabled,
                 isError = isError,
-                placeholder = { Text("請選擇") },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    focusedBorderColor = AppThemeTokens.colors.brandPrimary,
-                    unfocusedBorderColor = AppThemeTokens.colors.borderDefault,
-                    focusedPlaceholderColor = Color(0xFFA8ABB2),
-                    unfocusedPlaceholderColor = Color(0xFFA8ABB2),
-                    errorBorderColor = AppThemeTokens.colors.fieldErrorBorder,
-                    errorSupportingTextColor = AppThemeTokens.colors.errorText,
-                ),
+                placeholder = "請選擇",
                 trailingIcon = {
                     androidx.compose.foundation.Image(
                         painter = painterResource(com.example.tp_ncolso_android.R.drawable.ic_register_dropdown_arrow),
@@ -263,13 +253,10 @@ fun <T> AppSelectField(
                     )
                 },
                 supportingText = supportingText?.let { { Text(it) } },
+                textStyle = AppThemeTokens.typography.body.copy(color = AppThemeTokens.colors.textPrimary),
                 modifier = Modifier
                     .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled)
-                    .fillMaxWidth()
-                    .height(48.dp)
-                    .semantics {
-                        if (isError && supportingText != null) error(supportingText)
-                    },
+                    .fillMaxWidth(),
             )
             ExposedDropdownMenu(
                 expanded = expanded,
