@@ -1,6 +1,7 @@
 package com.example.tp_ncolso_android.ui.foundation.component
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -393,11 +394,16 @@ fun AppPrimaryButton(
         onClick = onClick,
         enabled = enabled && !loading,
         modifier = modifier.heightIn(min = AppThemeTokens.spacing.minimumTouchTarget),
+        shape = RoundedCornerShape(999.dp),
+        colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+            containerColor = AppThemeTokens.colors.brandPrimary,
+            contentColor = AppThemeTokens.colors.onBrandPrimary,
+        ),
     ) {
         if (loading) {
             CircularProgressIndicator(modifier = Modifier.padding(end = 8.dp), strokeWidth = 2.dp)
         }
-        Text(text)
+        Text(text, style = AppThemeTokens.typography.buttonLabel)
     }
 }
 
@@ -412,8 +418,14 @@ fun AppSecondaryButton(
         onClick = onClick,
         enabled = enabled,
         modifier = modifier.heightIn(min = AppThemeTokens.spacing.minimumTouchTarget),
+        shape = RoundedCornerShape(999.dp),
+        border = BorderStroke(1.dp, AppThemeTokens.colors.borderDefault),
+        colors = androidx.compose.material3.ButtonDefaults.outlinedButtonColors(
+            containerColor = Color.White,
+            contentColor = AppThemeTokens.colors.textPrimary,
+        ),
     ) {
-        Text(text)
+        Text(text, style = AppThemeTokens.typography.buttonLabel)
     }
 }
 
