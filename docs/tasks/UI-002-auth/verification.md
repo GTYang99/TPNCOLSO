@@ -21,9 +21,25 @@ This section supersedes the older round summaries for the current formal decisio
 
 ### Current formal decision
 
-`NOT VERIFIED`
+`FAIL`
 
-The current revision has passing local test evidence, but required current-revision visual evidence and authoritative hosted CI evidence are not available as a complete provenance chain. There is no proven current-revision nonconformance, so this is not `FAIL`; the missing evidence prevents `PASS`.
+The current revision has passing local unit/build/lint evidence, but source inspection proves nonconformance against approved Login accessibility and Registration asset requirements. Current-revision visual captures and authoritative hosted CI evidence are also incomplete, so the task cannot advance to Release.
+
+### Verified implementation findings
+
+| Finding | Reviewed revision evidence | Requirement | Result |
+|---|---|---|---|
+| Login logo exposes a duplicate spoken label | `app/src/main/.../LoginScreen.kt:78` sets `contentDescription = "品牌標誌"` | `login-ui-requirement.md` requires the decorative logo to have no duplicate spoken label while logo/title form one heading | FAIL; `AC-UI002-001`, `AC-UI002-009` |
+| Captcha reload semantics and target are nonconforming | `LoginScreen.kt:106–112` uses a `32.dp × 48.dp` clickable Box and description `重整` | Reload requires exact description `重新產生驗證碼` and an effective target of at least `48 × 48` without changing the `32dp` layout allocation | FAIL; `AC-UI002-001`, `AC-UI002-009` |
+| Registration Back is drawn instead of consuming the approved asset | `app/src/main/.../RegisterScreen.kt:42–47` draws a custom Canvas chevron | `registration-ui-requirement.md` requires the exact approved Back asset in the `48 × 48` target | FAIL; `AC-UI002-010` |
+
+These findings are implementation failures bound to reviewed revision `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; they are not inferred from screenshots.
+
+## Verification Run Evidence — 2026-09-23
+
+- Figma file `HRbRsw6HoNBUCtaieX8xUM` was read through nodes `2905:2680`, `2905:2679`, and `2997:11541`. `2905:2680` contains Login empty/filled/error, Registration empty/filled, and Logout context; `2905:2679` is a `402 × 874` Login frame; `2997:11541` exposes the `320dp` auth column and `736 × 246` skyline at `x=-138`, `y=635`. This is `visual_observation` supporting evidence only; the approved composite PNG remains the primary visual authority.
+- Local non-device command: `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew testDebugUnitTest lintDebug assembleDebug assembleRelease` — `BUILD SUCCESSFUL` in 51s; JBR `25.0.3`; 13 unit tests passed with 0 failures/errors/skips.
+- Current runtime attempt: `adb devices` could not start the daemon and returned `Operation not permitted`; no new connected-runtime capture or test PASS is claimed for this run. Existing local API 34 evidence remains provenance-bound as recorded above.
 
 ## Inputs
 
@@ -48,17 +64,17 @@ The older round below is retained as historical evidence and is not the reviewed
 
 | AC | Current result | Evidence / limitation |
 |---|---|---|
-| AC-UI002-001 | PASS (connected scope) | Login entry points and semantics pass `AuthScreenTest` on API 34; visual comparison remains pending. |
+| AC-UI002-001 | FAIL | Connected entry-point evidence exists, but reviewed source exposes a duplicate spoken logo label and a nonconforming reload semantics/target contract. |
 | AC-UI002-002 | PASS (unit scope) | `AuthValidationTest` and `AuthViewModelTest` cover required fields, captcha format and submit rejection. |
 | AC-UI002-003 | PASS (unit scope) | ViewModel tests cover success effect, sensitive clearing and auth-error retention; debug coordinator guards duplicate session start. |
 | AC-UI002-004 | PASS (connected scope) | Register route, six fields, Back and Cancel events pass `AuthScreenTest` on API 34. |
 | AC-UI002-005 | PASS (unit scope) | Pure validation tests cover account, password, confirmation, vendor, work type and Chinese name rules. |
-| AC-UI002-006 | PARTIAL | Debug coordinator and direct-login/logout tests pass on API 34; UI-003 drawer integration remains out of scope. |
-| AC-UI002-007 | PARTIAL | Emulator evidence now covers 720×2400 narrow width, font scale 1.3, and IME-open state; the header was corrected to constrain the title with weighted remaining width. Evidence remains emulator-only and needs the full approved device matrix before PASS. |
-| AC-UI002-008 | PASS (executed test scope) | Preview matrix and connected auth screen tests are present; full visual state matrix evidence remains pending. |
-| AC-UI002-009 | PARTIAL | Composite-based Login empty/filled/error normalized comparisons are recorded; measured diff remains above visual PASS. Auth-error retention, accessible global error, and current runtime evidence are complete. |
-| AC-UI002-010 | PARTIAL | UIR mapping is complete; Register empty and filled normalized comparisons are recorded. Remaining device-matrix evidence is incomplete. |
-| AC-UI002-011 | PARTIAL | Logout coordinator/idempotency unit evidence exists; UI-003 drawer contract integration is not executed. |
+| AC-UI002-006 | NOT VERIFIED | Debug coordinator evidence exists, but the complete cross-task logout contract is not executed in the current revision. |
+| AC-UI002-007 | NOT VERIFIED | Historical emulator evidence covers narrow width, font scale 1.3 and IME, but current-revision visual/runtime evidence is not bound to `0815e6b`. |
+| AC-UI002-008 | NOT VERIFIED | Preview and test fixtures exist, but the complete current-revision visual state matrix is not evidenced. |
+| AC-UI002-009 | FAIL | The Login UIR set contains source-proven accessibility nonconformance; current-revision visual evidence is also incomplete. |
+| AC-UI002-010 | FAIL | Registration uses a custom Canvas Back chevron instead of the approved Back asset; current-revision visual evidence is also incomplete. |
+| AC-UI002-011 | NOT VERIFIED | Coordinator/idempotency evidence exists, but UI-003 contract integration is not executed in the current revision. |
 
 ## Build and Test Evidence
 
@@ -133,10 +149,10 @@ The older round below is retained as historical evidence and is not the reviewed
 
 ## Overall Result
 
-`NOT VERIFIED`
+`FAIL`
 
-The formal result for the reviewed revision `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08` is `NOT VERIFIED`. The local test run is reproducible and passing, but the current-revision normalized visual comparisons and hosted CI provenance are incomplete. Historical `PARTIAL` labels above do not constitute the current final result.
+The formal result for the reviewed revision `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08` is `FAIL` because the source inspection findings above prove implementation nonconformance. Historical `PARTIAL` labels and missing visual/hosted-CI evidence remain limitations and do not constitute PASS.
 
 ## Next Action
 
-Obtain current-HEAD visual captures and normalized numeric comparisons for Login empty/filled/error and Register empty/filled, then obtain or explicitly record the authoritative CI result and rerun formal Verification. Physical-device testing remains out of scope.
+Route to `debug`: establish the minimum fix for the three implementation findings, then rerun the affected unit/Compose/accessibility checks and current-revision visual comparisons. Hosted CI remains an additional gate; physical-device testing remains out of scope.

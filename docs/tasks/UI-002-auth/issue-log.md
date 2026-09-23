@@ -1,5 +1,17 @@
 # Issue Log
 
+## IMP-AUTH-013 — Reviewed revision violates approved auth accessibility and asset clauses
+
+- Category: `implementation_failure`
+- Priority: `P1`
+- Status: open
+- Revision: `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`
+- Evidence: `LoginScreen.kt:78` exposes the decorative logo as `品牌標誌`; `LoginScreen.kt:106–112` gives captcha reload a `32dp × 48dp` clickable bounds and description `重整`; `RegisterScreen.kt:42–47` draws a Canvas chevron instead of consuming the approved Back asset.
+- Requirement: `login-ui-requirement.md` requires no duplicate spoken logo label, reload description `重新產生驗證碼`, and an effective `48 × 48` reload target; `registration-ui-requirement.md` requires the exact approved Back asset in the `48 × 48` target.
+- Impact: The reviewed revision fails approved accessibility/asset requirements even though local unit/build/lint checks pass. Current visual captures and hosted CI evidence are separately incomplete.
+- Route: `debug`
+- Owner: UI-002 implementation
+
 ## PLN-AUTH-007 — UI-001 implementation entry gate lacks authoritative completion evidence
 
 - Category: `planning_gap`

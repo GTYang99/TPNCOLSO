@@ -2,7 +2,7 @@ task:
   id: UI-002-auth
   type: feature
 
-phase: verification
+phase: debug
 status: in_progress
 
 knowledge:
@@ -32,9 +32,12 @@ git:
   status: committed
 
 verification:
-  result: NOT VERIFIED
-  category: null
-  failed_acceptance_criteria: []
+  result: FAIL
+  category: implementation
+  failed_acceptance_criteria:
+    - AC-UI002-001
+    - AC-UI002-009
+    - AC-UI002-010
 
 ci:
   build: PASS (local JBR Gradle)
@@ -46,4 +49,5 @@ release:
 blocking:
   - Current-revision visual captures and normalized numeric comparisons are not yet bound to reviewed revision 0815e6b.
   - No hosted/authoritative CI run evidence is available; the recorded test run is local emulator evidence.
-next_action: verification
+  - Reviewed revision has source-proven accessibility and approved-asset mismatches recorded as IMP-AUTH-013.
+next_action: implementation_debug
