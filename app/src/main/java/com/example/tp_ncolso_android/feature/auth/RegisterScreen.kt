@@ -40,10 +40,10 @@ fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEven
         Row(modifier = Modifier.fillMaxWidth().height(48.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
             TextButton(onClick = { onEvent(AuthEvent.BackToLogin) }, modifier = Modifier.size(48.dp)) {
                 val arrowColor = AppThemeTokens.colors.brandPrimary
-                Canvas(Modifier.size(24.dp).semantics { contentDescription = "返回登入頁" }) {
+                Canvas(Modifier.size(32.dp).semantics { contentDescription = "返回登入頁" }) {
                     val stroke = 2.5.dp.toPx()
-                    drawLine(arrowColor, androidx.compose.ui.geometry.Offset(16.dp.toPx(), 4.dp.toPx()), androidx.compose.ui.geometry.Offset(8.dp.toPx(), 12.dp.toPx()), stroke, cap = StrokeCap.Round)
-                    drawLine(arrowColor, androidx.compose.ui.geometry.Offset(8.dp.toPx(), 12.dp.toPx()), androidx.compose.ui.geometry.Offset(16.dp.toPx(), 20.dp.toPx()), stroke, cap = StrokeCap.Round)
+                    drawLine(arrowColor, androidx.compose.ui.geometry.Offset(20.dp.toPx(), 24.dp.toPx()), androidx.compose.ui.geometry.Offset(12.dp.toPx(), 16.dp.toPx()), stroke, cap = StrokeCap.Round)
+                    drawLine(arrowColor, androidx.compose.ui.geometry.Offset(12.dp.toPx(), 16.dp.toPx()), androidx.compose.ui.geometry.Offset(20.dp.toPx(), 8.dp.toPx()), stroke, cap = StrokeCap.Round)
                 }
             }
             Box(modifier = Modifier.weight(1f), contentAlignment = androidx.compose.ui.Alignment.Center) {
