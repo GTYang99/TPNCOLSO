@@ -286,6 +286,7 @@ fun <T> AppRadioGroup(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isError: Boolean = false,
+    labelStyle: TextStyle = AppThemeTokens.typography.fieldLabel,
 ) {
     Column(
         modifier = modifier.selectableGroup().semantics {
@@ -294,7 +295,7 @@ fun <T> AppRadioGroup(
         },
         verticalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
     ) {
-        Text(text = label, style = AppThemeTokens.typography.fieldLabel)
+        Text(text = label, style = labelStyle)
         options.forEach { option ->
             val selectedOption = selected == option
             Row(
