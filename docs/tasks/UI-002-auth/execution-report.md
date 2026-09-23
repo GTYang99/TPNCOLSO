@@ -4,7 +4,7 @@
 
 - Task: `UI-002-auth`
 - Branch: `UI-002feat`
-- Current implementation commits: `7dcde3f`, `e0f1d3a`, `7afc677`, `955ab7f`, `1d986fa`, `29464a1`, `d76cc43`, `5581b96`, `20a2342`, `73434c9`, `0894cd0`, `e9bac82`, `afcd107`, `c98291b`, `088e54d`
+- Current implementation commits: `7dcde3f`, `e0f1d3a`, `7afc677`, `955ab7f`, `1d986fa`, `29464a1`, `d76cc43`, `5581b96`, `20a2342`, `73434c9`, `0894cd0`, `e9bac82`, `afcd107`, `c98291b`, `088e54d`, `a46b9f2`
 - Date: 2026-09-08 (Asia/Taipei)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
@@ -30,6 +30,7 @@
 | Figma action-row alignment | PASS | Login action row now preserves the complete semantic text contract while rendering black `沒有帳號?` and blue `註冊` with the Figma 16sp/Medium composition. |
 | Figma input-field tokens | PASS | Runtime Login frame confirms white field containers, `#DCDFE6`-equivalent unfocused borders, primary focused borders, and `#A8ABB2` placeholder color are explicitly mapped in the shared field components. |
 | Figma skyline crop alignment | PASS | Runtime crop was tuned from `29dp` to `-4dp` against the 402×874 Figma MCP export; full unit/connected regression remains green. |
+| Figma form/captcha geometry | PASS | Shared fields now use the Figma 8dp label-control gap; captcha callback receives an explicit 139×48dp visual bound and the row is 48dp high. |
 | Release isolation scan | PASS | No debug auth source, direct-login fixture, coordinator, or fixture credential symbols found in `app/src/main` or `app/src/release`. |
 
 ## Known Gaps

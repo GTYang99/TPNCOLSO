@@ -28,7 +28,7 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: 088e54d
+  commit: a46b9f2
   status: committed
 
 verification:
