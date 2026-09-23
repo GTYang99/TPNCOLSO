@@ -7,19 +7,20 @@ This section supersedes the older round summaries for the current formal decisio
 | Provenance item | Current evidence | Classification |
 |---|---|---|
 | Requirement baseline | `KB-UI-002-AUTH-R10`; Plan Review iteration 16 `APPROVED` | PASS |
-| Implementation revision under review | Branch `UI-002feat`; parent implementation HEAD `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; `docs(UI-002): normalize implementation handoff` | PASS |
+| Previous failed implementation revision | Branch `UI-002feat`; `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; `docs(UI-002): normalize implementation handoff` | FAIL; superseded by the post-fix revision |
+| Post-fix candidate revision | Branch `UI-002feat`; `63a2379`; `fix(UI-002): restore auth accessibility and back asset contracts` | NOT VERIFIED pending formal re-evaluation |
 | Verification record revisions | `5fc0486` and follow-up `9f7b0e4` (`docs(UI-002): normalize verification provenance` / `docs(UI-002): distinguish verification revision provenance`) | PASS |
-| Unit test evidence | `testDebugUnitTest`; five XML suites, 13 tests, 0 failures/errors/skips; latest timestamp `2026-09-23T03:22:57Z` | PASS |
-| Connected test evidence | `connectedDebugAndroidTest`; 24 tests, 0 failures/errors/skips; `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`; latest timestamp `2026-09-23T03:23:40` | PASS |
-| Test command | `JAVA_HOME='/Applications/Android Studio.app/Contents/JBR/Contents/Home' ./gradlew :app:testDebugUnitTest :app:connectedDebugAndroidTest` | PASS |
+| Unit test evidence | `testDebugUnitTest`; five XML suites, 13 tests, 0 failures/errors/skips; latest timestamp `2026-09-23T06:47:13Z` | PASS |
+| Connected test evidence | `connectedDebugAndroidTest`; 24 tests, 0 failures/errors/skips; `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`; latest timestamp `2026-09-23T06:46:53` | PASS |
+| Developer-validation commands | `JAVA_HOME='/Applications/Android Studio.app/Contents/JBR/Contents/Home' ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest` and `./gradlew :app:connectedDebugAndroidTest` | PASS |
 | Visual primary authority | Requester-approved composite `docs/design/evidence/auth/auth-reference-2026-09-07.png`, SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c` | PASS |
 | Figma authority role | Figma file `HRbRsw6HoNBUCtaieX8xUM`, nodes `2905:2679` / `2997:11541`, direct export SHA-256 `bfde10cd297feb639ecc2b3fc4bc4964258bc4541174032e392c0a104e4ed2e5`; supporting design evidence, not the primary auth acceptance authority | PASS |
 | Comparison normalization | System chrome removed; debug-only `開發模式` region excluded by `login-content-only-mask.json` | PASS |
-| Current-revision visual comparison | Existing captures/diffs are from earlier implementation revisions or are not bound to HEAD `0815e6b`; Login filled/error and Register empty/filled current-state evidence is therefore not sufficient for this formal revision | NOT VERIFIED |
+| Current-revision visual comparison | Existing captures/diffs are from earlier implementation revisions or are not bound to post-fix `63a2379`; Login filled/error and Register empty/filled current-state evidence is therefore not sufficient for this formal revision | NOT VERIFIED |
 | Hosted CI | No hosted/authoritative CI run is available; local JBR Gradle and emulator evidence only | NOT VERIFIED |
 | Physical device | Explicitly out of scope by requester; emulator coverage is the applicable environment | NOT APPLICABLE |
 
-### Current formal decision
+### Previous formal decision — revision `0815e6b`
 
 `FAIL`
 
@@ -35,18 +36,24 @@ The current revision has passing local unit/build/lint evidence, but source insp
 
 These findings are implementation failures bound to reviewed revision `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; they are not inferred from screenshots.
 
+### Post-fix candidate decision — revision `63a2379`
+
+`NOT VERIFIED`
+
+The three source-proven implementation findings have been fixed and developer validation passes, but formal Verification must be rerun against this new committed revision. Current-revision visual evidence and hosted CI evidence remain outstanding.
+
 ## Verification Run Evidence — 2026-09-23
 
 - Figma file `HRbRsw6HoNBUCtaieX8xUM` was read through nodes `2905:2680`, `2905:2679`, and `2997:11541`. `2905:2680` contains Login empty/filled/error, Registration empty/filled, and Logout context; `2905:2679` is a `402 × 874` Login frame; `2997:11541` exposes the `320dp` auth column and `736 × 246` skyline at `x=-138`, `y=635`. This is `visual_observation` supporting evidence only; the approved composite PNG remains the primary visual authority.
-- Local non-device command: `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew testDebugUnitTest lintDebug assembleDebug assembleRelease` — `BUILD SUCCESSFUL` in 51s; JBR `25.0.3`; 13 unit tests passed with 0 failures/errors/skips.
-- Current runtime attempt: `adb devices` could not start the daemon and returned `Operation not permitted`; no new connected-runtime capture or test PASS is claimed for this run. Existing local API 34 evidence remains provenance-bound as recorded above.
+- Local developer validation: `JAVA_HOME="/Applications/Android Studio.app/Contents/JBR/Contents/Home" ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest` — `BUILD SUCCESSFUL`; JBR `25.0.3`; 13 unit tests passed with 0 failures/errors/skips.
+- Connected runtime validation: `JAVA_HOME="/Applications/Android Studio.app/Contents/JBR/Contents/Home" ./gradlew :app:connectedDebugAndroidTest` — `BUILD SUCCESSFUL`; 24 tests passed with 0 failures/errors/skips on `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`, timestamp `2026-09-23T06:46:53`.
 
 ## Inputs
 
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed revision for this formal round: `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08` (`docs(UI-002): normalize implementation handoff`)
+- Reviewed revision for the post-fix formal round: `63a2379` (`fix(UI-002): restore auth accessibility and back asset contracts`)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 The older round below is retained as historical evidence and is not the reviewed revision for the current formal decision.
@@ -149,10 +156,10 @@ The older round below is retained as historical evidence and is not the reviewed
 
 ## Overall Result
 
-`FAIL`
+`NOT VERIFIED`
 
-The formal result for the reviewed revision `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08` is `FAIL` because the source inspection findings above prove implementation nonconformance. Historical `PARTIAL` labels and missing visual/hosted-CI evidence remain limitations and do not constitute PASS.
+The previous formal result for `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08` was `FAIL` and routed to debug. The post-fix committed revision `63a2379` has passing developer validation, but formal Verification is not complete until the current revision is reevaluated with visual evidence and the remaining CI provenance limitation recorded.
 
 ## Next Action
 
-Route to `debug`: establish the minimum fix for the three implementation findings, then rerun the affected unit/Compose/accessibility checks and current-revision visual comparisons. Hosted CI remains an additional gate; physical-device testing remains out of scope.
+Run formal Verification for `63a2379`, including current-revision Login/Register visual comparisons and AC re-evaluation. Hosted CI remains an additional gate; physical-device testing remains out of scope.
