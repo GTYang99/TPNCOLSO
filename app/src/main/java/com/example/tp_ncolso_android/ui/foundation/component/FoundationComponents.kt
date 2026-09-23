@@ -228,10 +228,11 @@ fun <T> AppSelectField(
     enabled: Boolean = true,
     isError: Boolean = false,
     supportingText: String? = null,
+    labelStyle: TextStyle = AppThemeTokens.typography.fieldLabel,
 ) {
     var expanded by remember { mutableStateOf(false) }
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(label, style = AppThemeTokens.typography.fieldLabel)
+        Text(label, style = labelStyle)
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = { if (enabled) expanded = it },
