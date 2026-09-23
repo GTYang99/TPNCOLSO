@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,7 @@ import com.example.tp_ncolso_android.ui.foundation.component.AppTextField
 import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
 
 @Composable
-fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEvent: (AuthEvent) -> Unit, modifier: Modifier = Modifier, illustration: @Composable () -> Unit = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.register_user_illustration), contentDescription = "註冊插圖", modifier = Modifier.size(80.dp)) }) {
+fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEvent: (AuthEvent) -> Unit, modifier: Modifier = Modifier, illustration: @Composable () -> Unit = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.register_user_illustration), contentDescription = null, modifier = Modifier.size(80.dp)) }) {
     val registerLabelStyle = AppThemeTokens.typography.fieldLabel.copy(fontWeight = FontWeight.Medium)
     Column(modifier.fillMaxWidth().background(Color.White).padding(24.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(36.dp)) {
         Row(modifier = Modifier.fillMaxWidth().height(48.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
@@ -41,7 +42,7 @@ fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEven
                 Image(
                     painter = painterResource(com.example.tp_ncolso_android.R.drawable.ic_register_back_chevron),
                     contentDescription = "返回登入頁",
-                    modifier = Modifier.size(32.dp),
+                    modifier = Modifier.size(32.dp).graphicsLayer { rotationZ = 180f }.testTag("register-back-glyph"),
                 )
             }
             Box(modifier = Modifier.weight(1f), contentAlignment = androidx.compose.ui.Alignment.Center) {

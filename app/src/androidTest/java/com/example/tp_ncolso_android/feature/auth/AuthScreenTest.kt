@@ -99,6 +99,7 @@ class AuthScreenTest {
         composeRule.onNodeWithText("內業人員").assertIsDisplayed()
         composeRule.onNodeWithTag("register-back").assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
         composeRule.onNodeWithContentDescription("返回登入頁").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("註冊插圖").assertDoesNotExist()
     }
 
     @Test fun registerCancelDispatchesBackToLogin() {
