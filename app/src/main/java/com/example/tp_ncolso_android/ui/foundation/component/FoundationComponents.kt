@@ -93,7 +93,7 @@ fun AppTextField(
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
             singleLine = singleLine,
-            textStyle = AppThemeTokens.typography.body.copy(color = AppThemeTokens.colors.textPrimary),
+            textStyle = AppThemeTokens.typography.body.copy(color = AppThemeTokens.colors.textSecondary),
         )
     }
 }
@@ -148,7 +148,7 @@ fun AppPasswordField(
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
             singleLine = singleLine,
-            textStyle = AppThemeTokens.typography.body.copy(color = AppThemeTokens.colors.textPrimary),
+            textStyle = AppThemeTokens.typography.body.copy(color = AppThemeTokens.colors.textSecondary),
         )
     }
 }
@@ -253,7 +253,7 @@ fun <T> AppSelectField(
                     )
                 },
                 supportingText = supportingText?.let { { Text(it) } },
-                textStyle = AppThemeTokens.typography.body.copy(color = AppThemeTokens.colors.textPrimary),
+                textStyle = AppThemeTokens.typography.body.copy(color = AppThemeTokens.colors.textSecondary),
                 modifier = Modifier
                     .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled)
                     .fillMaxWidth(),
