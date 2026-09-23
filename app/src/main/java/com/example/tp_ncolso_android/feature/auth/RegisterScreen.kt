@@ -61,10 +61,10 @@ fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEven
         AppRadioGroup(WorkType.entries, state.workType, { onEvent(AuthEvent.WorkTypeSelected(it)) }, { if (it == WorkType.FIELD) "外業人員" else "內業人員" }, "作業性質", labelStyle = registerLabelStyle)
         state.fieldErrors[RegisterField.WORK_TYPE]?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("register-work-type-error")) }
         AppTextField(state.name, { onEvent(AuthEvent.RegisterNameChanged(it)) }, "姓名(請輸入真實姓名)", placeholder = "請輸入", isError = state.fieldErrors.containsKey(RegisterField.NAME), supportingText = state.fieldErrors[RegisterField.NAME], labelStyle = registerLabelStyle)
+        }
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth()) {
             AppSecondaryButton("取消", { onEvent(AuthEvent.CancelRegister) }, modifier = Modifier.weight(1f))
             AppPrimaryButton("完成", { onEvent(AuthEvent.SubmitRegister) }, enabled = !state.submitting, modifier = Modifier.weight(1f).testTag("register-submit"))
-        }
         }
     }
 }
