@@ -15,6 +15,7 @@
 - Shared 48dp text/password controls use Material 3 `OutlinedTextFieldDefaults.DecorationBox` with explicit horizontal padding, preventing filled-value clipping while retaining existing tokens and accessibility behavior.
 - `testDebugUnitTest` and `connectedDebugAndroidTest` both PASS on `Medium_Phone` API 34 in the final run.
 - Developer validation is complete. Verification remains `PARTIAL` because current-revision Register root screenshot/numeric diff evidence and the existing visual acceptance gaps are not all closed.
+- Subsequent Figma-alignment revisions through `322ba84` also cover the Register dropdown asset, radio indicator/row geometry, white surface and text tokens, work-type label token, and the root-level action-row spacing contract. Each revision passed the same unit and API 34 emulator validation.
 
 ## Implemented Scope
 
