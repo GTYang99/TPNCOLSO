@@ -108,7 +108,13 @@ fun LoginScreen(
                         .semantics { contentDescription = "重整" }
                         .testTag("captcha-refresh"),
                     contentAlignment = Alignment.Center,
-                ) { Text("重整", color = AppThemeTokens.colors.brandPrimary) }
+                ) {
+                    Image(
+                        painter = painterResource(com.example.tp_ncolso_android.R.drawable.ic_reload),
+                        contentDescription = null,
+                        modifier = Modifier.size(32.dp),
+                    )
+                }
             }
             state.captchaError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("captcha-error")) }
             state.requestError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("login-request-error").semantics { error(it) }) }
