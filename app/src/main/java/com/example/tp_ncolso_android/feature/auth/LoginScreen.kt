@@ -52,7 +52,7 @@ fun LoginScreen(
     state: LoginFormState,
     onEvent: (AuthEvent) -> Unit,
     modifier: Modifier = Modifier,
-    captchaVisual: @Composable () -> Unit = { Text(state.captchaImageKey, color = AppThemeTokens.colors.textSecondary) },
+    captchaVisual: @Composable (Modifier) -> Unit = { modifier -> Text(state.captchaImageKey, color = AppThemeTokens.colors.textSecondary, modifier = modifier) },
 ) {
     Box(modifier.fillMaxSize().background(Brush.verticalGradient(listOf(AppThemeTokens.colors.surface, AppThemeTokens.colors.surfaceMuted)))) {
     val skyline = ImageBitmap.imageResource(com.example.tp_ncolso_android.R.drawable.login_city_skyline)
@@ -68,7 +68,7 @@ fun LoginScreen(
         Modifier
             .width(320.dp)
             .align(Alignment.Center)
-            .offset(y = (-47).dp)
+            .offset(y = (-40).dp)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
@@ -98,11 +98,11 @@ fun LoginScreen(
                 Box(
                     modifier = Modifier
                         .width(139.dp)
-                        .height(56.dp)
+                        .height(48.dp)
                         .semantics { contentDescription = "驗證碼圖片" }
                         .testTag("captcha-image"),
                     contentAlignment = Alignment.Center,
-                ) { captchaVisual() }
+                ) { captchaVisual(Modifier.width(139.dp).height(48.dp)) }
                 Box(
                     modifier = Modifier
                         .width(32.dp)

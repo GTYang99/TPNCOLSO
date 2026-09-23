@@ -134,7 +134,7 @@ class AuthScreenTest {
                 LoginScreen(
                     LoginFormState(account = "sunrise000", password = "password", captcha = "0926", rememberMe = true),
                     {},
-                    captchaVisual = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片") },
+                    captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
                 )
             }
         }
@@ -153,7 +153,7 @@ class AuthScreenTest {
                 LoginScreen(
                     LoginFormState(),
                     {},
-                    captchaVisual = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片") },
+                    captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
                 )
             }
         }
@@ -172,7 +172,7 @@ class AuthScreenTest {
                 LoginScreen(
                     LoginFormState(account = "sunrise000", password = "password", captcha = "0926", rememberMe = true, requestError = "帳號、密碼或驗證碼錯誤"),
                     {},
-                    captchaVisual = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片") },
+                    captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
                 )
             }
         }

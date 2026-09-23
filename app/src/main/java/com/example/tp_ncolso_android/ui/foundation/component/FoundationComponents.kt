@@ -75,7 +75,7 @@ fun AppTextField(
     labelStyle: TextStyle = AppThemeTokens.typography.fieldLabel,
 ) {
     val displayLabel = if (required) "$label *" else label
-    Column(modifier.fillMaxWidth()) {
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(displayLabel, style = labelStyle, modifier = Modifier.semantics { if (!enabled) disabled() })
         OutlinedTextField(
             value = value,
@@ -129,7 +129,7 @@ fun AppPasswordField(
     labelStyle: TextStyle = AppThemeTokens.typography.fieldLabel,
 ) {
     val displayLabel = if (required) "$label *" else label
-    Column(modifier.fillMaxWidth()) {
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(displayLabel, style = labelStyle, modifier = Modifier.semantics { if (!enabled) disabled() })
         OutlinedTextField(
             value = value,

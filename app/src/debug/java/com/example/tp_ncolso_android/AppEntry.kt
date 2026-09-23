@@ -50,7 +50,7 @@ fun AppEntry() {
                         viewModel = authViewModel,
                         onLoginSucceeded = { coordinator.login(AppRole.INVESTIGATOR) },
                         onLogoutRequested = coordinator::logout,
-                        captchaVisual = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片") },
+                        captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
                     )
                 },
                 directLoginContent = { DebugDirectLogin(onLogin = coordinator::login) },

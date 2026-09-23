@@ -1,6 +1,7 @@
 package com.example.tp_ncolso_android.feature.auth
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 
 @Composable
 fun AuthHost(
@@ -8,7 +9,7 @@ fun AuthHost(
     onLoginSucceeded: () -> Unit,
     onRegistrationSucceeded: () -> Unit = {},
     onLogoutRequested: () -> Unit = {},
-    captchaVisual: @Composable () -> Unit = {},
+    captchaVisual: @Composable (Modifier) -> Unit = {},
 ) {
     AuthRoute(
         viewModel = viewModel,
