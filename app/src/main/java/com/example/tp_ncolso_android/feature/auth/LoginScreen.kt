@@ -30,6 +30,9 @@ import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -123,13 +126,14 @@ fun LoginScreen(
             Box(
                 modifier = Modifier
                     .height(40.dp)
-                    .clickable(role = Role.Button) { onEvent(AuthEvent.OpenRegister) }
-                    .semantics { contentDescription = "沒有帳號? 註冊" },
+                    .clickable(role = Role.Button) { onEvent(AuthEvent.OpenRegister) },
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    "沒有帳號? 註冊",
-                    color = AppThemeTokens.colors.brandPrimary,
+                    buildAnnotatedString {
+                        withStyle(SpanStyle(color = AppThemeTokens.colors.textPrimary)) { append("沒有帳號? ") }
+                        withStyle(SpanStyle(color = AppThemeTokens.colors.brandPrimary)) { append("註冊") }
+                    },
                     style = AppThemeTokens.typography.body.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.Medium),
                 )
             }

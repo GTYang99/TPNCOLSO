@@ -51,6 +51,7 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -283,7 +284,7 @@ fun AppCheckboxRow(
         ) {
             if (checked) Text("✓", color = Color.White, fontSize = 11.sp, lineHeight = 11.sp)
         }
-        Text(label, style = AppThemeTokens.typography.body)
+        Text(label, style = AppThemeTokens.typography.body.copy(fontWeight = FontWeight.Medium))
     }
 }
 
