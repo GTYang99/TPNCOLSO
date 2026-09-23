@@ -7,7 +7,8 @@ This section supersedes the older round summaries for the current formal decisio
 | Provenance item | Current evidence | Classification |
 |---|---|---|
 | Requirement baseline | `KB-UI-002-AUTH-R10`; Plan Review iteration 16 `APPROVED` | PASS |
-| Reviewed revision | Branch `UI-002feat`; HEAD `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; `docs(UI-002): normalize implementation handoff` | PASS |
+| Implementation revision under review | Branch `UI-002feat`; parent implementation HEAD `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; `docs(UI-002): normalize implementation handoff` | PASS |
+| Verification record revision | `5fc0486` (`docs(UI-002): normalize verification provenance`), containing this provenance decision | PASS |
 | Unit test evidence | `testDebugUnitTest`; five XML suites, 13 tests, 0 failures/errors/skips; latest timestamp `2026-09-23T03:22:57Z` | PASS |
 | Connected test evidence | `connectedDebugAndroidTest`; 24 tests, 0 failures/errors/skips; `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`; latest timestamp `2026-09-23T03:23:40` | PASS |
 | Test command | `JAVA_HOME='/Applications/Android Studio.app/Contents/JBR/Contents/Home' ./gradlew :app:testDebugUnitTest :app:connectedDebugAndroidTest` | PASS |
