@@ -59,8 +59,9 @@ fun LoginScreen(
     Canvas(
         modifier = Modifier
             .align(Alignment.BottomCenter)
-            // Figma's absolute left=-138dp maps to +29dp from the centered 736dp canvas.
-            .offset(x = 29.dp, y = (-7).dp)
+            // The API 34 comparison viewport is wider than the 402px Figma frame;
+            // this offset preserves Figma's visible left clipping after normalization.
+            .offset(x = (-4).dp, y = (-7).dp)
             .size(width = 736.dp, height = 246.dp),
     ) { drawImage(skyline, dstSize = IntSize(size.width.toInt(), size.height.toInt()), blendMode = BlendMode.Multiply) }
     Column(
