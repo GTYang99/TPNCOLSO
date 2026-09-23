@@ -5,6 +5,7 @@ import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.onAllNodesWithText
@@ -46,6 +47,8 @@ class AuthScreenTest {
         composeRule.onNodeWithText("記住我").assertIsDisplayed()
         composeRule.onNodeWithText("登入").assertIsDisplayed()
         composeRule.onNodeWithText("沒有帳號? 註冊").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("品牌標誌").assertDoesNotExist()
+        composeRule.onNodeWithContentDescription("重新產生驗證碼").assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
     }
 
     @Test fun loginRegisterEntryDispatchesEvent() {
@@ -67,6 +70,7 @@ class AuthScreenTest {
         }
         composeRule.onNodeWithTag("captcha-image").assertWidthIsEqualTo(139.dp).assertHeightIsEqualTo(48.dp)
         composeRule.onNodeWithTag("captcha-refresh").assertWidthIsEqualTo(32.dp).assertHeightIsEqualTo(48.dp)
+        composeRule.onNodeWithContentDescription("重新產生驗證碼").assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
     }
 
     @Test fun loginAuthErrorKeepsValuesAndShowsAccessibleGlobalMessage() {
@@ -93,6 +97,8 @@ class AuthScreenTest {
         composeRule.onNodeWithText("姓名(請輸入真實姓名)").assertIsDisplayed()
         composeRule.onNodeWithText("外業人員").assertIsDisplayed()
         composeRule.onNodeWithText("內業人員").assertIsDisplayed()
+        composeRule.onNodeWithTag("register-back").assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
+        composeRule.onNodeWithContentDescription("返回登入頁").assertIsDisplayed()
     }
 
     @Test fun registerCancelDispatchesBackToLogin() {

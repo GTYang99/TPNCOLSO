@@ -15,8 +15,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.Canvas
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.runtime.Composable
@@ -39,13 +37,12 @@ fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEven
     val registerLabelStyle = AppThemeTokens.typography.fieldLabel.copy(fontWeight = FontWeight.Medium)
     Column(modifier.fillMaxWidth().background(Color.White).padding(24.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(36.dp)) {
         Row(modifier = Modifier.fillMaxWidth().height(48.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-            TextButton(onClick = { onEvent(AuthEvent.BackToLogin) }, modifier = Modifier.size(48.dp)) {
-                val arrowColor = AppThemeTokens.colors.brandPrimary
-                Canvas(Modifier.size(32.dp).semantics { contentDescription = "返回登入頁" }) {
-                    val stroke = 2.5.dp.toPx()
-                    drawLine(arrowColor, androidx.compose.ui.geometry.Offset(20.dp.toPx(), 24.dp.toPx()), androidx.compose.ui.geometry.Offset(12.dp.toPx(), 16.dp.toPx()), stroke, cap = StrokeCap.Round)
-                    drawLine(arrowColor, androidx.compose.ui.geometry.Offset(12.dp.toPx(), 16.dp.toPx()), androidx.compose.ui.geometry.Offset(20.dp.toPx(), 8.dp.toPx()), stroke, cap = StrokeCap.Round)
-                }
+            TextButton(onClick = { onEvent(AuthEvent.BackToLogin) }, modifier = Modifier.size(48.dp).testTag("register-back")) {
+                Image(
+                    painter = painterResource(com.example.tp_ncolso_android.R.drawable.ic_register_back_chevron),
+                    contentDescription = "返回登入頁",
+                    modifier = Modifier.size(32.dp),
+                )
             }
             Box(modifier = Modifier.weight(1f), contentAlignment = androidx.compose.ui.Alignment.Center) {
                 Text("註冊", style = AppThemeTokens.typography.sectionTitle.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp, lineHeight = 28.sp, color = AppThemeTokens.colors.textPrimary))

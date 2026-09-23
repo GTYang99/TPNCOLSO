@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.Image
@@ -29,6 +30,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -72,10 +74,10 @@ fun LoginScreen(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().semantics { heading() }) {
             Image(
                 painter = painterResource(com.example.tp_ncolso_android.R.drawable.login_brand_logo),
-                contentDescription = "品牌標誌",
+                contentDescription = null,
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier.size(width = 96.dp, height = 65.dp),
             )
@@ -104,19 +106,23 @@ fun LoginScreen(
                     contentAlignment = Alignment.Center,
                 ) { captchaVisual(Modifier.width(139.dp).height(48.dp)) }
                 Box(
-                    modifier = Modifier
-                        .width(32.dp)
-                        .height(48.dp)
-                        .clickable(role = Role.Button) { onEvent(AuthEvent.RefreshCaptcha) }
-                        .semantics { contentDescription = "重整" }
-                        .testTag("captcha-refresh"),
+                    modifier = Modifier.width(32.dp).height(48.dp).testTag("captcha-refresh"),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Image(
-                        painter = painterResource(com.example.tp_ncolso_android.R.drawable.ic_reload),
-                        contentDescription = null,
-                        modifier = Modifier.size(32.dp),
-                    )
+                    Box(
+                        modifier = Modifier
+                            .offset(x = (-8).dp)
+                            .requiredSize(48.dp)
+                            .clickable(role = Role.Button) { onEvent(AuthEvent.RefreshCaptcha) }
+                            .semantics { contentDescription = "重新產生驗證碼" },
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Image(
+                            painter = painterResource(com.example.tp_ncolso_android.R.drawable.ic_reload),
+                            contentDescription = null,
+                            modifier = Modifier.size(32.dp),
+                        )
+                    }
                 }
             }
             state.captchaError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("captcha-error")) }
