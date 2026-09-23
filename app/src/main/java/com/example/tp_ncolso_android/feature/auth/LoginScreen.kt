@@ -120,7 +120,7 @@ fun LoginScreen(
                 }
             }
             state.captchaError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("captcha-error")) }
-            state.requestError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("login-request-error").semantics { error(it) }) }
+            state.requestError?.let { Text(it, color = AppThemeTokens.colors.errorText, modifier = Modifier.testTag("login-request-error").semantics { error(it) }) }
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             AppCheckboxRow(state.rememberMe, { onEvent(AuthEvent.RememberMeChanged(it)) }, "記住我", modifier = Modifier.weight(1f))
