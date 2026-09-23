@@ -8,6 +8,14 @@
 - Date: 2026-09-08 (Asia/Taipei)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
+## Latest Implementation Closure
+
+- Revision: `0f7cbe8` on `UI-002feat` (implementation `f19c53f`).
+- Register vendor control now uses an external label, `請選擇` placeholder, 48dp control geometry, and vendor error supporting text/semantics.
+- Shared 48dp text/password controls use Material 3 `OutlinedTextFieldDefaults.DecorationBox` with explicit horizontal padding, preventing filled-value clipping while retaining existing tokens and accessibility behavior.
+- `testDebugUnitTest` and `connectedDebugAndroidTest` both PASS on `Medium_Phone` API 34 in the final run.
+- Developer validation is complete. Verification remains `PARTIAL` because current-revision Register root screenshot/numeric diff evidence and the existing visual acceptance gaps are not all closed.
+
 ## Implemented Scope
 
 - Source-neutral auth contract, immutable Login/Register state, events and one-shot effects.
