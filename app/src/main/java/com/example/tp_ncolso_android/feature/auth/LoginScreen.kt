@@ -61,7 +61,7 @@ fun LoginScreen(
             .align(Alignment.BottomCenter)
             // The API 34 comparison viewport is wider than the 402px Figma frame;
             // this offset preserves Figma's visible left clipping after normalization.
-            .offset(x = (-4).dp, y = (-7).dp)
+            .offset(x = (-4).dp, y = 7.dp)
             .size(width = 736.dp, height = 246.dp),
     ) { drawImage(skyline, dstSize = IntSize(size.width.toInt(), size.height.toInt()), blendMode = BlendMode.Multiply) }
     Column(
