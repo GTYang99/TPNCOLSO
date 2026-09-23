@@ -31,7 +31,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -121,7 +120,19 @@ fun LoginScreen(
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             AppCheckboxRow(state.rememberMe, { onEvent(AuthEvent.RememberMeChanged(it)) }, "記住我", modifier = Modifier.weight(1f))
-            TextButton(onClick = { onEvent(AuthEvent.OpenRegister) }) { Text("沒有帳號? 註冊") }
+            Box(
+                modifier = Modifier
+                    .height(40.dp)
+                    .clickable(role = Role.Button) { onEvent(AuthEvent.OpenRegister) }
+                    .semantics { contentDescription = "沒有帳號? 註冊" },
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    "沒有帳號? 註冊",
+                    color = AppThemeTokens.colors.brandPrimary,
+                    style = AppThemeTokens.typography.body.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.Medium),
+                )
+            }
         }
         AppPrimaryButton("登入", { onEvent(AuthEvent.SubmitLogin) }, enabled = !state.submitting, modifier = Modifier.fillMaxWidth().testTag("login-submit"))
     }
