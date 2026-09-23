@@ -298,38 +298,45 @@ fun <T> AppRadioGroup(
         Text(text = label, style = labelStyle)
         options.forEach { option ->
             val selectedOption = selected == option
-            Row(
+            androidx.compose.foundation.layout.Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = AppThemeTokens.spacing.minimumTouchTarget)
+                    .height(AppThemeTokens.spacing.minimumTouchTarget)
                     .selectable(
                         selected = selectedOption,
                         enabled = enabled,
                         role = Role.RadioButton,
                         onClick = { onSelect(option) },
-                    )
-                    .padding(horizontal = AppThemeTokens.spacing.lg),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
+                    ),
+                contentAlignment = Alignment.CenterStart,
             ) {
-                androidx.compose.foundation.layout.Box(
+                Row(
                     modifier = Modifier
-                        .size(14.dp)
-                        .background(Color.White, CircleShape)
-                        .border(
-                            width = 2.dp,
-                            color = if (selectedOption) AppThemeTokens.colors.brandPrimary else Color(0xFFCDD0D6),
-                            shape = CircleShape,
-                        ),
-                    contentAlignment = Alignment.Center,
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .padding(horizontal = AppThemeTokens.spacing.lg),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
                 ) {
-                    if (selectedOption) {
-                        androidx.compose.foundation.layout.Box(
-                            modifier = Modifier.size(10.dp).background(AppThemeTokens.colors.brandPrimary, CircleShape),
-                        )
+                    androidx.compose.foundation.layout.Box(
+                        modifier = Modifier
+                            .size(14.dp)
+                            .background(Color.White, CircleShape)
+                            .border(
+                                width = 2.dp,
+                                color = if (selectedOption) AppThemeTokens.colors.brandPrimary else Color(0xFFCDD0D6),
+                                shape = CircleShape,
+                            ),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        if (selectedOption) {
+                            androidx.compose.foundation.layout.Box(
+                                modifier = Modifier.size(10.dp).background(AppThemeTokens.colors.brandPrimary, CircleShape),
+                            )
+                        }
                     }
+                    Text(itemLabel(option), style = AppThemeTokens.typography.body)
                 }
-                Text(itemLabel(option), style = AppThemeTokens.typography.body)
             }
         }
     }
