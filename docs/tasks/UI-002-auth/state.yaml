@@ -32,9 +32,13 @@ git:
   status: committed
 
 verification:
-  result: PASS
-  category: null
-  failed_acceptance_criteria: []
+  result: NOT VERIFIED
+  category: evidence_missing
+  failed_acceptance_criteria:
+    - AC-UI002-006
+    - AC-UI002-007
+    - AC-UI002-008
+    - AC-UI002-011
 
 ci:
   build: PASS (local JBR Gradle, 14dc640)
@@ -44,6 +48,6 @@ release:
   status: pending
 
 blocking:
-  - Current 14dc640 five-state visual comparison passes against the approved composite; hosted/authoritative CI evidence is still unavailable.
-  - No hosted/authoritative CI run evidence is available; the recorded build/test run is local JBR/emulator evidence.
+  - Current 14dc640 five-state visual comparison passes against the approved composite; AC-UI002-009/010 are PASS at visual scope.
+  - AC-UI002-006/007/008/011 and hosted/authoritative CI evidence remain unavailable, so overall Verification is NOT VERIFIED.
 next_action: ci

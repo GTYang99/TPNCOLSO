@@ -4,7 +4,7 @@
 
 This section supersedes the older round summaries for the current formal decision. Historical `PARTIAL` labels are retained as historical progress records only; the current formal result is restricted to `PASS`, `FAIL`, or `NOT VERIFIED`.
 
-Current formal result: `PASS` for `14dc640`. The prior `FAIL` decision for `db7dfbe782d3537b5f618af2735964913ce580b7` is retained as historical debug input; this round independently proves the focused composition fix against all five approved states. Hosted CI remains a separate `NOT VERIFIED` gate.
+Current formal result: `NOT VERIFIED` for `14dc640`. The visual subresult for AC-UI002-009/010 is `PASS`; the overall result remains `NOT VERIFIED` because AC-UI002-006/007/008/011 and hosted CI do not have current reproducible evidence. The prior `FAIL` decision for `db7dfbe782d3537b5f618af2735964913ce580b7` is retained as historical debug input.
 
 | Provenance item | Current evidence | Classification |
 |---|---|---|
@@ -25,11 +25,11 @@ Current formal result: `PASS` for `14dc640`. The prior `FAIL` decision for `db7d
 
 ### Current formal decision — revision `14dc640`
 
-`PASS`
+`NOT VERIFIED`
 
 The focused fix moves the Login header/form rhythm to the approved anchors, corrects the skyline visible baseline/crop, and moves the Register content origin to the approved vertical rhythm. All five states were recaptured from `14dc640`; metrics are Login empty `10.6668 / 36.7331 / 0.094388`, filled `11.2977 / 38.2649 / 0.098251`, auth-error `23.1447 / 59.4883 / 0.169743`; Register empty `5.8065 / 27.8070 / 0.062444`, filled `7.1941 / 31.9965 / 0.070508` (MAE / RMSE / over-threshold ratio, RGB threshold `20`). Direct review confirms the five state compositions align with the approved composite after system chrome and debug-only masking.
 
-This proves `AC-UI002-009` and `AC-UI002-010` for the reviewed revision. Local build, lint, release, unit and connected evidence passes. `AC-UI002-006`, `AC-UI002-007`, `AC-UI002-008`, and `AC-UI002-011` remain `NOT VERIFIED`; hosted CI is unavailable and is not converted into a PASS claim.
+This proves `AC-UI002-009` and `AC-UI002-010` for the reviewed revision at visual scope. Local build, lint, release, unit and connected evidence passes. `AC-UI002-006`, `AC-UI002-007`, `AC-UI002-008`, and `AC-UI002-011` remain `NOT VERIFIED`; hosted CI is unavailable. Under the Verification Rule, the overall result is therefore `NOT VERIFIED`, not PASS.
 
 ### Previous formal decision — revision `63a2379`
 
