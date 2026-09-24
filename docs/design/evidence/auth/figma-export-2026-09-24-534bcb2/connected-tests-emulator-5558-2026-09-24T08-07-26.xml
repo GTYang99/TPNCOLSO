@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuites tests="25" failures="0" errors="0" skipped="0" time="0.000" timestamp="2026-09-24T08:07:26" hostname="localhost">
+  <testsuite name="com.example.tp_ncolso_android.DebugDirectLoginTest" tests="2" failures="0" errors="0" skipped="0" time="19.388" timestamp="2026-09-24T08:07:26" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5558" />
+    </properties>
+    <testcase name="directLoginAndLogoutReturnToSignedOut" classname="com.example.tp_ncolso_android.DebugDirectLoginTest" time="11.735" />
+    <testcase name="initialStateShowsDebugModeAndRoles" classname="com.example.tp_ncolso_android.DebugDirectLoginTest" time="7.653" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.ExampleInstrumentedTest" tests="1" failures="0" errors="0" skipped="0" time="0.110" timestamp="2026-09-24T08:07:26" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5558" />
+    </properties>
+    <testcase name="useAppContext" classname="com.example.tp_ncolso_android.ExampleInstrumentedTest" time="0.110" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" tests="13" failures="0" errors="0" skipped="0" time="121.607" timestamp="2026-09-24T08:07:26" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5558" />
+    </properties>
+    <testcase name="registerRendersSixFieldsAndUnselectedWorkType" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="8.484" />
+    <testcase name="loginAuthErrorKeepsValuesAndShowsAccessibleGlobalMessage" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="7.734" />
+    <testcase name="loginRegisterEntryDispatchesEvent" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="13.118" />
+    <testcase name="loginRendersRequiredEntryPoints" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.682" />
+    <testcase name="captureLoginFilledStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="7.290" />
+    <testcase name="captureRegisterEmptyStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="11.477" />
+    <testcase name="registerFilledStateUsesPlaintextFieldsWithoutVisibilityAction" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="6.775" />
+    <testcase name="loginCaptchaVisualUsesFigmaBounds" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="7.670" />
+    <testcase name="captureLoginAuthErrorStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="10.686" />
+    <testcase name="registerCancelDispatchesBackToLogin" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="10.767" />
+    <testcase name="captureRegisterFilledStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="11.682" />
+    <testcase name="captureLoginEmptyStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="10.721" />
+    <testcase name="registerShowsWorkTypeValidationMessage" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="5.521" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" tests="9" failures="0" errors="0" skipped="0" time="14.139" timestamp="2026-09-24T08:07:26" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5558" />
+    </properties>
+    <testcase name="passwordVisibilityActionTogglesCallerState" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="2.089" />
+    <testcase name="passwordFieldCanDisableVisibilityAction" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="1.401" />
+    <testcase name="checkboxRowUsesFullSelectableRow" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="1.579" />
+    <testcase name="radioGroupAllowsExactlyOneSelectedOption" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="1.148" />
+    <testcase name="loadingButtonSuppressesClick" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="1.323" />
+    <testcase name="iconButtonExposesDescriptionAndClickAction" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="1.607" />
+    <testcase name="passwordFieldSupportsRequiredDisabledReadonlyAndErrorSemantics" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="1.572" />
+    <testcase name="textFieldShowsRequiredLabelAndErrorText" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="1.570" />
+    <testcase name="selectStatusReadOnlyLoadingAndErrorExposeContent" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="1.850" />
+  </testsuite>
+</testsuites>

@@ -4,26 +4,26 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 
 | Requirement | Implementation/evidence | Status |
 |---|---|---|
-| UIR-LOGIN-001 | `LoginScreen.kt` gradient, responsive auth column, composite-compatible skyline; five-state artifact exists but current runtime provenance is excluded pending emulator-authoritative recapture. | NOT VERIFIED |
+| UIR-LOGIN-001 | `LoginScreen.kt` gradient, responsive auth column, composite-compatible skyline; `numeric-diff-f83eaa0.json` is emulator-authoritative and confirms the five-state composition. | PASS (local emulator visual scope) |
 | UIR-LOGIN-002 | `LoginScreen.kt` 96×65 logo/title row; `login_brand_logo.png` checksum in asset manifest. | PASS |
-| UIR-LOGIN-003 | Account/password `AppTextField`/`AppPasswordField`; current connected/runtime evidence is not authoritative until emulator rerun succeeds. | NOT VERIFIED |
-| UIR-LOGIN-004 | Captcha input/image/reload row and `DebugCaptchaProvider`; current connected/runtime evidence is not authoritative until emulator rerun succeeds. | NOT VERIFIED |
-| UIR-LOGIN-005 | Empty/filled/error artifact is present in `figma-export-2026-09-24-534bcb2/numeric-diff-534bcb2.json`, but its runtime target is excluded; emulator-authoritative recapture is pending. | NOT VERIFIED |
-| UIR-LOGIN-006 | `LoginScreen.kt` maps field/request errors to all credential controls and accessible supporting text; current runtime error evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
-| UIR-LOGIN-007 | Remember-me row and register action exist; current connected test and capture evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
-| UIR-LOGIN-008 | `AppPrimaryButton` and `submitting` guard exist; current connected and geometry evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
+| UIR-LOGIN-003 | Account/password `AppTextField`/`AppPasswordField`; current connected suite and filled/error emulator captures pass the local runtime scope. | PASS (local emulator scope) |
+| UIR-LOGIN-004 | Captcha input/image/reload row and `DebugCaptchaProvider`; current connected suite and five-state emulator evidence pass the local runtime scope. | PASS (local emulator scope) |
+| UIR-LOGIN-005 | Empty/filled/error are recorded in `numeric-diff-f83eaa0.json` from `emulator-5558`. | PASS (local emulator visual scope) |
+| UIR-LOGIN-006 | `LoginScreen.kt` maps field/request errors to all credential controls and accessible supporting text; current error capture and connected assertions pass the local scope. | PASS (local emulator scope) |
+| UIR-LOGIN-007 | Remember-me row and register action are visible in the current empty/filled/error captures and connected suite. | PASS (local emulator visual scope) |
+| UIR-LOGIN-008 | `AppPrimaryButton` and `submitting` guard exist; current five-state emulator evidence confirms the action geometry. | PASS (local emulator scope) |
 | UIR-LOGIN-009 | Supporting Figma export, composite-compatible skyline asset, logo, captcha and SHA-256 records are in asset/evidence files; Figma-only skyline candidate was rejected by silhouette comparison. | PASS |
 | UIR-LOGIN-010 | Scroll container is implemented; the full current-revision narrow/IME/font-scale matrix is not re-executed. | NOT VERIFIED |
-| UIR-REG-001 | `RegisterScreen.kt` uses the approved content origin/rhythm and scroll; current comparison artifact exists but runtime provenance is excluded pending emulator-authoritative recapture. | NOT VERIFIED |
-| UIR-REG-002 | Balanced 48dp top-bar slots, 80dp illustration slot, and approved left-facing back arrow inside the 48dp control are implemented; current runtime evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
-| UIR-REG-003 | Six controls and labels implemented; current connected test evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
-| UIR-REG-004 | Plaintext fields are implemented; current captures/comparison are recorded but runtime provenance is excluded pending emulator-authoritative recapture. | NOT VERIFIED |
-| UIR-REG-005 | `AppSelectField` receives injected vendor options; current selection/runtime evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
-| UIR-REG-006 | Null/required work-type error and radio group implemented; current connected test evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
-| UIR-REG-007 | Cancel/complete buttons and submit guard implemented; current connected test evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
-| UIR-REG-008 | Back/cancel/success events are implemented in auth coordinator; current connected contract evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
+| UIR-REG-001 | `RegisterScreen.kt` uses the approved content origin/rhythm and scroll; `numeric-diff-f83eaa0.json` confirms emulator-authoritative empty/filled composition. | PASS (local emulator visual scope) |
+| UIR-REG-002 | Balanced 48dp top-bar slots, 80dp illustration slot, and approved left-facing back arrow inside the 48dp control are implemented and covered by the current connected suite. | PASS (local emulator scope) |
+| UIR-REG-003 | Six controls and labels are implemented and covered by the current connected suite/captures. | PASS (local emulator scope) |
+| UIR-REG-004 | Plaintext fields are implemented and confirmed in the current filled emulator capture. | PASS (local emulator visual scope) |
+| UIR-REG-005 | `AppSelectField` receives injected vendor options and is covered by the current connected suite. | PASS (local emulator scope) |
+| UIR-REG-006 | Null/required work-type error and horizontal radio group are implemented and covered by the current connected suite. | PASS (local emulator scope) |
+| UIR-REG-007 | Cancel/complete buttons and submit guard are implemented; current filled capture shows both actions fully visible. | PASS (local emulator visual scope) |
+| UIR-REG-008 | Back/cancel/success events are implemented in auth coordinator and current connected contract tests pass. | PASS (local emulator scope) |
 | UIR-REG-009 | Validation and plaintext boundary unit tests exist; no persistence/logging path is used by the feature. | PASS |
-| UIR-REG-010 | Illustration asset is runtime-consumed and traceability/comparison artifacts exist, but runtime provenance is excluded pending emulator-authoritative recapture. | NOT VERIFIED |
+| UIR-REG-010 | Illustration asset is runtime-consumed and traceability/comparison artifacts exist; current empty/filled captures are emulator-authoritative. | PASS (local emulator visual scope) |
 | UIR-REG-011 | Scroll support exists and current filled evidence confirms fields/actions are usable without horizontal clipping; full current responsive matrix remains unexecuted. | NOT VERIFIED |
 
 ## Current revision comparison addendum — 2026-09-23

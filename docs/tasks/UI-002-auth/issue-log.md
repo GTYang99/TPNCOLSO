@@ -12,6 +12,19 @@
 - Route: `infrastructure`
 - Owner: Android runtime / environment
 
+## IMP-AUTH-017 — Residual viewport anchor mismatch after `534bcb2`
+
+- Category: `implementation_failure`
+- Priority: `P1`
+- Status: resolved
+- Revision: `f83eaa0` (`fix(UI-002): align auth viewport anchors`)
+- Reproduction: current emulator-root normalized captures showed the Login skyline ending 67dp above the viewport, Login content/button shifted downward, and the Register action row clipped at the 402×874 bottom edge.
+- Root cause: Login used a negative skyline offset and an oversized top/button rhythm; Register used a 40dp top origin and the action row remained below the approved viewport after the corrected horizontal radio layout.
+- Fix: skyline offset is restored to the viewport edge, Login top/button anchors are tightened, Register top origin is 24dp, and the action row is placed 12dp upward without changing its 48dp controls or events.
+- Evidence: `numeric-diff-f83eaa0.json`; five emulator-only states on `emulator-5558` at API 34; MAE Login empty/filled/error `10.5298/10.7950/22.9243`, Register empty/filled `5.8778/6.3757`; direct review confirms the bottom skyline and action row are visible and aligned.
+- Route: `verification`
+- Owner: UI-002 implementation
+
 ## IMP-AUTH-016 — Current revision still fails the approved Login/Register visual contract
 
 - Category: `implementation_failure`

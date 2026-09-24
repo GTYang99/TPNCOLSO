@@ -1,0 +1,75 @@
+{
+  "reviewedRevision": "f83eaa0",
+  "baseRevision": "534bcb2",
+  "authority": "docs/design/evidence/auth/figma-export-2026-09-23/reference-composite-*.png",
+  "runtime": {
+    "device": "Medium_Phone (AVD) - 14",
+    "serial": "emulator-5558",
+    "api": 34,
+    "captureKind": "Compose semantics-root",
+    "rawDimensions": "1080x2274",
+    "normalizedDimensions": "402x874",
+    "systemChromeExcluded": true,
+    "debugOnlyRegionExcluded": true,
+    "mask": "content-only full normalized frame; root capture contains app content only, so no product pixels are excluded"
+  },
+  "comparison": {
+    "method": "Resize each emulator semantics-root capture to the 402x874 authority panel; compare RGB channels only",
+    "thresholdRgb": 20,
+    "sampleCount": 1054044,
+    "states": {
+      "login-empty": {
+        "runtime": "runtime-login-empty-avd-534bcb2-recapture2.png",
+        "normalized": "runtime-login-empty-avd-534bcb2-recapture2-normalized-402x874.png",
+        "runtimeSha256": "dc9d3d2b6fcee02f9a5964731c2c274a068abbaf9800fc1003719af352c1385a",
+        "normalizedSha256": "4198c343e23cba42b02a86b0850a8fcc9a34eb3e50e07b81f649028005004d54",
+        "mae": 10.5298,
+        "rmse": 36.5989,
+        "overThresholdRatio": 0.092699
+      },
+      "login-filled": {
+        "runtime": "runtime-login-filled-avd-534bcb2-recapture2.png",
+        "normalized": "runtime-login-filled-avd-534bcb2-recapture2-normalized-402x874.png",
+        "runtimeSha256": "7d8f99e56a6b5dc08459d179965044d5669f48f9847f15fd97ecb2cfdf213b3d",
+        "normalizedSha256": "bc5610c08419b104fa299d0494fbdf2ba1638606fffabe3937a3b1a68372ee0a",
+        "mae": 10.795,
+        "rmse": 37.2791,
+        "overThresholdRatio": 0.093578
+      },
+      "login-auth-error": {
+        "runtime": "runtime-login-error-avd-534bcb2-recapture2.png",
+        "normalized": "runtime-login-error-avd-534bcb2-recapture2-normalized-402x874.png",
+        "runtimeSha256": "7e46554b8d357773bab8bddd0324cdbd2ba6aff916c6214d3baf82523e7df52f",
+        "normalizedSha256": "d1df5f7300d280749d75c68d67bffdddc3e22e24911f8fe5419f5145a656aa1a",
+        "mae": 22.9243,
+        "rmse": 59.1915,
+        "overThresholdRatio": 0.169002
+      },
+      "register-empty": {
+        "runtime": "runtime-register-empty-avd-534bcb2-recapture2.png",
+        "normalized": "runtime-register-empty-avd-534bcb2-recapture2-normalized-402x874.png",
+        "runtimeSha256": "8c22051f725c8be8b07818f3ad2060493909de9e1257a336f36679df5e09f86d",
+        "normalizedSha256": "c21e6f606ce1584badcd7896313423ef410be4481c4ddbc7cde6a2047636e1d5",
+        "mae": 5.8778,
+        "rmse": 28.0635,
+        "overThresholdRatio": 0.064083
+      },
+      "register-filled": {
+        "runtime": "runtime-register-filled-avd-534bcb2-recapture2.png",
+        "normalized": "runtime-register-filled-avd-534bcb2-recapture2-normalized-402x874.png",
+        "runtimeSha256": "f13b4238314ef6b7fd7edc8d87fc14e4bc980405ed99c4834f4e7ca368988bb6",
+        "normalizedSha256": "cbbeaa7e47bf8876881c869dedff3deb0ffca7b86ca36d40d21db1de4adb8f73",
+        "mae": 6.3757,
+        "rmse": 29.5556,
+        "overThresholdRatio": 0.065932
+      }
+    }
+  },
+  "stateScope": "Five-state emulator-authoritative visual evidence refreshed after f83eaa0; direct review confirms skyline baseline and Register action-row visibility are corrected. Numeric values are reproducible comparison evidence, not a standalone acceptance threshold.",
+  "result": "PASS",
+  "limitations": [
+    "Responsive narrow/font-scale/IME matrix is recorded separately and is not re-captured in this run.",
+    "Hosted/authoritative CI is unavailable; local JBR Gradle and emulator evidence only.",
+    "Cross-task logout contract evidence remains unavailable for formal AC-UI002-006/007/008/011."
+  ]
+}

@@ -4,32 +4,32 @@
 
 This section supersedes the older round summaries for the current formal decision. Historical `PARTIAL` labels are retained as historical progress records only; the current formal result is restricted to `PASS`, `FAIL`, or `NOT VERIFIED`.
 
-Current formal result: `NOT VERIFIED` for `534bcb2`. The five-state numeric artifact is retained, but its earlier runtime target was `XQ-AU52 - 12`, which is excluded under the no-physical-device constraint; emulator-authoritative recapture is not complete. An emulator-only connected run on `Medium_Phone(AVD) - 14` failed with missing Compose hierarchies, so AC-UI002-006/007/008/009/010/011 and hosted CI do not have current reproducible evidence. The prior `FAIL` decisions for `db7dfbe782d3537b5f618af2735964913ce580b7` and the responsive finding fixed in `534bcb2` are retained as historical debug input.
+Current formal result: `NOT VERIFIED` for `f83eaa0`. The five-state visual comparison is now emulator-authoritative and passes the current visual scope; the remaining result is blocked only by unexecuted cross-task/logout and responsive-matrix evidence plus unavailable hosted CI. The prior `FAIL` decisions for `db7dfbe782d3537b5f618af2735964913ce580b7` and the responsive finding fixed in `534bcb2` are retained as historical debug input.
 
 | Provenance item | Current evidence | Classification |
 |---|---|---|
 | Requirement baseline | `KB-UI-002-AUTH-R10`; Plan Review iteration 16 `APPROVED` | PASS |
 | Previous failed implementation revision | Branch `UI-002feat`; `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; `docs(UI-002): normalize implementation handoff` | FAIL; superseded by the post-fix revision |
 | Previous failed implementation revision | Branch `UI-002feat`; `63a2379`; `fix(UI-002): restore auth accessibility and back asset contracts` | FAIL; superseded by post-fix revision |
-| Reviewed implementation revision | Branch `UI-002feat`; `534bcb2`; `fix(UI-002): make login layout responsive` (includes `14dc640`) | PASS; visual and responsive implementation fixes are reviewed below |
+| Reviewed implementation revision | Branch `UI-002feat`; `f83eaa0`; `fix(UI-002): align auth viewport anchors` (based on `534bcb2`) | PASS; current Login/Register anchor fix is reviewed below |
 | Verification handoff revision | `1c18088`; task state and verification handoff only | PASS; does not change reviewed production revision |
 | Unit test evidence | `testDebugUnitTest`; five XML suites, 13 tests, 0 failures/errors/skips; latest run `2026-09-24T07:05:03Z` | PASS |
-| Connected test evidence | Prior `XQ-AU52 - 12` result is excluded as non-emulator target. Isolated emulator-only `Medium_Phone(AVD) - 14` run at `2026-09-24T07:48:37Z` recorded 24 tests, 0 failures/errors/skips, device `emulator-5558`; committed XML: `figma-export-2026-09-24-534bcb2/connected-tests-emulator-5558-2026-09-24T07-48-37.xml` | PASS at local emulator scope |
+| Connected test evidence | Isolated emulator-only `Medium_Phone(AVD) - 14` run at `2026-09-24T08:07:26Z` recorded 25 tests, 0 failures/errors/skips, device `emulator-5558`; XML: `figma-export-2026-09-24-534bcb2/connected-tests-emulator-5558-2026-09-24T08-07-26.xml` | PASS at local emulator scope |
 | Developer-validation commands | `JAVA_HOME='/Applications/Android Studio.app/Contents/JBR/Contents/Home' ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest` and `./gradlew :app:connectedDebugAndroidTest` | PASS |
 | Visual primary authority | Requester-approved composite `docs/design/evidence/auth/auth-reference-2026-09-07.png`, SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c` | PASS |
 | Figma authority role | Figma file `HRbRsw6HoNBUCtaieX8xUM`, nodes `2905:2679` / `2997:11541`, direct export SHA-256 `bfde10cd297feb639ecc2b3fc4bc4964258bc4541174032e392c0a104e4ed2e5`; supporting design evidence, not the primary auth acceptance authority | PASS |
-| Comparison normalization | Composite panels cropped at `804×1748` from the approved source; runtime captures cropped to app content (`1080×2296`, top inset `48`, bottom inset `56`) and resized to `402×874`; debug-only region excluded | PASS |
-| Current-revision visual comparison | Existing five-state numeric artifact uses the excluded `XQ-AU52 - 12` target; one new raw Login empty capture is now recorded from `emulator-5558`, but full five-state emulator-authoritative recapture and normalized comparison are pending | NOT VERIFIED; AC-UI002-009 and AC-UI002-010 |
+| Comparison normalization | Approved composite panels are `402×874`; current runtime uses Compose semantics-root `1080×2274` captures resized to `402×874`; system chrome and debug-only region are absent from the root capture, so the content-only mask covers the full normalized frame | PASS |
+| Current-revision visual comparison | `numeric-diff-f83eaa0.json` contains Login empty/filled/error and Register empty/filled captures from `emulator-5558`; direct review confirms the skyline baseline and Register action row are aligned and visible | PASS at local emulator visual scope; AC-UI002-009/010 |
 | Hosted CI | No hosted/authoritative CI run is available; local JBR Gradle and emulator evidence only | NOT VERIFIED |
 | Physical device | Explicitly out of scope by requester; emulator coverage is the applicable environment | NOT APPLICABLE |
 
-### Current formal decision — revision `534bcb2`
+### Current formal decision — revision `f83eaa0`
 
 `NOT VERIFIED`
 
-The focused fix moves the Login header/form rhythm to the approved anchors, corrects the skyline visible baseline/crop, moves the Register content origin to the approved vertical rhythm, and makes narrow Login layout responsive by adapting width, header arrangement, captcha arrangement and skyline placement. The five-state artifact records metrics of Login empty `10.6742 / 36.7446 / 0.094471`, filled `11.2702 / 38.2067 / 0.098033`, auth-error `23.1521 / 59.4954 / 0.169826`; Register empty `5.8141 / 27.8220 / 0.062526`, filled `7.2016 / 32.0093 / 0.070590` (MAE / RMSE / over-threshold ratio, RGB threshold `20`), but its runtime target is excluded and it cannot currently prove AC-UI002-009/010. A 720×2400 narrow capture exists, but it likewise needs emulator-authoritative recapture.
+The debug fix moves the Login content origin to the approved anchor, removes the bottom white gap by restoring the skyline baseline to the viewport edge, tightens the Login button anchor, and moves the Register action row into the approved 402×874 viewport. The new five-state artifact records metrics of Login empty `10.5298 / 36.5989 / 0.092699`, filled `10.7950 / 37.2791 / 0.093578`, auth-error `22.9243 / 59.1915 / 0.169002`; Register empty `5.8778 / 28.0635 / 0.064083`, filled `6.3757 / 29.5556 / 0.065932` (MAE / RMSE / over-threshold ratio, RGB threshold `20`). These five states are now emulator-authoritative and visually reviewed as PASS for AC-UI002-009/010.
 
-The current artifacts do not yet prove `AC-UI002-009` and `AC-UI002-010` because four of the five comparison states still derive from the excluded target; a new raw Login empty capture from `emulator-5558` is recorded as `runtime-login-empty-avd-534bcb2.png` with SHA-256 `e9d4354f1d5e9fd9ebe794e0c3078629c7a29ed44050e0d419a2f75d2ee7a7ff`. Additional Login responsive captures are recorded as `runtime-login-narrow-534bcb2.png` (720×2400), `runtime-login-fontscale-1.3-534bcb2.png`, and `runtime-login-ime-534bcb2.png`; these remain observations pending the complete emulator-authoritative matrix. Local unit/build/static checks and the isolated emulator connected suite pass. `AC-UI002-006`, `AC-UI002-007`, `AC-UI002-008`, `AC-UI002-009`, `AC-UI002-010`, and `AC-UI002-011` remain `NOT VERIFIED`; hosted CI is unavailable. Under the Verification Rule, the overall result is therefore `NOT VERIFIED`, not PASS.
+The current artifacts now prove the standard five-state visual scope. The responsive observations (`runtime-login-narrow-534bcb2.png`, `runtime-login-fontscale-1.3-534bcb2.png`, and `runtime-login-ime-534bcb2.png`) are not yet recaptured on the isolated emulator after `f83eaa0`; AC-UI002-011 therefore remains `NOT VERIFIED`. Cross-task logout evidence for AC-UI002-006/007/008 and hosted CI are also unavailable. Under the Verification Rule, the overall result is therefore `NOT VERIFIED`, not PASS.
 
 ### Previous formal decision — revision `63a2379`
 
@@ -106,8 +106,8 @@ The older round below is retained as historical evidence and is not the reviewed
 | AC-UI002-006 | NOT VERIFIED | Debug coordinator evidence exists, but the complete cross-task logout contract is not executed in the current revision. |
 | AC-UI002-007 | NOT VERIFIED | Historical emulator evidence covers narrow width, font scale 1.3 and IME; the complete current-revision responsive matrix is still not executed. |
 | AC-UI002-008 | NOT VERIFIED | Preview and test fixtures exist, but the complete current-revision visual state matrix is not evidenced. |
-| AC-UI002-009 | NOT VERIFIED | `numeric-diff-534bcb2.json` contains three states, but the runtime target is excluded as non-emulator evidence; emulator-authoritative recapture is pending. |
-| AC-UI002-010 | NOT VERIFIED | `numeric-diff-534bcb2.json` contains two states, but the runtime target is excluded as non-emulator evidence; emulator-authoritative recapture is pending. |
+| AC-UI002-009 | PASS (local emulator visual scope) | `numeric-diff-f83eaa0.json` covers Login empty/filled/auth-error from `emulator-5558`; direct review confirms the corrected header/form/button/skyline composition. |
+| AC-UI002-010 | PASS (local emulator visual scope) | `numeric-diff-f83eaa0.json` covers Register empty/filled from `emulator-5558`; direct review confirms the corrected top rhythm, horizontal work-type row and visible action row. |
 | AC-UI002-011 | NOT VERIFIED | Coordinator/idempotency evidence exists, but UI-003 contract integration is not executed in the current revision. |
 
 ## Build and Test Evidence
@@ -181,12 +181,12 @@ The older round below is retained as historical evidence and is not the reviewed
 | Register empty | `runtime-register-empty-after-layout-fix-normalized-402x874.png` — SHA-256 `b60dadf8566ffcd31a13dd83906c17dba2775b512333db38ab4b66ab40211b8d` |
 | Register filled | `runtime-register-filled-after-layout-fix-normalized-402x874.png` — SHA-256 `457b6b1beeef8c172a17e818c77b0b67133bf0669f0438724dfb6406093a647a` |
 
-## Overall Result
+## Historical Overall Result — superseded revision `db7dfbe`
 
 `FAIL`
 
-Revision `db7dfbe` passes the local build and test gates, but the completed current-revision five-state comparison proves residual Login/Register visual nonconformance. The failed acceptance criteria are `AC-UI002-009` and `AC-UI002-010`; the formal route is `debug`. Hosted CI and the remaining cross-task/device/state evidence are additional `NOT VERIFIED` limitations.
+Revision `db7dfbe` passed the local build and test gates, but its five-state comparison proved residual Login/Register visual nonconformance. That result is superseded by `f83eaa0`; the current formal result remains `NOT VERIFIED` only because AC-UI002-006/007/008/011 and hosted CI evidence are not available.
 
 ## Next Action
 
-Route the proven visual mismatches to `debug`, implement only the approved visual correction scope, then rerun the five-state comparison and the developer/hosted CI gates. Physical-device testing remains out of scope.
+Next action: keep the task in Verification, collect the current responsive/cross-task evidence that is still in scope, and do not advance to Release until every required gate is evidenced. Physical-device testing remains out of scope.
