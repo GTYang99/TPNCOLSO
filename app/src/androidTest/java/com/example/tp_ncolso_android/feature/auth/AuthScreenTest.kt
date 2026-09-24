@@ -22,6 +22,7 @@ import org.junit.runner.RunWith
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.tp_ncolso_android.ui.foundation.theme.AppTheme
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.platform.io.PlatformTestStorageRegistry
 import java.io.File
 import java.io.FileOutputStream
 import androidx.compose.ui.unit.dp
@@ -31,10 +32,9 @@ class AuthScreenTest {
     @get:Rule val composeRule = createComposeRule()
 
     private fun exportComposeCapture(output: File, remoteName: String) {
-        val packageName = InstrumentationRegistry.getInstrumentation().targetContext.packageName
-        InstrumentationRegistry.getInstrumentation().uiAutomation
-            .executeShellCommand("run-as $packageName cat ${output.absolutePath} > /sdcard/$remoteName")
-            .close()
+        PlatformTestStorageRegistry.getInstance().openOutputFile(remoteName).use { destination ->
+            output.inputStream().use { source -> source.copyTo(destination) }
+        }
     }
 
     @Test fun loginRendersRequiredEntryPoints() {
@@ -148,6 +148,19 @@ class AuthScreenTest {
             composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
         }
         exportComposeCapture(output, "register-filled-compose-root.png")
+        check(output.length() > 0)
+    }
+
+    @Test fun captureRegisterEmptyStateForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme { RegisterScreen(RegisterFormState(), listOf(VendorOption("1", "廠商")), {}) }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "register-empty-compose.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "register-empty-compose-root.png")
         check(output.length() > 0)
     }
 

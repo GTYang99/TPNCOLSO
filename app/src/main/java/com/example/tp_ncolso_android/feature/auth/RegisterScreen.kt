@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.offset
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.semantics.contentDescription
@@ -36,7 +37,7 @@ import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
 @Composable
 fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEvent: (AuthEvent) -> Unit, modifier: Modifier = Modifier, illustration: @Composable () -> Unit = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.register_user_illustration), contentDescription = null, modifier = Modifier.size(80.dp)) }) {
     val registerLabelStyle = AppThemeTokens.typography.fieldLabel.copy(fontWeight = FontWeight.Medium)
-    Column(modifier.fillMaxWidth().background(Color.White).padding(start = 24.dp, top = 40.dp, end = 24.dp, bottom = 24.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(36.dp)) {
+    Column(modifier.fillMaxWidth().background(Color.White).padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 24.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(36.dp)) {
         Row(modifier = Modifier.fillMaxWidth().height(48.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
             TextButton(onClick = { onEvent(AuthEvent.BackToLogin) }, modifier = Modifier.size(48.dp).testTag("register-back")) {
                 Image(
@@ -60,7 +61,7 @@ fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEven
         state.fieldErrors[RegisterField.WORK_TYPE]?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("register-work-type-error")) }
         AppTextField(state.name, { onEvent(AuthEvent.RegisterNameChanged(it)) }, "姓名(請輸入真實姓名)", placeholder = "請輸入", isError = state.fieldErrors.containsKey(RegisterField.NAME), supportingText = state.fieldErrors[RegisterField.NAME], labelStyle = registerLabelStyle)
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth()) {
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth().offset(y = (-12).dp)) {
             AppSecondaryButton("取消", { onEvent(AuthEvent.CancelRegister) }, modifier = Modifier.weight(1f))
             AppPrimaryButton("完成", { onEvent(AuthEvent.SubmitRegister) }, enabled = !state.submitting, modifier = Modifier.weight(1f).testTag("register-submit"))
         }

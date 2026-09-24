@@ -61,7 +61,7 @@ fun LoginScreen(
     val authWidth = if (maxWidth < 368.dp) maxWidth - 48.dp else 320.dp
     val skylineWidth = minOf(402.dp, maxWidth)
     val skylineHeight = skylineWidth * (239f / 402f)
-    val skylineOffset = if (maxWidth < 368.dp) 0.dp else (-67).dp
+    val skylineOffset = 0.dp
     val skyline = ImageBitmap.imageResource(com.example.tp_ncolso_android.R.drawable.login_city_skyline)
     Canvas(
         modifier = Modifier
@@ -73,7 +73,7 @@ fun LoginScreen(
         Modifier
             .width(authWidth)
             .align(Alignment.TopCenter)
-            .padding(top = 161.dp)
+            .padding(top = 141.dp)
             .verticalScroll(rememberScrollState()),
     ) {
         if (authWidth < 300.dp) {
@@ -187,7 +187,7 @@ fun LoginScreen(
                 )
             }
         }
-        androidx.compose.foundation.layout.Spacer(Modifier.height(19.dp))
+        androidx.compose.foundation.layout.Spacer(Modifier.height(15.dp))
         AppPrimaryButton("登入", { onEvent(AuthEvent.SubmitLogin) }, enabled = !state.submitting, modifier = Modifier.fillMaxWidth().testTag("login-submit"))
     }
     }
