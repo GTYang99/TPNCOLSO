@@ -23,8 +23,12 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 | UIR-REG-007 | Cancel/complete buttons and submit guard implemented; full navigation-race evidence pending. | PARTIAL |
 | UIR-REG-008 | Back/cancel/success events are implemented in auth coordinator; full state-clearing runtime evidence pending. | PARTIAL |
 | UIR-REG-009 | Validation and plaintext boundary unit tests exist; log/SavedState/rememberSaveable audit evidence pending. | PARTIAL |
-| UIR-REG-010 | Illustration asset is runtime-consumed and asset traceability exists; strict composite comparison pending. | PARTIAL |
+| UIR-REG-010 | Illustration asset is runtime-consumed and asset traceability exists; current composite comparison is recorded in `composite-panel-comparison-842e290.json`, but the visual result remains PARTIAL. | PARTIAL |
 | UIR-REG-011 | Scroll support exists; Register filled 720×2400 evidence confirms fields and actions remain usable without horizontal clipping, while the full approved device matrix remains incomplete. | PARTIAL |
+
+## Current revision comparison addendum — 2026-09-23
+
+The five current-revision state comparisons are now complete against the approved composite panels using the recorded crop coordinates, system-inset normalization and RGB threshold in `docs/design/evidence/auth/figma-export-2026-09-23/composite-panel-comparison-842e290.json`. The evidence closes the numeric-comparison collection gap but does not pass the visual contract: Login remains geometrically different from the reference, and Registration's work-type options are vertically arranged in runtime while the approved panel is horizontal. Formal Verification therefore marks `AC-UI002-009` and `AC-UI002-010` as `FAIL` and routes the task to Debug.
 
 ## Login numeric diff revision
 

@@ -2,7 +2,7 @@ task:
   id: UI-002-auth
   type: feature
 
-phase: implementation
+phase: verification
 status: in_progress
 
 knowledge:
@@ -32,9 +32,9 @@ git:
   status: committed
 
 verification:
-  result: NOT VERIFIED
-  category: null
-  failed_acceptance_criteria: []
+  result: FAIL
+  category: implementation_failure
+  failed_acceptance_criteria: [AC-UI002-009, AC-UI002-010]
 
 ci:
   build: PASS (local JBR Gradle)
@@ -44,6 +44,6 @@ release:
   status: pending
 
 blocking:
-  - Current-revision visual captures and normalized numeric comparisons are not yet bound to post-fix revision 842e290.
+  - Complete five-state composite comparison for revision 842e290 proves Login/Register visual nonconformance; route to debug before re-verification.
   - No hosted/authoritative CI run evidence is available; the recorded test run is local JBR/emulator evidence.
-next_action: verification
+next_action: debug

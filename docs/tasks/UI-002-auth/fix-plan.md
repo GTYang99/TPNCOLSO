@@ -2,7 +2,7 @@
 
 ## Reviewed failure
 
-Fix only the approved-requirement mismatches recorded as `IMP-AUTH-014` for revision `63a23794e70edb5cd00203a617afca7715be57b9`.
+Fix only the approved-requirement mismatches recorded as `IMP-AUTH-015` for revision `842e29061238527d21ee51e29a61126ba9cbb32`.
 
 ## Minimum fix scope
 
@@ -12,6 +12,9 @@ Fix only the approved-requirement mismatches recorded as `IMP-AUTH-014` for revi
 4. Add focused Compose/accessibility assertions for the logo semantics, reload description/bounds, and Back asset/target behavior.
 5. Make the Registration illustration decorative in semantics (`contentDescription = null`) while preserving its approved 80dp visual geometry.
 6. Rotate the approved Registration Back vector toward the left without changing the existing 48dp target or visual slot geometry; bind orientation to the source-level `rotationZ = 180f` evidence and the formal visual comparison. A bitmap capture assertion is not used because the connected Compose runner cannot capture this graphics-layer node reliably.
+7. Replace or correct the runtime skyline asset only with bytes that reproduce the current approved composite silhouette; update the asset manifest/checksum evidence and preserve the 736 × 246 clipping contract.
+8. Replace Login's centered/global-spacing composition with explicit approved vertical anchors while retaining adaptive scrolling for narrow/IME conditions; align the shared field/captcha geometry against the five-state comparison.
+9. Add a Registration-specific horizontal work-type arrangement to `AppRadioGroup` without weakening its 48dp semantics targets, and verify that the action row remains visible in the approved 402 × 874 composition.
 
 No API, token, persistence, navigation, drawer, or visual-baseline changes are authorized by this fix plan.
 
@@ -26,6 +29,7 @@ The Registration reference confirms an 80dp decorative illustration frame at `I4
 - `assembleDebugAndroidTest`
 - `connectedDebugAndroidTest` when an approved emulator is available
 - current-revision Login empty/filled/auth-error and Registration empty/filled visual captures normalized against the requester-approved composite
+- five-state numeric comparison must show the skyline silhouette, Login anchors/geometry, horizontal work-type row and visible action row corrected before formal re-verification
 - release isolation scan
 
 ## Exit

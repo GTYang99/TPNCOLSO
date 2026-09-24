@@ -1,5 +1,17 @@
 # Issue Log
 
+## IMP-AUTH-015 — Current revision fails the approved Login/Register visual contract
+
+- Category: `implementation_failure`
+- Priority: `P1`
+- Status: open
+- Revision: `842e29061238527d21ee51e29a61126ba9cbb32`
+- Evidence: `docs/design/evidence/auth/figma-export-2026-09-23/composite-panel-comparison-842e290.json` records reproducible five-state comparisons against the approved composite. The current Register runtime places `外業人員` and `內業人員` vertically while the approved panel places them horizontally; the normalized runtime also does not preserve the approved bottom action-row composition. Login comparisons retain visible logo-treatment and field/captcha geometry differences. Current metrics are Login empty/filled/error MAE `21.3681`/`21.6469`/`31.6095` and Register empty/filled MAE `12.0194`/`12.5398` at RGB threshold `20`.
+- Requirement: `AC-UI002-009` and `AC-UI002-010`, `UIR-LOGIN-001–010`, and `UIR-REG-001–011` require the implementation to match the approved current composite and provide executed visual evidence.
+- Impact: Verification result is `FAIL`; Release remains pending and the task routes to `debug`. Hosted CI is an additional unresolved gate after the visual correction.
+- Route: `debug`
+- Owner: UI-002 implementation
+
 ## IMP-AUTH-014 — Post-fix Registration accessibility and Back asset orientation remain nonconforming
 
 - Category: `implementation_failure`
