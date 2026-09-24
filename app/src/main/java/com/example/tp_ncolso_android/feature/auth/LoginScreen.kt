@@ -61,18 +61,14 @@ fun LoginScreen(
     Canvas(
         modifier = Modifier
             .align(Alignment.BottomCenter)
-            // The API 34 comparison viewport is wider than the 402px Figma frame;
-            // this offset preserves Figma's visible left clipping after normalization.
-            .offset(x = (-4).dp, y = 7.dp)
-            .size(width = 736.dp, height = 246.dp),
+            .size(width = 402.dp, height = 239.dp),
     ) { drawImage(skyline, dstSize = IntSize(size.width.toInt(), size.height.toInt()), blendMode = BlendMode.Multiply) }
     Column(
         Modifier
             .width(320.dp)
-            .align(Alignment.Center)
-            .offset(y = (-40).dp)
+            .align(Alignment.TopCenter)
+            .padding(top = 151.dp)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().semantics { heading() }) {
             Image(
@@ -91,6 +87,7 @@ fun LoginScreen(
                 )
             }
         }
+        androidx.compose.foundation.layout.Spacer(Modifier.height(35.dp))
         val authError = state.requestError != null
         Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
             AppTextField(state.account, { onEvent(AuthEvent.LoginAccountChanged(it)) }, "帳號", placeholder = "請輸入", isError = authError || state.fieldErrors.containsKey(LoginField.ACCOUNT), supportingText = state.fieldErrors[LoginField.ACCOUNT], modifier = Modifier.testTag("login-account"))
@@ -128,6 +125,7 @@ fun LoginScreen(
             state.captchaError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("captcha-error")) }
             state.requestError?.let { Text(it, color = AppThemeTokens.colors.errorText, modifier = Modifier.testTag("login-request-error").semantics { error(it) }) }
         }
+        androidx.compose.foundation.layout.Spacer(Modifier.height(15.dp))
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             AppCheckboxRow(state.rememberMe, { onEvent(AuthEvent.RememberMeChanged(it)) }, "記住我", modifier = Modifier.weight(1f))
             Box(
@@ -145,6 +143,7 @@ fun LoginScreen(
                 )
             }
         }
+        androidx.compose.foundation.layout.Spacer(Modifier.height(19.dp))
         AppPrimaryButton("登入", { onEvent(AuthEvent.SubmitLogin) }, enabled = !state.submitting, modifier = Modifier.fillMaxWidth().testTag("login-submit"))
     }
     }

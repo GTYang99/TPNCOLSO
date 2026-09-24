@@ -287,6 +287,7 @@ fun <T> AppRadioGroup(
     enabled: Boolean = true,
     isError: Boolean = false,
     labelStyle: TextStyle = AppThemeTokens.typography.fieldLabel,
+    horizontal: Boolean = false,
 ) {
     Column(
         modifier = modifier.selectableGroup().semantics {
@@ -296,7 +297,13 @@ fun <T> AppRadioGroup(
         verticalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
     ) {
         Text(text = label, style = labelStyle)
-        options.forEach { option ->
+        if (horizontal) {
+            Row(horizontalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.lg)) {
+                options.forEach { option ->
+                    RadioOption(option, selected, onSelect, itemLabel, enabled)
+                }
+            }
+        } else options.forEach { option ->
             val selectedOption = selected == option
             androidx.compose.foundation.layout.Box(
                 modifier = Modifier
@@ -338,6 +345,41 @@ fun <T> AppRadioGroup(
                     Text(itemLabel(option), style = AppThemeTokens.typography.body)
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun <T> RadioOption(
+    option: T,
+    selected: T?,
+    onSelect: (T) -> Unit,
+    itemLabel: (T) -> String,
+    enabled: Boolean,
+) {
+    val selectedOption = selected == option
+    androidx.compose.foundation.layout.Box(
+        modifier = Modifier
+            .height(AppThemeTokens.spacing.minimumTouchTarget)
+            .selectable(selected = selectedOption, enabled = enabled, role = Role.RadioButton, onClick = { onSelect(option) }),
+        contentAlignment = Alignment.CenterStart,
+    ) {
+        Row(
+            modifier = Modifier.height(40.dp).padding(horizontal = AppThemeTokens.spacing.lg),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm),
+        ) {
+            androidx.compose.foundation.layout.Box(
+                modifier = Modifier.size(14.dp).background(Color.White, CircleShape).border(
+                    width = 2.dp,
+                    color = if (selectedOption) AppThemeTokens.colors.brandPrimary else Color(0xFFCDD0D6),
+                    shape = CircleShape,
+                ),
+                contentAlignment = Alignment.Center,
+            ) {
+                if (selectedOption) androidx.compose.foundation.layout.Box(Modifier.size(10.dp).background(AppThemeTokens.colors.brandPrimary, CircleShape))
+            }
+            Text(itemLabel(option), style = AppThemeTokens.typography.body)
         }
     }
 }
