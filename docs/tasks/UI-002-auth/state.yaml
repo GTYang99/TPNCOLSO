@@ -47,6 +47,6 @@ release:
   status: pending
 
 blocking:
-  - Five-state visual evidence is now emulator-authoritative on f83eaa0 and passes the current visual comparison scope; the narrow/font-scale/IME matrix still needs a fresh emulator-authoritative run for AC-UI002-007.
+  - Five-state visual evidence is now emulator-authoritative on f83eaa0 and passes the current visual comparison scope; narrow and font-scale captures are refreshed, but the Compose-root IME capture does not include the system keyboard, so AC-UI002-007 remains NOT VERIFIED.
   - Emulator-only connected validation now passes on Medium_Phone after ADB isolation; AC-UI002-006/007/011 and hosted/authoritative CI evidence remain unavailable, so overall Verification is NOT VERIFIED.
 next_action: verification

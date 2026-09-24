@@ -20,6 +20,7 @@ Current formal result: `NOT VERIFIED` for `f83eaa0`. The five-state visual compa
 | Figma authority role | Figma file `HRbRsw6HoNBUCtaieX8xUM`, nodes `2905:2679` / `2997:11541`, direct export SHA-256 `bfde10cd297feb639ecc2b3fc4bc4964258bc4541174032e392c0a104e4ed2e5`; supporting design evidence, not the primary auth acceptance authority | PASS |
 | Comparison normalization | Approved composite panels are `402×874`; current runtime uses Compose semantics-root `1080×2274` captures resized to `402×874`; system chrome and debug-only region are absent from the root capture, so the content-only mask covers the full normalized frame | PASS |
 | Current-revision visual comparison | `numeric-diff-f83eaa0.json` contains Login empty/filled/error and Register empty/filled captures from `emulator-5558`; direct review confirms the skyline baseline and Register action row are aligned and visible | PASS at local emulator visual scope; AC-UI002-009/010 |
+| Responsive runtime evidence | `runtime-login-narrow-f83eaa0-720x2400.png`, `runtime-login-fontscale-1.3-f83eaa0.png`, and focused `runtime-login-ime-f83eaa0.png` were captured on `emulator-5558`; the first two show usable layout, while the Compose-root IME capture excludes the system keyboard surface | NOT VERIFIED; AC-UI002-007 |
 | Hosted CI | No hosted/authoritative CI run is available; local JBR Gradle and emulator evidence only | NOT VERIFIED |
 | Physical device | Explicitly out of scope by requester; emulator coverage is the applicable environment | NOT APPLICABLE |
 
@@ -29,7 +30,7 @@ Current formal result: `NOT VERIFIED` for `f83eaa0`. The five-state visual compa
 
 The debug fix moves the Login content origin to the approved anchor, removes the bottom white gap by restoring the skyline baseline to the viewport edge, tightens the Login button anchor, and moves the Register action row into the approved 402×874 viewport. The new five-state artifact records metrics of Login empty `10.5298 / 36.5989 / 0.092699`, filled `10.7950 / 37.2791 / 0.093578`, auth-error `22.9243 / 59.1915 / 0.169002`; Register empty `5.8778 / 28.0635 / 0.064083`, filled `6.3757 / 29.5556 / 0.065932` (MAE / RMSE / over-threshold ratio, RGB threshold `20`). These five states are now emulator-authoritative and visually reviewed as PASS for AC-UI002-009/010.
 
-The current artifacts now prove the standard five-state visual scope and the UI state matrix (empty/filled/error/validation/submitting) at local unit/Compose scope. The responsive observations (`runtime-login-narrow-534bcb2.png`, `runtime-login-fontscale-1.3-534bcb2.png`, and `runtime-login-ime-534bcb2.png`) are not yet recaptured on the isolated emulator after `f83eaa0`; AC-UI002-007 therefore remains `NOT VERIFIED`. Cross-task logout handoff evidence for AC-UI002-006/011 and hosted CI are also unavailable. Under the Verification Rule, the overall result is therefore `NOT VERIFIED`, not PASS.
+The current artifacts now prove the standard five-state visual scope and the UI state matrix (empty/filled/error/validation/submitting) at local unit/Compose scope. Current emulator responsive captures now cover narrow and font-scale 1.3 layout; the focused IME capture proves focus state but excludes the system keyboard surface, so AC-UI002-007 remains `NOT VERIFIED`. Cross-task logout handoff evidence for AC-UI002-006/011 and hosted CI are also unavailable. Under the Verification Rule, the overall result is therefore `NOT VERIFIED`, not PASS.
 
 ### Previous formal decision — revision `63a2379`
 
@@ -104,7 +105,7 @@ The older round below is retained as historical evidence and is not the reviewed
 | AC-UI002-004 | PASS (connected scope) | Register route, six fields, Back and Cancel events pass `AuthScreenTest` on API 34. |
 | AC-UI002-005 | PASS (unit scope) | Pure validation tests cover account, password, confirmation, vendor, work type and Chinese name rules. |
 | AC-UI002-006 | NOT VERIFIED | Debug coordinator evidence exists, but the complete cross-task logout contract is not executed in the current revision. |
-| AC-UI002-007 | NOT VERIFIED | Historical emulator evidence covers narrow width, font scale 1.3 and IME; the complete current-revision responsive matrix is still not executed. |
+| AC-UI002-007 | NOT VERIFIED | Current emulator captures cover narrow width and font scale 1.3; focused IME root capture is recorded, but it cannot prove the system keyboard surface and full resized viewport behavior. |
 | AC-UI002-008 | PASS (local unit/Compose scope) | Preview matrix exists; current tests cover Login empty/filled/error/submitting and Register empty/filled/validation-error/submitting, with replaceable test data sources. |
 | AC-UI002-009 | PASS (local emulator visual scope) | `numeric-diff-f83eaa0.json` covers Login empty/filled/auth-error from `emulator-5558`; direct review confirms the corrected header/form/button/skyline composition. |
 | AC-UI002-010 | PASS (local emulator visual scope) | `numeric-diff-f83eaa0.json` covers Register empty/filled from `emulator-5558`; direct review confirms the corrected top rhythm, horizontal work-type row and visible action row. |

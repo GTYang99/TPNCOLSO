@@ -231,4 +231,24 @@ class AuthScreenTest {
         exportComposeCapture(output, "login-error-compose-root.png")
         check(output.length() > 0)
     }
+
+    @Test fun captureLoginImeStateForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(),
+                    {},
+                    captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
+                )
+            }
+        }
+        composeRule.onNodeWithTag("login-account").performClick()
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-ime-compose.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "login-ime-compose-root.png")
+        check(output.length() > 0)
+    }
 }
