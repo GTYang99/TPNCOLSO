@@ -2,7 +2,7 @@
 
 ## Reviewed failure
 
-Fix only the approved-requirement mismatches recorded as `IMP-AUTH-015` for revision `842e29061238527d21ee51e29a61126ba9cbb32`.
+Fix only the approved-requirement mismatches recorded as `IMP-AUTH-016` for revision `db7dfbe782d3537b5f618af2735964913ce580b7`.
 
 ## Minimum fix scope
 
@@ -15,6 +15,8 @@ Fix only the approved-requirement mismatches recorded as `IMP-AUTH-015` for revi
 7. Replace or correct the runtime skyline asset only with bytes that reproduce the current approved composite silhouette; update the asset manifest/checksum evidence and preserve the 736 × 246 clipping contract.
 8. Replace Login's centered/global-spacing composition with explicit approved vertical anchors while retaining adaptive scrolling for narrow/IME conditions; align the shared field/captcha geometry against the five-state comparison.
 9. Add a Registration-specific horizontal work-type arrangement to `AppRadioGroup` without weakening its 48dp semantics targets, and verify that the action row remains visible in the approved 402 × 874 composition.
+10. Replace the new spacer-driven Login geometry with explicit measured anchor placement; retain scrolling only as an adaptive fallback and keep the skyline's composite-compatible artwork while correcting its visible baseline/crop.
+11. Replace Register's one-size-fits-all `36dp` rhythm with the approved Register-specific top origin and group spacing so the illustration, fields, work-type row, name field and action row share the reference y-coordinates.
 
 No API, token, persistence, navigation, drawer, or visual-baseline changes are authorized by this fix plan.
 
@@ -29,7 +31,7 @@ The Registration reference confirms an 80dp decorative illustration frame at `I4
 - `assembleDebugAndroidTest`
 - `connectedDebugAndroidTest` when an approved emulator is available
 - current-revision Login empty/filled/auth-error and Registration empty/filled visual captures normalized against the requester-approved composite
-- five-state numeric comparison must show the skyline silhouette, Login anchors/geometry, horizontal work-type row and visible action row corrected before formal re-verification
+- five-state visual comparison must show the skyline baseline/crop, Login anchors/geometry, Register vertical rhythm, horizontal work-type row and visible action row corrected before formal re-verification
 - release isolation scan
 
 ## Exit

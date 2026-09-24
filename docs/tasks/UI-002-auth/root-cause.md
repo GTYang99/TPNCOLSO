@@ -1,8 +1,33 @@
 # UI-002 Verification Failure Root Cause
 
+## IMP-AUTH-016 — Residual composition failure after `db7dfbe`
+
+### Reproduction and evidence
+
+- Reviewed revision: `db7dfbe782d3537b5f618af2735964913ce580b7`.
+- All five states are normalized with the approved app-content crop and the debug-only top-left mask in `numeric-diff-db7dfbe.json`.
+- The failure is implementation, not CI: the same current captures show stable geometry differences in both Login and Register while local unit, lint, release, and emulator tests pass.
+
+### Root cause analysis
+
+1. Login still uses a manually approximated vertical stack. `LoginScreen.kt` uses a `151.dp` top padding followed by `35.dp`, `15.dp`, and `19.dp` spacers around components whose rendered bounds are not the approved anchor rectangles. This makes the header-to-form gap and lower action/button positions drift independently; changing one global offset cannot align all three Login states.
+2. Login's skyline is now the correct bridge/Taipei-101 artwork, but it is rendered as a `402 × 239.dp` canvas bottom-aligned to the runtime viewport. The approved composite's visible skyline baseline is a clipped panel composition; the runtime canvas is therefore at a different visible y/edge crop after system-content normalization. The remaining skyline mismatch is placement/clipping, not asset identity.
+3. Register's horizontal radio implementation fixed the previous orientation bug, but the parent `Column` still uses a global `24.dp` outer padding and `36.dp` spacing. The approved Register panel has a different top origin and inter-group rhythm, so the illustration, first field, work-type row, name field and action row are all displaced together. This is a parent geometry problem, not a radio-selection problem.
+4. The numeric metrics are improvement signals only; no numeric acceptance threshold is defined in the approved requirements. The visual authority therefore correctly rejects the revision despite lower MAE/ratio values.
+
+### Classification
+
+`implementation_failure` → `debug`. No requirement or authority conflict is present. Hosted CI is a separate `NOT VERIFIED` limitation and does not explain the current FAIL.
+
+### Minimum safe fix direction
+
+- Replace spacer-driven Login placement with a measured anchor layout: fixed content column bounds, explicit child top positions, and a separate adaptive scroll container for constrained heights.
+- Keep the composite-compatible skyline bytes, but anchor its visible baseline/crop to the normalized 402×874 panel rather than relying on the viewport's bottom alignment.
+- Give Register its own approved vertical rhythm/top origin while preserving the horizontal radio group and 48dp targets; verify the action row against the filled panel after the parent geometry change.
+
 ## Scope
 
-This debug re-entry addresses `IMP-AUTH-015`, the visual-comparison failure for reviewed revision `842e29061238527d21ee51e29a61126ba9cbb32` on branch `UI-002feat`.
+The current debug re-entry addresses `IMP-AUTH-016`, the visual-comparison failure for reviewed revision `db7dfbe782d3537b5f618af2735964913ce580b7` on branch `UI-002feat`. The `IMP-AUTH-015` section below is retained as historical analysis for the superseded `842e290` revision.
 
 ## Reproducible findings
 
