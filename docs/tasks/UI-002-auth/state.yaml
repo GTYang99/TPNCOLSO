@@ -44,7 +44,7 @@ verification:
 
 ci:
   build: PASS (local JBR Gradle, 534bcb2)
-  test: PASS (13/13 unit; 24/24 connected on Medium_Phone API 34 emulator-5558 at 2026-09-24T07:36:02Z; local emulator evidence only)
+  test: PASS (13/13 unit; 24/24 connected on Medium_Phone API 34 emulator-5558 at 2026-09-24T07:48:37Z; XML evidence committed locally; local emulator evidence only)
 
 release:
   status: pending
