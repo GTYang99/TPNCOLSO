@@ -28,13 +28,13 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: 842e290
+  commit: db7dfbe
   status: committed
 
 verification:
-  result: FAIL
-  category: implementation_failure
-  failed_acceptance_criteria: [AC-UI002-009, AC-UI002-010]
+  result: NOT VERIFIED
+  category: pending_reverification
+  failed_acceptance_criteria: []
 
 ci:
   build: PASS (local JBR Gradle)
@@ -44,6 +44,6 @@ release:
   status: pending
 
 blocking:
-  - Complete five-state composite comparison for revision 842e290 proves Login/Register visual nonconformance; route to debug before re-verification.
+  - Reverification evidence for db7dfbe has Login empty/filled/auth-error and Register empty captures; Register filled capture remains required before formal decision.
   - No hosted/authoritative CI run evidence is available; the recorded test run is local JBR/emulator evidence.
 next_action: debug

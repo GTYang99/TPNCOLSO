@@ -19,6 +19,15 @@
 
 ## Verification-Failure Debug Fix — 2026-09-23
 
+## Visual composition fix — 2026-09-24
+
+- Revision: `db7dfbe782d3537b5f618af2735964913ce580b7` on `UI-002feat`.
+- Restored the composite-compatible 402×239 skyline asset (`706d8030…`) and bottom-anchored it without the mismatched 736×246 Figma-only silhouette.
+- Replaced Login global centering/spacing with explicit approved vertical anchors while retaining scrolling for constrained heights.
+- Added a horizontal Registration work-type arrangement while preserving 48dp selection targets.
+- Direct normalized numeric evidence: Login empty `16.9289 / 51.5348 / 0.128929`, filled `17.5848 / 52.6788 / 0.132727`, auth-error `26.9049 / 65.9684 / 0.189490`; Register empty `10.4778 / 40.7509 / 0.092564` (MAE / RMSE / over-threshold ratio). Register filled still needs a fresh capture.
+- Formal result remains `NOT VERIFIED`; no `PARTIAL` result is used.
+
 - Scope: `IMP-AUTH-013` and `IMP-AUTH-014` only; no requirement, visual authority, API, persistence, navigation, or drawer contract changes.
 - Login logo is now decorative (`contentDescription = null`) and the brand row declares one heading semantics node.
 - Captcha reload retains the approved `32dp` row allocation while exposing the exact description `重新產生驗證碼` through a required `48dp × 48dp` interaction target.

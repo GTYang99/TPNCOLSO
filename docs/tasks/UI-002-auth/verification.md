@@ -1,15 +1,17 @@
 # UI-002 Verification Report
 
-## Current Verification Provenance — 2026-09-23, post-fix round 2
+## Current Verification Provenance — 2026-09-24, debug-fix re-entry
 
 This section supersedes the older round summaries for the current formal decision. Historical `PARTIAL` labels are retained as historical progress records only; the current formal result is restricted to `PASS`, `FAIL`, or `NOT VERIFIED`.
+
+Current formal result: `NOT VERIFIED` for `db7dfbe782d3537b5f618af2735964913ce580b7`. The `FAIL` decision below for `842e290` is retained as historical debug input and is superseded for current routing.
 
 | Provenance item | Current evidence | Classification |
 |---|---|---|
 | Requirement baseline | `KB-UI-002-AUTH-R10`; Plan Review iteration 16 `APPROVED` | PASS |
 | Previous failed implementation revision | Branch `UI-002feat`; `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; `docs(UI-002): normalize implementation handoff` | FAIL; superseded by the post-fix revision |
 | Previous failed implementation revision | Branch `UI-002feat`; `63a2379`; `fix(UI-002): restore auth accessibility and back asset contracts` | FAIL; superseded by post-fix revision |
-| Reviewed implementation revision | Branch `UI-002feat`; `842e290`; `fix(UI-002): correct registration accessibility and back direction` | FAIL; current formal review |
+| Reviewed implementation revision | Branch `UI-002feat`; `db7dfbe`; `fix(UI-002): align auth visual composition` | NOT VERIFIED; current re-verification candidate |
 | Verification handoff revision | `3e97b6e`; task state and verification handoff only | PASS; does not change reviewed production revision |
 | Unit test evidence | `testDebugUnitTest`; five XML suites, 13 tests, 0 failures/errors/skips; latest timestamp `2026-09-23T07:07:37Z` | PASS |
 | Connected test evidence | `connectedDebugAndroidTest`; 24 tests, 0 failures/errors/skips; `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`; latest timestamp `2026-09-23T08:06:23` | PASS |
@@ -17,7 +19,7 @@ This section supersedes the older round summaries for the current formal decisio
 | Visual primary authority | Requester-approved composite `docs/design/evidence/auth/auth-reference-2026-09-07.png`, SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c` | PASS |
 | Figma authority role | Figma file `HRbRsw6HoNBUCtaieX8xUM`, nodes `2905:2679` / `2997:11541`, direct export SHA-256 `bfde10cd297feb639ecc2b3fc4bc4964258bc4541174032e392c0a104e4ed2e5`; supporting design evidence, not the primary auth acceptance authority | PASS |
 | Comparison normalization | Composite panels cropped at `804×1748` from the approved source; runtime captures cropped to app content (`1080×2296`, top inset `48`, bottom inset `56`) and resized to `402×874`; debug-only region excluded | PASS |
-| Current-revision visual comparison | Five current-revision state comparisons are complete and bound in `composite-panel-comparison-842e290.json`; the measured differences and visual observations prove Login/Register visual nonconformance | FAIL; implementation failure |
+| Current-revision visual comparison | New evidence is bound in `figma-export-2026-09-24-db7dfbe/numeric-diff-db7dfbe.json`; Login empty/filled/auth-error and Register empty are captured, but Register filled is still missing | NOT VERIFIED |
 | Hosted CI | No hosted/authoritative CI run is available; local JBR Gradle and emulator evidence only | NOT VERIFIED |
 | Physical device | Explicitly out of scope by requester; emulator coverage is the applicable environment | NOT APPLICABLE |
 
@@ -38,7 +40,7 @@ The post-fix revision passes local build, unit, lint, and API 34 connected tests
 
 The source-proven findings from `63a23794e70edb5cd00203a617afca7715be57b9` are fixed in `842e290`. The current composite comparison now proves separate visual implementation mismatches in the reviewed revision; Verification routes to Debug. No production-code fix is made during Verification.
 
-### Current formal decision — revision `842e290`
+### Historical formal decision — revision `842e290`
 
 `FAIL`
 
@@ -96,8 +98,8 @@ The older round below is retained as historical evidence and is not the reviewed
 | AC-UI002-006 | NOT VERIFIED | Debug coordinator evidence exists, but the complete cross-task logout contract is not executed in the current revision. |
 | AC-UI002-007 | NOT VERIFIED | Historical emulator evidence covers narrow width, font scale 1.3 and IME; the complete current-revision responsive matrix is still not executed. |
 | AC-UI002-008 | NOT VERIFIED | Preview and test fixtures exist, but the complete current-revision visual state matrix is not evidenced. |
-| AC-UI002-009 | FAIL | Current composite comparison is complete, but Login still diverges in logo treatment, field/captcha geometry and composition; see `composite-panel-comparison-842e290.json`. |
-| AC-UI002-010 | FAIL | Current composite comparison is complete, but Registration work-type choices are vertically laid out instead of matching the approved horizontal panel, and the normalized runtime action-row composition is not preserved. |
+| AC-UI002-009 | NOT VERIFIED | New revision `db7dfbe` has refreshed Login empty/filled/auth-error captures and improved numeric evidence; formal acceptance awaits completion of the current five-state comparison. |
+| AC-UI002-010 | NOT VERIFIED | New revision `db7dfbe` has refreshed Register empty evidence and horizontal work-type/action-row implementation; Register filled comparison is still required. |
 | AC-UI002-011 | NOT VERIFIED | Coordinator/idempotency evidence exists, but UI-003 contract integration is not executed in the current revision. |
 
 ## Build and Test Evidence
