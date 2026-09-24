@@ -4,26 +4,26 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 
 | Requirement | Implementation/evidence | Status |
 |---|---|---|
-| UIR-LOGIN-001 | `LoginScreen.kt` gradient, responsive auth column, composite-compatible skyline; five-state normalized evidence in `figma-export-2026-09-24-534bcb2`. | PASS |
+| UIR-LOGIN-001 | `LoginScreen.kt` gradient, responsive auth column, composite-compatible skyline; five-state artifact exists but current runtime provenance is excluded pending emulator-authoritative recapture. | NOT VERIFIED |
 | UIR-LOGIN-002 | `LoginScreen.kt` 96×65 logo/title row; `login_brand_logo.png` checksum in asset manifest. | PASS |
-| UIR-LOGIN-003 | Account/password `AppTextField`/`AppPasswordField`; `AuthScreenTest.loginRendersRequiredEntryPoints`; geometry covered by current normalized capture. | PASS |
-| UIR-LOGIN-004 | Captcha input/image/reload row and `DebugCaptchaProvider`; connected auth tests and current normalized capture pass. | PASS |
-| UIR-LOGIN-005 | Empty/filled/error runtime captures and normalized composite comparisons are complete in `figma-export-2026-09-24-534bcb2/numeric-diff-534bcb2.json`. | PASS |
-| UIR-LOGIN-006 | `LoginScreen.kt` maps field/request errors to all credential controls and accessible supporting text; current runtime error capture shows retained values and global error. | PASS |
-| UIR-LOGIN-007 | Remember-me row and register action exist; `AuthScreenTest.loginRegisterEntryDispatchesEvent` and current five-state capture pass. | PASS |
-| UIR-LOGIN-008 | `AppPrimaryButton` and `submitting` guard; connected tests pass and exact button geometry is included in current composite diff. | PASS |
+| UIR-LOGIN-003 | Account/password `AppTextField`/`AppPasswordField`; current connected/runtime evidence is not authoritative until emulator rerun succeeds. | NOT VERIFIED |
+| UIR-LOGIN-004 | Captcha input/image/reload row and `DebugCaptchaProvider`; current connected/runtime evidence is not authoritative until emulator rerun succeeds. | NOT VERIFIED |
+| UIR-LOGIN-005 | Empty/filled/error artifact is present in `figma-export-2026-09-24-534bcb2/numeric-diff-534bcb2.json`, but its runtime target is excluded; emulator-authoritative recapture is pending. | NOT VERIFIED |
+| UIR-LOGIN-006 | `LoginScreen.kt` maps field/request errors to all credential controls and accessible supporting text; current runtime error evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
+| UIR-LOGIN-007 | Remember-me row and register action exist; current connected test and capture evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
+| UIR-LOGIN-008 | `AppPrimaryButton` and `submitting` guard exist; current connected and geometry evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
 | UIR-LOGIN-009 | Supporting Figma export, composite-compatible skyline asset, logo, captcha and SHA-256 records are in asset/evidence files; Figma-only skyline candidate was rejected by silhouette comparison. | PASS |
 | UIR-LOGIN-010 | Scroll container is implemented; the full current-revision narrow/IME/font-scale matrix is not re-executed. | NOT VERIFIED |
-| UIR-REG-001 | `RegisterScreen.kt` uses the approved content origin/rhythm and scroll; current empty/filled normalized comparisons are in `figma-export-2026-09-24-534bcb2/numeric-diff-534bcb2.json`. | PASS |
-| UIR-REG-002 | Balanced 48dp top-bar slots, 80dp illustration slot, and approved left-facing back arrow inside the 48dp control are covered by current empty/filled evidence. | PASS |
-| UIR-REG-003 | Six controls and labels implemented; `AuthScreenTest.registerRendersSixFieldsAndUnselectedWorkType`. | PASS |
-| UIR-REG-004 | Plaintext fields are implemented; current empty/filled captures and strict numeric comparison are recorded. | PASS |
-| UIR-REG-005 | `AppSelectField` receives injected vendor options; selection behavior and current filled evidence pass. | PASS |
-| UIR-REG-006 | Null/required work-type error and radio group implemented; `registerShowsWorkTypeValidationMessage`. | PASS |
-| UIR-REG-007 | Cancel/complete buttons and submit guard implemented; connected auth tests pass. | PASS |
-| UIR-REG-008 | Back/cancel/success events are implemented in auth coordinator; local connected contract evidence passes. | PASS |
+| UIR-REG-001 | `RegisterScreen.kt` uses the approved content origin/rhythm and scroll; current comparison artifact exists but runtime provenance is excluded pending emulator-authoritative recapture. | NOT VERIFIED |
+| UIR-REG-002 | Balanced 48dp top-bar slots, 80dp illustration slot, and approved left-facing back arrow inside the 48dp control are implemented; current runtime evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
+| UIR-REG-003 | Six controls and labels implemented; current connected test evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
+| UIR-REG-004 | Plaintext fields are implemented; current captures/comparison are recorded but runtime provenance is excluded pending emulator-authoritative recapture. | NOT VERIFIED |
+| UIR-REG-005 | `AppSelectField` receives injected vendor options; current selection/runtime evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
+| UIR-REG-006 | Null/required work-type error and radio group implemented; current connected test evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
+| UIR-REG-007 | Cancel/complete buttons and submit guard implemented; current connected test evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
+| UIR-REG-008 | Back/cancel/success events are implemented in auth coordinator; current connected contract evidence is pending emulator-authoritative rerun. | NOT VERIFIED |
 | UIR-REG-009 | Validation and plaintext boundary unit tests exist; no persistence/logging path is used by the feature. | PASS |
-| UIR-REG-010 | Illustration asset is runtime-consumed and asset traceability plus current composite comparison are recorded in `figma-export-2026-09-24-534bcb2/numeric-diff-534bcb2.json`. | PASS |
+| UIR-REG-010 | Illustration asset is runtime-consumed and traceability/comparison artifacts exist, but runtime provenance is excluded pending emulator-authoritative recapture. | NOT VERIFIED |
 | UIR-REG-011 | Scroll support exists and current filled evidence confirms fields/actions are usable without horizontal clipping; full current responsive matrix remains unexecuted. | NOT VERIFIED |
 
 ## Current revision comparison addendum — 2026-09-23

@@ -4,10 +4,10 @@
 
 - Reviewed implementation revision: `534bcb2` (`fix(UI-002): make login layout responsive`) on branch `UI-002feat`; it includes the prior composition fix `14dc640`.
 - Production changes: Login header/form spacing and skyline vertical crop were aligned to the approved composite; Register top content origin was aligned; Login now adapts narrow width, header layout, captcha arrangement and skyline placement without clipping or action overlap.
-- Local validation: `JAVA_HOME='/Applications/Android Studio.app/Contents/JBR/Contents/Home' ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleRelease :app:assembleDebugAndroidTest :app:connectedDebugAndroidTest` — `BUILD SUCCESSFUL`; 13/13 unit tests and 24/24 connected tests passed on API 34 (`XQ-AU52 - 12`).
-- Five-state evidence: `docs/design/evidence/auth/figma-export-2026-09-24-534bcb2/`; normalized with system chrome removed and debug-only `(0,0,175,48)` excluded. Numeric diff is recorded in `numeric-diff-534bcb2.json`.
-- Current responsive evidence: `runtime-login-narrow-534bcb2.png` at 720×2400, `runtime-login-fontscale-1.3-534bcb2.png`, and `runtime-login-ime-534bcb2.png` confirm no horizontal clipping/captcha overlap in the narrow layout, usable content at font scale 1.3, and usable focused-field/IME behavior. Emulator settings were restored to 1080×2520 and font scale 1.0 after capture.
-- Current visual verification result: `PASS` for AC-UI002-009 and AC-UI002-010. Hosted CI remains a separate `NOT VERIFIED` limitation; physical-device testing remains out of scope.
+- Local validation: unit/build/static checks remain PASS; 13/13 unit tests passed. The prior 24/24 connected result on `XQ-AU52 - 12` is excluded because the target is not emulator-authoritative. An emulator-only `Medium_Phone(AVD) - 14` run at `2026-09-24T07:26:12Z` failed 23/24 with `No compose hierarchies found`, an infrastructure failure.
+- Five-state evidence: `docs/design/evidence/auth/figma-export-2026-09-24-534bcb2/`; normalized with system chrome removed and debug-only `(0,0,175,48)` excluded. Numeric diff is recorded in `numeric-diff-534bcb2.json`, but the runtime target provenance must be re-established on the approved emulator before it is authoritative Verification evidence.
+- Responsive evidence: `runtime-login-narrow-534bcb2.png` at 720×2400, `runtime-login-fontscale-1.3-534bcb2.png`, and `runtime-login-ime-534bcb2.png` are retained as implementation observations; they are not current formal PASS evidence until recaptured on the approved emulator. Physical-device testing remains out of scope.
+- Current formal verification result: `NOT VERIFIED` for AC-UI002-006/007/008/009/010/011 and hosted CI; no `PARTIAL` result is used.
 
 ## Revision
 

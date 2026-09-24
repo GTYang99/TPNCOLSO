@@ -1,5 +1,17 @@
 # Issue Log
 
+## INF-AUTH-010 — Emulator-authoritative connected validation is unavailable
+
+- Category: `infrastructure`
+- Priority: `P1`
+- Status: open
+- Reproduction: the previously recorded `XQ-AU52 - 12` target has no `ro.boot.qemu` property, reports `qcom`, and is excluded under the no-physical-device constraint. A fresh `Medium_Phone(AVD) - 14` run at `2026-09-24T07:26:12Z` executed only on `emulator-5558` but failed 23/24 tests with `No compose hierarchies found in the app`.
+- Impact: connected semantics, responsive, and current five-state visual evidence cannot be promoted to formal Verification evidence. The failure is environmental and does not identify a production assertion regression.
+- Safe action taken: stopped the mixed-device run, launched a local AVD, explicitly selected `emulator-5558`, and excluded the non-emulator target from current evidence.
+- Required resolution: restore a working emulator Compose test surface or provide another approved emulator-only execution path, then recapture and rerun the current revision.
+- Route: `infrastructure`
+- Owner: Android runtime / environment
+
 ## IMP-AUTH-016 — Current revision still fails the approved Login/Register visual contract
 
 - Category: `implementation_failure`
