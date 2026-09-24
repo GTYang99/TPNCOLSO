@@ -5,10 +5,10 @@
 - Category: `implementation_failure`
 - Priority: `P1`
 - Status: resolved
-- Revision: `db7dfbe782d3537b5f618af2735964913ce580b7` (fixed in `14dc640`)
+- Revision: `db7dfbe782d3537b5f618af2735964913ce580b7` (fixed in `14dc640`, responsive hardening in `534bcb2`)
 - Evidence: `docs/design/evidence/auth/figma-export-2026-09-24-db7dfbe/numeric-diff-db7dfbe.json` contains all five normalized state comparisons against the approved composite. Direct review of the current captures proves residual Login header/form/action/skyline placement differences and residual Registration top-content/form/action vertical placement differences. Metrics are Login empty/filled/error MAE `16.9289`/`17.5848`/`26.9049` and Register empty/filled MAE `10.4778`/`11.5888`; RGB threshold `20`.
 - Requirement: `AC-UI002-009` and `AC-UI002-010`, including `UIR-LOGIN-001–010` and `UIR-REG-001–011`, require conformance to the approved composite visual contract.
-- Impact: The five-state visual mismatch is resolved in the focused implementation fix. Hosted CI and other cross-task gates remain separate `NOT VERIFIED` limitations.
+- Impact: The five-state visual mismatch and the narrow-width clipping/captcha overlap are resolved in the focused implementation fixes. Hosted CI and other cross-task gates remain separate `NOT VERIFIED` limitations.
 - Route: `verification`
 - Owner: UI-002 implementation
 

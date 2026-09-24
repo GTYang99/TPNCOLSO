@@ -4,7 +4,7 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 
 | Requirement | Implementation/evidence | Status |
 |---|---|---|
-| UIR-LOGIN-001 | `LoginScreen.kt` gradient, centered 320dp column, composite-compatible skyline; five-state normalized evidence in `figma-export-2026-09-24-14dc640`. | PASS |
+| UIR-LOGIN-001 | `LoginScreen.kt` gradient, responsive auth column, composite-compatible skyline; five-state normalized evidence in `figma-export-2026-09-24-534bcb2`. | PASS |
 | UIR-LOGIN-002 | `LoginScreen.kt` 96×65 logo/title row; `login_brand_logo.png` checksum in asset manifest. | PASS |
 | UIR-LOGIN-003 | Account/password `AppTextField`/`AppPasswordField`; `AuthScreenTest.loginRendersRequiredEntryPoints`; geometry covered by current normalized capture. | PASS |
 | UIR-LOGIN-004 | Captcha input/image/reload row and `DebugCaptchaProvider`; connected auth tests and current normalized capture pass. | PASS |

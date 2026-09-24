@@ -2,10 +2,11 @@
 
 ## Latest debug-fix implementation and validation — 2026-09-24
 
-- Reviewed implementation revision: `14dc640` (`fix(UI-002): align auth screen composition anchors`) on branch `UI-002feat`.
-- Production changes: Login header/form spacing and skyline vertical crop were aligned to the approved composite; Register top content origin was aligned while preserving horizontal work-type options and touch targets.
+- Reviewed implementation revision: `534bcb2` (`fix(UI-002): make login layout responsive`) on branch `UI-002feat`; it includes the prior composition fix `14dc640`.
+- Production changes: Login header/form spacing and skyline vertical crop were aligned to the approved composite; Register top content origin was aligned; Login now adapts narrow width, header layout, captcha arrangement and skyline placement without clipping or action overlap.
 - Local validation: `JAVA_HOME='/Applications/Android Studio.app/Contents/JBR/Contents/Home' ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleRelease :app:assembleDebugAndroidTest :app:connectedDebugAndroidTest` — `BUILD SUCCESSFUL`; 13/13 unit tests and 24/24 connected tests passed on API 34 (`XQ-AU52 - 12`).
-- Five-state evidence: `docs/design/evidence/auth/figma-export-2026-09-24-14dc640/`; normalized with system chrome removed and debug-only `(0,0,175,48)` excluded. Numeric diff is recorded in `numeric-diff-14dc640.json`.
+- Five-state evidence: `docs/design/evidence/auth/figma-export-2026-09-24-534bcb2/`; normalized with system chrome removed and debug-only `(0,0,175,48)` excluded. Numeric diff is recorded in `numeric-diff-534bcb2.json`.
+- Current narrow evidence: `runtime-login-narrow-534bcb2.png` at 720×2400 confirms no horizontal clipping/captcha overlap; emulator settings were restored to 1080×2520 and font scale 1.0.
 - Current visual verification result: `PASS` for AC-UI002-009 and AC-UI002-010. Hosted CI remains a separate `NOT VERIFIED` limitation; physical-device testing remains out of scope.
 
 ## Revision

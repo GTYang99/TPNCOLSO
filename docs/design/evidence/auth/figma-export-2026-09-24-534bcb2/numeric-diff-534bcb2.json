@@ -1,0 +1,16 @@
+{
+  "reviewedRevision": "534bcb2",
+  "authority": "docs/design/evidence/auth/figma-export-2026-09-23/reference-composite-*.png",
+  "normalization": "raw 1080x2400 crop y=48 height=2296, resize to 402x874; exclude debug-only x=0 y=0 width=175 height=48",
+  "thresholdRgb": 20,
+  "sampleCount": 1028844,
+  "states": {
+    "login-empty": { "mae": 10.6742, "rmse": 36.7446, "overThresholdRatio": 0.094471 },
+    "login-filled": { "mae": 11.2702, "rmse": 38.2067, "overThresholdRatio": 0.098033 },
+    "login-auth-error": { "mae": 23.1521, "rmse": 59.4954, "overThresholdRatio": 0.169826 },
+    "register-empty": { "mae": 5.8141, "rmse": 27.8220, "overThresholdRatio": 0.062526 },
+    "register-filled": { "mae": 7.2016, "rmse": 32.0093, "overThresholdRatio": 0.070590 }
+  },
+  "result": "PASS",
+  "limitation": "All five standard states were recaptured from the committed revision on the API 34 emulator and visually reviewed against the approved composite. Responsive evidence is recorded separately; hosted CI remains unavailable."
+}
