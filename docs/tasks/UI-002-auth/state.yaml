@@ -37,17 +37,16 @@ verification:
   failed_acceptance_criteria:
     - AC-UI002-006
     - AC-UI002-007
-    - AC-UI002-008
     - AC-UI002-011
 
 ci:
   build: PASS (local JBR Gradle, f83eaa0)
-  test: PASS (13/13 unit; 25/25 connected on Medium_Phone API 34 emulator-5558 at 2026-09-24T08:07:26Z; XML evidence captured locally; local emulator evidence only)
+  test: PASS (13/13 unit; 27/27 connected on Medium_Phone API 34 emulator-5558 at 2026-09-24T08:18:36Z; XML evidence captured locally; local emulator evidence only)
 
 release:
   status: pending
 
 blocking:
   - Five-state visual evidence is now emulator-authoritative on f83eaa0 and passes the current visual comparison scope; the narrow/font-scale/IME matrix still needs a fresh emulator-authoritative run for AC-UI002-007.
-  - Emulator-only connected validation now passes on Medium_Phone after ADB isolation; AC-UI002-006/007/008/011 and hosted/authoritative CI evidence remain unavailable, so overall Verification is NOT VERIFIED.
+  - Emulator-only connected validation now passes on Medium_Phone after ADB isolation; AC-UI002-006/007/011 and hosted/authoritative CI evidence remain unavailable, so overall Verification is NOT VERIFIED.
 next_action: verification

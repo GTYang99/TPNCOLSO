@@ -4,10 +4,11 @@
 
 - Reviewed implementation revision: `f83eaa0` (`fix(UI-002): align auth viewport anchors`) on branch `UI-002feat`, based on `534bcb2`.
 - Production changes: Login content origin moved to the approved anchor, the skyline baseline now reaches the approved clipped edge without the bottom white block, Login button spacing was tightened, Register top origin was aligned, and the Register action row was moved into the 402×874 viewport.
-- Local validation: `testDebugUnitTest`, `assembleDebug`, and `assembleDebugAndroidTest` PASS; 13/13 unit tests passed. Isolated `Medium_Phone(AVD) - 14` on API 34 / `emulator-5558` ran 25/25 connected tests PASS at `2026-09-24T08:07:26Z`; XML is `connected-tests-emulator-5558-2026-09-24T08-07-26.xml`.
+- Local validation: `testDebugUnitTest`, `assembleDebug`, and `assembleDebugAndroidTest` PASS; 13/13 unit tests passed. Isolated `Medium_Phone(AVD) - 14` on API 34 / `emulator-5558` ran 27/27 connected tests PASS at `2026-09-24T08:18:36Z`; XML is `connected-tests-emulator-5558-2026-09-24T08-18-36.xml`.
 - Five-state evidence: `numeric-diff-f83eaa0.json` contains emulator-authoritative Login empty/filled/error and Register empty/filled captures. Metrics are Login `10.5298 / 10.7950 / 22.9243` MAE and Register `5.8778 / 6.3757` MAE; direct review confirms skyline baseline and Register action-row visibility. AC-UI002-009/010 are PASS at local emulator visual scope.
 - Responsive evidence from the prior run remains observational; narrow/font-scale/IME captures must be refreshed on the isolated emulator after `f83eaa0` before AC-UI002-007 can advance. Physical-device testing remains out of scope.
-- Current formal verification result: `NOT VERIFIED` for AC-UI002-006/007/008/011 and hosted CI; no `PARTIAL` result is used as the current result.
+- State coverage now includes Login empty/filled/error/submitting and Register empty/filled/validation-error/submitting; AC-UI002-008 is PASS at local unit/Compose scope.
+- Current formal verification result: `NOT VERIFIED` for AC-UI002-006/007/011 and hosted CI; no `PARTIAL` result is used as the current result.
 
 ## Revision
 

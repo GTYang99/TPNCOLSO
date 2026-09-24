@@ -12,6 +12,7 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.assertHeightIsEqualTo
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.foundation.Image
@@ -87,6 +88,11 @@ class AuthScreenTest {
         composeRule.onNodeWithTag("login-request-error").assertIsDisplayed()
     }
 
+    @Test fun loginSubmittingStateDisablesSubmit() {
+        composeRule.setContent { AppTheme { LoginScreen(LoginFormState(submitting = true), {}) } }
+        composeRule.onNodeWithText("登入").assertIsNotEnabled()
+    }
+
     @Test fun registerRendersSixFieldsAndUnselectedWorkType() {
         composeRule.setContent { AppTheme { RegisterScreen(RegisterFormState(), listOf(VendorOption("1", "廠商")), {}) } }
         composeRule.onNodeWithText("帳號").assertIsDisplayed()
@@ -114,6 +120,11 @@ class AuthScreenTest {
             AppTheme { RegisterScreen(RegisterFormState(fieldErrors = mapOf(RegisterField.WORK_TYPE to "請選擇作業性質")), emptyList(), {}) }
         }
         composeRule.onNodeWithText("請選擇作業性質").assertIsDisplayed()
+    }
+
+    @Test fun registerSubmittingStateDisablesSubmit() {
+        composeRule.setContent { AppTheme { RegisterScreen(RegisterFormState(submitting = true), emptyList(), {}) } }
+        composeRule.onNodeWithText("完成").assertIsNotEnabled()
     }
 
     @Test fun registerFilledStateUsesPlaintextFieldsWithoutVisibilityAction() {
