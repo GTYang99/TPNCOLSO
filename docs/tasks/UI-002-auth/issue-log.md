@@ -4,11 +4,11 @@
 
 - Category: `infrastructure`
 - Priority: `P1`
-- Status: open
+- Status: resolved
 - Reproduction: the previously recorded `XQ-AU52 - 12` target has no `ro.boot.qemu` property, reports `qcom`, and is excluded under the no-physical-device constraint. A fresh `Medium_Phone(AVD) - 14` run at `2026-09-24T07:26:12Z` executed only on `emulator-5558` but failed 23/24 tests with `No compose hierarchies found in the app`.
-- Impact: connected semantics, responsive, and current five-state visual evidence cannot be promoted to formal Verification evidence. The failure is environmental and does not identify a production assertion regression.
-- Safe action taken: stopped the mixed-device run, launched a local AVD, explicitly selected `emulator-5558`, and excluded the non-emulator target from current evidence.
-- Required resolution: restore a working emulator Compose test surface or provide another approved emulator-only execution path, then recapture and rerun the current revision.
+- Impact: the initial mixed-device run and headless/profile run could not provide valid connected evidence. The failure was environmental and did not identify a production assertion regression.
+- Safe action taken: stopped mixed-device runs, launched a local AVD, isolated ADB with `--one-device emulator-5558`/mDNS disabled, used the SwiftShader profile, and reran the suite.
+- Resolution: `24/24` connected tests passed on `Medium_Phone(AVD) - 14`, `emulator-5558`, at `2026-09-24T07:36:02Z`. Visual five-state recapture remains a separate open evidence item.
 - Route: `infrastructure`
 - Owner: Android runtime / environment
 
