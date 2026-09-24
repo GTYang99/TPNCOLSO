@@ -3,6 +3,7 @@ package com.example.tp_ncolso_android.feature.auth
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -56,36 +57,62 @@ fun LoginScreen(
     modifier: Modifier = Modifier,
     captchaVisual: @Composable (Modifier) -> Unit = { modifier -> Text(state.captchaImageKey, color = AppThemeTokens.colors.textSecondary, modifier = modifier) },
 ) {
-    Box(modifier.fillMaxSize().background(Brush.verticalGradient(listOf(AppThemeTokens.colors.surface, AppThemeTokens.colors.surfaceMuted)))) {
+    BoxWithConstraints(modifier.fillMaxSize().background(Brush.verticalGradient(listOf(AppThemeTokens.colors.surface, AppThemeTokens.colors.surfaceMuted)))) {
+    val authWidth = if (maxWidth < 368.dp) maxWidth - 48.dp else 320.dp
+    val skylineWidth = minOf(402.dp, maxWidth)
+    val skylineHeight = skylineWidth * (239f / 402f)
+    val skylineOffset = if (maxWidth < 368.dp) 0.dp else (-67).dp
     val skyline = ImageBitmap.imageResource(com.example.tp_ncolso_android.R.drawable.login_city_skyline)
     Canvas(
         modifier = Modifier
             .align(Alignment.BottomCenter)
-            .offset(y = (-67).dp)
-            .size(width = 402.dp, height = 239.dp),
+            .offset(y = skylineOffset)
+            .size(width = skylineWidth, height = skylineHeight),
     ) { drawImage(skyline, dstSize = IntSize(size.width.toInt(), size.height.toInt()), blendMode = BlendMode.Multiply) }
     Column(
         Modifier
-            .width(320.dp)
+            .width(authWidth)
             .align(Alignment.TopCenter)
             .padding(top = 161.dp)
             .verticalScroll(rememberScrollState()),
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().semantics { heading() }) {
-            Image(
-                painter = painterResource(com.example.tp_ncolso_android.R.drawable.login_brand_logo),
-                contentDescription = null,
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier.size(width = 96.dp, height = 65.dp),
-            )
-            Column {
+        if (authWidth < 300.dp) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth().semantics { heading() },
+            ) {
+                Image(
+                    painter = painterResource(com.example.tp_ncolso_android.R.drawable.login_brand_logo),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.size(width = 96.dp, height = 65.dp),
+                )
                 Text("新工處土地占用", style = AppThemeTokens.typography.screenTitle, maxLines = 1)
                 Text(
                     "調查圖台系統",
                     style = AppThemeTokens.typography.screenTitle.copy(letterSpacing = 5.sp),
                     maxLines = 1,
-                    textAlign = TextAlign.Start,
+                    textAlign = TextAlign.Center,
                 )
+            }
+        } else {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().semantics { heading() }) {
+                Image(
+                    painter = painterResource(com.example.tp_ncolso_android.R.drawable.login_brand_logo),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.size(width = 96.dp, height = 65.dp),
+                )
+                Column {
+                    Text("新工處土地占用", style = AppThemeTokens.typography.screenTitle, maxLines = 1)
+                    Text(
+                        "調查圖台系統",
+                        style = AppThemeTokens.typography.screenTitle.copy(letterSpacing = 5.sp),
+                        maxLines = 1,
+                        textAlign = TextAlign.Start,
+                    )
+                }
             }
         }
         androidx.compose.foundation.layout.Spacer(Modifier.height(25.dp))
@@ -93,16 +120,19 @@ fun LoginScreen(
         Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
             AppTextField(state.account, { onEvent(AuthEvent.LoginAccountChanged(it)) }, "帳號", placeholder = "請輸入", isError = authError || state.fieldErrors.containsKey(LoginField.ACCOUNT), supportingText = state.fieldErrors[LoginField.ACCOUNT], modifier = Modifier.testTag("login-account"))
             AppPasswordField(state.password, { onEvent(AuthEvent.LoginPasswordChanged(it)) }, "密碼", visible = false, onVisibilityChange = {}, placeholder = "請輸入", isError = authError || state.fieldErrors.containsKey(LoginField.PASSWORD), supportingText = state.fieldErrors[LoginField.PASSWORD], modifier = Modifier.testTag("login-password"))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                AppTextField(state.captcha, { onEvent(AuthEvent.LoginCaptchaChanged(it)) }, "驗證碼", placeholder = "請輸入", keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), isError = authError || state.fieldErrors.containsKey(LoginField.CAPTCHA), supportingText = state.fieldErrors[LoginField.CAPTCHA], modifier = Modifier.width(133.dp).testTag("login-captcha"))
+            val captchaField: @Composable (Modifier) -> Unit = { fieldModifier ->
+                AppTextField(state.captcha, { onEvent(AuthEvent.LoginCaptchaChanged(it)) }, "驗證碼", placeholder = "請輸入", keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), isError = authError || state.fieldErrors.containsKey(LoginField.CAPTCHA), supportingText = state.fieldErrors[LoginField.CAPTCHA], modifier = fieldModifier.testTag("login-captcha"))
+            }
+            val captchaArtwork: @Composable (Modifier) -> Unit = { artworkModifier ->
                 Box(
-                    modifier = Modifier
-                        .width(139.dp)
+                    modifier = artworkModifier
                         .height(48.dp)
                         .semantics { contentDescription = "驗證碼圖片" }
                         .testTag("captcha-image"),
                     contentAlignment = Alignment.Center,
-                ) { captchaVisual(Modifier.width(139.dp).height(48.dp)) }
+                ) { captchaVisual(Modifier.fillMaxWidth().height(48.dp)) }
+            }
+            val captchaRefresh: @Composable () -> Unit = {
                 Box(
                     modifier = Modifier.width(32.dp).height(48.dp).testTag("captcha-refresh"),
                     contentAlignment = Alignment.Center,
@@ -121,6 +151,19 @@ fun LoginScreen(
                             modifier = Modifier.size(32.dp),
                         )
                     }
+                }
+            }
+            if (authWidth < 320.dp) {
+                captchaField(Modifier.fillMaxWidth())
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                    captchaArtwork(Modifier.weight(1f))
+                    captchaRefresh()
+                }
+            } else {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                    captchaField(Modifier.width(133.dp))
+                    captchaArtwork(Modifier.width(139.dp))
+                    captchaRefresh()
                 }
             }
             state.captchaError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("captcha-error")) }
