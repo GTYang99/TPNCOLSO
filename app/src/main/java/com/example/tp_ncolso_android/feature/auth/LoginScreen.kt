@@ -61,13 +61,14 @@ fun LoginScreen(
     Canvas(
         modifier = Modifier
             .align(Alignment.BottomCenter)
+            .offset(y = (-67).dp)
             .size(width = 402.dp, height = 239.dp),
     ) { drawImage(skyline, dstSize = IntSize(size.width.toInt(), size.height.toInt()), blendMode = BlendMode.Multiply) }
     Column(
         Modifier
             .width(320.dp)
             .align(Alignment.TopCenter)
-            .padding(top = 151.dp)
+            .padding(top = 161.dp)
             .verticalScroll(rememberScrollState()),
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().semantics { heading() }) {
@@ -87,7 +88,7 @@ fun LoginScreen(
                 )
             }
         }
-        androidx.compose.foundation.layout.Spacer(Modifier.height(35.dp))
+        androidx.compose.foundation.layout.Spacer(Modifier.height(25.dp))
         val authError = state.requestError != null
         Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
             AppTextField(state.account, { onEvent(AuthEvent.LoginAccountChanged(it)) }, "帳號", placeholder = "請輸入", isError = authError || state.fieldErrors.containsKey(LoginField.ACCOUNT), supportingText = state.fieldErrors[LoginField.ACCOUNT], modifier = Modifier.testTag("login-account"))
@@ -125,7 +126,7 @@ fun LoginScreen(
             state.captchaError?.let { Text(it, color = AppThemeTokens.colors.error, modifier = Modifier.testTag("captcha-error")) }
             state.requestError?.let { Text(it, color = AppThemeTokens.colors.errorText, modifier = Modifier.testTag("login-request-error").semantics { error(it) }) }
         }
-        androidx.compose.foundation.layout.Spacer(Modifier.height(15.dp))
+        androidx.compose.foundation.layout.Spacer(Modifier.height(21.dp))
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             AppCheckboxRow(state.rememberMe, { onEvent(AuthEvent.RememberMeChanged(it)) }, "記住我", modifier = Modifier.weight(1f))
             Box(

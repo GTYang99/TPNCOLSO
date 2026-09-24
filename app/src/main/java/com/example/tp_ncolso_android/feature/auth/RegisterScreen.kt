@@ -36,7 +36,7 @@ import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
 @Composable
 fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEvent: (AuthEvent) -> Unit, modifier: Modifier = Modifier, illustration: @Composable () -> Unit = { Image(painterResource(com.example.tp_ncolso_android.R.drawable.register_user_illustration), contentDescription = null, modifier = Modifier.size(80.dp)) }) {
     val registerLabelStyle = AppThemeTokens.typography.fieldLabel.copy(fontWeight = FontWeight.Medium)
-    Column(modifier.fillMaxWidth().background(Color.White).padding(24.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(36.dp)) {
+    Column(modifier.fillMaxWidth().background(Color.White).padding(start = 24.dp, top = 40.dp, end = 24.dp, bottom = 24.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(36.dp)) {
         Row(modifier = Modifier.fillMaxWidth().height(48.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
             TextButton(onClick = { onEvent(AuthEvent.BackToLogin) }, modifier = Modifier.size(48.dp).testTag("register-back")) {
                 Image(
