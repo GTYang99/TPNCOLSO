@@ -19,7 +19,7 @@ Current formal result: `NOT VERIFIED` for `db7dfbe782d3537b5f618af2735964913ce58
 | Visual primary authority | Requester-approved composite `docs/design/evidence/auth/auth-reference-2026-09-07.png`, SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c` | PASS |
 | Figma authority role | Figma file `HRbRsw6HoNBUCtaieX8xUM`, nodes `2905:2679` / `2997:11541`, direct export SHA-256 `bfde10cd297feb639ecc2b3fc4bc4964258bc4541174032e392c0a104e4ed2e5`; supporting design evidence, not the primary auth acceptance authority | PASS |
 | Comparison normalization | Composite panels cropped at `804×1748` from the approved source; runtime captures cropped to app content (`1080×2296`, top inset `48`, bottom inset `56`) and resized to `402×874`; debug-only region excluded | PASS |
-| Current-revision visual comparison | New evidence is bound in `figma-export-2026-09-24-db7dfbe/numeric-diff-db7dfbe.json`; Login empty/filled/auth-error and Register empty are captured, but Register filled is still missing | NOT VERIFIED |
+| Current-revision visual comparison | New evidence is bound in `figma-export-2026-09-24-db7dfbe/numeric-diff-db7dfbe.json`; all five states are captured with system chrome/debug-only region excluded | NOT VERIFIED; visual evidence complete, formal gate pending |
 | Hosted CI | No hosted/authoritative CI run is available; local JBR Gradle and emulator evidence only | NOT VERIFIED |
 | Physical device | Explicitly out of scope by requester; emulator coverage is the applicable environment | NOT APPLICABLE |
 
@@ -99,7 +99,7 @@ The older round below is retained as historical evidence and is not the reviewed
 | AC-UI002-007 | NOT VERIFIED | Historical emulator evidence covers narrow width, font scale 1.3 and IME; the complete current-revision responsive matrix is still not executed. |
 | AC-UI002-008 | NOT VERIFIED | Preview and test fixtures exist, but the complete current-revision visual state matrix is not evidenced. |
 | AC-UI002-009 | NOT VERIFIED | New revision `db7dfbe` has refreshed Login empty/filled/auth-error captures and improved numeric evidence; formal acceptance awaits completion of the current five-state comparison. |
-| AC-UI002-010 | NOT VERIFIED | New revision `db7dfbe` has refreshed Register empty evidence and horizontal work-type/action-row implementation; Register filled comparison is still required. |
+| AC-UI002-010 | NOT VERIFIED | New revision `db7dfbe` has refreshed Register empty/filled evidence and horizontal work-type/action-row implementation; formal gate remains pending. |
 | AC-UI002-011 | NOT VERIFIED | Coordinator/idempotency evidence exists, but UI-003 contract integration is not executed in the current revision. |
 
 ## Build and Test Evidence

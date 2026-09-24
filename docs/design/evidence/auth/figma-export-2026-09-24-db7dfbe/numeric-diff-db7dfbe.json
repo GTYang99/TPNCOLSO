@@ -9,8 +9,8 @@
     "login-filled": { "mae": 17.5848, "rmse": 52.6788, "overThresholdRatio": 0.132727 },
     "login-auth-error": { "mae": 26.9049, "rmse": 65.9684, "overThresholdRatio": 0.189490 },
     "register-empty": { "mae": 10.4778, "rmse": 40.7509, "overThresholdRatio": 0.092564 },
-    "register-filled": { "status": "NOT CAPTURED IN THIS REVISION" }
+    "register-filled": { "mae": 11.5888, "rmse": 43.3090, "overThresholdRatio": 0.096830 }
   },
   "result": "NOT VERIFIED",
-  "limitation": "Register filled direct capture is still required before formal re-verification; metrics are evidence of improvement, not a PASS decision."
+  "limitation": "All five states are now captured. Metrics are evidence of improvement, not a PASS decision; formal result remains NOT VERIFIED pending the applicable authoritative CI gate."
 }

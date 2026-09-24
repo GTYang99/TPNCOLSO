@@ -44,6 +44,6 @@ release:
   status: pending
 
 blocking:
-  - Reverification evidence for db7dfbe has Login empty/filled/auth-error and Register empty captures; Register filled capture remains required before formal decision.
+  - Reverification evidence for db7dfbe now has all five normalized state captures and numeric diffs; authoritative hosted CI evidence remains unavailable.
   - No hosted/authoritative CI run evidence is available; the recorded test run is local JBR/emulator evidence.
 next_action: debug
