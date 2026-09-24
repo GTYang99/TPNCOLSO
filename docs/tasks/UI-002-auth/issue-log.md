@@ -1,14 +1,26 @@
 # Issue Log
 
+## IMP-AUTH-016 — Current revision still fails the approved Login/Register visual contract
+
+- Category: `implementation_failure`
+- Priority: `P1`
+- Status: resolved
+- Revision: `db7dfbe782d3537b5f618af2735964913ce580b7` (fixed in `14dc640`)
+- Evidence: `docs/design/evidence/auth/figma-export-2026-09-24-db7dfbe/numeric-diff-db7dfbe.json` contains all five normalized state comparisons against the approved composite. Direct review of the current captures proves residual Login header/form/action/skyline placement differences and residual Registration top-content/form/action vertical placement differences. Metrics are Login empty/filled/error MAE `16.9289`/`17.5848`/`26.9049` and Register empty/filled MAE `10.4778`/`11.5888`; RGB threshold `20`.
+- Requirement: `AC-UI002-009` and `AC-UI002-010`, including `UIR-LOGIN-001–010` and `UIR-REG-001–011`, require conformance to the approved composite visual contract.
+- Impact: The five-state visual mismatch is resolved in the focused implementation fix. Hosted CI and other cross-task gates remain separate `NOT VERIFIED` limitations.
+- Route: `verification`
+- Owner: UI-002 implementation
+
 ## IMP-AUTH-015 — Current revision fails the approved Login/Register visual contract
 
 - Category: `implementation_failure`
 - Priority: `P1`
-- Status: resolved_pending_verification
+- Status: resolved
 - Revision: `842e29061238527d21ee51e29a61126ba9cbb32` (fixed in `db7dfbe782d3537b5f618af2735964913ce580b7`)
 - Evidence: `docs/design/evidence/auth/figma-export-2026-09-23/composite-panel-comparison-842e290.json` records reproducible five-state comparisons against the approved composite. The current Register runtime places `外業人員` and `內業人員` vertically while the approved panel places them horizontally; the normalized runtime also does not preserve the approved bottom action-row composition. Login comparisons retain visible logo-treatment and field/captcha geometry differences. Current metrics are Login empty/filled/error MAE `21.3681`/`21.6469`/`31.6095` and Register empty/filled MAE `12.0194`/`12.5398` at RGB threshold `20`.
 - Requirement: `AC-UI002-009` and `AC-UI002-010`, `UIR-LOGIN-001–010`, and `UIR-REG-001–011` require the implementation to match the approved current composite and provide executed visual evidence.
-- Impact: The implementation fix is committed and local validation passes. Formal Verification remains `NOT VERIFIED` until the new five-state evidence is complete. Hosted CI is an additional unresolved gate.
+- Impact: The specific 842e290 visual mismatch is superseded by the current db7dfbe verification finding `IMP-AUTH-016`; hosted CI remains an additional unresolved gate.
 - Route: `verification`
 - Owner: UI-002 implementation
 
@@ -16,11 +28,11 @@
 
 - Category: `implementation_failure`
 - Priority: `P1`
-- Status: resolved_pending_verification
+- Status: resolved
 - Revision: `63a23794e70edb5cd00203a617afca7715be57b9` (fixed in `842e290`)
 - Evidence: prior revision `RegisterScreen.kt:36` exposed the decorative illustration as `註冊插圖`; `ic_register_back_chevron.xml` used `M12,8 L20,16 L12,24` without rotation, so the committed vector pointed right. Revision `842e290` removes the label and applies 180° rotation.
 - Requirement: `registration-ui-requirement.md` requires the illustration to remain decorative and the exact approved Back chevron to be rotated toward the left inside the `48 × 48` target.
-- Impact: Source-level mismatches are fixed; current-revision visual comparison and hosted CI evidence remain separate limitations before formal PASS.
+- Impact: Source-level mismatches are fixed in `842e290`; the current visual-composition failure is tracked separately as `IMP-AUTH-016`.
 - Route: `verification`
 - Owner: UI-002 implementation
 

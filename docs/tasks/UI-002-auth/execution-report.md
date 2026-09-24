@@ -1,5 +1,13 @@
 # UI-002 Implementation Execution Report
 
+## Latest debug-fix implementation and validation — 2026-09-24
+
+- Reviewed implementation revision: `14dc640` (`fix(UI-002): align auth screen composition anchors`) on branch `UI-002feat`.
+- Production changes: Login header/form spacing and skyline vertical crop were aligned to the approved composite; Register top content origin was aligned while preserving horizontal work-type options and touch targets.
+- Local validation: `JAVA_HOME='/Applications/Android Studio.app/Contents/JBR/Contents/Home' ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleRelease :app:assembleDebugAndroidTest :app:connectedDebugAndroidTest` — `BUILD SUCCESSFUL`; 13/13 unit tests and 24/24 connected tests passed on API 34 (`XQ-AU52 - 12`).
+- Five-state evidence: `docs/design/evidence/auth/figma-export-2026-09-24-14dc640/`; normalized with system chrome removed and debug-only `(0,0,175,48)` excluded. Numeric diff is recorded in `numeric-diff-14dc640.json`.
+- Current visual verification result: `PASS` for AC-UI002-009 and AC-UI002-010. Hosted CI remains a separate `NOT VERIFIED` limitation; physical-device testing remains out of scope.
+
 ## Revision
 
 - Task: `UI-002-auth`
@@ -26,7 +34,7 @@
 - Replaced Login global centering/spacing with explicit approved vertical anchors while retaining scrolling for constrained heights.
 - Added a horizontal Registration work-type arrangement while preserving 48dp selection targets.
 - Direct normalized numeric evidence: Login empty `16.9289 / 51.5348 / 0.128929`, filled `17.5848 / 52.6788 / 0.132727`, auth-error `26.9049 / 65.9684 / 0.189490`; Register empty `10.4778 / 40.7509 / 0.092564`, filled `11.5888 / 43.3090 / 0.096830` (MAE / RMSE / over-threshold ratio).
-- All five current-revision state captures are now present. Formal result remains `NOT VERIFIED` because authoritative hosted CI evidence is unavailable; no `PARTIAL` result is used.
+- All five current-revision state captures are now present. Formal Verification is `FAIL` because the captures still visibly differ from the approved composite; hosted CI remains an additional `NOT VERIFIED` limitation.
 
 - Scope: `IMP-AUTH-013` and `IMP-AUTH-014` only; no requirement, visual authority, API, persistence, navigation, or drawer contract changes.
 - Login logo is now decorative (`contentDescription = null`) and the brand row declares one heading semantics node.
@@ -43,7 +51,14 @@
 | `:app:connectedDebugAndroidTest` | PASS | 24/24 tests, 0 failures/errors/skips on `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`; rerun after the constraint fix. |
 | Focused semantics/asset assertions | PASS | Login logo has no `品牌標誌` node; reload exposes `重新產生驗證碼` at 48dp × 48dp while the row tag remains 32dp × 48dp; Register Back target remains 48dp and uses the approved drawable. |
 
-The fix is committed as `842e290` and ready to return to formal Verification. Hosted CI remains unavailable and physical-device testing remains out of scope.
+The preceding accessibility/asset fix is committed as `842e290`; the current visual-composition revision is evaluated separately below. Hosted CI remains unavailable and physical-device testing remains out of scope.
+
+## Current verification handoff — 2026-09-24
+
+- Reviewed implementation revision: `db7dfbe782d3537b5f618af2735964913ce580b7`.
+- Five-state normalized evidence is complete in `figma-export-2026-09-24-db7dfbe/`; local unit and connected validation pass at 13/13 and 24/24.
+- Formal Verification result: `FAIL` for `AC-UI002-009` and `AC-UI002-010` because the current captures still visibly differ from the approved composite. Route: `debug`.
+- Hosted CI, complete current responsive/state matrix, and cross-task logout integration remain unverified.
 
 ## Implemented Scope
 
@@ -84,4 +99,4 @@ The fix is committed as `842e290` and ready to return to formal Verification. Ho
 
 ## Status
 
-Implementation is in progress. The task must not be declared PASS or Done until the visual UIR mappings, refreshed content-only numeric evidence, full logout contract evidence and required handoff artifacts are complete.
+The reviewed implementation revision is committed, but formal Verification is `FAIL` on the current Login/Register visual contract. The task must return to `debug`; it must not be declared PASS or Done until the approved visual correction and the remaining required gates are complete.

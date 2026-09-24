@@ -4,24 +4,32 @@
 
 This section supersedes the older round summaries for the current formal decision. Historical `PARTIAL` labels are retained as historical progress records only; the current formal result is restricted to `PASS`, `FAIL`, or `NOT VERIFIED`.
 
-Current formal result: `NOT VERIFIED` for `db7dfbe782d3537b5f618af2735964913ce580b7`. The `FAIL` decision below for `842e290` is retained as historical debug input and is superseded for current routing.
+Current formal result: `PASS` for `14dc640`. The prior `FAIL` decision for `db7dfbe782d3537b5f618af2735964913ce580b7` is retained as historical debug input; this round independently proves the focused composition fix against all five approved states. Hosted CI remains a separate `NOT VERIFIED` gate.
 
 | Provenance item | Current evidence | Classification |
 |---|---|---|
 | Requirement baseline | `KB-UI-002-AUTH-R10`; Plan Review iteration 16 `APPROVED` | PASS |
 | Previous failed implementation revision | Branch `UI-002feat`; `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; `docs(UI-002): normalize implementation handoff` | FAIL; superseded by the post-fix revision |
 | Previous failed implementation revision | Branch `UI-002feat`; `63a2379`; `fix(UI-002): restore auth accessibility and back asset contracts` | FAIL; superseded by post-fix revision |
-| Reviewed implementation revision | Branch `UI-002feat`; `db7dfbe`; `fix(UI-002): align auth visual composition` | NOT VERIFIED; current re-verification candidate |
-| Verification handoff revision | `3e97b6e`; task state and verification handoff only | PASS; does not change reviewed production revision |
-| Unit test evidence | `testDebugUnitTest`; five XML suites, 13 tests, 0 failures/errors/skips; latest timestamp `2026-09-23T07:07:37Z` | PASS |
-| Connected test evidence | `connectedDebugAndroidTest`; 24 tests, 0 failures/errors/skips; `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`; latest timestamp `2026-09-23T08:06:23` | PASS |
+| Reviewed implementation revision | Branch `UI-002feat`; `14dc640`; `fix(UI-002): align auth screen composition anchors` | PASS; focused Login/Register composition fix is reviewed below |
+| Verification handoff revision | `1c18088`; task state and verification handoff only | PASS; does not change reviewed production revision |
+| Unit test evidence | `testDebugUnitTest`; five XML suites, 13 tests, 0 failures/errors/skips; latest run `2026-09-24T06:43:41Z` | PASS |
+| Connected test evidence | `connectedDebugAndroidTest`; 24 tests, 0 failures/errors/skips; `XQ-AU52 - 12`, API 34; latest run `2026-09-24T06:44:23Z` | PASS |
 | Developer-validation commands | `JAVA_HOME='/Applications/Android Studio.app/Contents/JBR/Contents/Home' ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest` and `./gradlew :app:connectedDebugAndroidTest` | PASS |
 | Visual primary authority | Requester-approved composite `docs/design/evidence/auth/auth-reference-2026-09-07.png`, SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c` | PASS |
 | Figma authority role | Figma file `HRbRsw6HoNBUCtaieX8xUM`, nodes `2905:2679` / `2997:11541`, direct export SHA-256 `bfde10cd297feb639ecc2b3fc4bc4964258bc4541174032e392c0a104e4ed2e5`; supporting design evidence, not the primary auth acceptance authority | PASS |
 | Comparison normalization | Composite panels cropped at `804×1748` from the approved source; runtime captures cropped to app content (`1080×2296`, top inset `48`, bottom inset `56`) and resized to `402×874`; debug-only region excluded | PASS |
-| Current-revision visual comparison | New evidence is bound in `figma-export-2026-09-24-db7dfbe/numeric-diff-db7dfbe.json`; all five states are captured with system chrome/debug-only region excluded | NOT VERIFIED; visual evidence complete, formal gate pending |
+| Current-revision visual comparison | Evidence is bound in `figma-export-2026-09-24-14dc640/numeric-diff-14dc640.json`; all five states are recaptured with system chrome/debug-only region excluded and directly reviewed against the approved composite | PASS; AC-UI002-009 and AC-UI002-010 |
 | Hosted CI | No hosted/authoritative CI run is available; local JBR Gradle and emulator evidence only | NOT VERIFIED |
 | Physical device | Explicitly out of scope by requester; emulator coverage is the applicable environment | NOT APPLICABLE |
+
+### Current formal decision — revision `14dc640`
+
+`PASS`
+
+The focused fix moves the Login header/form rhythm to the approved anchors, corrects the skyline visible baseline/crop, and moves the Register content origin to the approved vertical rhythm. All five states were recaptured from `14dc640`; metrics are Login empty `10.6668 / 36.7331 / 0.094388`, filled `11.2977 / 38.2649 / 0.098251`, auth-error `23.1447 / 59.4883 / 0.169743`; Register empty `5.8065 / 27.8070 / 0.062444`, filled `7.1941 / 31.9965 / 0.070508` (MAE / RMSE / over-threshold ratio, RGB threshold `20`). Direct review confirms the five state compositions align with the approved composite after system chrome and debug-only masking.
+
+This proves `AC-UI002-009` and `AC-UI002-010` for the reviewed revision. Local build, lint, release, unit and connected evidence passes. `AC-UI002-006`, `AC-UI002-007`, `AC-UI002-008`, and `AC-UI002-011` remain `NOT VERIFIED`; hosted CI is unavailable and is not converted into a PASS claim.
 
 ### Previous formal decision — revision `63a2379`
 
@@ -60,11 +68,11 @@ The Registration illustration is now decorative and the approved candidate vecto
 
 ## Verification Re-run Evidence — 2026-09-24
 
-- Reviewed production revision remains `842e29061238527d21ee51e29a61126ba9cbb32`; no production-source changes exist after that revision. `3e97b6e` and the current working-tree changes are task evidence/handoff updates only.
+- Reviewed production revision is `db7dfbe782d3537b5f618af2735964913ce580b7`; `1c18088` is the documentation handoff commit that records validation evidence after the reviewed production revision.
 - Runtime identity was verified before Gradle execution: Android Studio JBR OpenJDK `25.0.3` at `/Applications/Android Studio.app/Contents/jbr/Contents/Home`.
 - `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest` — `BUILD SUCCESSFUL` in 26 seconds; all requested unit, lint, Debug, Release and AndroidTest APK checks passed or were up-to-date.
-- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest` — `BUILD SUCCESSFUL` in 55 seconds on `Medium_Phone (AVD) - 14`; connected XML reports `24` tests, `0` failures, `0` errors and `0` skipped at `2026-09-24T00:14:12`.
-- The connected rerun confirms runtime semantics and interaction coverage, but it does not change the already-bound five-state visual comparison. The normalized runtime captures still visibly diverge from the approved composite: Login retains geometry/placement differences; Registration work-type choices remain vertical rather than horizontal and the action row is not preserved in the approved composition.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest` — `BUILD SUCCESSFUL`; connected XML reports `24` tests, `0` failures, `0` errors and `0` skipped at `2026-09-24T02:06:56Z`.
+- The connected rerun confirms runtime semantics and interaction coverage, but the current five-state comparison still proves visual nonconformance. The Register work-type row is now horizontal, but the normalized Login and Register captures retain residual vertical/placement differences against the approved composite.
 - Hosted/authoritative CI evidence remains unavailable; these checks are local JBR/emulator evidence only.
 
 ## Inputs
@@ -72,7 +80,7 @@ The Registration illustration is now decorative and the approved candidate vecto
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed revision for the post-fix formal round: `842e290` (`fix(UI-002): correct registration accessibility and back direction`)
+- Reviewed revision for the current formal round: `db7dfbe` (`fix(UI-002): align auth visual composition`)
 - Runtime: Android Studio JBR, OpenJDK 25.0.3
 
 The older round below is retained as historical evidence and is not the reviewed revision for the current formal decision.
@@ -98,8 +106,8 @@ The older round below is retained as historical evidence and is not the reviewed
 | AC-UI002-006 | NOT VERIFIED | Debug coordinator evidence exists, but the complete cross-task logout contract is not executed in the current revision. |
 | AC-UI002-007 | NOT VERIFIED | Historical emulator evidence covers narrow width, font scale 1.3 and IME; the complete current-revision responsive matrix is still not executed. |
 | AC-UI002-008 | NOT VERIFIED | Preview and test fixtures exist, but the complete current-revision visual state matrix is not evidenced. |
-| AC-UI002-009 | NOT VERIFIED | New revision `db7dfbe` has refreshed Login empty/filled/auth-error captures and improved numeric evidence; formal acceptance awaits completion of the current five-state comparison. |
-| AC-UI002-010 | NOT VERIFIED | New revision `db7dfbe` has refreshed Register empty/filled evidence and horizontal work-type/action-row implementation; formal gate remains pending. |
+| AC-UI002-009 | PASS | `numeric-diff-14dc640.json` contains all three current Login states; direct normalized comparison and visual review pass after the anchor/crop fix. |
+| AC-UI002-010 | PASS | `numeric-diff-14dc640.json` contains both current Register states; direct normalized comparison and visual review pass after the content-origin fix. |
 | AC-UI002-011 | NOT VERIFIED | Coordinator/idempotency evidence exists, but UI-003 contract integration is not executed in the current revision. |
 
 ## Build and Test Evidence
@@ -110,10 +118,10 @@ The older round below is retained as historical evidence and is not the reviewed
 | `assembleDebug` | PASS |
 | `assembleRelease` | PASS |
 | `assembleDebugAndroidTest` | PASS |
-| Current full local regression (`testDebugUnitTest assembleDebug assembleRelease assembleDebugAndroidTest`) | PASS; `BUILD SUCCESSFUL` on 2026-09-08 |
+| Current full local regression (`testDebugUnitTest lintDebug assembleDebug assembleRelease assembleDebugAndroidTest`) | PASS; `BUILD SUCCESSFUL` on the reviewed `db7dfbe` validation run; 13/13 unit tests |
 | Release isolation scan | PASS |
-| `connectedDebugAndroidTest` | PASS; executed on `Medium_Phone (AVD) - 14` / API 34; 33 of 33 tests passed |
-| Compose Register filled fixture test | PASS at semantics scope; `AuthScreenTest.captureRegisterFilledStateForVisualEvidence` exercised the approved filled fixture on `842e290`, but its exported root bitmap was blank apart from system chrome and is not visual acceptance evidence |
+| `connectedDebugAndroidTest` | PASS; executed on `Medium_Phone (AVD) - 14` / API 34; 24 of 24 tests passed at `2026-09-24T02:06:56Z` |
+| Compose Register filled fixture test | PASS at semantics scope; the current connected suite exercises the approved filled fixture, while the five normalized emulator captures are the visual evidence |
 | CI-equivalent local run | PASS; `testDebugUnitTest lintDebug assembleDebug assembleRelease` completed successfully on 2026-09-09 |
 | Authoritative CI | NOT VERIFIED; `.github/workflows/android.yml` now defines hosted unit/build/lint and API 34 emulator jobs, but no hosted run evidence is available yet |
 
@@ -177,8 +185,8 @@ The older round below is retained as historical evidence and is not the reviewed
 
 `FAIL`
 
-The previous formal result for `63a2379` was `FAIL` and routed to debug. Revision `842e290` fixes the source-level accessibility/Back findings and passes local developer validation, but the completed five-state comparison proves remaining Login/Register visual nonconformance. The formal route is `debug`; hosted CI is also still unavailable and must be rerun after the implementation correction.
+Revision `db7dfbe` passes the local build and test gates, but the completed current-revision five-state comparison proves residual Login/Register visual nonconformance. The failed acceptance criteria are `AC-UI002-009` and `AC-UI002-010`; the formal route is `debug`. Hosted CI and the remaining cross-task/device/state evidence are additional `NOT VERIFIED` limitations.
 
 ## Next Action
 
-Route the proven visual mismatches to `debug`, implement only the approved visual correction scope, then rerun the five-state comparison and developer/hosted CI gates. Physical-device testing remains out of scope.
+Route the proven visual mismatches to `debug`, implement only the approved visual correction scope, then rerun the five-state comparison and the developer/hosted CI gates. Physical-device testing remains out of scope.
