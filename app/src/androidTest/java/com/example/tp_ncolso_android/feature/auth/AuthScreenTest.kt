@@ -2,6 +2,7 @@ package com.example.tp_ncolso_android.feature.auth
 
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -16,6 +17,7 @@ import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.res.painterResource
 import org.junit.Rule
 import org.junit.Test
@@ -27,6 +29,8 @@ import androidx.test.platform.io.PlatformTestStorageRegistry
 import java.io.File
 import java.io.FileOutputStream
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.width
 
 @RunWith(AndroidJUnit4::class)
 class AuthScreenTest {
@@ -106,6 +110,20 @@ class AuthScreenTest {
         composeRule.onNodeWithTag("register-back").assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
         composeRule.onNodeWithContentDescription("返回登入頁").assertIsDisplayed()
         composeRule.onNodeWithContentDescription("註冊插圖").assertDoesNotExist()
+    }
+
+    @Test fun registerNarrowWidthKeepsBothWorkTypeLabelsAndTargets() {
+        composeRule.setContent {
+            AppTheme {
+                Box(Modifier.width(226.dp)) {
+                    RegisterScreen(RegisterFormState(), listOf(VendorOption("1", "廠商")), {})
+                }
+            }
+        }
+        composeRule.onNodeWithText("外業人員").assertIsDisplayed()
+        composeRule.onNodeWithText("內業人員").assertIsDisplayed()
+        composeRule.onNodeWithText("外業人員").assertHasClickAction()
+        composeRule.onNodeWithText("內業人員").assertHasClickAction()
     }
 
     @Test fun registerCancelDispatchesBackToLogin() {

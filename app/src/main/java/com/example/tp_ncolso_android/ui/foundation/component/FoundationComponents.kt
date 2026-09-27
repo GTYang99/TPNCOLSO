@@ -2,6 +2,7 @@ package com.example.tp_ncolso_android.ui.foundation.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -298,9 +299,21 @@ fun <T> AppRadioGroup(
     ) {
         Text(text = label, style = labelStyle)
         if (horizontal) {
-            Row(horizontalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.lg)) {
-                options.forEach { option ->
-                    RadioOption(option, selected, onSelect, itemLabel, enabled)
+            BoxWithConstraints {
+                // Preserve the approved horizontal composition at baseline widths;
+                // stack options when both labeled targets cannot fit the content width.
+                if (maxWidth >= 296.dp) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.lg)) {
+                        options.forEach { option ->
+                            RadioOption(option, selected, onSelect, itemLabel, enabled)
+                        }
+                    }
+                } else {
+                    Column(verticalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm), modifier = Modifier.fillMaxWidth()) {
+                        options.forEach { option ->
+                            RadioOption(option, selected, onSelect, itemLabel, enabled, modifier = Modifier.fillMaxWidth())
+                        }
+                    }
                 }
             }
         } else options.forEach { option ->
@@ -356,10 +369,11 @@ private fun <T> RadioOption(
     onSelect: (T) -> Unit,
     itemLabel: (T) -> String,
     enabled: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     val selectedOption = selected == option
     androidx.compose.foundation.layout.Box(
-        modifier = Modifier
+        modifier = modifier
             .height(AppThemeTokens.spacing.minimumTouchTarget)
             .selectable(selected = selectedOption, enabled = enabled, role = Role.RadioButton, onClick = { onSelect(option) }),
         contentAlignment = Alignment.CenterStart,
