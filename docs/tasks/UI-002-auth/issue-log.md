@@ -298,3 +298,15 @@
 - Resolution: `KD-AUTH-011`、`KB-UI-002-AUTH-R9`、`login-ui-requirement.md` revision 2 與 plan revision 12 將 screenshot 設為 sole current Login empty visual source；舊 Figma Login frames 降為 asset／behavior supporting evidence，derived states 不宣告舊版 pixel match。
 - Next action: `plan_review`
 - Owner: Planning / Design
+
+## IMP-AUTH-018 — IME 開啟後 Login action 被覆蓋
+
+- Category: `implementation_regression`
+- Priority: `P1`
+- Status: resolved
+- Impact: 真實 Android keyboard 開啟後，Login root 未消費 IME inset；ScrollView semantics 為 `scrollable=false`，登入按鈕停在 keyboard 覆蓋區，無法完成登入。
+- Evidence: `emulator-5554` pre-fix UI hierarchy `ui-ime-scrolled.xml`；`mInputShown=true`；Login button bounds `[488,1560][592,1635]`，keyboard 覆蓋下方區域。
+- Root cause: Login/Register root layout 使用 edge-to-edge，但沒有 `imePadding()`；既有 `verticalScroll` 因內容未受 IME 後的可視高度限制而沒有形成可滾動 viewport。
+- Resolution: Revision `b193a4a` 對 LoginScreen/RegisterScreen root 加入 `imePadding()`。Post-fix hierarchy reports `scrollable=true`; after swipe the Login button is `[488,1417][592,1492]`, above the keyboard. Full connected suite is 28/28 PASS on API 34 emulator-5554.
+- Next action: `verification` — AC-UI002-007 PASS at local emulator scope; hosted CI and cross-task logout evidence remain open.
+- Owner: UI-002 Implementation / Verification

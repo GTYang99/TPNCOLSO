@@ -1,14 +1,14 @@
 # UI-002 Implementation Execution Report
 
-## Latest debug-fix implementation and validation — 2026-09-24
+## Latest debug-fix implementation and validation — 2026-09-27
 
-- Reviewed implementation revision: `f83eaa0` (`fix(UI-002): align auth viewport anchors`) on branch `UI-002feat`, based on `534bcb2`.
+- Reviewed implementation revision: `b193a4a` (`fix(UI-002): keep auth actions visible with IME`) on branch `UI-002feat`, based on `f83eaa0`.
 - Production changes: Login content origin moved to the approved anchor, the skyline baseline now reaches the approved clipped edge without the bottom white block, Login button spacing was tightened, Register top origin was aligned, and the Register action row was moved into the 402×874 viewport.
-- Local validation: `testDebugUnitTest`, `assembleDebug`, and `assembleDebugAndroidTest` PASS; 14/14 unit tests passed at `2026-09-27T06:33:27Z`. The added `ui003LogoutRequestedFixtureClearsBothStatesAndIsIdempotent` test simulates the UI-003 callback boundary and verifies complete local state clearing plus repeated-event idempotency. Isolated `Medium_Phone(AVD) - 14` on API 34 / `emulator-5558` ran 28/28 connected tests PASS at `2026-09-24T08:29:44Z`; XML is `connected-tests-emulator-5558-2026-09-24T08-29-44.xml`.
+- Local validation: `testDebugUnitTest`, `assembleDebug`, and `assembleDebugAndroidTest` PASS; 14/14 unit tests passed at `2026-09-27T06:33:27Z`. The added `ui003LogoutRequestedFixtureClearsBothStatesAndIsIdempotent` test simulates the UI-003 callback boundary and verifies complete local state clearing plus repeated-event idempotency. The new `imePadding()` fix was installed on `Medium_Phone(AVD) - 14`; the full API 34 connected suite ran 28/28 PASS at `2026-09-27T06:41:04Z` on `emulator-5554`; XML is `connected-tests-emulator-5554-2026-09-27T06-41-04.xml`.
 - Five-state evidence: `numeric-diff-f83eaa0.json` contains emulator-authoritative Login empty/filled/error and Register empty/filled captures. Metrics are Login `10.5298 / 10.7950 / 22.9243` MAE and Register `5.8778 / 6.3757` MAE; direct review confirms skyline baseline and Register action-row visibility. AC-UI002-009/010 are PASS at local emulator visual scope.
-- Responsive evidence is refreshed on `emulator-5558`: narrow `runtime-login-narrow-f83eaa0-720x2400.png`, font-scale 1.3 `runtime-login-fontscale-1.3-f83eaa0.png`, and focused IME Compose-root `runtime-login-ime-f83eaa0.png`. Narrow/font-scale direct review shows no functional text clipping or action-row loss; the Compose-root capture cannot include the system keyboard surface, so AC-UI002-007 remains `NOT VERIFIED` until a full IME device-surface capture is available. Physical-device testing remains out of scope.
+- Responsive evidence is refreshed on `emulator-5554`: narrow and font-scale captures remain valid, while `runtime-login-ime-device-2b15d0d-fixed2.png` and `runtime-login-ime-device-2b15d0d-fixed-scrolled.png` show the real keyboard and the Login button restored above it after scrolling. UI hierarchy snapshots record `ScrollView scrollable=true` and button bounds `[488,1417][592,1492]`. AC-UI002-007 is PASS at local emulator scope. Physical-device testing remains out of scope.
 - State coverage now includes Login empty/filled/error/submitting and Register empty/filled/validation-error/submitting; AC-UI002-008 is PASS at local unit/Compose scope.
-- Current formal verification result: `NOT VERIFIED` for AC-UI002-006/007/011 and hosted CI. The callback fixture improves local contract evidence but does not replace UI-003 integration evidence; no `PARTIAL` result is used as the current result.
+- Current formal verification result: `NOT VERIFIED` for AC-UI002-006/011 and hosted CI. AC-UI002-007 is now PASS at local emulator scope; the callback fixture improves local contract evidence but does not replace UI-003 integration evidence. No `PARTIAL` result is used as the current result.
 
 ## Revision
 

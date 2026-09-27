@@ -28,7 +28,7 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: f83eaa0
+  commit: b193a4a
   status: committed
 
 verification:
@@ -36,7 +36,6 @@ verification:
   category: evidence_missing
   failed_acceptance_criteria:
     - AC-UI002-006
-    - AC-UI002-007
     - AC-UI002-011
 
 ci:
@@ -47,6 +46,6 @@ release:
   status: pending
 
 blocking:
-  - Five-state visual evidence is now emulator-authoritative on f83eaa0 and passes the current visual comparison scope; narrow and font-scale captures are refreshed, but the Compose-root IME capture does not include the system keyboard, so AC-UI002-007 remains NOT VERIFIED.
-  - Emulator-only connected validation now passes on Medium_Phone after ADB isolation; a local UI-003 callback fixture now covers coordinator state clearing/idempotency, but real UI-003 integration, full IME surface evidence, and hosted/authoritative CI remain unavailable, so overall Verification is NOT VERIFIED.
+  - Five-state visual evidence remains valid for the unchanged non-IME composition from f83eaa0; b193a4a adds imePadding and emulator-authoritative system-IME evidence, closing AC-UI002-007 at local emulator scope.
+  - Emulator-only connected validation now passes on Medium_Phone after ADB isolation; a local UI-003 callback fixture covers coordinator state clearing/idempotency, but real UI-003 integration and hosted/authoritative CI remain unavailable, so overall Verification is NOT VERIFIED.
 next_action: verification
