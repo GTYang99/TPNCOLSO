@@ -39,8 +39,8 @@ verification:
     - AC-UI002-011
 
 ci:
-  build: PASS (local JBR Gradle, f83eaa0)
-  test: PASS (14/14 unit at 2026-09-27T06:33:27Z; 28/28 connected on Medium_Phone API 34 emulator-5558 at 2026-09-24T08:29:44Z; XML evidence captured locally; local emulator evidence only)
+  build: PASS (local JBR Gradle, b193a4a; assembleDebug, testDebugUnitTest, assembleDebugAndroidTest)
+  test: PASS (14/14 unit at 2026-09-27T06:33:27Z; 28/28 connected on Medium_Phone API 34 emulator-5554 at 2026-09-27T06:41:04Z; XML evidence captured locally; local emulator evidence only)
 
 release:
   status: pending
