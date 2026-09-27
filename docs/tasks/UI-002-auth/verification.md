@@ -13,7 +13,7 @@ Current formal result: `NOT VERIFIED` for `f83eaa0`. The five-state visual compa
 | Previous failed implementation revision | Branch `UI-002feat`; `63a2379`; `fix(UI-002): restore auth accessibility and back asset contracts` | FAIL; superseded by post-fix revision |
 | Reviewed implementation revision | Branch `UI-002feat`; `f83eaa0`; `fix(UI-002): align auth viewport anchors` (based on `534bcb2`) | PASS; current Login/Register anchor fix is reviewed below |
 | Verification handoff revision | `1c18088`; task state and verification handoff only | PASS; does not change reviewed production revision |
-| Unit test evidence | `testDebugUnitTest`; five XML suites, 13 tests, 0 failures/errors/skips; latest run `2026-09-24T07:05:03Z` | PASS |
+| Unit test evidence | `testDebugUnitTest`; five XML suites, 14 tests, 0 failures/errors/skips; latest run `2026-09-27T06:33:27Z`; includes `ui003LogoutRequestedFixtureClearsBothStatesAndIsIdempotent` | PASS at local contract scope |
 | Connected test evidence | Isolated emulator-only `Medium_Phone(AVD) - 14` run at `2026-09-24T08:29:44Z` recorded 28 tests, 0 failures/errors/skips, device `emulator-5558`; XML: `figma-export-2026-09-24-534bcb2/connected-tests-emulator-5558-2026-09-24T08-29-44.xml` | PASS at local emulator scope |
 | Developer-validation commands | `JAVA_HOME='/Applications/Android Studio.app/Contents/JBR/Contents/Home' ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest` and `./gradlew :app:connectedDebugAndroidTest` | PASS |
 | Visual primary authority | Requester-approved composite `docs/design/evidence/auth/auth-reference-2026-09-07.png`, SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c` | PASS |
@@ -30,7 +30,7 @@ Current formal result: `NOT VERIFIED` for `f83eaa0`. The five-state visual compa
 
 The debug fix moves the Login content origin to the approved anchor, removes the bottom white gap by restoring the skyline baseline to the viewport edge, tightens the Login button anchor, and moves the Register action row into the approved 402×874 viewport. The new five-state artifact records metrics of Login empty `10.5298 / 36.5989 / 0.092699`, filled `10.7950 / 37.2791 / 0.093578`, auth-error `22.9243 / 59.1915 / 0.169002`; Register empty `5.8778 / 28.0635 / 0.064083`, filled `6.3757 / 29.5556 / 0.065932` (MAE / RMSE / over-threshold ratio, RGB threshold `20`). These five states are now emulator-authoritative and visually reviewed as PASS for AC-UI002-009/010.
 
-The current artifacts now prove the standard five-state visual scope and the UI state matrix (empty/filled/error/validation/submitting) at local unit/Compose scope. Current emulator responsive captures now cover narrow and font-scale 1.3 layout; the focused IME capture proves focus state but excludes the system keyboard surface, so AC-UI002-007 remains `NOT VERIFIED`. Cross-task logout handoff evidence for AC-UI002-006/011 and hosted CI are also unavailable. Under the Verification Rule, the overall result is therefore `NOT VERIFIED`, not PASS.
+The current artifacts now prove the standard five-state visual scope and the UI state matrix (empty/filled/error/validation/submitting) at local unit/Compose scope. The new debug contract fixture simulates one UI-003 `LogoutRequested` callback and proves that the coordinator clears signed-in state plus all Login/Register transient values, returns to `LOGIN_EMPTY`, and remains idempotent on a repeated callback. It does not prove a real UI-003 drawer integration because UI-003 is still in Knowledge and has no implementation revision. Current emulator responsive captures now cover narrow and font-scale 1.3 layout; the focused IME capture proves focus state but excludes the system keyboard surface, so AC-UI002-007 remains `NOT VERIFIED`. Cross-task logout handoff evidence for AC-UI002-006/011 and hosted CI are also unavailable. Under the Verification Rule, the overall result is therefore `NOT VERIFIED`, not PASS.
 
 ### Previous formal decision — revision `63a2379`
 
@@ -104,12 +104,12 @@ The older round below is retained as historical evidence and is not the reviewed
 | AC-UI002-003 | PASS (unit scope) | ViewModel tests cover success effect, sensitive clearing and auth-error retention; debug coordinator guards duplicate session start. |
 | AC-UI002-004 | PASS (connected scope) | Register route, six fields, Back and Cancel events pass `AuthScreenTest` on API 34. |
 | AC-UI002-005 | PASS (unit scope) | Pure validation tests cover account, password, confirmation, vendor, work type and Chinese name rules. |
-| AC-UI002-006 | NOT VERIFIED | Debug coordinator evidence exists, but the complete cross-task logout contract is not executed in the current revision. |
+| AC-UI002-006 | NOT VERIFIED | New local callback-fixture test proves coordinator clearing/reset/idempotency, but the complete UI-003 cross-task logout contract is not executed because UI-003 has no implementation revision. |
 | AC-UI002-007 | NOT VERIFIED | Current emulator captures cover narrow width and font scale 1.3; focused IME root capture is recorded, but it cannot prove the system keyboard surface and full resized viewport behavior. |
 | AC-UI002-008 | PASS (local unit/Compose scope) | Preview matrix exists; current tests cover Login empty/filled/error/submitting and Register empty/filled/validation-error/submitting, with replaceable test data sources. |
 | AC-UI002-009 | PASS (local emulator visual scope) | `numeric-diff-f83eaa0.json` covers Login empty/filled/auth-error from `emulator-5558`; direct review confirms the corrected header/form/button/skyline composition. |
 | AC-UI002-010 | PASS (local emulator visual scope) | `numeric-diff-f83eaa0.json` covers Register empty/filled from `emulator-5558`; direct review confirms the corrected top rhythm, horizontal work-type row and visible action row. |
-| AC-UI002-011 | NOT VERIFIED | Coordinator/idempotency evidence exists, but UI-003 contract integration is not executed in the current revision. |
+| AC-UI002-011 | NOT VERIFIED | New local callback-fixture test covers the UI-002 side of the contract; UI-003 contract integration and drawer-owned event evidence are not executed in the current revision. |
 
 ## Build and Test Evidence
 

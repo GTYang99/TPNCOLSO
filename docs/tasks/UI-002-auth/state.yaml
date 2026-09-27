@@ -41,12 +41,12 @@ verification:
 
 ci:
   build: PASS (local JBR Gradle, f83eaa0)
-  test: PASS (13/13 unit; 28/28 connected on Medium_Phone API 34 emulator-5558 at 2026-09-24T08:29:44Z; XML evidence captured locally; local emulator evidence only)
+  test: PASS (14/14 unit at 2026-09-27T06:33:27Z; 28/28 connected on Medium_Phone API 34 emulator-5558 at 2026-09-24T08:29:44Z; XML evidence captured locally; local emulator evidence only)
 
 release:
   status: pending
 
 blocking:
   - Five-state visual evidence is now emulator-authoritative on f83eaa0 and passes the current visual comparison scope; narrow and font-scale captures are refreshed, but the Compose-root IME capture does not include the system keyboard, so AC-UI002-007 remains NOT VERIFIED.
-  - Emulator-only connected validation now passes on Medium_Phone after ADB isolation; AC-UI002-006/007/011 and hosted/authoritative CI evidence remain unavailable, so overall Verification is NOT VERIFIED.
+  - Emulator-only connected validation now passes on Medium_Phone after ADB isolation; a local UI-003 callback fixture now covers coordinator state clearing/idempotency, but real UI-003 integration, full IME surface evidence, and hosted/authoritative CI remain unavailable, so overall Verification is NOT VERIFIED.
 next_action: verification
