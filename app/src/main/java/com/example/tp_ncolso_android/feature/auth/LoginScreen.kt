@@ -22,6 +22,7 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -57,7 +58,7 @@ fun LoginScreen(
     modifier: Modifier = Modifier,
     captchaVisual: @Composable (Modifier) -> Unit = { modifier -> Text(state.captchaImageKey, color = AppThemeTokens.colors.textSecondary, modifier = modifier) },
 ) {
-    BoxWithConstraints(modifier.fillMaxSize().background(Brush.verticalGradient(listOf(AppThemeTokens.colors.surface, AppThemeTokens.colors.surfaceMuted)))) {
+    BoxWithConstraints(modifier.fillMaxSize().imePadding().background(Brush.verticalGradient(listOf(AppThemeTokens.colors.surface, AppThemeTokens.colors.surfaceMuted)))) {
     val authWidth = if (maxWidth < 368.dp) maxWidth - 48.dp else 320.dp
     val skylineWidth = minOf(402.dp, maxWidth)
     val skylineHeight = skylineWidth * (239f / 402f)
