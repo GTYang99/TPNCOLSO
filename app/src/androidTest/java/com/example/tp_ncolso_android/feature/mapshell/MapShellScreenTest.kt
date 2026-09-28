@@ -73,4 +73,34 @@ class MapShellScreenTest {
         composeRule.onNodeWithTag("location-retry").assertIsDisplayed().performClick()
         assertEquals(MapShellEvent.RetryLocation, event)
     }
+
+    @Test fun topAndLocationControlsForwardExplicitCallbacks() {
+        var search = 0
+        var notifications = 0
+        var navigation = 0
+        var location = 0
+        composeRule.setContent {
+            AppTheme {
+                MapShellRoute(
+                    identity = identity,
+                    callbacks = MapShellCallbacks(
+                        onSearch = { search += 1 },
+                        onNotifications = { notifications += 1 },
+                        onMapNavigation = { navigation += 1 },
+                        onLocation = { location += 1 },
+                    ),
+                )
+            }
+        }
+
+        composeRule.onNodeWithContentDescription("關鍵字搜尋").performClick()
+        composeRule.onNodeWithContentDescription("通知").performClick()
+        composeRule.onNodeWithContentDescription("定位目前位置").performClick()
+        composeRule.onNodeWithText("地塊 A-001").performClick()
+
+        assertEquals(1, search)
+        assertEquals(1, notifications)
+        assertEquals(1, location)
+        assertEquals(1, navigation)
+    }
 }
