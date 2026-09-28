@@ -2,6 +2,8 @@ package com.example.tp_ncolso_android
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import com.example.tp_ncolso_android.ui.foundation.theme.AppTheme
 import org.junit.Rule
@@ -32,11 +34,12 @@ class DebugDirectLoginTest {
         composeRule.onNodeWithText("開發模式").performClick()
         composeRule.onNodeWithText("管理者").performClick()
         composeRule.onNodeWithText("直接進入").performClick()
-        composeRule.onNodeWithText("已進入開發受保護內容").assertExists()
-        composeRule.onNodeWithText("使用者：開發測試人員").assertExists()
-        composeRule.onNodeWithText("角色：管理者").assertExists()
+        composeRule.onNodeWithTag("map-surface").assertExists()
+        composeRule.onNodeWithContentDescription("開啟選單").performClick()
+        composeRule.onNodeWithText("開發測試人員 · ADMINISTRATOR").assertExists()
+        composeRule.onNodeWithText("登出").assertExists()
 
-        composeRule.onNodeWithText("登出開發模式").performClick()
+        composeRule.onNodeWithText("登出").performClick()
         composeRule.onNodeWithText("開發模式").assertExists()
         composeRule.onNodeWithText("帳號").assertExists()
         composeRule.onNodeWithText("登入").assertExists()
