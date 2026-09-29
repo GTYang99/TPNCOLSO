@@ -43,7 +43,7 @@ verification:
 
 ci:
   build: PASS (local JBR Gradle; debug/release/AndroidTest APK and lint)
-  test: PASS (18/18 unit; 33/33 connected on Medium_Phone API 34 emulator-5554 at 2026-09-28T23:39:22+0800; XML SHA-256 298f3feb01e302b8b3e54231780ba93171428d7e942fefb319fd26e3b4a2abf4; local emulator evidence only)
+  test: PASS (18/18 unit; 35/35 connected on Medium_Phone API 34 emulator-5554 at 2026-09-29T01:38:01+0800; final local emulator evidence includes UI-003 semantics/callback regressions; hosted CI remains unavailable)
 
 release:
   status: pending
