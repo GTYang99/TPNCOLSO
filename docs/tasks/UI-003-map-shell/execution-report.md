@@ -82,6 +82,7 @@ Implementation-debug re-entry for `CR-UI003-001` through `CR-UI003-005`. Respons
 
 ## Implementation-debug fix result — 2026-09-29
 
+- Implementation fix revision: `51cb024` (`fix(UI-003): resolve map shell review findings`).
 - Fixed `CR-UI003-001`: basemap options now use `selectable(selected = ..., role = Role.RadioButton)` within a selectable group; the Compose test verifies the initial and changed selected states.
 - Fixed `CR-UI003-002`: loading and permission-denied states now use `AppLoadingContent` and `AppErrorContent`; tests verify loading semantics and denied retry behavior.
 - Fixed `CR-UI003-003`: `圖台` and `儀錶板` now expose 48dp-or-larger button targets and callback ports (`onMapPlatform`, `onDashboard`) without adding navigation destinations.
@@ -94,4 +95,4 @@ Implementation-debug re-entry for `CR-UI003-001` through `CR-UI003-005`. Respons
 
 ## Next action after fix
 
-Create the new committed implementation revision, request Code Review again, and retain Verification as `NOT VERIFIED` until the new review and authoritative CI evidence are available.
+Request Code Review for committed revision `51cb024`, then retain Verification as `NOT VERIFIED` until the new review and authoritative CI evidence are available.

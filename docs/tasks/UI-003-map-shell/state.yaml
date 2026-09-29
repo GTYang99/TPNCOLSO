@@ -33,7 +33,7 @@ validation:
 
 git:
   branch: UI-003feat
-  commit: 0e0b609
+  commit: 51cb024
   status: committed
 
 verification:
@@ -49,9 +49,9 @@ release:
   status: pending
 
 blocking:
-  - Code Review Revision 1 requested changes for CR-UI003-001 through CR-UI003-005; production fixes and a new committed review revision are required before Verification
+  - Code Review Revision 1 requested changes for CR-UI003-001 through CR-UI003-005; implementation fixes are committed in `51cb024` and require a new Code Review before Verification
   - `UI-003feat` is not published, so no hosted CI run exists for the current UI-003 revision; the available parent UI-002 run 36442276066 failed during Android SDK/connected-runner setup and cannot substitute for UI-003 CI evidence
   - UI-001 release/handoff and authoritative CI remain downstream gates; UI-002/UI-003 cross-task logout is verified at local emulator scope
   - WMTS layer and request parameters remain unspecified; this blocks real tile integration, not UI-only planning
 
-next_action: implementation_debug
+next_action: verification

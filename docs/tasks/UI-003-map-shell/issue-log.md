@@ -7,6 +7,12 @@
 - All five findings remain open pending authorized implementation and a new review revision.
 - Classification is `implementation_failure`; no requirement, planning or environment re-route was identified.
 
+## Implementation fix — revision `51cb024`
+
+- `CR-UI003-001` through `CR-UI003-005` have implementation fixes in the committed revision `51cb024`.
+- Focused and connected validation passed after the fixes; findings remain `fixed_pending_review` until Code Review confirms the new semantics, component usage, callback ports, icon/token path and hygiene.
+- Verification remains `NOT VERIFIED`; no hosted CI run exists for `UI-003feat`.
+
 ## CR-UI003-001 — Basemap selected semantics are not exposed
 
 - Category: `implementation_failure`
