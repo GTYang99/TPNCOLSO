@@ -1,6 +1,8 @@
 package com.example.tp_ncolso_android.feature.mapshell
 
 import androidx.compose.ui.test.assertHasClickAction
+import androidx.compose.ui.test.assertIsNotSelected
+import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -23,8 +25,9 @@ class MapShellScreenTest {
     private val identity = AppIdentity("測試人員", AppRole.INVESTIGATOR)
 
     @Test fun shellRendersControlsAndExactlyThreeBasemaps() {
+        val viewModel = MapShellViewModel(identity)
         composeRule.setContent {
-            AppTheme { MapShellScreen(MapShellUiState(identity), {}) }
+            AppTheme { MapShellRoute(identity = identity, viewModel = viewModel) }
         }
 
         composeRule.onNodeWithTag("map-surface").assertIsDisplayed()
@@ -34,6 +37,13 @@ class MapShellScreenTest {
         composeRule.onNodeWithText("電子地圖").assertIsDisplayed()
         composeRule.onNodeWithText("正射圖").assertIsDisplayed()
         composeRule.onNodeWithText("地形圖").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("電子地圖").assertIsSelected()
+        composeRule.onNodeWithContentDescription("正射圖").assertIsNotSelected()
+        composeRule.onNodeWithContentDescription("地形圖").assertIsNotSelected()
+        composeRule.onNodeWithContentDescription("正射圖").performClick()
+        composeRule.onNodeWithContentDescription("電子地圖").assertIsNotSelected()
+        composeRule.onNodeWithContentDescription("正射圖").assertIsSelected()
+        composeRule.onNodeWithContentDescription("地形圖").assertIsNotSelected()
     }
 
     @Test fun drawerLogoutEmitsOneCallbackAndExposesAccessibleAction() {
@@ -51,6 +61,8 @@ class MapShellScreenTest {
 
         composeRule.onNodeWithContentDescription("開啟選單").performClick()
         composeRule.onNodeWithTag("map-drawer").assertIsDisplayed()
+        composeRule.onNodeWithTag("map-platform").assertHasClickAction()
+        composeRule.onNodeWithTag("map-dashboard").assertHasClickAction()
         composeRule.onNodeWithText("登出").assertHasClickAction().performClick()
         composeRule.waitForIdle()
 
@@ -70,8 +82,47 @@ class MapShellScreenTest {
         }
 
         composeRule.onNodeWithTag("location-denied").assertIsDisplayed()
-        composeRule.onNodeWithTag("location-retry").assertIsDisplayed().performClick()
+        composeRule.onNodeWithText("重試").assertIsDisplayed().performClick()
         assertEquals(MapShellEvent.RetryLocation, event)
+    }
+
+    @Test fun loadingStateUsesCommonLoadingSemantics() {
+        composeRule.setContent {
+            AppTheme {
+                MapShellScreen(
+                    state = MapShellUiState(identity, locationState = LocationState.LOADING),
+                    onEvent = {},
+                )
+            }
+        }
+
+        composeRule.onNodeWithTag("location-loading").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("載入中：定位中…").assertIsDisplayed()
+    }
+
+    @Test fun drawerNavigationCallbacksAreForwarded() {
+        var mapPlatform = 0
+        var dashboard = 0
+        val viewModel = MapShellViewModel(identity)
+        composeRule.setContent {
+            AppTheme {
+                MapShellRoute(
+                    identity = identity,
+                    viewModel = viewModel,
+                    callbacks = MapShellCallbacks(
+                        onMapPlatform = { mapPlatform += 1 },
+                        onDashboard = { dashboard += 1 },
+                    ),
+                )
+            }
+        }
+
+        composeRule.onNodeWithContentDescription("開啟選單").performClick()
+        composeRule.onNodeWithTag("map-platform").performClick()
+        composeRule.onNodeWithTag("map-dashboard").performClick()
+
+        assertEquals(1, mapPlatform)
+        assertEquals(1, dashboard)
     }
 
     @Test fun topAndLocationControlsForwardExplicitCallbacks() {

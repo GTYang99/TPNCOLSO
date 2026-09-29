@@ -39,6 +39,8 @@ sealed interface MapShellEvent {
     data object SearchClicked : MapShellEvent
     data object NotificationsClicked : MapShellEvent
     data object MapNavigationClicked : MapShellEvent
+    data object MapPlatformClicked : MapShellEvent
+    data object DashboardClicked : MapShellEvent
     data object LocationClicked : MapShellEvent
     data object RetryLocation : MapShellEvent
     data class SetLocationState(val state: LocationState) : MapShellEvent
@@ -48,4 +50,3 @@ sealed interface MapShellEvent {
 sealed interface MapShellEffect {
     data object LogoutRequested : MapShellEffect
 }
-

@@ -3,7 +3,7 @@ task:
   type: feature
 
 phase: implementation
-status: completed
+status: in_progress
 
 knowledge:
   status: ready
@@ -23,30 +23,35 @@ plan_review:
 implementation:
   status: completed
 
+review:
+  result: CHANGES_REQUESTED
+  iteration: 1
+  commit: 0e0b609
+
 validation:
   status: passed
 
 git:
   branch: UI-003feat
-  commit: 37d957e
+  commit: 0e0b609
   status: committed
 
 verification:
   result: NOT VERIFIED
   category: evidence_missing
-  failed_acceptance_criteria:
-    - AC-UI003-009
+  failed_acceptance_criteria: []
 
 ci:
   build: PASS (local JBR Gradle; debug/release/AndroidTest APK and lint)
-  test: PASS (18/18 unit; 33/33 connected on Medium_Phone API 34 emulator-5554 at 2026-09-28T15:28:31; local emulator evidence only)
+  test: PASS (18/18 unit; 33/33 connected on Medium_Phone API 34 emulator-5554 at 2026-09-28T23:39:22+0800; XML SHA-256 298f3feb01e302b8b3e54231780ba93171428d7e942fefb319fd26e3b4a2abf4; local emulator evidence only)
 
 release:
   status: pending
 
 blocking:
-  - Responsive map-shell evidence at narrow width, font scale 1.3 and IME-visible conditions remains unavailable, so AC-UI003-009 is NOT VERIFIED
-  - UI-001/UI-002 handoff and real cross-task logout verification remain downstream integration gates
+  - Code Review Revision 1 requested changes for CR-UI003-001 through CR-UI003-005; production fixes and a new committed review revision are required before Verification
+  - `UI-003feat` is not published, so no hosted CI run exists for the current UI-003 revision; the available parent UI-002 run 36442276066 failed during Android SDK/connected-runner setup and cannot substitute for UI-003 CI evidence
+  - UI-001 release/handoff and authoritative CI remain downstream gates; UI-002/UI-003 cross-task logout is verified at local emulator scope
   - WMTS layer and request parameters remain unspecified; this blocks real tile integration, not UI-only planning
 
-next_action: code_review
+next_action: implementation_debug

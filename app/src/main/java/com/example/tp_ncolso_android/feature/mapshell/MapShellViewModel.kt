@@ -22,7 +22,9 @@ class MapShellViewModel(identity: com.example.tp_ncolso_android.session.AppIdent
             MapShellEvent.CloseDrawer -> mutableState.value = mutableState.value.copy(drawerOpen = false)
             MapShellEvent.SearchClicked,
             MapShellEvent.NotificationsClicked,
-            MapShellEvent.MapNavigationClicked -> Unit
+            MapShellEvent.MapNavigationClicked,
+            MapShellEvent.MapPlatformClicked,
+            MapShellEvent.DashboardClicked -> Unit
             MapShellEvent.LocationClicked -> mutableState.value = mutableState.value.copy(locationState = LocationState.LOADING)
             MapShellEvent.RetryLocation -> mutableState.value = mutableState.value.copy(locationState = LocationState.LOADING)
             is MapShellEvent.SetLocationState -> mutableState.value = mutableState.value.copy(locationState = event.state)
@@ -37,4 +39,3 @@ class MapShellViewModel(identity: com.example.tp_ncolso_android.session.AppIdent
         effects.trySend(MapShellEffect.LogoutRequested)
     }
 }
-

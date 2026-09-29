@@ -16,7 +16,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,13 +31,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.tp_ncolso_android.session.AppIdentity
+import com.example.tp_ncolso_android.R
+import com.example.tp_ncolso_android.ui.foundation.component.AppErrorContent
+import com.example.tp_ncolso_android.ui.foundation.component.AppLoadingContent
 import com.example.tp_ncolso_android.ui.foundation.component.AppPrimaryButton
 import com.example.tp_ncolso_android.ui.foundation.component.AppSecondaryButton
 import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
@@ -42,6 +49,8 @@ data class MapShellCallbacks(
     val onSearch: () -> Unit = {},
     val onNotifications: () -> Unit = {},
     val onMapNavigation: () -> Unit = {},
+    val onMapPlatform: () -> Unit = {},
+    val onDashboard: () -> Unit = {},
     val onLocation: () -> Unit = {},
     val onLogoutRequested: () -> Unit = {},
 )
@@ -65,6 +74,8 @@ fun MapShellRoute(
             MapShellEvent.SearchClicked -> callbacks.onSearch()
             MapShellEvent.NotificationsClicked -> callbacks.onNotifications()
             MapShellEvent.MapNavigationClicked -> callbacks.onMapNavigation()
+            MapShellEvent.MapPlatformClicked -> callbacks.onMapPlatform()
+            MapShellEvent.DashboardClicked -> callbacks.onDashboard()
             MapShellEvent.LocationClicked -> callbacks.onLocation()
             else -> Unit
         }
@@ -105,8 +116,8 @@ private fun MapSurface(state: MapShellUiState, onEvent: (MapShellEvent) -> Unit)
             Box(
                 Modifier
                     .size(176.dp)
-                    .background(Color(0xFFD8E5D1), RoundedCornerShape(16.dp))
-                    .border(1.dp, Color(0xFF9CB497), RoundedCornerShape(16.dp))
+                    .background(AppThemeTokens.colors.surface, RoundedCornerShape(16.dp))
+                    .border(1.dp, AppThemeTokens.colors.borderDefault, RoundedCornerShape(16.dp))
                     .clickable(role = Role.Button) { onEvent(MapShellEvent.MapNavigationClicked) }
                     .semantics { contentDescription = "${state.overlay.selectedTarget}，${state.overlay.label}" },
                 contentAlignment = Alignment.Center,
@@ -115,10 +126,16 @@ private fun MapSurface(state: MapShellUiState, onEvent: (MapShellEvent) -> Unit)
             Text("${state.overlay.userLocationMarker} · ${state.overlay.activeQuery.ifBlank { "尚無查詢" }}", color = AppThemeTokens.colors.textSecondary)
             when (state.locationState) {
                 LocationState.NORMAL -> Unit
-                LocationState.LOADING -> Text("定位中…", modifier = Modifier.testTag("location-loading"))
+                LocationState.LOADING -> AppLoadingContent(
+                    message = "定位中…",
+                    modifier = Modifier.testTag("location-loading"),
+                )
                 LocationState.PERMISSION_DENIED -> {
-                    Text("需要定位權限才能顯示目前位置", modifier = Modifier.testTag("location-denied"))
-                    AppSecondaryButton("重新嘗試", { onEvent(MapShellEvent.RetryLocation) }, Modifier.testTag("location-retry"))
+                    AppErrorContent(
+                        message = "需要定位權限才能顯示目前位置",
+                        retry = { onEvent(MapShellEvent.RetryLocation) },
+                        modifier = Modifier.testTag("location-denied"),
+                    )
                 }
             }
         }
@@ -131,9 +148,9 @@ private fun TopControls(onEvent: (MapShellEvent) -> Unit) {
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 24.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        ShellAction("☰", "開啟選單", "map-hamburger") { onEvent(MapShellEvent.OpenDrawer) }
-        ShellAction("⌕", "關鍵字搜尋", "map-search") { onEvent(MapShellEvent.SearchClicked) }
-        ShellAction("通知", "通知", "map-notifications") { onEvent(MapShellEvent.NotificationsClicked) }
+        ShellAction(R.drawable.ic_map_menu, "開啟選單", "map-hamburger") { onEvent(MapShellEvent.OpenDrawer) }
+        ShellAction(R.drawable.ic_map_search, "關鍵字搜尋", "map-search") { onEvent(MapShellEvent.SearchClicked) }
+        ShellAction(R.drawable.ic_map_notifications, "通知", "map-notifications") { onEvent(MapShellEvent.NotificationsClicked) }
     }
 }
 
@@ -149,7 +166,12 @@ private fun BoxScope.LocationAffordance(state: MapShellUiState, onEvent: (MapShe
             .semantics { contentDescription = "定位目前位置" }
             .testTag("map-location"),
         contentAlignment = Alignment.Center,
-    ) { Text(if (state.locationState == LocationState.LOADING) "…" else "◎") }
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_map_location),
+            contentDescription = null,
+        )
+    }
 }
 
 @Composable
@@ -161,6 +183,7 @@ private fun BoxScope.BasemapSwitcher(state: MapShellUiState, onEvent: (MapShellE
             .padding(horizontal = 16.dp, vertical = 24.dp)
             .background(AppThemeTokens.colors.surface, RoundedCornerShape(16.dp))
             .padding(8.dp)
+            .selectableGroup()
             .testTag("basemap-switcher"),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
@@ -171,10 +194,13 @@ private fun BoxScope.BasemapSwitcher(state: MapShellUiState, onEvent: (MapShellE
                     .weight(1f)
                     .sizeIn(minHeight = 48.dp)
                     .background(if (selected) AppThemeTokens.colors.brandPrimary else Color.Transparent, RoundedCornerShape(12.dp))
-                    .clickable(role = Role.RadioButton) { onEvent(MapShellEvent.SelectBasemap(basemap)) }
+                    .selectable(
+                        selected = selected,
+                        role = Role.RadioButton,
+                        onClick = { onEvent(MapShellEvent.SelectBasemap(basemap)) },
+                    )
                     .semantics {
                         contentDescription = basemap.label
-                        role = Role.RadioButton
                     },
                 contentAlignment = Alignment.Center,
             ) { Text(basemap.label, color = if (selected) AppThemeTokens.colors.onBrandPrimary else AppThemeTokens.colors.textPrimary) }
@@ -195,8 +221,16 @@ private fun Drawer(state: MapShellUiState, onEvent: (MapShellEvent) -> Unit) {
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text("${state.identity.displayName} · ${state.identity.role}", style = AppThemeTokens.typography.sectionTitle)
-            Text("圖台", modifier = Modifier.sizeIn(minHeight = 48.dp).padding(vertical = 12.dp))
-            Text("儀錶板", modifier = Modifier.sizeIn(minHeight = 48.dp).padding(vertical = 12.dp))
+            AppSecondaryButton(
+                text = "圖台",
+                onClick = { onEvent(MapShellEvent.MapPlatformClicked) },
+                modifier = Modifier.fillMaxWidth().testTag("map-platform"),
+            )
+            AppSecondaryButton(
+                text = "儀錶板",
+                onClick = { onEvent(MapShellEvent.DashboardClicked) },
+                modifier = Modifier.fillMaxWidth().testTag("map-dashboard"),
+            )
             Spacer(Modifier.weight(1f))
             AppPrimaryButton("登出", { onEvent(MapShellEvent.LogoutRequested) }, Modifier.fillMaxWidth().testTag("map-logout"))
             AppSecondaryButton("關閉選單", { onEvent(MapShellEvent.CloseDrawer) }, Modifier.fillMaxWidth().testTag("map-drawer-close"))
@@ -205,14 +239,16 @@ private fun Drawer(state: MapShellUiState, onEvent: (MapShellEvent) -> Unit) {
 }
 
 @Composable
-private fun ShellAction(icon: String, description: String, tag: String, onClick: () -> Unit) {
+private fun ShellAction(iconRes: Int, description: String, tag: String, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .sizeIn(minWidth = 48.dp, minHeight = 48.dp)
             .background(AppThemeTokens.colors.surface, RoundedCornerShape(12.dp))
-            .clickable(role = Role.Button, onClick = onClick)
-            .semantics { contentDescription = description }
             .testTag(tag),
         contentAlignment = Alignment.Center,
-    ) { Text(icon) }
+    ) {
+        IconButton(onClick = onClick, modifier = Modifier.sizeIn(minWidth = 48.dp, minHeight = 48.dp)) {
+            Icon(painter = painterResource(iconRes), contentDescription = description)
+        }
+    }
 }
