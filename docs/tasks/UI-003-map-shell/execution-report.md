@@ -127,11 +127,11 @@ Request Code Review for committed revision `51cb024`, then retain Verification a
 - Full command: `ANDROID_SERIAL=emulator-5554 JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest` — PASS, 36/36.
 - Physical devices were excluded by explicit serial targeting. This evidence proves the direct-login regression flow on the approved test machine only.
 
-## Verification attempt — 2026-10-01
+## Verification attempt — 2026-10-01 (superseded by direct-login fix)
 
 - Candidate source revision: `9cbd82a`; documentation handoff revision: `b0b4852`.
 - Full connected command: `ANDROID_SERIAL=emulator-5554 JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest`.
 - Result: `35/36` tests passed, `1` failed, `0` errors and `0` skipped on `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`. Result XML: `app/build/outputs/androidTest-results/connected/debug/TEST-Medium_Phone(AVD) - 14.xml`, SHA-256 `afb20aa45094e4d107b3ef4cc007783252aff853cde8893e6e8c735029cb3f9f`.
 - Failure: `DebugDirectLoginTest.directLoginAndLogoutReturnToSignedOut` cannot find `開發測試人員 · ADMINISTRATOR` at line 39. The current drawer renders `開發測試人員` and `ADMINISTRATOR` as separate nodes after the approved drawer composition fix.
 - UI-003 focused evidence remains PASS: `MapShellScreenTest` `7/7`, including current-revision drawer, callback, retry and logout assertions.
-- Verification result: `NOT VERIFIED`; classify as `implementation_regression` and route to `debug`. Code Review Revision 3, fresh current-revision responsive evidence, and hosted CI are also still pending.
+- Historical result: `NOT VERIFIED`; the direct-login assertion failure was fixed in `a84f848` and the full suite subsequently passed. Code Review Revision 3, fresh current-revision responsive evidence, and hosted CI remain pending.
