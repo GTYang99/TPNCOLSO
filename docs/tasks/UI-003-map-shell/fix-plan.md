@@ -15,7 +15,7 @@ The new fixes remain within the already approved UI-only scope; no new Plan Revi
 2. Forward `MapShellEvent.RetryLocation` through `MapShellRoute` to `MapShellCallbacks.onLocation`, without changing the ViewModel's existing UI-only loading transition.
 3. Add focused regression checks for the drawer's measured width and denied retry callback, then run unit/lint and the UI-003 connected class on the approved API 34 emulator.
 
-The follow-up implementation is complete in the working tree and is pending commit/review.
+The follow-up implementation is committed as `9cbd82a` and is pending Code Review Revision 3.
 
 ## Minimum safe fix
 

@@ -33,8 +33,8 @@ validation:
 
 git:
   branch: UI-003feat
-  commit: pending-debug-fix-commit
-  status: pending_commit
+  commit: 9cbd82a
+  status: committed
 
 verification:
   result: NOT VERIFIED
@@ -55,4 +55,4 @@ blocking:
   - UI-001 release/handoff and authoritative CI remain downstream gates; UI-002/UI-003 cross-task logout is verified at local emulator scope
   - WMTS layer and request parameters remain unspecified; this blocks real tile integration, not UI-only planning
 
-next_action: implementation_debug
+next_action: verification
