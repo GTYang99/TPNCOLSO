@@ -33,23 +33,25 @@ validation:
 
 git:
   branch: UI-003feat
-  commit: 9cbd82a
+  commit: a84f848
   status: committed
 
 verification:
   result: NOT VERIFIED
   category: evidence_missing
-  failed_acceptance_criteria: []
+  failed_acceptance_criteria:
+    - AC-UI003-009
 
 ci:
   build: PASS (local JBR Gradle; debug/release/AndroidTest APK and lint)
-  test: PASS (18/18 unit; 35/35 connected on Medium_Phone API 34 emulator-5554 at 2026-09-29T01:38:01+0800; final local emulator evidence includes UI-003 semantics/callback regressions; hosted CI remains unavailable)
+  test: PASS (18/18 unit; full connected run 36/36 on Medium_Phone API 34 emulator-5554 at 2026-10-01; UI-003 focused MapShellScreenTest 7/7; hosted CI remains unavailable)
 
 release:
   status: pending
 
 blocking:
   - Code Review Revision 2 requested changes for CR-UI003-006 and CR-UI003-007; fixes are implemented and require a new commit and Code Review Revision 3 before Verification
+  - Direct-login regression coverage is fixed and passes 36/36 on the approved emulator; Code Review Revision 3 remains required before Verification
   - Responsive screenshots and hierarchy evidence predate `51cb024`; capture current-revision evidence for AC-UI003-009 after fixes
   - `UI-003feat` is not published, so no hosted CI run exists for the current UI-003 revision; the available parent UI-002 run 36442276066 failed during Android SDK/connected-runner setup and cannot substitute for UI-003 CI evidence
   - UI-001 release/handoff and authoritative CI remain downstream gates; UI-002/UI-003 cross-task logout is verified at local emulator scope
