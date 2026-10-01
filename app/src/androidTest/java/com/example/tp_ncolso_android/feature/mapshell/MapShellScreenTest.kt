@@ -4,6 +4,7 @@ import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
@@ -17,6 +18,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.compose.ui.unit.dp
 
 @RunWith(AndroidJUnit4::class)
 class MapShellScreenTest {
@@ -60,7 +62,7 @@ class MapShellScreenTest {
         }
 
         composeRule.onNodeWithContentDescription("開啟選單").performClick()
-        composeRule.onNodeWithTag("map-drawer").assertIsDisplayed()
+        composeRule.onNodeWithTag("map-drawer").assertIsDisplayed().assertWidthIsEqualTo(304.dp)
         composeRule.onNodeWithTag("map-platform").assertHasClickAction()
         composeRule.onNodeWithTag("map-dashboard").assertHasClickAction()
         composeRule.onNodeWithText("登出").assertHasClickAction().performClick()
@@ -84,6 +86,25 @@ class MapShellScreenTest {
         composeRule.onNodeWithTag("location-denied").assertIsDisplayed()
         composeRule.onNodeWithText("重試").assertIsDisplayed().performClick()
         assertEquals(MapShellEvent.RetryLocation, event)
+    }
+
+    @Test fun deniedRetryForwardsLocationCallbackThroughRoute() {
+        var location = 0
+        val viewModel = MapShellViewModel(identity)
+        viewModel.onEvent(MapShellEvent.SetLocationState(LocationState.PERMISSION_DENIED))
+        composeRule.setContent {
+            AppTheme {
+                MapShellRoute(
+                    identity = identity,
+                    viewModel = viewModel,
+                    callbacks = MapShellCallbacks(onLocation = { location += 1 }),
+                )
+            }
+        }
+
+        composeRule.onNodeWithText("重試").performClick()
+
+        assertEquals(1, location)
     }
 
     @Test fun loadingStateUsesCommonLoadingSemantics() {

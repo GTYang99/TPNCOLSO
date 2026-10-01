@@ -7,6 +7,16 @@
 - Fix type: implementation-debug re-entry within the approved UI-only map-shell scope
 - Authorization boundary: production code must remain unchanged until this plan is approved for implementation
 
+## Revision 2 follow-up fix
+
+The new fixes remain within the already approved UI-only scope; no new Plan Review is required.
+
+1. Replace the drawer's full-size content container with a 304dp full-height side panel, keeping the scrim full-screen. Use theme tokens and the approved drawer composition: dynamic identity/avatar, icon-backed `圖台` and `儀錶板` actions, and a light logout row.
+2. Forward `MapShellEvent.RetryLocation` through `MapShellRoute` to `MapShellCallbacks.onLocation`, without changing the ViewModel's existing UI-only loading transition.
+3. Add focused regression checks for the drawer's measured width and denied retry callback, then run unit/lint and the UI-003 connected class on the approved API 34 emulator.
+
+The follow-up implementation is complete in the working tree and is pending commit/review.
+
 ## Minimum safe fix
 
 1. **Expose basemap selection semantics.** Replace the manual radio-role `clickable` path with `selectable(selected = selected, role = Role.RadioButton, ...)` (or an equivalent semantics-preserving implementation) inside a selectable group. Keep the three labels, default `電子地圖`, mutual exclusion, visual selected state and reducer unchanged.

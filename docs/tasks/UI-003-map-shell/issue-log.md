@@ -1,73 +1,128 @@
 # Issue Log
 
-## Debug handoff — 2026-09-29
+## Debug handoff — 2026-09-29 (historical)
 
 - Root cause analysis: `root-cause.md`.
 - Minimum fix plan: `fix-plan.md`.
-- All five findings remain open pending authorized implementation and a new review revision.
+- At handoff, all five findings were open pending implementation and re-review.
 - Classification is `implementation_failure`; no requirement, planning or environment re-route was identified.
 
 ## Implementation fix — revision `51cb024`
 
 - `CR-UI003-001` through `CR-UI003-005` have implementation fixes in the committed revision `51cb024`.
-- Focused and connected validation passed after the fixes; findings remain `fixed_pending_review` until Code Review confirms the new semantics, component usage, callback ports, icon/token path and hygiene.
+- Focused and connected validation passed after the fixes. Code Review Revision 2 below confirms these five findings are resolved.
 - Verification remains `NOT VERIFIED`; no hosted CI run exists for `UI-003feat`.
 
 ## CR-UI003-001 — Basemap selected semantics are not exposed
 
 - Category: `implementation_failure`
 - Priority: `P1`
-- Status: open
+- Status: resolved
 - Revision: `0e0b60995a73252ea6610b513c8c512baba6bd92`
 - Evidence: `MapShellScreen.kt:167-178` uses `clickable(role = Role.RadioButton)` but never declares `selectable(selected = ...)` or a selected state. The captured hierarchy `ui-map-shell-normal.xml` reports all three radio nodes with `selected="false"`, including the initial `電子地圖`.
 - Requirement: `AC-UI003-002` and the `CMP-BASEMAP-SWITCHER` contract require exactly one selected basemap; the accessibility rules require selection state not to be conveyed by color alone.
 - Impact: The visual selected state is present, but assistive technology cannot identify which basemap is selected. The current test only checks labels and does not catch this regression.
 - Route: `debug`
 - Owner: UI-003 implementation
+- Resolution: `51cb024` uses `selectable(selected = ..., role = Role.RadioButton)` in a selectable group.
+- Verification: Code Review Revision 2 confirmed selected semantics and the initial/changed state assertions in `MapShellScreenTest`.
 
 ## CR-UI003-002 — Location states do not use the common state components
 
 - Category: `implementation_failure`
 - Priority: `P1`
-- Status: open
+- Status: resolved
 - Revision: `0e0b60995a73252ea6610b513c8c512baba6bd92`
 - Evidence: `MapShellScreen.kt:116-122` renders loading and denied states with plain `Text`; the existing `AppLoadingContent` and `AppErrorContent` common components are not used. The Compose test covers only the denied state and does not assert loading semantics.
 - Requirement: `AC-UI003-007` requires loading and permission-denied states to use the common UI template; `AC-UI003-008` requires state rendering coverage.
 - Impact: Loading lacks the common live-region/loading semantics, and denied state lacks the common error semantics. The execution report currently overstates AC-UI003-007 coverage.
 - Route: `debug`
 - Owner: UI-003 implementation
+- Resolution: `51cb024` renders loading and denied states through `AppLoadingContent` and `AppErrorContent`.
+- Verification: Code Review Revision 2 confirmed common-component usage and Compose assertions for loading semantics and denied retry presentation.
 
 ## CR-UI003-003 — Drawer navigation rows are non-actionable
 
 - Category: `implementation_failure`
 - Priority: `P1`
-- Status: open
+- Status: resolved
 - Revision: `0e0b60995a73252ea6610b513c8c512baba6bd92`
 - Evidence: `MapShellScreen.kt:197-202` renders `圖台` and `儀錶板` as plain `Text`. `ui-map-shell-drawer-fontscale-1.3.xml` reports both nodes as `clickable="false"` and `focusable="false"`.
 - Requirement: `AC-UI003-004` requires the approved identity/navigation/logout drawer composition; `OVL-NAV-01` lists 圖台、儀表板、登出, and actionable rows must expose Traditional Chinese semantics and at least 48dp targets.
 - Impact: The drawer shows the labels but does not provide navigation actions or accessibility targets. The existing test verifies logout only.
 - Route: `debug`
 - Owner: UI-003 implementation
+- Resolution: `51cb024` replaces both labels with 48dp-minimum `AppSecondaryButton` actions and explicit callback ports.
+- Verification: Code Review Revision 2 confirmed both callback routes and the shared button minimum target contract.
 
 ## CR-UI003-004 — Feature UI bypasses the approved icon/token path
 
 - Category: `implementation_failure`
 - Priority: `P2`
-- Status: open
+- Status: resolved
 - Revision: `0e0b60995a73252ea6610b513c8c512baba6bd92`
 - Evidence: `MapShellScreen.kt:108-109` contains raw overlay colors, and `ShellAction` at `:208-217` renders Unicode strings instead of the approved Material/system icon path described by the plan and component catalog.
 - Requirement: The design baseline requires semantic theme tokens and the plan specifies Material/system icons for shell controls.
 - Impact: The implementation can drift from the shared foundation and approved visual/icon behavior. This is not a production API or security issue.
 - Route: `debug`
 - Owner: UI-003 implementation
+- Resolution: `51cb024` uses theme tokens for map fixture colors, Material3 `Icon`/`IconButton`, and project vector resources.
+- Verification: Code Review Revision 2 confirmed the relevant source changes; the current committed diff has no raw map-surface color literals or Unicode shell glyphs.
 
 ## CR-UI003-005 — Review revision contains whitespace defects
 
 - Category: `implementation_failure`
 - Priority: `P2`
-- Status: open
+- Status: resolved
 - Revision: `0e0b60995a73252ea6610b513c8c512baba6bd92`
 - Evidence: `git diff --check 48670ff HEAD` reports new blank lines at EOF in `MapShellContract.kt`, `MapShellViewModel.kt` and the current execution report.
 - Impact: No runtime impact, but the committed review revision does not pass the repository whitespace check.
 - Route: `debug`
 - Owner: UI-003 implementation
+- Resolution: whitespace defects were removed in `51cb024`.
+- Verification: `git diff --check 48670ff..51cb024` completed without diagnostics.
+
+## Code Review Revision 2 — 2026-09-30
+
+- Result: `CHANGES_REQUESTED`.
+- Reviewed implementation revision: `51cb024fe907b2047750162ed857900fe126abbd` on `UI-003feat`; review base: `0e0b60995a73252ea6610b513c8c512baba6bd92`.
+- Review covered the approved requirement, drawer/logout contract, implementation source, tests, and prior review fixes. No source changes were made during review.
+- `CR-UI003-001` through `CR-UI003-005` are resolved in this revision.
+- New findings: `CR-UI003-006` and `CR-UI003-007`; both route to `debug`.
+- Validation boundary: existing unit/connected results are recorded in `execution-report.md`; no tests were run during this review. The available responsive screenshots and hierarchies predate `51cb024` and do not establish AC-UI003-009 for this revision. Hosted CI is unavailable.
+
+## CR-UI003-006 — Drawer occupies the whole screen and misses approved composition
+
+- Category: `implementation_regression`
+- Priority: `P1`
+- Status: open
+- Revision: `51cb024fe907b2047750162ed857900fe126abbd`
+- Evidence: `MapShellScreen.kt:215-218` applies `fillMaxSize()` before `width(304.dp)`, so the width modifier receives tight full-screen constraints and the drawer remains full width. The runtime capture `runtime-map-shell-drawer-fontscale-1.3-1080x2400.png` shows the prior revision's matching modifier chain covering the complete viewport; the outer drawer modifiers are unchanged by `51cb024`. The approved `logout-interface-requirement.md` specifies a blue side panel, avatar, navigation icons, white Logout row, and a visible map scrim; the current `Drawer` uses a surface-colored panel, text-only header/actions, and a filled primary logout button.
+- Requirement: `AC-UI003-004`; approved drawer composition in `docs/tasks/UI-002-auth/logout-interface-requirement.md`.
+- Impact: Opening the drawer hides the map entirely and the visible composition does not match the approved drawer, including its identity/avatar, navigation icon, logout-row, and scrim treatment.
+- Owner: UI-003 implementation
+- Route: `debug`
+- Resolution: fixed_pending_review; the follow-up revision uses a 304dp full-height panel, theme-token blue surface, scrim, identity/avatar, icon-backed rows, and a light logout row.
+- Verification: pending Code Review Revision 3 and current-revision runtime evidence.
+
+## CR-UI003-007 — Location retry does not reach a callback consumer
+
+- Category: `implementation_regression`
+- Priority: `P1`
+- Status: open
+- Revision: `51cb024fe907b2047750162ed857900fe126abbd`
+- Evidence: `MapShellScreen.kt:134-137` maps the Retry action to `MapShellEvent.RetryLocation`. `MapShellRoute` forwards `LocationClicked` to `callbacks.onLocation` at `:72-82`, but does not forward `RetryLocation`; `MapShellViewModel` only changes the state to `LOADING` at `MapShellViewModel.kt:29`.
+- Requirement: `AC-UI003-006` location callback boundary and `AC-UI003-007` denied-state recovery action.
+- Impact: Activating `重試` displays an indefinite loading state because no location owner is notified to retry or return a result.
+- Owner: UI-003 implementation
+- Route: `debug`
+- Resolution: fixed_pending_review; `RetryLocation` now forwards through the location callback contract, with a route-level regression test asserting one callback.
+- Verification: pending Code Review Revision 3.
+
+## Debug Fix Revision 3 — 2026-10-01
+
+- Scope: `CR-UI003-006` and `CR-UI003-007` only; no requirement or plan change.
+- Focused validation: `:app:testDebugUnitTest :app:lintDebug` passed.
+- Connected validation: UI-003 `MapShellScreenTest` passed 7/7 on `Medium_Phone(AVD) - 14` / `emulator-5554`.
+- The test runner was explicitly limited to the approved emulator; the unrelated physical device was not used as evidence because it exposes no Compose hierarchy.
+- Result boundary: fixes are `fixed_pending_review`; Verification remains `NOT VERIFIED` until Code Review Revision 3 and current-revision responsive/CI evidence.

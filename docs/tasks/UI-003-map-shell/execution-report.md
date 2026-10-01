@@ -93,6 +93,27 @@ Implementation-debug re-entry for `CR-UI003-001` through `CR-UI003-005`. Respons
 - Release isolation scan: PASS; no `DebugDirectLogin`, `DebugAuthSessionCoordinator`, or debug direct-login labels found in `app-release.apk`.
 - The first combined connected run exposed a test-harness defect (the screen test used a no-op event lambda); the test was corrected to exercise `MapShellRoute`/`MapShellViewModel`, and the full connected suite was rerun successfully.
 
-## Next action after fix
+## Next action after fix (before Code Review Revision 2)
 
 Request Code Review for committed revision `51cb024`, then retain Verification as `NOT VERIFIED` until the new review and authoritative CI evidence are available.
+
+## Code Review Revision 2 — 2026-09-30
+
+- Reviewed revision: `51cb024fe907b2047750162ed857900fe126abbd` (`fix(UI-003): resolve map shell review findings`), branch `UI-003feat`.
+- Review base: `0e0b60995a73252ea6610b513c8c512baba6bd92`.
+- Result: `CHANGES_REQUESTED`.
+- `CR-UI003-001` through `CR-UI003-005` are resolved: basemap selected semantics, common location-state components, actionable drawer rows, theme/icon usage, and whitespace checks were confirmed in the committed source and tests.
+- New findings `CR-UI003-006` and `CR-UI003-007` are recorded in `issue-log.md`: the drawer fills the viewport and misses its approved composition; the denied-state retry does not call a location callback and can remain loading indefinitely.
+- Review was static; no tests were run during this review. The developer-reported `:app:testDebugUnitTest`, lint/build, and 35-test connected run are existing local evidence, not reruns for this review.
+- The available responsive screenshots and hierarchy dumps predate `51cb024`; AC-UI003-009 remains `NOT VERIFIED` on the reviewed revision until fresh evidence is captured after the fixes.
+- Hosted/authoritative CI remains unavailable. No Verification or Release approval is implied by this review.
+- Next action: `debug` for `CR-UI003-006` and `CR-UI003-007`, followed by a new committed review revision.
+
+## Debug Fix Revision 3 — 2026-10-01
+
+- Fixed `CR-UI003-006`: the drawer is now a 304dp full-height themed side panel with full-screen scrim, dynamic identity/avatar, icon-backed navigation rows, and a light logout row.
+- Fixed `CR-UI003-007`: denied-state retry now reaches `MapShellCallbacks.onLocation` through `MapShellRoute`; the ViewModel's existing loading transition is unchanged.
+- Focused developer validation: `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:testDebugUnitTest :app:lintDebug` — PASS.
+- Focused connected validation: `ANDROID_SERIAL=emulator-5554 JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest` — PASS, 7/7 on `Medium_Phone(AVD) - 14`.
+- The physical device with no Compose hierarchy was excluded from this focused evidence; it is an environment limitation, not a UI-003 assertion failure.
+- `git diff --check` is required before commit. Verification remains `NOT VERIFIED` pending Code Review Revision 3, fresh responsive evidence, and hosted CI.

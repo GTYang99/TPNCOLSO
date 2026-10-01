@@ -10,18 +10,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -77,6 +83,7 @@ fun MapShellRoute(
             MapShellEvent.MapPlatformClicked -> callbacks.onMapPlatform()
             MapShellEvent.DashboardClicked -> callbacks.onDashboard()
             MapShellEvent.LocationClicked -> callbacks.onLocation()
+            MapShellEvent.RetryLocation -> callbacks.onLocation()
             else -> Unit
         }
         viewModel.onEvent(event)
@@ -210,31 +217,73 @@ private fun BoxScope.BasemapSwitcher(state: MapShellUiState, onEvent: (MapShellE
 
 @Composable
 private fun Drawer(state: MapShellUiState, onEvent: (MapShellEvent) -> Unit) {
-    Box(Modifier.fillMaxSize().background(AppThemeTokens.colors.scrim)) {
+    Box(Modifier.fillMaxSize()) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(AppThemeTokens.colors.scrim)
+                .testTag("map-drawer-scrim"),
+        )
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxHeight()
                 .width(304.dp)
-                .background(AppThemeTokens.colors.surface)
-                .padding(24.dp)
-                .testTag("map-drawer"),
+                .testTag("map-drawer")
+                .background(AppThemeTokens.colors.brandPrimary)
+                .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text("${state.identity.displayName} · ${state.identity.role}", style = AppThemeTokens.typography.sectionTitle)
-            AppSecondaryButton(
-                text = "圖台",
-                onClick = { onEvent(MapShellEvent.MapPlatformClicked) },
-                modifier = Modifier.fillMaxWidth().testTag("map-platform"),
-            )
-            AppSecondaryButton(
-                text = "儀錶板",
-                onClick = { onEvent(MapShellEvent.DashboardClicked) },
-                modifier = Modifier.fillMaxWidth().testTag("map-dashboard"),
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Box(
+                    modifier = Modifier.size(48.dp).background(AppThemeTokens.colors.surface, CircleShape),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = state.identity.displayName.take(1),
+                        color = AppThemeTokens.colors.brandPrimary,
+                        style = AppThemeTokens.typography.sectionTitle,
+                    )
+                }
+                Column {
+                    Text(state.identity.displayName, color = AppThemeTokens.colors.onBrandPrimary, style = AppThemeTokens.typography.sectionTitle)
+                    Text(state.identity.role.toString(), color = AppThemeTokens.colors.onBrandPrimary, style = AppThemeTokens.typography.supporting)
+                }
+            }
+            DrawerAction(R.drawable.ic_map_layers, "圖台", "map-platform") { onEvent(MapShellEvent.MapPlatformClicked) }
+            DrawerAction(R.drawable.ic_map_dashboard, "儀錶板", "map-dashboard") { onEvent(MapShellEvent.DashboardClicked) }
             Spacer(Modifier.weight(1f))
-            AppPrimaryButton("登出", { onEvent(MapShellEvent.LogoutRequested) }, Modifier.fillMaxWidth().testTag("map-logout"))
+            Button(
+                onClick = { onEvent(MapShellEvent.LogoutRequested) },
+                modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("map-logout"),
+                shape = RoundedCornerShape(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = AppThemeTokens.colors.surface,
+                    contentColor = AppThemeTokens.colors.brandPrimary,
+                ),
+            ) {
+                Icon(painterResource(R.drawable.ic_map_logout), contentDescription = null)
+                Spacer(Modifier.width(8.dp))
+                Text("登出", style = AppThemeTokens.typography.buttonLabel)
+            }
             AppSecondaryButton("關閉選單", { onEvent(MapShellEvent.CloseDrawer) }, Modifier.fillMaxWidth().testTag("map-drawer-close"))
         }
+    }
+}
+
+@Composable
+private fun DrawerAction(iconRes: Int, label: String, tag: String, onClick: () -> Unit) {
+    TextButton(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag(tag),
+        colors = ButtonDefaults.textButtonColors(contentColor = AppThemeTokens.colors.onBrandPrimary),
+    ) {
+        Icon(painterResource(iconRes), contentDescription = null)
+        Spacer(Modifier.width(12.dp))
+        Text(label, style = AppThemeTokens.typography.buttonLabel)
     }
 }
 

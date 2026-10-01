@@ -56,6 +56,16 @@ The implementation validation documentation and two newly added Kotlin files ret
 
 The common underlying cause is that implementation optimized for visible local behavior and callback tests, while the approved contract also requires shared foundation semantics, actionable drawer affordances, and repository hygiene. No requirement, plan, API, WMTS, or environment conflict was found. The minimum correction remains within the approved UI-only scope; no new Plan Review is required unless the fixes add navigation behavior beyond callback ports or alter the approved visual/ownership contract.
 
-## Debug boundary
+## Code Review Revision 2 follow-up
 
-Production code remains unchanged during this analysis. Re-implementation may start only after the fix plan is authorized. Verification remains blocked until a new committed revision resolves all review findings and is re-reviewed.
+### CR-UI003-006 — drawer composition and width
+
+The drawer applied `fillMaxSize()` before `width(304.dp)`, so the measured drawer occupied the full viewport. It also did not express the approved blue side panel, identity/avatar header, icon navigation rows, scrim, and light logout row. The minimum fix keeps the drawer UI-only and uses existing theme tokens: a full-screen scrim layer, a 304dp side panel, dynamic identity initials and role, icon-backed actionable rows, and a surface-colored logout button.
+
+### CR-UI003-007 — denied retry callback is not forwarded
+
+The denied-state retry emitted `RetryLocation`, but `MapShellRoute` only forwarded `LocationClicked` to the owner callback. The ViewModel then transitioned to `LOADING` without notifying the owner, so a real location coordinator could not restart the request. The minimum fix forwards `RetryLocation` through `callbacks.onLocation` and adds a route-level regression test; the existing UI-only ViewModel transition remains unchanged.
+
+## Updated conclusion
+
+Both Revision 2 findings are implementation regressions within the approved UI-only scope. No requirement, plan, API, WMTS, persistence, navigation-destination, or environment conflict was found. Developer validation confirms the fixes compile and the focused UI-003 connected tests pass on the approved API 34 emulator. Verification remains blocked only by required Code Review of the new revision, fresh current-revision responsive evidence, and unavailable hosted CI.
