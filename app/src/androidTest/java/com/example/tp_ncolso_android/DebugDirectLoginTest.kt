@@ -36,7 +36,9 @@ class DebugDirectLoginTest {
         composeRule.onNodeWithText("直接進入").performClick()
         composeRule.onNodeWithTag("map-surface").assertExists()
         composeRule.onNodeWithContentDescription("開啟選單").performClick()
-        composeRule.onNodeWithText("開發測試人員 · ADMINISTRATOR").assertExists()
+        // The approved drawer exposes identity fields as separate accessible nodes.
+        composeRule.onNodeWithText("開發測試人員").assertExists()
+        composeRule.onNodeWithText("ADMINISTRATOR").assertExists()
         composeRule.onNodeWithText("登出").assertExists()
 
         composeRule.onNodeWithText("登出").performClick()

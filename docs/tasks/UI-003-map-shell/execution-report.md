@@ -117,3 +117,21 @@ Request Code Review for committed revision `51cb024`, then retain Verification a
 - Focused connected validation: `ANDROID_SERIAL=emulator-5554 JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest` — PASS, 7/7 on `Medium_Phone(AVD) - 14`.
 - The physical device with no Compose hierarchy was excluded from this focused evidence; it is an environment limitation, not a UI-003 assertion failure.
 - `git diff --check` is required before commit. Verification remains `NOT VERIFIED` pending Code Review Revision 3, fresh responsive evidence, and hosted CI.
+
+## Direct-login regression coverage — 2026-10-01
+
+- Root cause: `DebugDirectLoginTest` asserted the pre-fix combined identity string, while the approved drawer renders display name and role as separate nodes.
+- Fix scope: test-only assertion update; no production code or acceptance criteria changed.
+- Runtime: Android Studio JBR 25.0.3; `Medium_Phone(AVD) - 14`, API 34, `emulator-5554`.
+- Focused command: `ANDROID_SERIAL=emulator-5554 JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.DebugDirectLoginTest` — PASS.
+- Full command: `ANDROID_SERIAL=emulator-5554 JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest` — PASS, 36/36.
+- Physical devices were excluded by explicit serial targeting. This evidence proves the direct-login regression flow on the approved test machine only.
+
+## Verification attempt — 2026-10-01
+
+- Candidate source revision: `9cbd82a`; documentation handoff revision: `b0b4852`.
+- Full connected command: `ANDROID_SERIAL=emulator-5554 JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest`.
+- Result: `35/36` tests passed, `1` failed, `0` errors and `0` skipped on `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`. Result XML: `app/build/outputs/androidTest-results/connected/debug/TEST-Medium_Phone(AVD) - 14.xml`, SHA-256 `afb20aa45094e4d107b3ef4cc007783252aff853cde8893e6e8c735029cb3f9f`.
+- Failure: `DebugDirectLoginTest.directLoginAndLogoutReturnToSignedOut` cannot find `開發測試人員 · ADMINISTRATOR` at line 39. The current drawer renders `開發測試人員` and `ADMINISTRATOR` as separate nodes after the approved drawer composition fix.
+- UI-003 focused evidence remains PASS: `MapShellScreenTest` `7/7`, including current-revision drawer, callback, retry and logout assertions.
+- Verification result: `NOT VERIFIED`; classify as `implementation_regression` and route to `debug`. Code Review Revision 3, fresh current-revision responsive evidence, and hosted CI are also still pending.

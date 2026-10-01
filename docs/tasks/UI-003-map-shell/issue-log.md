@@ -126,3 +126,20 @@
 - Connected validation: UI-003 `MapShellScreenTest` passed 7/7 on `Medium_Phone(AVD) - 14` / `emulator-5554`.
 - The test runner was explicitly limited to the approved emulator; the unrelated physical device was not used as evidence because it exposes no Compose hierarchy.
 - Result boundary: fixes are `fixed_pending_review`; Verification remains `NOT VERIFIED` until Code Review Revision 3 and current-revision responsive/CI evidence.
+
+## Verification attempt — 2026-10-01
+
+- Candidate source revision: `9cbd82a` (`fix(UI-003): repair drawer and location retry`); documentation handoff is `b0b4852`.
+- Full connected validation command: `ANDROID_SERIAL=emulator-5554 JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest`.
+- Result: `35/36` passed, `1` failed, `0` errors, `0` skipped on `Medium_Phone (AVD) - 14`, API 34, `emulator-5554`; XML SHA-256 `afb20aa45094e4d107b3ef4cc007783252aff853cde8893e6e8c735029cb3f9f`.
+- `DebugDirectLoginTest.directLoginAndLogoutReturnToSignedOut` fails at `DebugDirectLoginTest.kt:39` because it expects `開發測試人員 · ADMINISTRATOR`, while the current approved drawer composition renders the display name and role as separate nodes. This is a current-revision implementation/test contract regression, not an environment failure.
+- UI-003 focused connected evidence remains `MapShellScreenTest` `7/7` PASS, including drawer width, navigation callbacks, retry callback forwarding and exactly-once logout callback.
+- Route: `debug`; update the direct-login regression coverage to the current drawer contract, then commit and request Code Review Revision 3. Do not claim Verification PASS until the full connected suite, review, current responsive evidence and required CI gates are restored.
+
+## Direct-login regression fix — 2026-10-01
+
+- Updated `DebugDirectLoginTest.directLoginAndLogoutReturnToSignedOut` to assert the current approved drawer contract: `開發測試人員` and `ADMINISTRATOR` are separate accessible nodes.
+- The test still covers the complete debug direct-login → authenticated map shell → drawer → logout → signed-out Login flow.
+- Focused result: `DebugDirectLoginTest` PASS on `emulator-5554`.
+- Full connected result: 36/36 PASS on `Medium_Phone(AVD) - 14`, API 34, `emulator-5554`; no physical device was used.
+- This resolves `VER-UI003-008` / the direct-login test-contract regression. Remaining Verification limitations are Code Review Revision 3, current responsive evidence, and hosted CI.
