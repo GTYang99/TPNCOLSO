@@ -97,7 +97,7 @@ Implementation-debug re-entry for `CR-UI003-001` through `CR-UI003-005`. Respons
 
 Request Code Review for committed revision `51cb024`, then retain Verification as `NOT VERIFIED` until the new review and authoritative CI evidence are available.
 
-## Code Review Revision 2 — 2026-09-30
+## Code Review Revision 2 — 2026-09-30 (historical)
 
 - Reviewed revision: `51cb024fe907b2047750162ed857900fe126abbd` (`fix(UI-003): resolve map shell review findings`), branch `UI-003feat`.
 - Review base: `0e0b60995a73252ea6610b513c8c512baba6bd92`.
@@ -108,6 +108,16 @@ Request Code Review for committed revision `51cb024`, then retain Verification a
 - The available responsive screenshots and hierarchy dumps predate `51cb024`; AC-UI003-009 remains `NOT VERIFIED` on the reviewed revision until fresh evidence is captured after the fixes.
 - Hosted/authoritative CI remains unavailable. No Verification or Release approval is implied by this review.
 - Next action: `debug` for `CR-UI003-006` and `CR-UI003-007`, followed by a new committed review revision.
+
+## Code Review Revision 3 — 2026-10-01
+
+- Reviewed committed revision: `9c0d45378dafb1095ff7c03a1c7da16beb597e3` on `UI-003feat`; source fix ancestry `9cbd82a`, direct-login test fix `a84f848`.
+- Result: `APPROVED`.
+- `CR-UI003-006` and `CR-UI003-007` are resolved: the drawer is a 304dp side panel with the approved scrim/composition, and denied-state retry reaches `MapShellCallbacks.onLocation`.
+- No remaining implementation findings were identified in the approved UI-003 scope.
+- Review was static; no tests were run during this review. Existing evidence records `MapShellScreenTest` 7/7 and the full connected suite 36/36 on the approved emulator.
+- AC-UI003-009 remains `NOT VERIFIED` because current-revision responsive screenshots/hierarchies were not captured. Hosted CI remains unavailable.
+- Next action: `verification` after current-revision responsive evidence and the required CI gate are available.
 
 ## Debug Fix Revision 3 — 2026-10-01
 
@@ -127,6 +137,17 @@ Request Code Review for committed revision `51cb024`, then retain Verification a
 - Full command: `ANDROID_SERIAL=emulator-5554 JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest` — PASS, 36/36.
 - Physical devices were excluded by explicit serial targeting. This evidence proves the direct-login regression flow on the approved test machine only.
 
+## Current-revision responsive evidence — 2026-10-01
+
+- Revision under test: `9c0d453` on `UI-003feat`; package installed from the current debug APK on `emulator-5554`.
+- Device state: API 34 `Medium_Phone(AVD)`, standard 1080x2400, restored to font scale 1.0 after capture.
+- Standard: [`runtime-map-shell-standard-9c0d453-1080x2400.png`](runtime-map-shell-standard-9c0d453-1080x2400.png), SHA-256 `4d8c8e4396d5ffdfc6b4958ae02ee0663c0c1c517f73c2b6ff2ea552cffc3dd2`; hierarchy [`ui-map-shell-standard-9c0d453.xml`](ui-map-shell-standard-9c0d453.xml), SHA-256 `99d9a0fd7a0c021d8a876c3de09fcffc4c7842ff288e220cd3607758cfe52634`.
+- Narrow: [`runtime-map-shell-narrow-9c0d453-720x2400.png`](runtime-map-shell-narrow-9c0d453-720x2400.png), SHA-256 `2459264a262fcda03b3094c55186322d216ea2d6f1f3caa160fac5d27a983fe7`; hierarchy [`ui-map-shell-narrow-9c0d453.xml`](ui-map-shell-narrow-9c0d453.xml), SHA-256 `a7d35c476d5975c1fc49db89cbff0abddc5b2a8f6f3a32f98e8204b70f78f7de`.
+- Font scale 1.3: [`runtime-map-shell-fontscale-1.3-9c0d453-1080x2400.png`](runtime-map-shell-fontscale-1.3-9c0d453-1080x2400.png), SHA-256 `87b340f580273da9c298844a74ce0972ecbdeae2a2d70f30266d40b9276b303c`; hierarchy [`ui-map-shell-fontscale-1.3-9c0d453.xml`](ui-map-shell-fontscale-1.3-9c0d453.xml), SHA-256 `b7dae2f67da84fc818918d1edd0fee5f5a89099b86316617ecab9c76448bb170`.
+- Drawer at standard: [`runtime-map-shell-drawer-9c0d453-1080x2400.png`](runtime-map-shell-drawer-9c0d453-1080x2400.png), SHA-256 `a138a85f00c581c69e84f1a55850d3bb650e31514fed25b262f8117fd6f2a55d`; hierarchy [`ui-map-shell-drawer-9c0d453.xml`](ui-map-shell-drawer-9c0d453.xml), SHA-256 `66c24f3222a036d64eeda29dd2e53a4f722ab6d96d073570fa4a899b1f0cd391`.
+- Drawer at font scale 1.3: [`runtime-map-shell-drawer-fontscale-1.3-9c0d453-1080x2400.png`](runtime-map-shell-drawer-fontscale-1.3-9c0d453-1080x2400.png), SHA-256 `e364bf6a01402ca8a935e6741d66074963a6734ae80f04d1ac8239edc4432e38`; hierarchy [`ui-map-shell-drawer-fontscale-1.3-9c0d453.xml`](ui-map-shell-drawer-fontscale-1.3-9c0d453.xml), SHA-256 `79ec9313b39facfe8885807142d3516a52a1304705ee948f7d80abbcc8febc73`.
+- Visual observation: all requested shell controls, exactly three basemap choices, location affordance, drawer identity, `圖台`, `儀錶板`, `登出`, and `關閉選單` remain visible; no primary control clipping was observed. This evidence does not infer hidden API, permission or persistence behavior.
+
 ## Verification attempt — 2026-10-01 (superseded by direct-login fix)
 
 - Candidate source revision: `9cbd82a`; documentation handoff revision: `b0b4852`.
@@ -135,3 +156,13 @@ Request Code Review for committed revision `51cb024`, then retain Verification a
 - Failure: `DebugDirectLoginTest.directLoginAndLogoutReturnToSignedOut` cannot find `開發測試人員 · ADMINISTRATOR` at line 39. The current drawer renders `開發測試人員` and `ADMINISTRATOR` as separate nodes after the approved drawer composition fix.
 - UI-003 focused evidence remains PASS: `MapShellScreenTest` `7/7`, including current-revision drawer, callback, retry and logout assertions.
 - Historical result: `NOT VERIFIED`; the direct-login assertion failure was fixed in `a84f848` and the full suite subsequently passed. Code Review Revision 3, fresh current-revision responsive evidence, and hosted CI remain pending.
+
+## Verification rerun — focused device test — 2026-10-01
+
+- Scope: only the UI-003 Compose/device test class; no full connected suite, physical device, screenshot recapture or production-code change was performed.
+- Revision: `9c0d453` (`UI-003feat`); source fix ancestry `9cbd82a`, direct-login test fix `a84f848`.
+- Environment: Android Studio JBR 25.0.3; `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`.
+- Command: `ANDROID_SERIAL=emulator-5554 GRADLE_USER_HOME="/private/tmp/tp-ncolso-gradle-verification" JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest`.
+- Result: `BUILD SUCCESSFUL`; `MapShellScreenTest` `7/7` passed, `0` failures, `0` errors and `0` skipped. XML timestamp `2026-10-01T06:37:22`, SHA-256 `4ffbd5d8addbda942cf8904692caea6b82632f7e0eb8cf58dc6905d88e12b9a5`.
+- Covered tests: shell controls/basemaps, drawer navigation callbacks, loading semantics, permission-denied retry callback, top/location callbacks and exactly-once logout callback.
+- Historical verification boundary: focused evidence PASS; current-revision responsive evidence was captured below. Overall Verification remains `NOT VERIFIED` only because hosted CI is unavailable.

@@ -95,29 +95,39 @@
 
 - Category: `implementation_regression`
 - Priority: `P1`
-- Status: open
+- Status: resolved
 - Revision: `51cb024fe907b2047750162ed857900fe126abbd`
 - Evidence: `MapShellScreen.kt:215-218` applies `fillMaxSize()` before `width(304.dp)`, so the width modifier receives tight full-screen constraints and the drawer remains full width. The runtime capture `runtime-map-shell-drawer-fontscale-1.3-1080x2400.png` shows the prior revision's matching modifier chain covering the complete viewport; the outer drawer modifiers are unchanged by `51cb024`. The approved `logout-interface-requirement.md` specifies a blue side panel, avatar, navigation icons, white Logout row, and a visible map scrim; the current `Drawer` uses a surface-colored panel, text-only header/actions, and a filled primary logout button.
 - Requirement: `AC-UI003-004`; approved drawer composition in `docs/tasks/UI-002-auth/logout-interface-requirement.md`.
 - Impact: Opening the drawer hides the map entirely and the visible composition does not match the approved drawer, including its identity/avatar, navigation icon, logout-row, and scrim treatment.
 - Owner: UI-003 implementation
 - Route: `debug`
-- Resolution: fixed_pending_review; the follow-up revision uses a 304dp full-height panel, theme-token blue surface, scrim, identity/avatar, icon-backed rows, and a light logout row.
-- Verification: pending Code Review Revision 3 and current-revision runtime evidence.
+- Resolution: `9cbd82a` uses a 304dp full-height panel, theme-token blue surface, scrim, identity/avatar, icon-backed rows, and a light logout row.
+- Verification: Code Review Revision 3 confirmed the source fix and 304dp width assertion. Current-revision responsive runtime evidence remains a Verification limitation for AC-UI003-009.
 
 ## CR-UI003-007 — Location retry does not reach a callback consumer
 
 - Category: `implementation_regression`
 - Priority: `P1`
-- Status: open
+- Status: resolved
 - Revision: `51cb024fe907b2047750162ed857900fe126abbd`
 - Evidence: `MapShellScreen.kt:134-137` maps the Retry action to `MapShellEvent.RetryLocation`. `MapShellRoute` forwards `LocationClicked` to `callbacks.onLocation` at `:72-82`, but does not forward `RetryLocation`; `MapShellViewModel` only changes the state to `LOADING` at `MapShellViewModel.kt:29`.
 - Requirement: `AC-UI003-006` location callback boundary and `AC-UI003-007` denied-state recovery action.
 - Impact: Activating `重試` displays an indefinite loading state because no location owner is notified to retry or return a result.
 - Owner: UI-003 implementation
 - Route: `debug`
-- Resolution: fixed_pending_review; `RetryLocation` now forwards through the location callback contract, with a route-level regression test asserting one callback.
-- Verification: pending Code Review Revision 3.
+- Resolution: `9cbd82a` forwards `RetryLocation` through the location callback contract, with a route-level regression test asserting one callback.
+- Verification: Code Review Revision 3 confirmed the route forwarding and focused retry callback assertion.
+
+## Code Review Revision 3 — 2026-10-01
+
+- Result: `APPROVED`.
+- Reviewed committed revision: `9c0d45378dafb1095ff7c03a1c7da16beb597e3` on `UI-003feat`; source fixes are in its ancestry at `9cbd82a`, with the direct-login regression assertion fixed in `a84f848`.
+- Review covered the approved requirement, drawer/logout contract, production source, UI-003 tests, direct-login regression test, prior findings, and committed validation evidence.
+- `CR-UI003-001` through `CR-UI003-005` remain resolved. `CR-UI003-006` and `CR-UI003-007` are resolved and verified by source inspection plus the current focused UI test evidence.
+- No remaining implementation findings were identified in the approved UI-003 scope.
+- Review checks were static; no tests were run during this review. `git diff --check 51cb024..9c0d453` completed without diagnostics.
+- Verification remains `NOT VERIFIED`: current-revision responsive screenshot/hierarchy evidence for AC-UI003-009 is missing, and hosted CI is unavailable for the unpublished branch.
 
 ## Debug Fix Revision 3 — 2026-10-01
 
@@ -125,7 +135,7 @@
 - Focused validation: `:app:testDebugUnitTest :app:lintDebug` passed.
 - Connected validation: UI-003 `MapShellScreenTest` passed 7/7 on `Medium_Phone(AVD) - 14` / `emulator-5554`.
 - The test runner was explicitly limited to the approved emulator; the unrelated physical device was not used as evidence because it exposes no Compose hierarchy.
-- Result boundary: fixes are `fixed_pending_review`; Verification remains `NOT VERIFIED` until Code Review Revision 3 and current-revision responsive/CI evidence.
+- Result boundary: fixes are reviewed and approved; Verification remains `NOT VERIFIED` until current-revision responsive/CI evidence.
 
 ## Verification attempt — 2026-10-01 (superseded by direct-login fix)
 
@@ -142,4 +152,16 @@
 - The test still covers the complete debug direct-login → authenticated map shell → drawer → logout → signed-out Login flow.
 - Focused result: `DebugDirectLoginTest` PASS on `emulator-5554`.
 - Full connected result: 36/36 PASS on `Medium_Phone(AVD) - 14`, API 34, `emulator-5554`; no physical device was used.
-- This resolves `VER-UI003-008` / the direct-login test-contract regression. Remaining Verification limitations are Code Review Revision 3, current responsive evidence, and hosted CI.
+- This resolves `VER-UI003-008` / the direct-login test-contract regression. The remaining Verification limitation is hosted CI.
+
+## Current-revision responsive verification — 2026-10-01
+
+- Current responsive screenshot and hierarchy evidence was captured from revision `9c0d453` on API 34 `emulator-5554` at standard 1080x2400, narrow 720x2400, font scale 1.3, and drawer/font scale 1.3.
+- `AC-UI003-009` is PASS at local emulator scope. Checksums and paths are recorded in `execution-report.md`.
+- The only remaining Verification limitation is unavailable hosted CI for the unpublished branch; this does not change the local acceptance result.
+
+## Verification rerun — focused device test — 2026-10-01
+
+- Only `MapShellScreenTest` was executed, explicitly targeted to `emulator-5554`; physical devices and the full suite were excluded by scope.
+- Result: `7/7 PASS` on `Medium_Phone (AVD) - 14`, API 34, with XML SHA-256 `4ffbd5d8addbda942cf8904692caea6b82632f7e0eb8cf58dc6905d88e12b9a5`.
+- No implementation failure was observed in this focused run. The current-revision responsive evidence is recorded above; the overall gate remains `NOT VERIFIED` only because hosted CI is unavailable.

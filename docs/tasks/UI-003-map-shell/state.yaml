@@ -2,7 +2,7 @@ task:
   id: UI-003-map-shell
   type: feature
 
-phase: implementation
+phase: verification
 status: in_progress
 
 knowledge:
@@ -24,23 +24,22 @@ implementation:
   status: completed
 
 review:
-  result: CHANGES_REQUESTED
-  iteration: 2
-  commit: 51cb024
+  result: APPROVED
+  iteration: 3
+  commit: 9c0d453
 
 validation:
   status: passed
 
 git:
   branch: UI-003feat
-  commit: a84f848
+  commit: 9c0d453
   status: committed
 
 verification:
   result: NOT VERIFIED
   category: evidence_missing
-  failed_acceptance_criteria:
-    - AC-UI003-009
+  failed_acceptance_criteria: []
 
 ci:
   build: PASS (local JBR Gradle; debug/release/AndroidTest APK and lint)
@@ -50,9 +49,6 @@ release:
   status: pending
 
 blocking:
-  - Code Review Revision 2 requested changes for CR-UI003-006 and CR-UI003-007; fixes are implemented and require a new commit and Code Review Revision 3 before Verification
-  - Direct-login regression coverage is fixed and passes 36/36 on the approved emulator; Code Review Revision 3 remains required before Verification
-  - Responsive screenshots and hierarchy evidence predate `51cb024`; capture current-revision evidence for AC-UI003-009 after fixes
   - `UI-003feat` is not published, so no hosted CI run exists for the current UI-003 revision; the available parent UI-002 run 36442276066 failed during Android SDK/connected-runner setup and cannot substitute for UI-003 CI evidence
   - UI-001 release/handoff and authoritative CI remain downstream gates; UI-002/UI-003 cross-task logout is verified at local emulator scope
   - WMTS layer and request parameters remain unspecified; this blocks real tile integration, not UI-only planning
