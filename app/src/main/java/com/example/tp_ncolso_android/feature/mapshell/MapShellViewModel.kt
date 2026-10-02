@@ -25,6 +25,15 @@ class MapShellViewModel(identity: com.example.tp_ncolso_android.session.AppIdent
             MapShellEvent.MapNavigationClicked,
             MapShellEvent.MapPlatformClicked,
             MapShellEvent.DashboardClicked -> Unit
+            is MapShellEvent.UpdateSearchContext -> {
+                val current = mutableState.value
+                mutableState.value = current.copy(
+                    overlay = current.overlay.copy(
+                        activeQuery = event.query,
+                        selectedTarget = event.selectedTarget,
+                    ),
+                )
+            }
             MapShellEvent.LocationClicked -> mutableState.value = mutableState.value.copy(locationState = LocationState.LOADING)
             MapShellEvent.RetryLocation -> mutableState.value = mutableState.value.copy(locationState = LocationState.LOADING)
             is MapShellEvent.SetLocationState -> mutableState.value = mutableState.value.copy(locationState = event.state)

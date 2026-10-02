@@ -2,39 +2,74 @@ task:
   id: UI-004-parcel-search
   type: feature
 
-phase: knowledge
-status: knowledge_resolved
+phase: implementation
+status: in_progress
 
 knowledge:
-  status: validating
+  status: ready
   collection: completed
   resolution: completed
-  validation: pending
-  baseline_id: null
+  validation: passed
+  baseline_id: KB-UI-004-PARCEL-SEARCH-R2
 
 planning:
-  status: pending
+  status: completed
 plan_review:
-  status: pending
+  status: approved
+  result: APPROVED
+  iteration: 1
 implementation:
-  status: pending
+  status: completed
 validation:
-  status: pending
+  status: completed
 git:
-  branch: ""
+  branch: codex/ui-004-parcel-search
   commit: ""
   status: pending
 verification:
   result: pending
   category: null
   failed_acceptance_criteria: []
+  not_verified_acceptance_criteria: []
+completion:
+  scope: development
+  status: in_progress
 ci:
-  build: pending
-  test: pending
+  status: deferred
+  build: deferred
+  test: deferred
+  reason: Pre-release development scope; hosted CI is required again before release-candidate validation.
+  owner: release/project maintainer
+  reactivate_at: before release-candidate validation
+deferred_obligations:
+  - gate: production_parcel_api_and_integration_tests
+    status: deferred
+    reason: Endpoint, schema and error contract are assigned to INT-002.
+    owner: INT-002/API owner
+    reactivate_at: after API contract approval and before release validation
+  - gate: product_uat
+    status: deferred
+    reason: Not required to establish UI-only Development Complete; release policy may require it.
+    owner: Product/requester
+    reactivate_at: release-candidate acceptance if required
+  - gate: release_approval_merge_deployment_and_monitoring
+    status: deferred
+    reason: Outside development scope and requires separate explicit authorization.
+    owner: release approver / deployment owner
+    reactivate_at: after Development Complete when a release candidate is proposed
+  - gate: formal_figma_revision_approval_and_pixel_parity
+    status: deferred
+    reason: Current Figma frames are visual observations; this plan makes no formal pixel-parity claim.
+    owner: Design/requester
+    reactivate_at: before a formal pixel-acceptance claim or if requirements add pixel-level acceptance
+  - gate: release_signed_in_host_integration
+    status: deferred
+    reason: Release AppEntry currently has empty signed-in content; UI-004 is hosted in the debug signed-in shell for this development scope.
+    owner: UI-002 / INT-001 authentication and release-integration owner
+    reactivate_at: when the release session host exists and before release-candidate validation
 release:
   status: pending
 
-blocking:
-  - UI-003 map shell baseline and prerequisite handoff are not complete
+blocking: []
 
-next_action: knowledge_validation
+next_action: git_commit

@@ -6,10 +6,10 @@
 - Out of scope: production API、土地詳情、調查表單、WMTS、通知已讀／分頁與後端錯誤合約。
 
 ## Candidate Knowledge Baseline
-- Baseline ID: `KB-UI-004-PARCEL-SEARCH-R1`
-- Created date: 2026-09-08 (Asia/Taipei)
-- Supersedes: None
-- Status: draft
+- Baseline ID: `KB-UI-004-PARCEL-SEARCH-R2`
+- Created date: 2026-10-02 (Asia/Taipei)
+- Supersedes: `KB-UI-004-PARCEL-SEARCH-R1` for entry placement and successful-result presentation
+- Status: validated
 
 ## Source Register
 | Source ID | Title / Location | Type | Domain / Owner | Version / Date | Authority | Freshness | Scope / AC | Notes |
@@ -20,22 +20,25 @@
 | SRC-UI004-004 | `docs/tasks/UI-0907-app-ui-requirements/requirement.md` | parent requirement | Product / Design | 2026-09-08 | authoritative | current | FR-005 | Search inputs, result summary and no-result behavior. |
 | SRC-UI004-005 | `docs/tasks/README.md` and `docs/tasks/UI-ROADMAP-0907/plan.md` | task sequencing | Process | 2026-09-08 | authoritative | current | UI-004 fake data boundary | API deferred to INT-002. |
 | SRC-UI004-006 | `docs/product/land-survey-115/5 API規格.md` | API specification | Product / API | 2026-09-08 | supporting / incomplete | current | future integration only | No production contract is fixed in this baseline. |
+| SRC-UI004-007 | Requester clarification in current task conversation | explicit product decision | Product / requester | 2026-10-02 | authoritative for UI-004 entry placement and matched-result presentation | current | top-toolbar search/filter entry, lower-right location-only action, bottom card after successful search | Direct requester instruction. |
 
 Figma MCP inspection on 2026-09-08 confirmed node `4952:14932` contains three child screen frames, each `402 x 874` (`4952:14938`, `4952:14933`, `4987:4490`).
 
 ## Material Claims and Traceability
 | Claim ID | Statement | Supporting Sources | Contradicting Sources | Authority / Confidence | Requirement / AC | Status |
 |---|---|---|---|---|---|---|
-| KCL-UI004-001 | UI-004 provides parcel search from the map shell and presents result／summary UI. | SRC-UI004-003, 004, 005 | None | Product + Design / high | FR-005, parent AC-006/007 | resolved |
-| KCL-UI004-002 | Search accepts land number, location or land-number keyword; successful result keeps context, locates parcel and opens summary sheet. | SRC-UI004-004 | None | Product / high | FR-005 | resolved for UI-only flow |
+| KCL-UI004-001 | UI-004 is entered from the full-map page's top-toolbar search/filter callback and presents result/summary UI. | SRC-UI004-003, 004, 007 | Parent FR-003 legacy placement wording | Product + requester / high | FR-005, parent AC-006/007, AC-UI004-006 | resolved by explicit requester clarification |
+| KCL-UI004-002 | Search accepts land number, location or land-number keyword; successful result keeps context, locates parcel and opens a card-style page from the bottom. | SRC-UI004-004, 007 | None | Product + requester / high | FR-005, AC-UI004-002 | resolved for UI-only flow |
 | KCL-UI004-003 | No-result state keeps the entered keyword and displays a no-result state without silently clearing the current container. | SRC-UI004-004 | None | Product / high | FR-005 | resolved |
 | KCL-UI004-004 | UI-004 uses fake parcel data; production query／detail API remains a later integration task. | SRC-UI004-005, 006; requester decision 2026-09-08 | None | Process / high | UI-004 API policy | resolved |
+| KCL-UI004-005 | The lower-right map-shell control is location only; search/filter entry is in the top toolbar. | SRC-UI004-007 | Parent FR-003 legacy placement wording | Requester / high | AC-UI004-006 | resolved by current requester direction |
 
 ## Conflicts and Gaps
 | Conflict ID | Claims / Sources | Domain | Impact / Severity | Options | Decision Owner | Status |
 |---|---|---|---|---|---|---|
 | KCF-UI004-001 | Figma visible search states exist; API contract remains absent. | Design / API | P2 for integration validation | Use confirmed Figma dimensions for visible UI, fake data for UI behavior, defer API | Requester / Planning | resolved for visual dimensions; API remains deferred |
 | KCF-UI004-002 | Search affordance is visible in UI-003 while search/result content belongs to UI-004. | Task boundary | P1 if duplicated | UI-003 emits entry callback; UI-004 owns search/result container | Product / Architecture | resolved |
+| KCF-UI004-003 | Parent FR-003 can be read as placing a search/filter entry at lower right; the requester specifies top-toolbar entry and lower-right location only. | Product behavior / task boundary | Material placement mismatch | Follow the explicit current requester direction for UI-004 and record it in the child Requirement; UI-003 retains shell control ownership. | Requester | resolved 2026-10-02 |
 
 ## Decision Records
 ### KD-UI004-001
@@ -54,6 +57,16 @@ Figma MCP inspection on 2026-09-08 confirmed node `4952:14932` contains three ch
 - Rationale: Confirms the Android reference frame without converting deferred API behavior into UI requirements.
 - Approver and date: Requester and Figma MCP inspection, 2026-09-08.
 - Revalidation trigger: Figma node `4952:14932` changes.
+
+### KD-UI004-003
+- Decision: For UI-004, the search/filter entry is in the full-map page's top toolbar; the lower-right map control is location only; a successful search opens a card-style page from the bottom.
+- Alternatives: Interpret the older parent FR-003 wording as a second lower-right search/filter entry.
+- Source / Conflict IDs: SRC-UI004-007; KCF-UI004-003.
+- Rationale: This is the requester's explicit clarification of the intended UI-004 interaction and supersedes the prior lower-right interpretation for this child task.
+- Approver and date: Requester, 2026-10-02.
+- Affected requirements / AC / artifacts: UI-004 Requirement, AC-UI004-002 / 006, Plan, UI-003 callback wiring boundary.
+- Supersedes: Prior UI-004 planning interpretation of the lower-right location control as a search/filter entry.
+- Revalidation trigger: Requester changes entry placement or result presentation, or parent requirement is revised to reconcile FR-003 wording.
 
 ## Assumptions
 | Assumption ID | Statement / Evidence | Confidence | Impact if Wrong | Owner | Validation Method | Expiry / Trigger | Safe for Planning |
@@ -84,8 +97,8 @@ Figma MCP inspection on 2026-09-08 confirmed node `4952:14932` contains three ch
 - Figma node `4952:14932` changes; requester changes page ownership; INT-002 publishes API contract.
 
 ## Validation Handoff
-- Candidate baseline: `KB-UI-004-PARCEL-SEARCH-R1`
-- Decisions and constraints Validation must check: KD-UI004-001, fake-data boundary, UI-003 handoff and deferred API scope.
+- Candidate baseline: `KB-UI-004-PARCEL-SEARCH-R2`
+- Decisions and constraints Validation must check: KD-UI004-001 through KD-UI004-003, fake-data boundary, UI-003 handoff and deferred API scope.
 - Safe assumptions: KA-UI004-001.
 - Required follow-up evidence: structured Figma MCP capture.
 - Material blockers: no.
