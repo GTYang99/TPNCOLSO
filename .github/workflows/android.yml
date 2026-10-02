@@ -60,7 +60,6 @@ jobs:
           disable-animations: true
           emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           script: |
-            set -o pipefail
             adb devices -l
             ./gradlew connectedDebugAndroidTest --stacktrace --info
       - name: Capture hosted emulator diagnostics
