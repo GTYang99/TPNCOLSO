@@ -165,3 +165,54 @@
 - Only `MapShellScreenTest` was executed, explicitly targeted to `emulator-5554`; physical devices and the full suite were excluded by scope.
 - Result: `7/7 PASS` on `Medium_Phone (AVD) - 14`, API 34, with XML SHA-256 `4ffbd5d8addbda942cf8904692caea6b82632f7e0eb8cf58dc6905d88e12b9a5`.
 - No implementation failure was observed in this focused run. The current-revision responsive evidence is recorded above; the overall gate remains `NOT VERIFIED` only because hosted CI is unavailable.
+
+## Hosted CI attempt — 2026-10-01
+
+- Authorization: requester explicitly authorized publishing `UI-003feat` and running hosted CI.
+- Published branch: `origin/UI-003feat`, head `c60c605`.
+- Workflow run: [Android CI run 36828347279](https://github.com/GTYang99/TPNCOLSO/actions/runs/36828347279).
+- `unit-and-build`: `failure` at `Set up Android SDK`; the Gradle build/test step was skipped.
+- `connected`: `failure`; the `Connected Android tests` step exited with code `1`, and no usable hosted test result was produced.
+- Classification: `infrastructure`; local JBR/emulator evidence remains PASS and is not invalidated by the hosted runner failure.
+- Verification remains `NOT VERIFIED`; no merge, deploy or release action was taken.
+
+## VER-UI003-010 — hosted connected job failed without accessible diagnostic output
+
+- Category: `infrastructure` / `unknown`
+- Priority: `P1`
+- Status: resolved
+- Revision: `8f0decf4caa82d66f7acf6be680ada14febb4915`
+- Evidence: hosted run `36841914119` has `unit-and-build` PASS and `connected` FAIL; the `Connected Android tests` step exited with code `1`. The check annotations expose no test failure detail, and the job log endpoint returns HTTP 403.
+- Impact: required hosted connected-test PASS evidence is unavailable; UI-003 Verification cannot advance beyond `NOT VERIFIED` and UI-004 Implementation cannot start.
+- Route: `infrastructure` / `investigation`
+- Resolution: Android SDK setup was repaired in workflow commit `8f0decf`; remaining connected failure requires accessible hosted log output or an authorized rerun with diagnostics.
+
+## VER-UI003-011 — hosted connected failure persists after diagnostics reruns
+
+- Category: `investigation`
+- Priority: `P1`
+- Status: resolved
+- Revision: `471d40c`
+- Evidence: runs `36947001582`, `36947353256`, and `36947657986` all have hosted `unit-and-build` PASS and hosted `connected` FAIL. In the latest run, Android SDK setup, KVM setup, post-failure diagnostics, and artifact upload all passed; artifact `11202647109` exists, but authenticated download is unavailable. Check annotations expose only bounded runner identity and generic shell exit code `1`.
+- Impact: required hosted connected-test PASS evidence remains unavailable; UI-003 Verification cannot advance and UI-004 Implementation cannot start.
+- Route: `investigation` / external hosted-runner access
+- Resolution: workflow-only diagnostics were added without changing product behavior. Exact emulator/test failure still requires authenticated artifact/log access or an authorized rerun under an accessible hosted-runner account.
+
+## VER-UI003-012 — Arc confirms failure before Gradle connected tests
+
+- Category: `infrastructure`
+- Priority: `P1`
+- Status: resolved
+- Revision: `471d40c`
+- Evidence: authenticated Arc inspection of hosted run `36947001582` shows `reactivecircus/android-emulator-runner@v2` entering `Configure emulator`, `Install Android SDK`, `Create AVD`, and `Terminate Emulator`, then exiting with code `1`. The configured `adb devices` and `./gradlew connectedDebugAndroidTest` script was not reached.
+- Impact: hosted connected-test PASS evidence is unavailable; UI-003 Verification remains `NOT VERIFIED`, and UI-004 Implementation remains blocked.
+- Route: `infrastructure` / hosted emulator runner
+- Resolution: SDK setup and KVM preparation already pass. The remaining failure is external runner AVD creation/termination and requires hosted runner remediation or a supported emulator configuration.
+
+## Verification infrastructure issue closure — 2026-10-02
+
+- `VER-UI003-010`, `VER-UI003-011` and `VER-UI003-012` are resolved; their historical evidence remains above.
+- Root cause and repair: the hosted emulator profile `Medium_Phone` was not a supported hosted `avdmanager` profile. Workflow commit `cf5c207` changed it to the official `pixel_7_pro` profile, allowing AVD creation and launch.
+- Follow-up root cause and repair: the emulator runner executes the script with `/usr/bin/sh`, where `set -o pipefail` is illegal. Workflow commit `00d5d1e` removed that incompatible shell option while retaining `adb devices -l` and `./gradlew connectedDebugAndroidTest`.
+- Final evidence: hosted run `36948553870` passed both `unit-and-build` and `connected` on `00d5d1e`; no production code changed.
+- Impact closure: the hosted CI gate is satisfied, UI-003 Verification is `PASS`, and the UI-003 prerequisite handoff is complete. No merge, deploy or release action was performed.

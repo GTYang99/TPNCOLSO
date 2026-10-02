@@ -166,3 +166,45 @@ Request Code Review for committed revision `51cb024`, then retain Verification a
 - Result: `BUILD SUCCESSFUL`; `MapShellScreenTest` `7/7` passed, `0` failures, `0` errors and `0` skipped. XML timestamp `2026-10-01T06:37:22`, SHA-256 `4ffbd5d8addbda942cf8904692caea6b82632f7e0eb8cf58dc6905d88e12b9a5`.
 - Covered tests: shell controls/basemaps, drawer navigation callbacks, loading semantics, permission-denied retry callback, top/location callbacks and exactly-once logout callback.
 - Historical verification boundary: focused evidence PASS; current-revision responsive evidence was captured below. Overall Verification remains `NOT VERIFIED` only because hosted CI is unavailable.
+
+## Hosted CI attempt — 2026-10-01
+
+- Requester authorized publishing and hosted CI execution. Branch `UI-003feat` was published to `origin` at head `c60c605932a9c17d66d9378c8eac846df96b51f2`.
+- Workflow: [Android CI run 36828347279](https://github.com/GTYang99/TPNCOLSO/actions/runs/36828347279).
+- `unit-and-build`: `failure` during `Set up Android SDK`; `Unit tests and build checks` was skipped, so hosted code/build evidence is unavailable.
+- `connected`: `failure` with the `Connected Android tests` step exiting with code `1`; no usable hosted test result was emitted.
+- Local evidence remains unchanged: JBR 25.0.3, emulator `emulator-5554`, full connected `36/36 PASS`, UI-003 focused `7/7 PASS`.
+- Classification: `infrastructure`; overall Verification remains `NOT VERIFIED`. No merge, deploy or release was performed.
+
+## Hosted CI retry after infrastructure repair — 2026-10-01
+
+- Infrastructure-only change: `.github/workflows/android.yml` updated `android-actions/setup-android` from `v3` to `v4.0.4`; no production code or acceptance criteria changed. Commit: `8f0decf4caa82d66f7acf6be680ada14febb4915`.
+- Workflow: [Android CI run 36841914119](https://github.com/GTYang99/TPNCOLSO/actions/runs/36841914119).
+- `unit-and-build`: `PASS`; Android SDK setup and `./gradlew testDebugUnitTest lintDebug assembleDebug assembleRelease` completed successfully.
+- `connected`: `FAIL`; `Connected Android tests` exited with code `1` after checkout/JDK setup. The GitHub API exposed only the exit-code annotation; the job log endpoint returned `403`, so the failing test or runner cause could not be established.
+- Classification: infrastructure/unknown evidence boundary. The SDK setup failure was repaired, but hosted connected-test PASS evidence is still absent.
+- Verification remains `NOT VERIFIED`; no merge, deploy or release action was taken. UI-004 Implementation remains blocked on this prerequisite handoff.
+
+## Hosted CI diagnostics reruns — 2026-10-02
+
+- Workflow-only CI revisions were pushed to `origin/UI-003feat`: `a36db65` added explicit Android SDK/KVM/emulator diagnostics; `28db4e2` added an always-run diagnostics artifact; `471d40c` exposed bounded diagnostics through check annotations. No production code or acceptance criteria changed.
+- Run `36947001582` (`a36db65`): `unit-and-build` PASS; `connected` FAIL after SDK/KVM setup, with no report artifact.
+- Run `36947353256` (`28db4e2`): `unit-and-build` PASS; `connected` FAIL. Diagnostics artifact `11202428031` was created; API download returned HTTP 401 without authenticated artifact access.
+- Run `36947657986` (`471d40c`): `unit-and-build` PASS; `connected` FAIL. SDK setup and KVM setup passed, the always-run diagnostics step and artifact upload passed, and artifact `11202647109` was created. Check annotations expose the hosted Linux/ADB/SDK identity and the generic shell exit code, but not the failing emulator/test output.
+- Classification: `investigation` / hosted runner evidence boundary. The connected failure is not proven to be an implementation regression, and no hosted connected-test PASS exists.
+- Verification remains `NOT VERIFIED`; no merge, deploy or release action was taken. UI-004 Implementation remains blocked.
+
+## Arc hosted log inspection — 2026-10-02
+
+- The authenticated Arc GitHub Actions view for run `36947001582` exposed the `reactivecircus/android-emulator-runner@v2` substeps: `Configure emulator`, `Install Android SDK`, `Create AVD`, and `Terminate Emulator`, followed by the generic shell exit code `1`.
+- The `adb devices` and `./gradlew connectedDebugAndroidTest` script lines were not reached. This is hosted emulator/AVD infrastructure evidence, not a UI-003 assertion failure.
+- The newer run `36947657986` has the same connected-job boundary and remains `FAIL`; no hosted connected-test PASS is available.
+
+## Hosted CI final verification — 2026-10-02
+
+- Workflow-only head: `00d5d1e13a332d17805d96e4530f53d22523f54b` on `UI-003feat`; no production source, tests, requirements or acceptance criteria changed.
+- Workflow run: [Android CI run 36948553870](https://github.com/GTYang99/TPNCOLSO/actions/runs/36948553870).
+- `unit-and-build`: `PASS` (`110656093616`), including hosted unit tests, lint and debug/release build checks.
+- `connected`: `PASS` (`110656093273`), including hosted emulator creation/launch and `./gradlew connectedDebugAndroidTest`.
+- Diagnostics artifact: `11202519006`, SHA-256 `6bcb1bf8bd606b334f2c3ee572f3c8f5fabbb40b8648b7a6b536d1b9d408f358`.
+- The hosted CI gate is now satisfied. UI-003 Verification and prerequisite handoff are ready for the next release-approval gate; no merge, deploy or release action was performed.

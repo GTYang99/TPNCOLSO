@@ -3,7 +3,7 @@ task:
   type: feature
 
 phase: verification
-status: in_progress
+status: passed
 
 knowledge:
   status: ready
@@ -33,24 +33,21 @@ validation:
 
 git:
   branch: UI-003feat
-  commit: c3eb3de
+  commit: 00d5d1e
   status: committed
 
 verification:
-  result: NOT VERIFIED
-  category: evidence_missing
+  result: PASS
+  category: null
   failed_acceptance_criteria: []
 
 ci:
-  build: PASS (local JBR Gradle; debug/release/AndroidTest APK and lint)
-  test: PASS (18/18 unit; full connected run 36/36 on Medium_Phone API 34 emulator-5554 at 2026-10-01; UI-003 focused MapShellScreenTest 7/7; hosted CI remains unavailable)
+  build: PASS (local JBR Gradle debug/release/AndroidTest APK and lint PASS; hosted run 36948553870 unit-and-build PASS on workflow-only commit 00d5d1e)
+  test: PASS (local 18/18 unit and 36/36 connected PASS; UI-003 focused MapShellScreenTest 7/7; hosted run 36948553870 connected PASS)
 
 release:
   status: pending
 
-blocking:
-  - `UI-003feat` is not published, so no hosted CI run exists for the current UI-003 revision; the available parent UI-002 run 36442276066 failed during Android SDK/connected-runner setup and cannot substitute for UI-003 CI evidence
-  - UI-001 release/handoff and authoritative CI remain downstream gates; UI-002/UI-003 cross-task logout is verified at local emulator scope
-  - WMTS layer and request parameters remain unspecified; this blocks real tile integration, not UI-only planning
+blocking: []
 
-next_action: verification
+next_action: release

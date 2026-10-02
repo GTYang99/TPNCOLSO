@@ -4,11 +4,12 @@
 
 - Requirement: `docs/tasks/UI-003-map-shell/requirement.md`
 - Plan and approved baseline: `docs/tasks/UI-003-map-shell/plan.md`, `KB-UI-003-MAP-SHELL-R1`
-- Candidate committed revision: `9c0d453` on `UI-003feat` (production fix ancestry `9cbd82a`, regression-test fix `a84f848`)
-- Current verification run: 2026-10-01, current-revision responsive capture and connected validation on the approved emulator
+- Candidate reviewed production revision: `9c0d453` on `UI-003feat` (production fix ancestry `9cbd82a`, regression-test fix `a84f848`)
+- CI-evaluated descendant: `00d5d1e` on `UI-003feat` (workflow-only hosted-runner compatibility changes after `9c0d453`; no production-code change)
+- Current verification run: 2026-10-02, current-revision responsive capture and hosted CI validation
 - Code Review Revision 3: `APPROVED` for committed revision `9c0d453`
 - Local focused validation: Android Studio JBR 25.0.3; `MapShellScreenTest` connected tests 7/7 PASS
-- Full connected result: 36/36 PASS on `emulator-5554`; hosted CI unavailable
+- Full connected result: 36/36 PASS on `emulator-5554`; hosted run `36948553870` unit-and-build PASS, connected PASS
 
 ## Acceptance Criteria
 
@@ -32,21 +33,22 @@
 
 - `VER-UI003-008`: resolved locally by the test-only assertion update; the prior full connected regression is 36/36 on `emulator-5554`.
 - Code Review Revision 3 approved the `CR-UI003-006` and `CR-UI003-007` fixes.
-- Hosted/authoritative CI is unavailable for the unpublished `UI-003feat` branch.
+- Hosted run `36948553870` is PASS: both `unit-and-build` and `connected` completed successfully on workflow-only revision `00d5d1e`. The connected job created/launched the hosted emulator and completed `./gradlew connectedDebugAndroidTest`.
+- Prior hosted infrastructure issues `VER-UI003-010` through `VER-UI003-012` are closed in `issue-log.md`; no production code changed during their resolution.
 
 ## Validation Limitations
 
 - The available physical device is excluded because it exposes no Compose hierarchy.
-- Hosted CI evidence is unavailable; local emulator evidence cannot substitute for that gate.
+- Hosted connected-test evidence is now available from run `36948553870`; the available physical device remains excluded because it exposes no Compose hierarchy.
 
 ## Failure Classification
 
-- `unknown` — no implementation failure occurred in this focused run; overall `NOT VERIFIED` is caused by remaining review/evidence gates.
+- `none` — prior hosted failures were infrastructure/tooling issues. The final workflow-only repair was verified by hosted run `36948553870`; no implementation regression remains in the reviewed scope.
 
 ## Next Action
 
-- Keep Verification at `NOT VERIFIED` because hosted CI is unavailable for the unpublished branch. All locally executable acceptance criteria now have passing evidence; no production code change was made in this verification run.
+- Verification is complete. Proceed to the release-approval gate for UI-003 when release work is explicitly requested; do not merge, deploy, or publish without authorization.
 
 ## Final Result
 
-NOT VERIFIED
+PASS
