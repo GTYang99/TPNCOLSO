@@ -63,13 +63,38 @@ jobs:
             set -o pipefail
             adb devices -l
             ./gradlew connectedDebugAndroidTest --stacktrace --info
+      - name: Capture hosted emulator diagnostics
+        if: ${{ always() }}
+        run: |
+          set +e
+          mkdir -p ci-diagnostics
+          {
+            echo '=== runner ==='
+            uname -a
+            id
+            echo '=== sdk ==='
+            echo "ANDROID_HOME=${ANDROID_HOME:-}"
+            command -v adb
+            adb version
+            command -v emulator
+            emulator -version
+            echo '=== adb devices ==='
+            adb devices -l
+            echo '=== avd list ==='
+            emulator -list-avds
+            echo '=== kvm ==='
+            ls -l /dev/kvm
+            echo '=== android directories ==='
+            find "${ANDROID_HOME:-$HOME/.android}" -maxdepth 3 -type d | sort | head -200
+          } > ci-diagnostics/runner.txt 2>&1
       - name: Upload connected test diagnostics
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: connected-test-diagnostics
-          if-no-files-found: ignore
+          if-no-files-found: error
           path: |
+            ci-diagnostics/**
             app/build/outputs/androidTest-results/**
             app/build/reports/androidTests/**
             app/build/outputs/logs/**
