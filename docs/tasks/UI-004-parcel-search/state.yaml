@@ -2,7 +2,7 @@ task:
   id: UI-004-parcel-search
   type: feature
 
-phase: implementation
+phase: code_review
 status: in_progress
 
 knowledge:
@@ -24,8 +24,8 @@ validation:
   status: completed
 git:
   branch: codex/ui-004-parcel-search
-  commit: ""
-  status: pending
+  commit: d235a5d
+  status: committed
 verification:
   result: pending
   category: null
@@ -72,4 +72,4 @@ release:
 
 blocking: []
 
-next_action: git_commit
+next_action: code_review

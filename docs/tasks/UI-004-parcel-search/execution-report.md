@@ -40,11 +40,11 @@ Infrastructure cause and recovery: `Medium_Phone` had `mWakefulness=Asleep`, `mL
 
 ## Git and completion status
 
-- Implementation files and evidence are ready to commit on `codex/ui-004-parcel-search`.
+- Implementation commit: `d235a5d` (`feat(UI-004): implement parcel keyword search`) on `codex/ui-004-parcel-search`.
 - Code review, task-scope Verification PASS, and Development Complete have not been reached.
 - Hosted CI remains deferred for pre-release development and must be reactivated before release-candidate validation.
 - No merge, signing, publishing, release configuration, or deployment was performed.
 
 ## Next action
 
-Implementation and local developer validation are complete. Next action: commit the task scope, then request code review. Hosted CI remains deferred for this pre-release development scope; release-candidate CI obligations remain active as recorded in `state.yaml`.
+Implementation and local developer validation are complete. Next action: code review of commit `d235a5d`. Hosted CI remains deferred for this pre-release development scope; release-candidate CI obligations remain active as recorded in `state.yaml`.
