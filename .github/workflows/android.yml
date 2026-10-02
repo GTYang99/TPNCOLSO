@@ -87,6 +87,22 @@ jobs:
             echo '=== android directories ==='
             find "${ANDROID_HOME:-$HOME/.android}" -maxdepth 3 -type d | sort | head -200
           } > ci-diagnostics/runner.txt 2>&1
+      - name: Publish hosted emulator diagnostics
+        if: ${{ always() }}
+        run: |
+          {
+            echo '## Hosted emulator diagnostics'
+            echo '```text'
+            cat ci-diagnostics/runner.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          while IFS= read -r line; do
+            [ -z "$line" ] && continue
+            safe_line=${line//\%/\%25}
+            safe_line=${safe_line//$'\r'/\%0D}
+            safe_line=${safe_line//$'\n'/\%0A}
+            echo "::notice title=hosted-emulator::$safe_line"
+          done < ci-diagnostics/runner.txt
       - name: Upload connected test diagnostics
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
