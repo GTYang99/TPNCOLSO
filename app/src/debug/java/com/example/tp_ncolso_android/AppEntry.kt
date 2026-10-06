@@ -34,7 +34,14 @@ import com.example.tp_ncolso_android.feature.auth.AuthViewModel
 import com.example.tp_ncolso_android.feature.auth.DebugAuthDataSource
 import com.example.tp_ncolso_android.feature.auth.DebugCaptchaProvider
 import com.example.tp_ncolso_android.feature.mapshell.MapShellCallbacks
+import com.example.tp_ncolso_android.feature.mapshell.MapShellEvent
 import com.example.tp_ncolso_android.feature.mapshell.MapShellRoute
+import com.example.tp_ncolso_android.feature.mapshell.MapShellViewModel
+import com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchCallbacks
+import com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchEvent
+import com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchRoute
+import com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchViewModel
+import com.example.tp_ncolso_android.feature.parcelsearch.data.FakeParcelSearchDataSource
 
 @Composable
 fun AppEntry() {
@@ -59,12 +66,44 @@ fun AppEntry() {
             )
         },
         signedInContent = { identity ->
-            MapShellRoute(
-                identity = identity,
-                callbacks = MapShellCallbacks(onLogoutRequested = coordinator::logout),
-            )
+            DebugSignedInContent(identity = identity, onLogout = coordinator::logout)
         },
     )
+}
+
+@Composable
+internal fun DebugSignedInContent(
+    identity: AppIdentity,
+    onLogout: () -> Unit,
+) {
+    val mapShellViewModel = remember(identity) { MapShellViewModel(identity) }
+    val parcelSearchViewModel = remember(identity) { ParcelSearchViewModel(FakeParcelSearchDataSource()) }
+    var parcelSearchOpen by rememberSaveable(identity) { mutableStateOf(false) }
+
+    Box(Modifier.fillMaxSize()) {
+        MapShellRoute(
+            identity = identity,
+            viewModel = mapShellViewModel,
+            callbacks = MapShellCallbacks(
+                onSearch = { parcelSearchOpen = true },
+                onLogoutRequested = onLogout,
+            ),
+        )
+        if (parcelSearchOpen) {
+            ParcelSearchRoute(
+                viewModel = parcelSearchViewModel,
+                callbacks = ParcelSearchCallbacks(
+                    onClose = {
+                        parcelSearchViewModel.onEvent(ParcelSearchEvent.DismissSummary)
+                        parcelSearchOpen = false
+                    },
+                    onParcelSelected = { query, selectedTarget ->
+                        mapShellViewModel.onEvent(MapShellEvent.UpdateSearchContext(query, selectedTarget))
+                    },
+                ),
+            )
+        }
+    }
 }
 
 @Composable

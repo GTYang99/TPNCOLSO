@@ -37,6 +37,7 @@ sealed interface MapShellEvent {
     data object OpenDrawer : MapShellEvent
     data object CloseDrawer : MapShellEvent
     data object SearchClicked : MapShellEvent
+    data class UpdateSearchContext(val query: String, val selectedTarget: String) : MapShellEvent
     data object NotificationsClicked : MapShellEvent
     data object MapNavigationClicked : MapShellEvent
     data object MapPlatformClicked : MapShellEvent

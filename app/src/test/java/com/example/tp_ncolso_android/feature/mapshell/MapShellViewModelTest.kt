@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withTimeoutOrNull
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertSame
 import org.junit.Assert.assertNull
 import org.junit.Test
 
@@ -28,6 +29,28 @@ class MapShellViewModelTest {
 
         assertEquals(Basemap.TERRAIN, viewModel.state.value.selectedBasemap)
         assertEquals(initialOverlay, viewModel.state.value.overlay)
+    }
+
+    @Test fun searchContextUpdatesOnlyQueryAndSelectedTarget() {
+        val viewModel = MapShellViewModel(identity)
+        viewModel.onEvent(MapShellEvent.SelectBasemap(Basemap.TERRAIN))
+        viewModel.onEvent(MapShellEvent.SetLocationState(LocationState.PERMISSION_DENIED))
+        viewModel.onEvent(MapShellEvent.OpenDrawer)
+        val initial = viewModel.state.value
+
+        viewModel.onEvent(MapShellEvent.UpdateSearchContext("TEST-KEY-001", "測試地塊 T-001"))
+
+        val updated = viewModel.state.value
+        assertEquals(
+            initial.copy(
+                overlay = initial.overlay.copy(
+                    activeQuery = "TEST-KEY-001",
+                    selectedTarget = "測試地塊 T-001",
+                ),
+            ),
+            updated,
+        )
+        assertSame(initial.identity, updated.identity)
     }
 
     @Test fun locationTransitionsAreUiOnly() {
