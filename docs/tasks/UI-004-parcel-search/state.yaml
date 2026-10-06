@@ -2,8 +2,8 @@ task:
   id: UI-004-parcel-search
   type: feature
 
-phase: implementation
-status: ready
+phase: infrastructure
+status: blocked
 
 knowledge:
   status: ready
@@ -14,23 +14,36 @@ knowledge:
 
 planning:
   status: completed
+
 plan_review:
   status: approved
   result: APPROVED
   iteration: 1
+
+code_review:
+  status: approved
+  revision: 1101ec7
+
 implementation:
-  status: pending
-git:
-  branch: ""
-  commit: ""
-  status: pending
-verification:
-  result: pending
-  category: null
-  failed_acceptance_criteria: []
+  status: completed
+
+validation:
+  status: not_verified
+
 completion:
   scope: development
   status: in_progress
+
+git:
+  branch: codex/ui004-parcel-search
+  commit: 1101ec7
+  status: committed
+
+verification:
+  result: not_verified
+  category: environment
+  failed_acceptance_criteria: []
+
 ci:
   status: deferred
   build: deferred
@@ -38,6 +51,7 @@ ci:
   reason: Pre-release development scope; hosted CI is required again before release-candidate validation.
   owner: release/project maintainer
   reactivate_at: before release-candidate validation
+
 deferred_obligations:
   - gate: production_parcel_api_and_integration_tests
     status: deferred
@@ -64,9 +78,11 @@ deferred_obligations:
     reason: Release AppEntry currently has empty signed-in content; UI-004 is hosted in the debug signed-in shell for this development scope.
     owner: UI-002 / INT-001 authentication and release-integration owner
     reactivate_at: when the release session host exists and before release-candidate validation
+
 release:
   status: pending
 
-blocking: []
+blocking:
+  - ENV-UI004-001
 
-next_action: implementation
+next_action: infrastructure

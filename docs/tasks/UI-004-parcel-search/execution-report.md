@@ -9,7 +9,7 @@
 - Out of scope: production parcel API, release signed-in host, real map movement, formal Figma pixel parity, release actions.
 - Branch: `codex/ui004-parcel-search`
 - Base revision: `b9451b5` (contains UI-003 prerequisite commit `00d5d1e`)
-- Implementation commit: pending.
+- Implementation commit: `1101ec7` (`feat(ui-004): implement parcel search and summary`).
 
 ## Changes
 
@@ -27,7 +27,7 @@
 - `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest` — NOT VERIFIED; unchanged map-shell Compose cases report the same missing-hierarchy error.
 - `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.DebugDirectLoginTest` — NOT VERIFIED; pre-existing Compose cases report the same missing-hierarchy error.
 - `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.ExampleInstrumentedTest` — PASS on the same emulator.
-- `git diff --check` — PASS before final task-evidence edits; rerun before commit.
+- `git diff --cached --check` — PASS before commit `1101ec7`.
 
 ## Limitations and Routing
 
@@ -38,5 +38,5 @@
 
 ## Review and Revision
 
-- Code review: pending.
-- Verification: pending; must evaluate the reviewed committed implementation revision. Local results above are not hosted CI evidence.
+- Code review: `APPROVED` for committed revision `1101ec7`; reviewer: Codex (same-agent review; independent reviewer unavailable). The diff follows the approved ownership split, keeps parcel types out of UI-003, updates only `activeQuery` and `selectedTarget`, and includes the state-preservation tests. No blocking findings; no code changes followed this review.
+- Verification: `NOT VERIFIED` for committed revision `1101ec7`; AC-level results are in `verification.md`. Local results above are not hosted CI evidence.
