@@ -17,6 +17,18 @@
 - Test device: `Medium_Phone (AVD) - 14`, serial `emulator-5554`, API 34; physical-device testing was not used.
 - Emulator font scale was restored to `1.0` after the 1.3× smoke test.
 
+## Fresh Verification Run
+
+- Date: 2026-10-07 (Asia/Taipei).
+- Reviewed implementation revision: `80ed4ee`; current `HEAD` is `a01ed8b`, a documentation-only verification-evidence commit on top of the reviewed implementation.
+- Device inventory contained only the Android emulator `emulator-5554`; no physical device was used.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:testDebugUnitTest :app:compileDebugAndroidTestKotlin` — PASS; 36 unit tests passed and Compose test sources compiled.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest` — PASS, 4/4 on `Medium_Phone (AVD) - 14`, API 34, normal font scale.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest` — PASS, 46/46; 0 failures, 0 errors, 0 skipped, including UI003/UI004/UI005 regression and UI006 4/4.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest#noOccupancyHidesOccupationAndSelectingOccupiedShowsIt` — PASS, 1/1 at emulator font scale 1.3; font scale restored to 1.0 afterward.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:assembleDebug :app:assembleRelease :app:lint` — PASS.
+- `git diff --check` — PASS; no production-file changes were made during verification. The fresh evidence is the only current working-tree change.
+
 ## Acceptance Criteria
 
 | AC | Result | Evidence |

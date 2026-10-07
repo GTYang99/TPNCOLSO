@@ -16,9 +16,23 @@ validation: { status: completed }
 completion: { scope: development, status: development_complete }
 code_review: { status: approved, revision: "57a75f5" }
 git: { branch: main, commit: "57a75f5", status: committed }
-verification: { result: PASS, category: environment_tooling_deferred, failed_acceptance_criteria: [] }
-ci: { build: PASS, test: PASS_TARGETED_FULL_SUITE_DEFERRED }
+verification:
+  result: passed
+  category: null
+  failed_acceptance_criteria: []
+ci:
+  status: deferred
+  build: deferred
+  test: deferred
+  reason: pre_release_development
+  owner: release/project maintainer
+  reactivate_at: release_candidate
 deferred_obligations:
+  - gate: full_connected_regression
+    status: completed
+    reason: 49/49 connected tests passed on Medium_Phone (AVD) - 14, API 34.
+    owner: task owner / local Android validation environment
+    reactivate_at: before release validation
   - gate: hosted_ci
     status: deferred
     reason: pre_release_development
@@ -29,7 +43,17 @@ deferred_obligations:
     reason: upload API and server storage contract are outside UI007 scope
     owner: INT-003/API owner
     reactivate_at: after upload contract approval and before release validation
+  - gate: physical_camera_smoke
+    status: deferred
+    reason: physical-device testing is excluded from this verification by user instruction.
+    owner: task owner / QA
+    reactivate_at: release_candidate
+  - gate: formal_figma_pixel_parity
+    status: deferred
+    reason: approved source covers photo-area states, not camera-preview parity.
+    owner: design/requester
+    reactivate_at: before formal pixel-acceptance claim
 release:
   status: pending
 blocking: []
-next_action: release_validation
+next_action: none
