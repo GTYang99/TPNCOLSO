@@ -28,6 +28,11 @@
 | SRC-UI004-004 | `docs/tasks/UI-0907-app-ui-requirements/requirement.md` | parent UI requirement | Product / Design | working tree 2026-09-08 | authoritative | current | FR-005, query and no-result behavior | available | Query accepts land number, location or land number keyword; result opens summary sheet; no result keeps keyword. |
 | SRC-UI004-005 | `docs/tasks/README.md` and `docs/tasks/UI-ROADMAP-0907/plan.md` | task sequencing | Process | 2026-09-08 | authoritative | current | UI-004 boundary and fake data policy | available | UI-004 uses fake parcel list; production API is INT-002. |
 | SRC-UI004-006 | `docs/product/land-survey-115/5 API規格.md` | product API specification | Product / API | working tree 2026-09-08 | supporting / incomplete for this UI baseline | current | future parcel query contract | available | API details may be extended later; do not invent DTOs or endpoints now. |
+| SRC-UI004-007 | Requester clarification in current task conversation | explicit product decision | Product / requester | 2026-10-02 | authoritative for UI-004 entry placement and matched-result presentation | current | top-toolbar search/filter entry, lower-right location-only action, bottom card after successful search | available | Direct requester instruction; resolves the prior uncertainty in UI-004 planning. |
+
+### Collection Addendum — 2026-10-02
+- The requester clarified that the full-map page's top toolbar is the search/filter entry, the lower-right control is for location only, and a successful search opens a card-style page from the bottom.
+- This claim differs from an earlier reading of parent FR-003 as placing a separate search/filter entry at lower right. Collection records both claims; Resolution must apply instruction precedence and bind the child task to the requester's explicit direction.
 
 ## Missing or Inaccessible Sources
 - Structured Figma MCP output for node `4952:14932` has not yet been captured.
@@ -35,14 +40,14 @@
 
 ## Initial Conflicts and Gaps
 - Figma establishes visible search states, while API behavior is not yet available; UI must use fake data and keep integration replaceable.
-- Search result and summary belong to UI-004; map shell search affordance remains UI-003-owned.
+- Search result and summary belong to UI-004; map shell entry controls remain UI-003-owned. Parent FR-003 placement wording and the new requester clarification require explicit Resolution.
 
 ## Collection Limitations
 - Screenshot or Figma evidence cannot prove API payloads, permissions, pagination or error semantics.
 
 ## Handoff to Resolution
 - Coverage sufficient: yes
-- Sources requiring authority or freshness resolution: Figma visible states versus deferred API behavior; UI-003／UI-004 search ownership.
-- Questions Resolution must answer: What is the UI-only search flow? What states are required? Which API details remain deferred?
+- Sources requiring authority or freshness resolution: Figma visible states versus deferred API behavior; UI-003／UI-004 search ownership; parent FR-003 placement wording versus the 2026-10-02 requester clarification.
+- Questions Resolution must answer: What is the UI-only search flow? What states are required? Which API details remain deferred? How does explicit requester placement direction resolve against the older parent wording?
 - Blocking items: None for Knowledge; UI-003 prerequisite blocks implementation sequencing.
 - Recommended next action: knowledge_resolution
