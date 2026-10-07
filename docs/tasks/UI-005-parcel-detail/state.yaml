@@ -1,8 +1,8 @@
 task:
   id: UI-005-parcel-detail
   type: feature
-phase: implementation
-status: implementation_in_progress
+phase: verification
+status: verification_not_verified
 knowledge:
   status: ready
   collection: completed
@@ -16,21 +16,58 @@ plan_review:
   result: APPROVED
   iteration: 1
 implementation:
-  status: in_progress
+  status: completed
 validation:
-  status: pending
+  status: completed
+code_review:
+  status: approved
+  revision: f69f8c8
+completion:
+  scope: development
+  status: in_progress
 git:
-  branch: ""
-  commit: ""
-  status: pending
+  branch: main
+  commit: f69f8c8
+  status: committed
 verification:
-  result: pending
-  category: null
-  failed_acceptance_criteria: []
+  result: not_verified
+  category: environment
+  failed_acceptance_criteria:
+    - AC-UI005-001
+    - AC-UI005-002
+    - AC-UI005-003
+    - AC-UI005-004
+    - AC-UI005-005
 ci:
-  build: pending
-  test: pending
+  status: deferred
+  build: deferred
+  test: deferred
+  reason: pre_release_development
+  owner: release/project maintainer
+  reactivate_at: release_candidate
 release:
   status: pending
-blocking: []
-next_action: implementation
+deferred_obligations:
+  - gate: connected_compose_validation
+    status: reactivated
+    reason: No connected Android device was available during local verification.
+    owner: task owner / local Android validation environment
+    reactivate_at: before Development Complete
+  - gate: hosted_ci
+    status: deferred
+    reason: Pre-release development scope permits hosted CI deferral.
+    owner: release/project maintainer
+    reactivate_at: release_candidate
+  - gate: production_parcel_detail_api_integration
+    status: deferred
+    reason: Production detail/history API contract is assigned to integration work.
+    owner: INT-002/API owner
+    reactivate_at: after API contract approval and before release validation
+  - gate: formal_figma_pixel_parity
+    status: deferred
+    reason: Formal Figma revision approval is unavailable; current evidence is visual observation only.
+    owner: Design/requester
+    reactivate_at: before formal pixel-acceptance claim
+blocking:
+  - ENV-UI005-001: no connected Android device; connected Compose AC evidence is NOT VERIFIED. Route: infrastructure.
+next_action: infrastructure

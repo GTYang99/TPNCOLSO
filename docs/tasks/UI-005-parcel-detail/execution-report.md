@@ -26,9 +26,10 @@
 - `adb devices` — no connected devices.
 - `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest` — NOT VERIFIED / blocked by `DeviceException: No connected devices!`.
 
-## Review and Limitations
+## Review and Revision
 
-- Production source review: pending committed revision; no unrelated files were changed.
+- Implementation commit: `f69f8c8` (`feat(ui-005): implement parcel detail view`).
+- Code review: `APPROVED` for `f69f8c8`; same-agent review because independent reviewer was unavailable. The review confirmed the read-only UI-005/UI-006 ownership split, feature-owned fake source, mounted map context and no unrelated file changes.
 - Compose/device evidence for AC-UI005-001 through AC-UI005-006 is `NOT VERIFIED` until an Android emulator is connected; the blocker is recorded as `ENV-UI005-001` in `issue-log.md`.
 - UI-005 unit/state and source compilation evidence is PASS. Debug/release build and lint are PASS.
 - Figma detail dimensions remain visual observations; no pixel-parity claim is made.
