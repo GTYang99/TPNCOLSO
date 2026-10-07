@@ -25,9 +25,10 @@
 4. `UI-004-parcel-search`：建立查詢、空／錯誤／結果狀態及 parcel summary bottom sheet。
 5. `UI-005-parcel-detail`：建立固定摘要、土地資料／現況雙頁籤及唯讀格式。
 6. `UI-006-survey-form`：建立新增／編輯表單、條件欄位、validation、dirty state 與確認離開。
-7. `UI-007-photo-camera`：接入 CameraX UI、四張 4:3 限制、縮圖與刪除確認；只處理本機照片。
-8. `UI-008-return-flow`：建立退回通知、意見 banner、修正與確認修正流程。
+7. `UI-007-photo-camera`：接入 CameraX UI、四張 4:3 限制與縮圖；只處理本機照片。
+8. `UI-008-alerts`：建立刪除提醒與編輯提醒 Android Alert，含取消／確認流程。
 9. `UI-009-ui-hardening`：統一處理 Android 9+、多尺寸、字級、IME、accessibility、旋轉與狀態恢復。
+10. `UI-010-return-flow`：建立退回通知、意見 banner、修正與確認修正流程。
 10. API schema 核定後，依序規劃 `INT-001` 至 `INT-004`，用 production data source 替換 fake source。
 
 ## Test Plan

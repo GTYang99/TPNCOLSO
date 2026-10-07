@@ -18,6 +18,7 @@ class DebugDirectLoginTest {
     fun initialStateShowsDebugModeAndRoles() {
         setTestContent()
 
+        composeRule.onNodeWithText("開發模式").performClick()
         composeRule.onNodeWithText("開發模式").assertExists()
         composeRule.onNodeWithText("調查人員").assertExists()
         composeRule.onNodeWithText("內業人員").assertExists()
@@ -28,6 +29,7 @@ class DebugDirectLoginTest {
     fun directLoginAndLogoutReturnToSignedOut() {
         setTestContent()
 
+        composeRule.onNodeWithText("開發模式").performClick()
         composeRule.onNodeWithText("管理者").performClick()
         composeRule.onNodeWithText("直接進入").performClick()
         composeRule.onNodeWithText("已進入開發受保護內容").assertExists()
@@ -36,6 +38,8 @@ class DebugDirectLoginTest {
 
         composeRule.onNodeWithText("登出開發模式").performClick()
         composeRule.onNodeWithText("開發模式").assertExists()
+        composeRule.onNodeWithText("帳號").assertExists()
+        composeRule.onNodeWithText("登入").assertExists()
     }
 
     private fun setTestContent() {

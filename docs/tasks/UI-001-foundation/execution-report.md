@@ -68,3 +68,63 @@
 - `git commit`: PASS; commit `ec6a1a3` contains only the staged UI-001 foundation, test, asset and task-evidence scope.
 - Code Review and authoritative CI: pending.
 - Verification: pending until a reviewed committed revision is available.
+
+## Code Review Revision 8 Response
+
+- Review result: `CHANGES REQUESTED`
+- Addressed `AppIconButton` policy by restricting the API to Material/System `ImageVector` values.
+- Added `AppPasswordField` required, enabled, read-only, supporting error text, and error semantics consistent with `AppTextField`.
+- Added semantics and interaction coverage for select, status, loading, error, read-only, icon-button, and password accessibility states.
+- Added polite live-region semantics for loading and error content.
+- Created and checked out `feature/UI-001-foundation-compose` for this review revision.
+
+### Review-fix validation
+
+| Check | Result | Evidence |
+|---|---|---|
+| `testDebugUnitTest` | PASS | Review-fix API and test changes compile and unit tests pass. |
+| `assembleDebug` | PASS | Debug build completed in the full validation run. |
+| `assembleRelease` | PASS | Release build completed in the full validation run. |
+| `assembleDebugAndroidTest` | PASS | Instrumentation APK compiled with the new coverage. |
+| `connectedDebugAndroidTest` on `Medium_Phone(AVD) - 14` | PASS | 12 tests passed, including all new foundation coverage. |
+| `connectedDebugAndroidTest` on `XQ-AU52 - 12` | NOT VERIFIED | 11 tests failed with `No compose hierarchies found in the app`; failures occurred before assertions. |
+
+### Traceability
+
+- Review branch: `feature/UI-001-foundation-compose`
+- Review-fix commit: `1482f7d`.
+- The revision is ready for reviewer re-review; Verification remains pending until review disposition is updated.
+
+## Code Review Revision 9 Disposition
+
+- Review result: `APPROVED`
+- Reviewed revision: `1482f7d`
+- The Revision 8 findings were re-reviewed and confirmed resolved: `AppIconButton` now accepts `ImageVector`, `AppPasswordField` exposes required/enabled/read-only/error behavior, and foundation accessibility coverage was added for select/status/loading/error/read-only/icon components.
+- No remaining implementation findings were identified in the approved UI-001 scope.
+- Verification remains pending because CI is not configured and the `XQ-AU52 - 12` connected Compose run remains `NOT VERIFIED`.
+
+## Verification Follow-up
+
+- Reviewed and verified handoff commit: `1482f7d756330705ac31c60321403c68c6bf4786` on `feature/UI-001-foundation-compose`.
+- Verification result: `PASS`; AC-UI001-001–010 are recorded as PASS in `verification.md`.
+- The earlier physical-device limitation was resolved by the isolated `emulator-5554` run, which completed all 12 instrumentation tests.
+- CI build/test remains `not_verified` and is deferred to the later Release gate; this does not change the recorded Verification result.
+
+## CI Evidence Follow-up
+
+- Date: 2026-09-08 (Asia/Taipei)
+- Branch: `UI-002feat`
+- Revision: `64c1d61`
+- Runtime: Android Studio JBR, OpenJDK 25.0.3
+- Gradle: 9.6.0 via the project wrapper
+- Command: `JAVA_HOME='/Applications/Android Studio.app/Contents/jbr/Contents/Home' ./gradlew testDebugUnitTest assembleDebug assembleRelease assembleDebugAndroidTest`
+- Result: `BUILD SUCCESSFUL` (7s; 119 actionable tasks, 5 executed, 114 up-to-date)
+
+| Local CI-equivalent check | Result |
+|---|---|
+| `testDebugUnitTest` | PASS |
+| `assembleDebug` | PASS |
+| `assembleRelease` | PASS |
+| `assembleDebugAndroidTest` | PASS |
+
+This is reproducible local build/test evidence only. No `.github/workflows` or other authoritative CI provider configuration exists in the repository, so UI-001 `ci.build` and `ci.test` remain `not_verified`; local results must not be represented as authoritative CI PASS.

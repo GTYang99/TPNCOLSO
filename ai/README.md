@@ -1,61 +1,69 @@
 # AI Workflow Index
 
-`AGENTS.md` is the mandatory workflow entry. This directory contains detailed rules, canonical templates, and the explanatory tutorial.
+`AGENTS.md` is the mandatory compact contract. Load the rest progressively from the current Task state.
 
-## Quick Start
+## Minimal Load
 
-1. Read [`AGENTS.md`](../AGENTS.md).
-2. Read the latest task [`state.yaml`](../docs/tasks/) and follow `next_action`.
-3. Open the matching rule below.
-4. Create task artifacts from the canonical template.
-5. Use the [Developer Guide](./tutorial/developer-guide.md) for examples and the five-minute project overview.
+```text
+AGENTS.md
+-> docs/tasks/<task-id>/state.yaml
+-> one primary Rule selected by next_action
+-> only that Rule's current inputs
+-> source/code evidence on demand
+```
 
-## Rules
+Never preload every Rule, template, tutorial, source document, or Task artifact.
 
-| Domain | Rules |
-|---|---|
-| Knowledge | [Collection](./rules/knowledge/collection.md), [Resolution](./rules/knowledge/resolution.md), [Validation](./rules/knowledge/validation.md) |
-| Planning | [Planning](./rules/planning/planning.md), [Plan Review](./rules/planning/plan-review.md) |
-| Implementation | [Developer](./rules/implementation/developer.md), [Coding](./rules/implementation/coding.md), [Debug](./rules/implementation/debug.md) |
-| Verification | [Testing](./rules/verification/testing.md), [Verification](./rules/verification/verification.md) |
-| Operations | [Infrastructure](./rules/operations/infrastructure.md), [Investigation](./rules/operations/investigation.md), [Release](./rules/operations/release.md) |
-| Governance | [Git](./rules/governance/git.md), [Issue Management](./rules/governance/issue-management.md), [Template Rules](./rules/governance/templates.md) |
+## Phase Router
 
-## Templates
+| `next_action` | Primary Rule | Normally read from current Task |
+|---|---|---|
+| `knowledge_collection` | [Collection](./rules/knowledge/collection.md) | requirement/request, current source register if any |
+| `knowledge_resolution` | [Resolution](./rules/knowledge/resolution.md) | collection, unresolved claims/conflicts |
+| `knowledge_validation` | [Validation](./rules/knowledge/validation.md) | collection, resolution, cited evidence |
+| `planning` | [Planning](./rules/planning/planning.md) | requirement, active Knowledge handoff, relevant architecture/code |
+| `plan_review` | [Plan Review](./rules/planning/plan-review.md) | requirement, analysis, plan, state |
+| `implementation` / `implementation_debug` | [Developer](./rules/implementation/developer.md) | approved requirement, plan/review, state |
+| `debug` | [Debug](./rules/implementation/debug.md) | failed AC, Verification, relevant evidence |
+| `verification` | [Verification](./rules/verification/verification.md) | requirement, plan, revision/diff, validation/CI evidence |
+| `infrastructure` | [Infrastructure](./rules/operations/infrastructure.md) | failing operation and environment evidence |
+| `investigation` | [Investigation](./rules/operations/investigation.md) | issue and observations |
+| `release` / `human_release` | [Release](./rules/operations/release.md) | verified revision/artifact and release evidence |
 
-- `templates/knowledge/`: Collection, Resolution, and Validation artifacts.
-- `templates/task/`: Requirement, analysis, plan, plan review, state, and verification artifacts.
+## On-demand Policies
+
+Read only when applicable:
+
+- Production coding: [Coding](./rules/implementation/coding.md)
+- Test selection/execution: [Testing](./rules/verification/testing.md)
+- Gradle/Android JDK execution: [Runtime](./rules/operations/runtime.md)
+- Branch/commit work: [Git](./rules/governance/git.md)
+- A blocker or defect exists: [Issue Management](./rules/governance/issue-management.md)
+- Creating an artifact: [Template Rules](./rules/governance/templates.md) and the matching template
+
+## Canonical Templates
+
+- Knowledge: `templates/knowledge/`
+- Task lifecycle and state: `templates/task/`
+
+Templates define shape; Rules define behavior; AGENTS defines global invariants. None should duplicate the others.
 
 ## Project Knowledge
 
 - [Architecture](../docs/architecture/overview.md)
-- [115 年度土地調查產品規格](../docs/product/land-survey-115/README.md)
+- [Product](../docs/product/land-survey-115/README.md)
 - [Design](../docs/design/)
 - [API](../docs/api/)
 - [Assets](../docs/assets/)
-- [Tasks](../docs/tasks/)
+- [Task Index](../docs/tasks/README.md)
 
-## Canonical Structure
+## Optional Material
 
-```text
-ai/
-├── README.md
-├── rules/
-│   ├── knowledge/
-│   ├── planning/
-│   ├── implementation/
-│   ├── verification/
-│   ├── operations/
-│   └── governance/
-├── templates/
-│   ├── knowledge/
-│   └── task/
-└── tutorial/
-    ├── developer-guide.md
-    └── assets/
-```
+[Developer Guide](./tutorial/developer-guide.md) is explanatory and optional. Read only the relevant section when the Rule is insufficient for understanding; it never overrides the contract, Rule, template, or approved Task artifacts.
 
 ## Migration Map
+
+Historical path mapping remains documented here only:
 
 | Former location | Canonical location |
 |---|---|
@@ -63,6 +71,4 @@ ai/
 | `ai/templates/*-template.*` | `ai/templates/knowledge/` or `ai/templates/task/` |
 | `ai/codexAgentsDeveloperTutorial.md` | `ai/tutorial/developer-guide.md` |
 | `ai/architecture.md` | `docs/architecture/overview.md` |
-| root `115年度新工處轄管土地調查作業*` | `docs/product/land-survey-115/` |
-
-The migration map is historical guidance only. New references MUST use canonical locations.
+| root product export | `docs/product/land-survey-115/` |

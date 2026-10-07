@@ -1,39 +1,25 @@
-# Investigation Rules
+# Investigation
 
-## Objective
+## Purpose
 
-Gather enough evidence to classify an unknown failure and route it to the phase that owns the correction.
+Collect enough evidence to classify an unknown failure without implementing a speculative fix.
 
-Investigation MUST NOT modify production code.
+## Entry and Load
 
-## Required Inputs
+- `next_action: investigation`
+- issue, observed behavior, environment/revision, and available evidence
 
-- latest `state.yaml`
-- issue record
-- observed and expected behavior
-- available logs, tests, screenshots, diffs, and reproduction steps
+Inspect only the smallest relevant logs, tests, code, configuration, and sources.
 
-## Process
+## Output
 
-- reproduce the problem when possible
-- narrow the failing boundary
-- test competing hypotheses without changing product behavior
-- classify the cause as `requirement`, `planning`, `implementation`, or `environment`
-- route the task using `AGENTS.md`
+Record hypotheses, checks, evidence, eliminated causes, final classification/confidence, affected AC, and destination.
 
-## State Updates
+## Exit
 
-```yaml
-phase: investigation
-status: investigation_in_progress
-next_action: investigation
-```
+- requirement/planning/implementation/environment cause: matching canonical route.
+- insufficient evidence: remain blocked and name the smallest missing evidence or owner action.
 
-When classified, update the issue evidence and set `next_action` to `knowledge_collection`, `knowledge_resolution`, `planning`, `debug`, or `infrastructure`.
+## Restrictions
 
-If evidence remains insufficient, record the exact missing evidence and keep the task blocked. Do not guess a category.
-
-## Definition of Done
-
-- the failure has an evidence-backed category and route, or
-- the task records a precise evidence blocker that prevents classification
+No production-code change, requirement invention, or issue closure without verification.

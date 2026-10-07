@@ -1,0 +1,21 @@
+{
+  "reference": "figma-login-reference-402x874.png",
+  "runtime": "login-current-normalized.png",
+  "size": { "width": 402, "height": 874 },
+  "preprocessing": {
+    "systemChrome": "excluded by normalized crop before comparison",
+    "resize": "1080x2400 emulator capture cropped to content and resized to 402x874"
+  },
+  "excludedRegions": [
+    {
+      "name": "debug-only-development-mode",
+      "x": 0,
+      "y": 0,
+      "width": 175,
+      "height": 48,
+      "reason": "runtime-only debug affordance; not part of product UI"
+    }
+  ],
+  "includedRegion": "all pixels outside excludedRegions",
+  "metric": { "colorSpace": "RGB", "threshold": 20, "statistics": ["MAE", "RMSE", "overThresholdRatio"] }
+}

@@ -70,7 +70,7 @@ private val LightAppColors = AppColors(
     textSecondary = Color(0xFF606266),
     borderDefault = Color(0xFFDCDFE6),
     surface = Color(0xFFFFFBFE),
-    surfaceMuted = Color(0xFFF0F5F2),
+    surfaceMuted = Color(0xFFE7E9F6),
     error = Color(0xFFC8320A),
     onError = Color.White,
     fieldErrorBorder = Color(0xFFC8320A),
@@ -103,12 +103,12 @@ private val AppSpacingDefaults = AppSpacing(
 )
 
 private val AppTypographyDefaults = AppTypography(
-    screenTitle = TextStyle(fontFamily = FontFamily.Default, fontWeight = FontWeight.SemiBold, fontSize = 28.sp, lineHeight = 34.sp),
+    screenTitle = TextStyle(fontFamily = FontFamily.Default, fontWeight = FontWeight.Bold, fontSize = 28.sp, lineHeight = 38.sp),
     sectionTitle = TextStyle(fontFamily = FontFamily.Default, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, lineHeight = 26.sp),
-    fieldLabel = TextStyle(fontFamily = FontFamily.Default, fontWeight = FontWeight.Medium, fontSize = 14.sp, lineHeight = 20.sp),
+    fieldLabel = TextStyle(fontFamily = FontFamily.Default, fontWeight = FontWeight.Bold, fontSize = 16.sp, lineHeight = 24.sp),
     body = TextStyle(fontFamily = FontFamily.Default, fontWeight = FontWeight.Normal, fontSize = 16.sp, lineHeight = 24.sp),
     supporting = TextStyle(fontFamily = FontFamily.Default, fontWeight = FontWeight.Normal, fontSize = 13.sp, lineHeight = 18.sp),
-    buttonLabel = TextStyle(fontFamily = FontFamily.Default, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, lineHeight = 20.sp),
+    buttonLabel = TextStyle(fontFamily = FontFamily.Default, fontWeight = FontWeight.Bold, fontSize = 20.sp, lineHeight = 28.sp),
 )
 
 private val LocalAppColors = staticCompositionLocalOf { LightAppColors }

@@ -63,7 +63,7 @@ Every component accepts `modifier` and exposes state through parameters; compone
 | Component | Required inputs | Required states / behavior |
 |---|---|---|
 | `AppTextField` | value, onValueChange, label, placeholder, required, enabled, readOnly, isError, supportingText, keyboardOptions, keyboardActions, singleLine | default, focused, disabled, readonly, required, error |
-| `AppPasswordField` | value, onValueChange, label, placeholder, visualTransformation, visible, onVisibilityChange, visibilityActionEnabled, isError, supportingText, keyboardOptions, keyboardActions, singleLine | Login supports masked＋eye; Registration supports plaintext＋no-eye; sensitive value is caller-owned and never saved by the component |
+| `AppPasswordField` | value, onValueChange, label, placeholder, visualTransformation, visible, onVisibilityChange, visibilityActionEnabled, required, enabled, readOnly, isError, supportingText, keyboardOptions, keyboardActions, singleLine | Login supports masked＋eye; Registration supports plaintext＋no-eye; required, disabled, readonly and error semantics match `AppTextField`; sensitive value is caller-owned and never saved by the component |
 | `AppSelectField<T>` | selected, options, itemLabel, label, onSelect, enabled, isError | closed, open, selected, disabled, error |
 | `AppRadioGroup<T>` | options, selected, onSelect, label, enabled, isError | exactly zero or one selected; full row is clickable |
 | `AppCheckboxRow` | checked, onCheckedChange, label, enabled | visual checkbox may be smaller, but the full labeled row is a single selectable target of at least 48dp |
@@ -142,8 +142,9 @@ interface DebugSessionController : AppSessionOwner {
 
 - Interactive targets are at least 48dp even when the visual glyph is smaller.
 - Text fields expose their visible label; errors expose supporting text and error semantics.
+- Password fields expose the same required, enabled, read-only, and error semantics as `AppTextField`.
 - Icon-only actions require a nonblank Traditional Chinese content description.
-- Loading, error, selection and status cannot be color-only.
+- Loading and error content expose announcement/error semantics; selection and status cannot be color-only.
 - Focus order follows visual reading order; modal ownership remains feature-specific.
 - Tests prefer visible labels, roles and content descriptions; test tags are allowed only when semantics cannot identify a stable element.
 

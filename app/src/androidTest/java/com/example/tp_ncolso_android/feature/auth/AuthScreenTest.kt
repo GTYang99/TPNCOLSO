@@ -1,0 +1,272 @@
+package com.example.tp_ncolso_android.feature.auth
+
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.assertHasClickAction
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.assertWidthIsEqualTo
+import androidx.compose.ui.test.assertHeightIsEqualTo
+import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.res.painterResource
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.tp_ncolso_android.ui.foundation.theme.AppTheme
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.platform.io.PlatformTestStorageRegistry
+import java.io.File
+import java.io.FileOutputStream
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.width
+
+@RunWith(AndroidJUnit4::class)
+class AuthScreenTest {
+    @get:Rule val composeRule = createComposeRule()
+
+    private fun exportComposeCapture(output: File, remoteName: String) {
+        PlatformTestStorageRegistry.getInstance().openOutputFile(remoteName).use { destination ->
+            output.inputStream().use { source -> source.copyTo(destination) }
+        }
+    }
+
+    @Test fun loginRendersRequiredEntryPoints() {
+        composeRule.setContent {
+            AppTheme { LoginScreen(LoginFormState(), {},) }
+        }
+        composeRule.onNodeWithText("帳號").assertIsDisplayed()
+        composeRule.onNodeWithText("密碼").assertIsDisplayed()
+        composeRule.onNodeWithText("驗證碼").assertIsDisplayed()
+        composeRule.onNodeWithText("記住我").assertIsDisplayed()
+        composeRule.onNodeWithText("登入").assertIsDisplayed()
+        composeRule.onNodeWithText("沒有帳號? 註冊").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("品牌標誌").assertDoesNotExist()
+        composeRule.onNodeWithContentDescription("重新產生驗證碼").assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
+    }
+
+    @Test fun loginRegisterEntryDispatchesEvent() {
+        var event: AuthEvent? = null
+        composeRule.setContent { AppTheme { LoginScreen(LoginFormState(), { event = it }) } }
+        composeRule.onNodeWithText("沒有帳號? 註冊").performClick()
+        assert(event == AuthEvent.OpenRegister)
+    }
+
+    @Test fun loginCaptchaVisualUsesFigmaBounds() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(),
+                    {},
+                    captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
+                )
+            }
+        }
+        composeRule.onNodeWithTag("captcha-image").assertWidthIsEqualTo(139.dp).assertHeightIsEqualTo(48.dp)
+        composeRule.onNodeWithTag("captcha-refresh").assertWidthIsEqualTo(32.dp).assertHeightIsEqualTo(48.dp)
+        composeRule.onNodeWithContentDescription("重新產生驗證碼").assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
+    }
+
+    @Test fun loginAuthErrorKeepsValuesAndShowsAccessibleGlobalMessage() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(account = "sunrise000", password = "********", captcha = "0926", rememberMe = true, requestError = "帳號、密碼或驗證碼錯誤"),
+                    {},
+                )
+            }
+        }
+        composeRule.onNodeWithText("sunrise000").assertIsDisplayed()
+        composeRule.onNodeWithText("帳號、密碼或驗證碼錯誤").assertIsDisplayed()
+        composeRule.onNodeWithTag("login-request-error").assertIsDisplayed()
+    }
+
+    @Test fun loginSubmittingStateDisablesSubmit() {
+        composeRule.setContent { AppTheme { LoginScreen(LoginFormState(submitting = true), {}) } }
+        composeRule.onNodeWithText("登入").assertIsNotEnabled()
+    }
+
+    @Test fun registerRendersSixFieldsAndUnselectedWorkType() {
+        composeRule.setContent { AppTheme { RegisterScreen(RegisterFormState(), listOf(VendorOption("1", "廠商")), {}) } }
+        composeRule.onNodeWithText("帳號").assertIsDisplayed()
+        composeRule.onNodeWithText("密碼").assertIsDisplayed()
+        composeRule.onNodeWithText("確認密碼").assertIsDisplayed()
+        composeRule.onNodeWithText("廠商名稱").assertIsDisplayed()
+        composeRule.onNodeWithText("作業性質").assertIsDisplayed()
+        composeRule.onNodeWithText("姓名(請輸入真實姓名)").assertIsDisplayed()
+        composeRule.onNodeWithText("外業人員").assertIsDisplayed()
+        composeRule.onNodeWithText("內業人員").assertIsDisplayed()
+        composeRule.onNodeWithTag("register-back").assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
+        composeRule.onNodeWithContentDescription("返回登入頁").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("註冊插圖").assertDoesNotExist()
+    }
+
+    @Test fun registerNarrowWidthKeepsBothWorkTypeLabelsAndTargets() {
+        composeRule.setContent {
+            AppTheme {
+                Box(Modifier.width(226.dp)) {
+                    RegisterScreen(RegisterFormState(), listOf(VendorOption("1", "廠商")), {})
+                }
+            }
+        }
+        composeRule.onNodeWithText("外業人員").assertIsDisplayed()
+        composeRule.onNodeWithText("內業人員").assertIsDisplayed()
+        composeRule.onNodeWithText("外業人員").assertHasClickAction()
+        composeRule.onNodeWithText("內業人員").assertHasClickAction()
+    }
+
+    @Test fun registerCancelDispatchesBackToLogin() {
+        var event: AuthEvent? = null
+        composeRule.setContent { AppTheme { RegisterScreen(RegisterFormState(), emptyList(), { event = it }) } }
+        composeRule.onNodeWithText("取消").performScrollTo().performClick()
+        assert(event == AuthEvent.CancelRegister)
+    }
+
+    @Test fun registerShowsWorkTypeValidationMessage() {
+        composeRule.setContent {
+            AppTheme { RegisterScreen(RegisterFormState(fieldErrors = mapOf(RegisterField.WORK_TYPE to "請選擇作業性質")), emptyList(), {}) }
+        }
+        composeRule.onNodeWithText("請選擇作業性質").assertIsDisplayed()
+    }
+
+    @Test fun registerSubmittingStateDisablesSubmit() {
+        composeRule.setContent { AppTheme { RegisterScreen(RegisterFormState(submitting = true), emptyList(), {}) } }
+        composeRule.onNodeWithText("完成").assertIsNotEnabled()
+    }
+
+    @Test fun registerFilledStateUsesPlaintextFieldsWithoutVisibilityAction() {
+        composeRule.setContent {
+            AppTheme {
+                RegisterScreen(
+                    RegisterFormState(account = "sunrise1234", password = "sfk;wfj1~", confirmPassword = "sfk;wfj1~", vendor = VendorOption("1", "日陞"), workType = WorkType.FIELD, name = "劉大君"),
+                    listOf(VendorOption("1", "日陞")),
+                    {},
+                )
+            }
+        }
+        composeRule.onNodeWithText("sunrise1234").assertIsDisplayed()
+        composeRule.onAllNodesWithText("sfk;wfj1~").assertCountEquals(2)
+        composeRule.onNodeWithText("顯示密碼").assertDoesNotExist()
+        composeRule.onNodeWithText("外業人員").assertIsDisplayed()
+    }
+
+    @Test fun captureRegisterFilledStateForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                RegisterScreen(
+                    RegisterFormState(account = "sunrise1234", password = "sfk;wfj1~", confirmPassword = "sfk;wfj1~", vendor = VendorOption("1", "日陞"), workType = WorkType.FIELD, name = "劉大君"),
+                    listOf(VendorOption("1", "日陞")),
+                    {},
+                )
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "register-filled-compose.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "register-filled-compose-root.png")
+        check(output.length() > 0)
+    }
+
+    @Test fun captureRegisterEmptyStateForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme { RegisterScreen(RegisterFormState(), listOf(VendorOption("1", "廠商")), {}) }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "register-empty-compose.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "register-empty-compose-root.png")
+        check(output.length() > 0)
+    }
+
+    @Test fun captureLoginFilledStateForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(account = "sunrise000", password = "password", captcha = "0926", rememberMe = true),
+                    {},
+                    captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
+                )
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-filled-compose.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "login-filled-compose-root.png")
+        check(output.length() > 0)
+    }
+
+    @Test fun captureLoginEmptyStateForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(),
+                    {},
+                    captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
+                )
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-empty-compose.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "login-empty-compose-root.png")
+        check(output.length() > 0)
+    }
+
+    @Test fun captureLoginAuthErrorStateForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(account = "sunrise000", password = "password", captcha = "0926", rememberMe = true, requestError = "帳號、密碼或驗證碼錯誤"),
+                    {},
+                    captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
+                )
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-error-compose.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "login-error-compose-root.png")
+        check(output.length() > 0)
+    }
+
+    @Test fun captureLoginImeStateForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(),
+                    {},
+                    captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
+                )
+            }
+        }
+        composeRule.onNodeWithTag("login-account").performClick()
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-ime-compose.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "login-ime-compose-root.png")
+        check(output.length() > 0)
+    }
+}

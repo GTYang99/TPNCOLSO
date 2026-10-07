@@ -1,0 +1,16 @@
+{
+  "reviewedRevision": "14dc640",
+  "authority": "docs/design/evidence/auth/figma-export-2026-09-23/reference-composite-*.png",
+  "normalization": "raw 1080x2400 crop y=48 height=2296, resize to 402x874; exclude debug-only x=0 y=0 width=175 height=48",
+  "thresholdRgb": 20,
+  "sampleCount": 1028844,
+  "states": {
+    "login-empty": { "mae": 10.6668, "rmse": 36.7331, "overThresholdRatio": 0.094388 },
+    "login-filled": { "mae": 11.2977, "rmse": 38.2649, "overThresholdRatio": 0.098251 },
+    "login-auth-error": { "mae": 23.1447, "rmse": 59.4883, "overThresholdRatio": 0.169743 },
+    "register-empty": { "mae": 5.8065, "rmse": 27.8070, "overThresholdRatio": 0.062444 },
+    "register-filled": { "mae": 7.1941, "rmse": 31.9965, "overThresholdRatio": 0.070508 }
+  },
+  "result": "PASS",
+  "limitation": "All five states were recaptured from the committed revision on the API 34 emulator and visually reviewed against the approved composite. Hosted CI remains a separate unavailable gate."
+}

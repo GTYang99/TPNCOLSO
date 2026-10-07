@@ -2,7 +2,7 @@
 
 ## Status
 
-- Approved visual baseline — Requester 於 2026-09-07 核定目前 Figma Copy 為正式 UI；尚未解決的產品／API 問題仍由各 owning Task 追蹤，不降低 visual baseline authority。
+- Approved visual baseline — Login／Register／Logout context 以 requester 於 2026-09-07 提供的 composite PNG 為唯一正式來源；其他畫面仍依核定 Figma Copy。尚未解決的產品／API 問題由各 owning Task 追蹤。
 
 ## Related Product Requirement
 
@@ -11,11 +11,12 @@
 
 ## Screens and Components
 
-### Figma source index
+### Visual source index
 
-| Flow | Figma source node | Primary screens / states |
+| Flow | Formal source | Primary screens / states |
 |---|---|---|
-| 登入、註冊、登出 | [2905:2680](https://www.figma.com/design/HRbRsw6HoNBUCtaieX8xUM/新工處土地占用調查圖台系統-行動板---Copy-?node-id=2905-2680) | 登入空白／已輸入／失敗、註冊空白／已輸入、首頁、側欄 |
+| Login／Register／Logout context | Composite PNG `codex-clipboard-52d4f92d-7688-4c67-99f9-f6e97ce5f1dc.png`, 7904×2916 sRGB, SHA-256 `75cb578c…3d3e9c` | Login empty／filled／auth-error；Register empty／filled；home/drawer context。外層 gray board 與 headings 排除 |
+| Other App flows | [2905:2680](https://www.figma.com/design/HRbRsw6HoNBUCtaieX8xUM/新工處土地占用調查圖台系統-行動板---Copy-?node-id=2905-2680) | 圖台與其他未被 composite 取代的 screens；先前 auth nodes 僅可作 candidate assets |
 | 底圖切換 | [4952:18205](https://www.figma.com/design/HRbRsw6HoNBUCtaieX8xUM/新工處土地占用調查圖台系統-行動板---Copy-?node-id=4952-18205) | 電子地圖、正射圖、地形圖 |
 | 調查填報 | [2938:193](https://www.figma.com/design/HRbRsw6HoNBUCtaieX8xUM/新工處土地占用調查圖台系統-行動板---Copy-?node-id=2938-193) | 地塊、摘要 sheet、土地資料、現況檢視、新增、成功 |
 | 修正退回資料 | [3327:13251](https://www.figma.com/design/HRbRsw6HoNBUCtaieX8xUM/新工處土地占用調查圖台系統-行動板---Copy-?node-id=3327-13251) | 通知清單、退回意見、編輯、確認修正、已修正 |
@@ -25,9 +26,11 @@
 
 ### Information architecture
 
-登入頁的精確 layout、tokens、assets 與三個 state requirements 詳見 [`UI-002-auth/login-ui-requirement.md`](../tasks/UI-002-auth/login-ui-requirement.md)。
+登入頁的 current composite-backed layout、三個 authoritative states、assets 與 derived-state requirements 詳見 [`UI-002-auth/login-ui-requirement.md`](../tasks/UI-002-auth/login-ui-requirement.md)。
 
-註冊頁的精確 layout、tokens、assets、empty／filled states 與密碼安全例外詳見 [`UI-002-auth/registration-ui-requirement.md`](../tasks/UI-002-auth/registration-ui-requirement.md)。
+註冊頁的精確 layout、tokens、assets、empty／filled states、initial null required work type 與 plaintext password behavior 詳見 [`UI-002-auth/registration-ui-requirement.md`](../tasks/UI-002-auth/registration-ui-requirement.md)。
+
+登出列由 UI-003 實作；UI-002 僅提供立即清除本機登入狀態並回到 Login 的契約，詳見 [`UI-002-auth/logout-interface-requirement.md`](../tasks/UI-002-auth/logout-interface-requirement.md)。
 
 ```text
 登入 ─┬─ 註冊
@@ -48,8 +51,8 @@
 
 | Screen ID | Screen / container | Entry | Required states | Exit / navigation | AC |
 |---|---|---|---|---|---|
-| `SCR-AUTH-01` | 登入 | 未登入啟動、登出、401 | empty, filled, submitting, field-error | 成功至 `SCR-MAP-01`；註冊至 `SCR-AUTH-02` | AC-001, AC-002, AC-016 |
-| `SCR-AUTH-02` | 註冊 | 登入頁「註冊」 | empty, filled, validation-error, submitting | 取消／返回至登入；完成後依核定流程 | AC-003 |
+| `SCR-AUTH-01` | 登入 | 未登入啟動、登出、401 | empty, filled, submitting, field-error, auth-error | 成功至 `SCR-MAP-01`；註冊至 `SCR-AUTH-02` | AC-001, AC-002, AC-016 |
+| `SCR-AUTH-02` | 註冊 | 登入頁「註冊」 | empty, filled, validation-error, submitting | 取消／返回／註冊成功均至 empty Login；不自動登入 | AC-003 |
 | `SCR-MAP-01` | 圖台首頁 | 登入成功 | loading, content, map-error, permission-denied | 開啟側欄、查詢、通知、底圖、土地摘要 | AC-004, AC-005, AC-006 |
 | `OVL-NAV-01` | 側欄 | 漢堡選單 | open | 圖台、儀表板、登出 | AC-004, AC-016 |
 | `OVL-NOTIFY-01` | 退回通知清單 | 通知入口 | loading, content, empty, error | 點擊土地至 `SCR-PARCEL-01` | AC-012 |
@@ -65,7 +68,7 @@
 | Component ID | Component | Inputs / content | States / behavior | Reuse scope |
 |---|---|---|---|---|
 | `CMP-TEXT-FIELD` | 標籤文字欄位 | label, value, placeholder, required, helper/error | default, focused, disabled, error, readonly | 登入、註冊、查詢、調查 |
-| `CMP-PASSWORD` | 密碼欄位 | value, visibility action | masked by default, error | 登入、註冊 |
+| `CMP-PASSWORD` | 密碼欄位 | value, transformation, optional visibility action | Login masked＋eye；Register plaintext＋no eye；error | 登入、註冊 |
 | `CMP-CAPTCHA` | 驗證碼列 | 4 碼輸入、圖片、重整 | loading, ready, error | 登入 |
 | `CMP-SELECT` | 單選下拉／可輸入選單 | label, options, custom value | closed, open, selected, disabled, error | 註冊、調查 |
 | `CMP-RADIO-GROUP` | 單選群組 | options, selected | default, selected, disabled, error | 作業性質、占用型態 |
@@ -123,7 +126,9 @@
 - Figma「地形圖（圖片亂放的）」明示為暫放素材，不能視為可交付的實際地形圖內容；實作來源仍依介面規格的臺北市歷史圖資 WMTS。
 - 認證決策（2026-09-07 requester）：Token 效期永久；登入失敗文案為「帳號、密碼或驗證碼錯誤」；註冊成功返回登入頁；帳號限英數且最多 30 字元。
 - Login auth-error visual（2026-09-07 requester correction）：三個 credential field borders 使用 `#C8320A`，global error message 使用 `#E00000`；兩者為分離 semantic roles，不得統一。
-- Figma Copy `HRbRsw6HoNBUCtaieX8xUM`、入口 node `2905:2680` 及本文件 source index 所列節點，已由 requester 於 2026-09-07 核定為正式 UI，可作為實作與視覺驗收來源。核定綁定當日已取得的設計內容；後續 Figma 變更須重新確認 freshness 與影響範圍。
+- Auth visual（2026-09-07 requester）：SHA-256 `75cb578c…3d3e9c` composite 取代所有先前 Login／Register／Logout screenshots 與 Figma nodes；gray board 與 panel headings 不屬 App UI。
+- Register（2026-09-07 requester）：作業性質初始不預選，完成時必填；密碼與確認密碼顯示明文，不提供 eye action，但不得記錄、保存或持久化。
+- Logout（2026-09-07 requester）：drawer visual 全部屬 UI-003 且不納入 UI-002；點擊後不確認，立即清除本機登入／Auth state 並返回正式 empty Login，不等待 remote logout。
 
 ## Open Questions
 
