@@ -45,13 +45,27 @@
 ## ENV-UI004-001 — Local Compose instrumentation hierarchy unavailable
 - Category: `environment`
 - Priority: P1
-- Status: open
+- Status: resolved
 - Expected behavior: UI-004 Compose interactions and affected map-shell regressions execute on the configured Android emulator.
-- Actual behavior: Focused UI-004 `ParcelSearchHostTest`, existing `MapShellScreenTest`, and existing `DebugDirectLoginTest` fail before their UI assertions with `IllegalStateException: No compose hierarchies found in the app`. The non-Compose `ExampleInstrumentedTest` passes on the same emulator.
-- Affected AC: `AC-UI004-001`, `AC-UI004-002`, `AC-UI004-003`, `AC-UI004-004`, `AC-UI004-006` (Compose/runtime interaction evidence remains unavailable).
-- Evidence: Local `:app:connectedDebugAndroidTest` filtered runs on `Medium_Phone(AVD)` / `emulator-5554`, API 34; UI-004 report at `app/build/reports/androidTests/connected/debug/com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchHostTest.html`, existing map-shell report at `app/build/reports/androidTests/connected/debug/com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest.html`, and pre-existing debug-login report at `app/build/reports/androidTests/connected/debug/com.example.tp_ncolso_android.DebugDirectLoginTest.html`. `:app:testDebugUnitTest`, `:app:assembleDebug`, `:app:assembleRelease`, `:app:lint`, and `ExampleInstrumentedTest` pass.
-- Impact: Compose/runtime behavior cannot be marked PASS in this local environment; no product assertion ran in the failing Compose tests.
+- Actual behavior: The initial run reported `IllegalStateException: No compose hierarchies found in the app`. In this continuation, sandboxed ADB could not bind its local listener (`Operation not permitted`) and Gradle could not create its wrapper-cache lock. Running ADB and Gradle through the authorized unsandboxed path made the API 34 emulator available and Compose hierarchies were exposed.
+- Affected AC: `AC-UI004-001`, `AC-UI004-002`, `AC-UI004-003`, `AC-UI004-004`, `AC-UI004-006` (initially blocked; current Compose evidence is recorded in `verification.md`).
+- Evidence: On `a4989bc`, filtered `:app:connectedDebugAndroidTest` runs passed for `ParcelSearchHostTest` (2 tests), `MapShellScreenTest`, and `DebugDirectLoginTest` on `Medium_Phone(AVD)` / `emulator-5554`, API 34. Focused unit tests, Debug/Release builds, and lint also passed. The initial `No compose hierarchies` failure did not recur.
+- Impact: Compose/runtime behavior was blocked only while ADB/Gradle access was restricted; the task-scoped Compose checks now execute.
 - Owner: Android test environment / project maintainer
 - Route: `infrastructure`
-- Resolution: Pending restoration of a local Compose test hierarchy or provision of a working Android Compose test environment. Then rerun the focused UI-004 and map-shell Compose tests.
-- Verification: `NOT VERIFIED`; environment classification is supported by the same failure in unchanged baseline Compose tests and the passing non-Compose instrumentation smoke test.
+- Resolution: Started the configured `Medium_Phone` API 34 AVD and ran the local Android tools outside the restricted sandbox. The Compose test hierarchy became available; reran the affected UI-004, map-shell and debug-login Compose suites successfully.
+- Verification: `PASS` for environment restoration and affected Compose test execution. Return route: `verification`.
+
+## VER-UI004-001 — Summary key text matcher was ambiguous
+- Category: `verification_failure`
+- Priority: P2
+- Status: resolved
+- Expected behavior: The match test verifies that the active query remains visible and that the parcel summary exposes the same `key_no`.
+- Actual behavior: `onNodeWithText("TEST-KEY-001")` matched both the retained search input and the visible summary key, so the single-node assertion failed after the Compose UI had rendered.
+- Affected AC: `AC-UI004-004` (the assertion stopped before the remaining summary fields were checked).
+- Evidence: The first restored-environment `ParcelSearchHostTest` run failed at the ambiguous text assertion; `noMatchKeepsQueryAndMapContainerVisible` passed. The test-only correction and subsequent host test pass are committed in `a4989bc`.
+- Impact: Summary key display could not be asserted with a single-node selector; no product behavior defect was shown.
+- Owner: UI-004 task owner
+- Route: `verification`
+- Resolution: Changed the assertion to require the key text to occur twice, while retaining separate assertions for the active input, visible summary card, status, land number and site condition. No production behavior or acceptance criteria changed.
+- Verification: `PASS`; both `ParcelSearchHostTest` cases passed on `a4989bc`.
