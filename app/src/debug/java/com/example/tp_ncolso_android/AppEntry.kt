@@ -154,10 +154,12 @@ internal fun DebugSignedInContent(
         if (surveyOpen && surveyViewModel != null) {
             SurveyFormRoute(
                 viewModel = surveyViewModel,
+                backEnabled = !cameraOpen,
                 callbacks = SurveyFormCallbacks(
                     onCloseRequested = { _, _ ->
                         cameraOpen = false
                         surveyOpen = false
+                        surveyKeyNo = null
                     },
                     onCaptureRequested = { cameraOpen = true },
                 ),

@@ -1,16 +1,30 @@
 task:
   id: UI-008-alerts
   type: feature
-phase: knowledge
-status: knowledge_resolved
-knowledge: { status: validating, collection: completed, resolution: completed, validation: pending, baseline_id: null }
-planning: { status: pending }
-plan_review: { status: pending }
-implementation: { status: pending }
+phase: implementation
+status: in_progress
+knowledge: { status: ready, collection: completed, resolution: completed, validation: passed, baseline_id: KB-UI-008-ALERTS-R1 }
+planning: { status: completed }
+plan_review: { status: approved, result: APPROVED, iteration: 2 }
+implementation: { status: in_progress }
 validation: { status: pending }
-git: { branch: "", commit: "", status: pending }
+completion: { scope: development, status: in_progress }
+code_review: { status: pending, revision: "" }
+git: { branch: main, commit: "", status: pending }
 verification: { result: pending, category: null, failed_acceptance_criteria: [] }
-ci: { build: pending, test: pending }
+ci:
+  status: deferred
+  build: deferred
+  test: deferred
+  reason: pre_release_development
+  owner: release/project maintainer
+  reactivate_at: release_candidate
+deferred_obligations:
+  - gate: hosted_ci
+    status: deferred
+    reason: pre_release_development
+    owner: release/project maintainer
+    reactivate_at: release_candidate
 release: { status: pending }
 blocking: []
-next_action: knowledge_validation
+next_action: implementation

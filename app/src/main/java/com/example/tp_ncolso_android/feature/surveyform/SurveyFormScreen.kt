@@ -2,6 +2,7 @@ package com.example.tp_ncolso_android.feature.surveyform
 
 import android.graphics.BitmapFactory
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,6 +24,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -29,7 +32,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +50,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.example.tp_ncolso_android.feature.surveyform.SurveyFormEffect.CaptureRequested
@@ -60,25 +67,124 @@ import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
 fun SurveyFormRoute(
     viewModel: SurveyFormViewModel,
     callbacks: SurveyFormCallbacks,
+    backEnabled: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsState()
     val currentCallbacks by rememberUpdatedState(callbacks)
+    val currentState by rememberUpdatedState(state)
+    var pendingDeletePhotoId by rememberSaveable { mutableStateOf<String?>(null) }
+    var showDiscardDialog by rememberSaveable { mutableStateOf(false) }
+    val requestClose by rememberUpdatedState {
+        if (currentState.dirty) {
+            showDiscardDialog = true
+        } else {
+            currentCallbacks.onCloseRequested(currentState.keyNo, false)
+        }
+    }
+    BackHandler(enabled = backEnabled) { viewModel.onEvent(SurveyFormEvent.CloseRequested) }
     LaunchedEffect(viewModel) {
         viewModel.effect.collect { effect ->
             when (effect) {
                 CaptureRequested -> currentCallbacks.onCaptureRequested()
-                is CloseRequested -> currentCallbacks.onCloseRequested(effect.keyNo, effect.dirty)
+                is CloseRequested -> requestClose()
             }
         }
     }
-    SurveyFormScreen(state = state, onEvent = viewModel::onEvent, modifier = modifier)
+    SurveyFormScreen(
+        state = state,
+        onEvent = viewModel::onEvent,
+        onDeleteRequested = { pendingDeletePhotoId = it },
+        modifier = modifier,
+    )
+
+    val deletePhotoId = pendingDeletePhotoId
+    if (deletePhotoId != null && state.photos.any { it.id == deletePhotoId }) {
+        SurveyAlertDialog(
+            title = "刪除確認",
+            message = "刪除後無法恢復。",
+            dismissLabel = "取消",
+            confirmLabel = "刪除",
+            confirmColor = AppThemeTokens.colors.error,
+            onDismissRequest = { pendingDeletePhotoId = null },
+            onDismiss = { pendingDeletePhotoId = null },
+            onConfirm = {
+                viewModel.onEvent(SurveyFormEvent.DeletePhoto(deletePhotoId))
+                pendingDeletePhotoId = null
+            },
+        )
+    }
+
+    if (showDiscardDialog) {
+        SurveyAlertDialog(
+            title = "是否捨棄未儲存的內容？",
+            message = "如果現在離開，剛才編輯的內容將會遺失。",
+            dismissLabel = "繼續編輯",
+            confirmLabel = "捨棄編輯",
+            confirmColor = AppThemeTokens.colors.error,
+            onDismissRequest = { showDiscardDialog = false },
+            onDismiss = { showDiscardDialog = false },
+            onConfirm = {
+                showDiscardDialog = false
+                currentCallbacks.onCloseRequested(currentState.keyNo, true)
+            },
+        )
+    }
+}
+
+@Composable
+private fun SurveyAlertDialog(
+    title: String,
+    message: String,
+    dismissLabel: String,
+    confirmLabel: String,
+    confirmColor: Color,
+    onDismissRequest: () -> Unit,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismissRequest,
+        modifier = Modifier.widthIn(min = 280.dp, max = 312.dp).fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        containerColor = AppThemeTokens.colors.surface,
+        tonalElevation = 0.dp,
+        title = {
+            Text(
+                title,
+                color = AppThemeTokens.colors.textPrimary,
+                style = AppThemeTokens.typography.sectionTitle.copy(lineHeight = 28.sp),
+            )
+        },
+        text = {
+            Text(
+                message,
+                color = AppThemeTokens.colors.textPrimary,
+                style = AppThemeTokens.typography.body,
+            )
+        },
+        confirmButton = {
+            TextButton(
+                onClick = onConfirm,
+                modifier = Modifier.heightIn(min = AppThemeTokens.spacing.minimumTouchTarget),
+                colors = androidx.compose.material3.ButtonDefaults.textButtonColors(contentColor = confirmColor),
+            ) { Text(confirmLabel, style = AppThemeTokens.typography.fieldLabel) }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.heightIn(min = AppThemeTokens.spacing.minimumTouchTarget),
+                colors = androidx.compose.material3.ButtonDefaults.textButtonColors(contentColor = AppThemeTokens.colors.brandPrimary),
+            ) { Text(dismissLabel, style = AppThemeTokens.typography.fieldLabel) }
+        },
+    )
 }
 
 @Composable
 fun SurveyFormScreen(
     state: SurveyFormUiState,
     onEvent: (SurveyFormEvent) -> Unit,
+    onDeleteRequested: (photoId: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -133,7 +239,11 @@ fun SurveyFormScreen(
                     singleLine = false,
                     modifier = Modifier.testTag("survey-field-note"),
                 )
-                PhotoSection(state = state, onEvent = onEvent)
+                PhotoSection(
+                    state = state,
+                    onEvent = onEvent,
+                    onDeleteRequested = onDeleteRequested,
+                )
                 state.errorMessage?.let { message ->
                     AppErrorContent(message = message, modifier = Modifier.testTag("survey-form-error"))
                 }
@@ -245,6 +355,7 @@ private fun OccupationSection(
 private fun PhotoSection(
     state: SurveyFormUiState,
     onEvent: (SurveyFormEvent) -> Unit,
+    onDeleteRequested: (photoId: String) -> Unit,
 ) {
     Column(modifier = Modifier.testTag("survey-photo-section"), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text("現況照片", style = AppThemeTokens.typography.fieldLabel)
@@ -265,7 +376,7 @@ private fun PhotoSection(
                         } else {
                             PhotoTile(
                                 photo = photo,
-                                onDelete = { onEvent(SurveyFormEvent.DeletePhoto(photo.id)) },
+                                onDelete = { onDeleteRequested(photo.id) },
                             )
                         }
                     }
