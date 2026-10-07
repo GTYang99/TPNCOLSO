@@ -34,6 +34,7 @@ import com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchEffect.Par
 import com.example.tp_ncolso_android.ui.foundation.component.AppEmptyContent
 import com.example.tp_ncolso_android.ui.foundation.component.AppPrimaryButton
 import com.example.tp_ncolso_android.ui.foundation.component.AppReadOnlyField
+import com.example.tp_ncolso_android.ui.foundation.component.AppSecondaryButton
 import com.example.tp_ncolso_android.ui.foundation.component.AppStatusBadge
 import com.example.tp_ncolso_android.ui.foundation.component.AppStatusTone
 import com.example.tp_ncolso_android.ui.foundation.component.AppTextField
@@ -42,6 +43,7 @@ import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
 data class ParcelSearchCallbacks(
     val onClose: () -> Unit,
     val onParcelSelected: (query: String, selectedTarget: String) -> Unit,
+    val onOpenDetail: (keyNo: String) -> Unit = {},
 )
 
 @Composable
@@ -65,6 +67,7 @@ fun ParcelSearchRoute(
         state = state,
         onEvent = viewModel::onEvent,
         onClose = { currentCallbacks.onClose() },
+        onOpenDetail = { currentCallbacks.onOpenDetail(it) },
         modifier = modifier,
     )
 }
@@ -74,6 +77,7 @@ fun ParcelSearchScreen(
     state: ParcelSearchUiState,
     onEvent: (ParcelSearchEvent) -> Unit,
     onClose: () -> Unit,
+    onOpenDetail: (keyNo: String) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     Box(modifier.fillMaxSize().testTag("parcel-search-overlay")) {
@@ -130,6 +134,7 @@ fun ParcelSearchScreen(
             ParcelSummaryCard(
                 parcel = parcel,
                 onDismiss = { onEvent(ParcelSearchEvent.DismissSummary) },
+                onOpenDetail = { onOpenDetail(parcel.keyNo) },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
@@ -144,6 +149,7 @@ fun ParcelSearchScreen(
 private fun ParcelSummaryCard(
     parcel: ParcelSearchRecord,
     onDismiss: () -> Unit,
+    onOpenDetail: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -179,6 +185,11 @@ private fun ParcelSummaryCard(
             AppReadOnlyField(label = "土地編號", value = parcel.keyNo)
             AppReadOnlyField(label = "地號", value = parcel.landNo)
             AppReadOnlyField(label = "現場勘查土地情形", value = parcel.siteCondition)
+            AppSecondaryButton(
+                text = "查看詳情",
+                onClick = onOpenDetail,
+                modifier = Modifier.fillMaxWidth().testTag("parcel-open-detail"),
+            )
         }
     }
 }

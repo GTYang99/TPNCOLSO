@@ -42,6 +42,10 @@ import com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchEvent
 import com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchRoute
 import com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchViewModel
 import com.example.tp_ncolso_android.feature.parcelsearch.data.FakeParcelSearchDataSource
+import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailCallbacks
+import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailRoute
+import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailViewModel
+import com.example.tp_ncolso_android.feature.parceldetail.data.FakeParcelDetailDataSource
 
 @Composable
 fun AppEntry() {
@@ -75,10 +79,16 @@ fun AppEntry() {
 internal fun DebugSignedInContent(
     identity: AppIdentity,
     onLogout: () -> Unit,
+    onEditSurvey: (String) -> Unit = {},
 ) {
     val mapShellViewModel = remember(identity) { MapShellViewModel(identity) }
     val parcelSearchViewModel = remember(identity) { ParcelSearchViewModel(FakeParcelSearchDataSource()) }
     var parcelSearchOpen by rememberSaveable(identity) { mutableStateOf(false) }
+    var detailKeyNo by rememberSaveable(identity) { mutableStateOf<String?>(null) }
+    var detailOpen by rememberSaveable(identity) { mutableStateOf(false) }
+    val detailViewModel = remember(identity, detailKeyNo) {
+        detailKeyNo?.let { ParcelDetailViewModel(it, FakeParcelDetailDataSource()) }
+    }
 
     Box(Modifier.fillMaxSize()) {
         MapShellRoute(
@@ -100,6 +110,23 @@ internal fun DebugSignedInContent(
                     onParcelSelected = { query, selectedTarget ->
                         mapShellViewModel.onEvent(MapShellEvent.UpdateSearchContext(query, selectedTarget))
                     },
+                    onOpenDetail = { keyNo ->
+                        detailKeyNo = keyNo
+                        parcelSearchOpen = false
+                        detailOpen = true
+                    },
+                ),
+            )
+        }
+        if (detailOpen && detailViewModel != null) {
+            ParcelDetailRoute(
+                viewModel = detailViewModel,
+                callbacks = ParcelDetailCallbacks(
+                    onClose = {
+                        detailOpen = false
+                        parcelSearchOpen = true
+                    },
+                    onEditRequested = onEditSurvey,
                 ),
             )
         }
