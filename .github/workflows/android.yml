@@ -20,7 +20,7 @@ jobs:
           distribution: temurin
           java-version: '17'
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4.0.4
       - name: Gradle cache
         uses: actions/cache@v4
         with:
@@ -42,11 +42,74 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4.0.4
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
       - name: Connected Android tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 34
           target: google_apis
           arch: x86_64
-          profile: Medium_Phone
-          script: ./gradlew connectedDebugAndroidTest
+          profile: pixel_7_pro
+          emulator-boot-timeout: 600
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          script: |
+            adb devices -l
+            ./gradlew connectedDebugAndroidTest --stacktrace --info
+      - name: Capture hosted emulator diagnostics
+        if: ${{ always() }}
+        run: |
+          set +e
+          mkdir -p ci-diagnostics
+          {
+            echo '=== runner ==='
+            uname -a
+            id
+            echo '=== sdk ==='
+            echo "ANDROID_HOME=${ANDROID_HOME:-}"
+            command -v adb
+            adb version
+            command -v emulator
+            emulator -version
+            echo '=== adb devices ==='
+            adb devices -l
+            echo '=== avd list ==='
+            emulator -list-avds
+            echo '=== kvm ==='
+            ls -l /dev/kvm
+            echo '=== android directories ==='
+            find "${ANDROID_HOME:-$HOME/.android}" -maxdepth 3 -type d | sort | head -200
+          } > ci-diagnostics/runner.txt 2>&1
+      - name: Publish hosted emulator diagnostics
+        if: ${{ always() }}
+        run: |
+          {
+            echo '## Hosted emulator diagnostics'
+            echo '```text'
+            cat ci-diagnostics/runner.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          while IFS= read -r line; do
+            [ -z "$line" ] && continue
+            safe_line=${line//\%/\%25}
+            safe_line=${safe_line//$'\r'/\%0D}
+            safe_line=${safe_line//$'\n'/\%0A}
+            echo "::notice title=hosted-emulator::$safe_line"
+          done < ci-diagnostics/runner.txt
+      - name: Upload connected test diagnostics
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: connected-test-diagnostics
+          if-no-files-found: error
+          path: |
+            ci-diagnostics/**
+            app/build/outputs/androidTest-results/**
+            app/build/reports/androidTests/**
+            app/build/outputs/logs/**

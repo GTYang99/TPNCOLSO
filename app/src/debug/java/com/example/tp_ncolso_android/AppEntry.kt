@@ -33,6 +33,8 @@ import com.example.tp_ncolso_android.feature.auth.AuthHost
 import com.example.tp_ncolso_android.feature.auth.AuthViewModel
 import com.example.tp_ncolso_android.feature.auth.DebugAuthDataSource
 import com.example.tp_ncolso_android.feature.auth.DebugCaptchaProvider
+import com.example.tp_ncolso_android.feature.mapshell.MapShellCallbacks
+import com.example.tp_ncolso_android.feature.mapshell.MapShellRoute
 
 @Composable
 fun AppEntry() {
@@ -56,7 +58,12 @@ fun AppEntry() {
                 directLoginContent = { DebugDirectLogin(onLogin = coordinator::login) },
             )
         },
-        signedInContent = { identity -> DebugAuthenticatedContent(identity = identity, onLogout = coordinator::logout) },
+        signedInContent = { identity ->
+            MapShellRoute(
+                identity = identity,
+                callbacks = MapShellCallbacks(onLogoutRequested = coordinator::logout),
+            )
+        },
     )
 }
 

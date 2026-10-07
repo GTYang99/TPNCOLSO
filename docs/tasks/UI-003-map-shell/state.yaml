@@ -2,46 +2,52 @@ task:
   id: UI-003-map-shell
   type: feature
 
-phase: knowledge
-status: knowledge_resolved
+phase: verification
+status: passed
 
 knowledge:
-  status: validating
+  status: ready
   collection: completed
   resolution: completed
-  validation: pending
-  baseline_id: null
+  validation: passed
+  baseline_id: KB-UI-003-MAP-SHELL-R1
 
 planning:
-  status: pending
+  status: completed
 
 plan_review:
-  status: pending
+  status: approved
+  result: APPROVED
+  iteration: 1
 
 implementation:
-  status: pending
+  status: completed
+
+review:
+  result: APPROVED
+  iteration: 3
+  commit: 9c0d453
 
 validation:
-  status: pending
+  status: passed
 
 git:
-  branch: ""
-  commit: ""
-  status: pending
+  branch: UI-003feat
+  commit: 00d5d1e
+  status: committed
 
 verification:
-  result: pending
+  result: PASS
   category: null
   failed_acceptance_criteria: []
 
 ci:
-  build: pending
-  test: pending
+  build: PASS (local JBR Gradle debug/release/AndroidTest APK and lint PASS; hosted run 36948553870 unit-and-build PASS on workflow-only commit 00d5d1e)
+  test: PASS (local 18/18 unit and 36/36 connected PASS; UI-003 focused MapShellScreenTest 7/7; hosted run 36948553870 connected PASS)
 
 release:
   status: pending
 
-blocking:
-  - UI-001 foundation remains unresolved and UI-002 auth has not completed the prerequisite handoff into authenticated content
+blocking: []
 
-next_action: knowledge_validation
+next_action: release
