@@ -1,20 +1,25 @@
 task:
   id: UI-006-survey-form
   type: feature
-phase: knowledge
-status: knowledge_resolved
+phase: implementation
+status: implementation_in_progress
 knowledge:
-  status: validating
+  status: ready
   collection: completed
   resolution: completed
-  validation: pending
-  baseline_id: null
+  validation: passed
+  baseline_id: KB-UI-006-SURVEY-FORM-R1
 planning:
-  status: pending
+  status: in_progress
 plan_review:
-  status: pending
+  status: approved
+  result: APPROVED
+  iteration: 1
+completion:
+  scope: development
+  status: in_progress
 implementation:
-  status: pending
+  status: in_progress
 validation:
   status: pending
 git:
@@ -26,10 +31,29 @@ verification:
   category: null
   failed_acceptance_criteria: []
 ci:
+  status: pending
   build: pending
   test: pending
+  reason: null
+  owner: null
+  reactivate_at: null
 release:
   status: pending
-blocking:
-  - UI-005 prerequisite handoff is not complete
-next_action: knowledge_validation
+deferred_obligations:
+  - gate: hosted_ci
+    status: deferred
+    reason: pre_release_development
+    owner: release/project maintainer
+    reactivate_at: release_candidate
+  - gate: production_survey_photo_api_integration
+    status: deferred
+    reason: API and upload contracts are intentionally outside UI006 scope
+    owner: INT-003/API owner
+    reactivate_at: after API contract approval and before release validation
+  - gate: formal_figma_pixel_parity
+    status: deferred
+    reason: per-state Figma captures and formal revision evidence are incomplete
+    owner: design/requester
+    reactivate_at: before formal pixel-acceptance claim
+blocking: []
+next_action: implementation

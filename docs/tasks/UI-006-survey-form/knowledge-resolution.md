@@ -9,7 +9,7 @@
 - Baseline ID: `KB-UI-006-SURVEY-FORM-R1`
 - Created date: 2026-09-08 (Asia/Taipei)
 - Supersedes: None
-- Status: draft
+- Status: validated
 
 ## Material Claims and Traceability
 | Claim ID | Statement | Supporting Sources | Contradicting Sources | Authority / Confidence | Requirement / AC | Status |

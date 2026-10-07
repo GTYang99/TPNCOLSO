@@ -46,6 +46,12 @@ import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailCallbacks
 import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailRoute
 import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailViewModel
 import com.example.tp_ncolso_android.feature.parceldetail.data.FakeParcelDetailDataSource
+import com.example.tp_ncolso_android.feature.surveyform.SurveyFormCallbacks
+import com.example.tp_ncolso_android.feature.surveyform.SurveyFormEvent
+import com.example.tp_ncolso_android.feature.surveyform.SurveyFormPhoto
+import com.example.tp_ncolso_android.feature.surveyform.SurveyFormRoute
+import com.example.tp_ncolso_android.feature.surveyform.SurveyFormViewModel
+import com.example.tp_ncolso_android.feature.surveyform.data.FakeSurveyFormDataSource
 
 @Composable
 fun AppEntry() {
@@ -86,8 +92,14 @@ internal fun DebugSignedInContent(
     var parcelSearchOpen by rememberSaveable(identity) { mutableStateOf(false) }
     var detailKeyNo by rememberSaveable(identity) { mutableStateOf<String?>(null) }
     var detailOpen by rememberSaveable(identity) { mutableStateOf(false) }
+    var surveyKeyNo by rememberSaveable(identity) { mutableStateOf<String?>(null) }
+    var surveyOpen by rememberSaveable(identity) { mutableStateOf(false) }
+    var nextPhotoNumber by rememberSaveable(identity) { mutableStateOf(1) }
     val detailViewModel = remember(identity, detailKeyNo) {
         detailKeyNo?.let { ParcelDetailViewModel(it, FakeParcelDetailDataSource()) }
+    }
+    val surveyViewModel = remember(identity, surveyKeyNo) {
+        surveyKeyNo?.let { SurveyFormViewModel(it, FakeSurveyFormDataSource()) }
     }
 
     Box(Modifier.fillMaxSize()) {
@@ -126,7 +138,31 @@ internal fun DebugSignedInContent(
                         detailOpen = false
                         parcelSearchOpen = true
                     },
-                    onEditRequested = onEditSurvey,
+                    onEditRequested = { keyNo ->
+                        onEditSurvey(keyNo)
+                        surveyKeyNo = keyNo
+                        surveyOpen = true
+                    },
+                ),
+            )
+        }
+        if (surveyOpen && surveyViewModel != null) {
+            SurveyFormRoute(
+                viewModel = surveyViewModel,
+                callbacks = SurveyFormCallbacks(
+                    onCloseRequested = { _, _ -> surveyOpen = false },
+                    onCaptureRequested = {
+                        val number = nextPhotoNumber++
+                        surveyViewModel.onEvent(
+                            SurveyFormEvent.CapturePhoto(
+                                SurveyFormPhoto(
+                                    id = "debug-$number",
+                                    uri = "local://debug/survey-$number",
+                                    capturedAt = "民國 115 年 10 月 7 日 10:${number.toString().padStart(2, '0')}",
+                                ),
+                            ),
+                        )
+                    },
                 ),
             )
         }
