@@ -7,6 +7,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import com.example.tp_ncolso_android.DebugSignedInContent
@@ -38,18 +40,18 @@ class ParcelDetailHostTest {
         composeRule.onNodeWithTag("parcel-detail-fixed-summary").assertIsDisplayed()
         composeRule.onNodeWithText("未調查").assertIsDisplayed()
         composeRule.onNodeWithText("TEST-KEY-001").assertIsDisplayed()
-        composeRule.onNodeWithText("測試段 0012-0000").assertIsDisplayed()
+        composeRule.onAllNodesWithText("測試段 0012-0000").assertCountEquals(2)
         composeRule.onNodeWithText("無占用").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-land-field-地號").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-land-field-都市計劃使用分區").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-land-field-宗地面積").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-land-field-權利範圍-分子").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-land-field-權利範圍-分母").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-land-field-持分面積(㎡)").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-land-field-所有權人").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-land-field-登記原因").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-gis-field-是否遭占").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-gis-field-占用狀況").assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-land-field-地號").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-land-field-都市計劃使用分區").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-land-field-宗地面積").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-land-field-權利範圍-分子").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-land-field-權利範圍-分母").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-land-field-持分面積(㎡)").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-land-field-所有權人").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-land-field-登記原因").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-gis-field-是否遭占").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-gis-field-占用狀況").performScrollTo().assertIsDisplayed()
         composeRule.onAllNodes(hasSetTextAction()).assertCountEquals(0)
     }
 
@@ -64,13 +66,21 @@ class ParcelDetailHostTest {
 
         composeRule.onNodeWithTag("parcel-detail-latest").assertIsDisplayed()
         composeRule.onNodeWithText("民國 115 年 10 月 7 日").assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-survey-field-現況照片")
+            .performScrollTo()
+            .assertIsDisplayed()
         composeRule.onNodeWithText("尚未拍攝").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-period-selector").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-period-selector").performClick()
+        composeRule.onNodeWithTag("parcel-detail-period-selector")
+            .performScrollTo()
+            .assertIsDisplayed()
+            .performClick()
         composeRule.onNodeWithText("2025 年歷史期別").performClick()
 
         composeRule.onNodeWithTag("parcel-detail-history-readonly").assertIsDisplayed()
         composeRule.onNodeWithText("民國 114 年 9 月 3 日").assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-survey-field-備註")
+            .performScrollTo()
+            .assertIsDisplayed()
         composeRule.onNodeWithText("歷史檢視資料").assertIsDisplayed()
         composeRule.onAllNodes(hasSetTextAction()).assertCountEquals(0)
     }
