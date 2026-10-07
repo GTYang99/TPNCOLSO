@@ -18,7 +18,6 @@ code_review: { status: approved, revision: "57a75f5" }
 git: { branch: main, commit: "57a75f5", status: committed }
 verification: { result: PASS, category: environment_tooling_deferred, failed_acceptance_criteria: [] }
 ci: { build: PASS, test: PASS_TARGETED_FULL_SUITE_DEFERRED }
-release: { status: pending }
 deferred_obligations:
   - gate: hosted_ci
     status: deferred
