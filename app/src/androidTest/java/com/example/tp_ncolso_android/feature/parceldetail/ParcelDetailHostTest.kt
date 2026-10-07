@@ -42,6 +42,7 @@ class ParcelDetailHostTest {
         composeRule.onNodeWithText("TEST-KEY-001").assertIsDisplayed()
         composeRule.onAllNodesWithText("測試段 0012-0000").assertCountEquals(2)
         composeRule.onNodeWithText("無占用").assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-return-reason").assertDoesNotExist()
         composeRule.onNodeWithTag("parcel-detail-land-field-地號").performScrollTo().assertIsDisplayed()
         composeRule.onNodeWithTag("parcel-detail-land-field-都市計劃使用分區").performScrollTo().assertIsDisplayed()
         composeRule.onNodeWithTag("parcel-detail-land-field-宗地面積").performScrollTo().assertIsDisplayed()
