@@ -46,6 +46,9 @@ import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailCallbacks
 import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailRoute
 import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailViewModel
 import com.example.tp_ncolso_android.feature.parceldetail.data.FakeParcelDetailDataSource
+import com.example.tp_ncolso_android.feature.photocamera.PhotoCameraCallbacks
+import com.example.tp_ncolso_android.feature.photocamera.PhotoCameraRoute
+import com.example.tp_ncolso_android.feature.photocamera.PhotoCameraViewModel
 import com.example.tp_ncolso_android.feature.surveyform.SurveyFormCallbacks
 import com.example.tp_ncolso_android.feature.surveyform.SurveyFormEvent
 import com.example.tp_ncolso_android.feature.surveyform.SurveyFormPhoto
@@ -94,6 +97,7 @@ internal fun DebugSignedInContent(
     var detailOpen by rememberSaveable(identity) { mutableStateOf(false) }
     var surveyKeyNo by rememberSaveable(identity) { mutableStateOf<String?>(null) }
     var surveyOpen by rememberSaveable(identity) { mutableStateOf(false) }
+    var cameraOpen by rememberSaveable(identity) { mutableStateOf(false) }
     var nextPhotoNumber by rememberSaveable(identity) { mutableStateOf(1) }
     val detailViewModel = remember(identity, detailKeyNo) {
         detailKeyNo?.let { ParcelDetailViewModel(it, FakeParcelDetailDataSource()) }
@@ -101,6 +105,7 @@ internal fun DebugSignedInContent(
     val surveyViewModel = remember(identity, surveyKeyNo) {
         surveyKeyNo?.let { SurveyFormViewModel(it, FakeSurveyFormDataSource()) }
     }
+    val photoCameraViewModel = remember(identity) { PhotoCameraViewModel() }
 
     Box(Modifier.fillMaxSize()) {
         MapShellRoute(
@@ -150,18 +155,31 @@ internal fun DebugSignedInContent(
             SurveyFormRoute(
                 viewModel = surveyViewModel,
                 callbacks = SurveyFormCallbacks(
-                    onCloseRequested = { _, _ -> surveyOpen = false },
-                    onCaptureRequested = {
+                    onCloseRequested = { _, _ ->
+                        cameraOpen = false
+                        surveyOpen = false
+                    },
+                    onCaptureRequested = { cameraOpen = true },
+                ),
+            )
+        }
+        if (cameraOpen && surveyViewModel != null) {
+            PhotoCameraRoute(
+                viewModel = photoCameraViewModel,
+                callbacks = PhotoCameraCallbacks(
+                    onClose = { cameraOpen = false },
+                    onPhotoCaptured = { captured ->
                         val number = nextPhotoNumber++
                         surveyViewModel.onEvent(
                             SurveyFormEvent.CapturePhoto(
                                 SurveyFormPhoto(
-                                    id = "debug-$number",
-                                    uri = "local://debug/survey-$number",
-                                    capturedAt = "民國 115 年 10 月 7 日 10:${number.toString().padStart(2, '0')}",
+                                    id = "camera-$number",
+                                    uri = captured.uri,
+                                    capturedAt = captured.capturedAt,
                                 ),
                             ),
                         )
+                        cameraOpen = false
                     },
                 ),
             )

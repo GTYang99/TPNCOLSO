@@ -1,8 +1,11 @@
 package com.example.tp_ncolso_android.feature.surveyform
 
-import androidx.compose.foundation.BorderStroke
+import android.graphics.BitmapFactory
+import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,9 +19,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -26,15 +29,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import com.example.tp_ncolso_android.feature.surveyform.SurveyFormEffect.CaptureRequested
 import com.example.tp_ncolso_android.feature.surveyform.SurveyFormEffect.CloseRequested
 import com.example.tp_ncolso_android.ui.foundation.component.AppCheckboxRow
@@ -236,29 +247,61 @@ private fun PhotoSection(
     onEvent: (SurveyFormEvent) -> Unit,
 ) {
     Column(modifier = Modifier.testTag("survey-photo-section"), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text("現況照片（4:3、現場拍攝） *", style = AppThemeTokens.typography.fieldLabel)
-        state.photos.chunked(2).forEachIndexed { rowIndex, rowPhotos ->
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                rowPhotos.forEach { photo ->
-                    PhotoTile(photo = photo, onDelete = { onEvent(SurveyFormEvent.DeletePhoto(photo.id)) }, modifier = Modifier.weight(1f))
-                }
-                if (rowPhotos.size == 1) Spacer(Modifier.weight(1f))
-            }
-            if (rowIndex < state.photos.chunked(2).lastIndex) Spacer(Modifier.height(4.dp))
+        Text("現況照片", style = AppThemeTokens.typography.fieldLabel)
+        Text("*需拍攝4張照片", color = AppThemeTokens.colors.error, style = AppThemeTokens.typography.supporting)
+        val tiles = buildList<SurveyFormPhoto?> {
+            addAll(state.photos)
+            if (state.photos.size < 4) add(null)
         }
-        if (state.photos.size < 4) {
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                FloatingActionButton(
-                    onClick = { onEvent(SurveyFormEvent.RequestCapture) },
-                    modifier = Modifier
-                        .size(56.dp)
-                        .semantics { contentDescription = "拍攝現況照片" }
-                        .testTag("survey-camera"),
-                    containerColor = AppThemeTokens.colors.brandPrimary,
-                ) { Text("拍", color = AppThemeTokens.colors.onBrandPrimary) }
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            tiles.chunked(2).forEach { rowTiles ->
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    rowTiles.forEach { photo ->
+                        if (photo == null) {
+                            CameraTile(
+                                onClick = { onEvent(SurveyFormEvent.RequestCapture) },
+                                modifier = Modifier.testTag("survey-camera"),
+                            )
+                        } else {
+                            PhotoTile(
+                                photo = photo,
+                                onDelete = { onEvent(SurveyFormEvent.DeletePhoto(photo.id)) },
+                            )
+                        }
+                    }
+                    if (rowTiles.size == 1) Spacer(Modifier.width(168.dp))
+                }
             }
         }
         state.photoError?.let { Text(it, color = AppThemeTokens.colors.error, style = AppThemeTokens.typography.supporting, modifier = Modifier.testTag("survey-photo-error")) }
+    }
+}
+
+@Composable
+private fun CameraTile(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        modifier = modifier
+            .size(width = 168.dp, height = 126.dp)
+            .clickable(onClick = onClick)
+            .semantics { contentDescription = "拍攝現況照片" },
+        color = Color.White,
+        shape = RoundedCornerShape(8.dp),
+        shadowElevation = 6.dp,
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Image(
+                painter = painterResource(com.example.tp_ncolso_android.R.drawable.ic_photo_camera),
+                contentDescription = null,
+                modifier = Modifier.size(32.dp),
+            )
+            Text("拍攝照片", color = AppThemeTokens.colors.textSecondary, style = AppThemeTokens.typography.body)
+        }
     }
 }
 
@@ -268,22 +311,73 @@ private fun PhotoTile(
     onDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val bitmap by rememberPhotoBitmap(photo.uri)
     Surface(
-        modifier = modifier.height(126.dp).testTag("survey-photo-${photo.id}"),
-        color = AppThemeTokens.colors.surfaceMuted,
-        shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, AppThemeTokens.colors.borderDefault),
+        modifier = modifier.size(width = 168.dp, height = 126.dp).testTag("survey-photo-${photo.id}"),
+        color = Color.Transparent,
+        shape = RoundedCornerShape(8.dp),
+        shadowElevation = 6.dp,
     ) {
-        Box(contentAlignment = Alignment.Center) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text("現場照片", style = AppThemeTokens.typography.body)
-                Text(photo.capturedAt, style = AppThemeTokens.typography.supporting)
-                if (photo.aspect == SurveyPhotoAspect.OTHER) Text("非 4:3", color = AppThemeTokens.colors.error, style = AppThemeTokens.typography.supporting)
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            if (bitmap != null) {
+                Image(
+                    bitmap = bitmap!!,
+                    contentDescription = "現場照片",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            } else {
+                Box(
+                    modifier = Modifier.fillMaxSize().background(AppThemeTokens.colors.surfaceMuted),
+                    contentAlignment = Alignment.Center,
+                ) { Text("現場照片", style = AppThemeTokens.typography.body) }
             }
-            TextButton(
-                onClick = onDelete,
-                modifier = Modifier.align(Alignment.TopEnd).semantics { contentDescription = "刪除照片 ${photo.id}" },
-            ) { Text("刪除") }
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .fillMaxWidth()
+                    .background(Color.Black.copy(alpha = 0.45f))
+                    .padding(horizontal = 4.dp, vertical = 2.dp),
+            ) {
+                Text(photo.capturedAt, color = Color.White, style = AppThemeTokens.typography.supporting)
+            }
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .size(40.dp)
+                    .clickable(onClick = onDelete)
+                    .semantics { contentDescription = "刪除照片 ${photo.id}" },
+                contentAlignment = Alignment.Center,
+            ) {
+                Surface(modifier = Modifier.size(20.dp), color = Color.White, shape = CircleShape) {
+                    Image(
+                        painter = painterResource(com.example.tp_ncolso_android.R.drawable.ic_photo_delete),
+                        contentDescription = null,
+                        modifier = Modifier.padding(2.dp).size(15.dp),
+                    )
+                }
+            }
+            if (photo.aspect == SurveyPhotoAspect.OTHER) {
+                Text("非 4:3", color = AppThemeTokens.colors.error, style = AppThemeTokens.typography.supporting)
+            }
+        }
+    }
+}
+
+@Composable
+private fun rememberPhotoBitmap(uriString: String): androidx.compose.runtime.State<ImageBitmap?> {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    return produceState<ImageBitmap?>(initialValue = null, uriString) {
+        value = withContext(Dispatchers.IO) {
+            runCatching {
+                val uri = Uri.parse(uriString)
+                val bitmap = if (uri.scheme == "file") {
+                    BitmapFactory.decodeFile(uri.path)
+                } else {
+                    context.contentResolver.openInputStream(uri)?.use(BitmapFactory::decodeStream)
+                }
+                bitmap?.asImageBitmap()
+            }.getOrNull()
         }
     }
 }
