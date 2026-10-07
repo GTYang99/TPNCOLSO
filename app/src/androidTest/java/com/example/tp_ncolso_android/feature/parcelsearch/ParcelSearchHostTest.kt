@@ -1,12 +1,14 @@
 package com.example.tp_ncolso_android.feature.parcelsearch
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import com.example.tp_ncolso_android.DebugSignedInContent
@@ -42,7 +44,7 @@ class ParcelSearchHostTest {
         composeRule.onNodeWithText("測試地塊 T-001").assertIsDisplayed()
         composeRule.onNodeWithTag("parcel-summary-card").assertIsDisplayed()
         composeRule.onNodeWithTag("parcel-status").assertIsDisplayed()
-        composeRule.onNodeWithText("TEST-KEY-001").assertIsDisplayed()
+        composeRule.onAllNodesWithText("TEST-KEY-001").assertCountEquals(2)
         composeRule.onNodeWithText("測試段 0012-0000").assertIsDisplayed()
         composeRule.onNodeWithText("無占用").assertIsDisplayed()
 
