@@ -8,12 +8,15 @@ Determine release readiness and record the exact approved artifact, risks, autho
 
 - `next_action: release`
 - Verification PASS on reviewed committed revision
-- required CI/UAT evidence complete
+- completion scope is `release` and the release candidate is identified
+- every deferred release obligation has been reactivated
+- required hosted CI, integration, and UAT evidence is complete
 
 ## Load
 
 - state and Verification result
 - exact revision/artifact identity
+- deferred-obligation owners, reactivation milestones, and completion evidence
 - only applicable release configuration, risks, and operational evidence
 
 ## Output
@@ -23,9 +26,9 @@ Record version/build variant, environment, signing status, checksum/immutable ID
 ## Exit
 
 - Ready but authorization required: `human_release`.
-- Authorized deployment and required monitoring complete: `done`.
+- Authorized deployment and required monitoring complete: set `completion.status: release_complete` and `next_action: none`.
 - Failed signal/gate: open issue and route by cause.
 
 ## Restrictions
 
-Release records do not authorize merge, publish, deploy, production configuration, or signing use. Those require explicit human authorization. Never mark Done with pending/failed/`NOT VERIFIED` gates.
+Release records do not authorize merge, publish, deploy, production configuration, or signing use. Those require explicit human authorization. Never mark `release_complete` with pending, failed, deferred, or `NOT VERIFIED` release-scope gates.

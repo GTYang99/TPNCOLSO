@@ -61,13 +61,17 @@ Intake
 -> Developer Validation
 -> Git Commit
 -> Code Review
--> CI
+-> Hosted CI (when required for the current completion scope)
 -> Verification
--> UAT (when required)
--> Release Approval
+-> Development Complete
+
+Release-candidate flow:
+Development Complete
+-> Required Hosted CI / Integration Tests / UAT
+-> Release Verification and Approval
 -> Authorized Merge or Deployment
--> Post-deployment Verification / Monitoring (when applicable)
--> Done
+-> Post-deployment Verification / Monitoring
+-> Release Complete
 ```
 
 Knowledge is required for multiple, stale, unknown, inaccessible, or conflicting sources. A small task with one clear authoritative source may set Knowledge to `not_required`.
@@ -92,7 +96,19 @@ Every phase must define:
 - exit status and `next_action`
 - failure classification and route
 
-# Required Gates
+# Development and Release Gates
+
+Development-task completion and release completion are separate scopes.
+
+During the current pre-release development stage, hosted CI may be deferred. A Development Task may complete after approved requirements and plan, developer validation, commit, code review, and Verification PASS for all task-scoped acceptance criteria.
+
+Local validation evidence must identify the tested revision, environment, commands, and results. Local results must not be reported as hosted CI PASS. Existing CI failures remain recorded; failures indicating product defects must be investigated and resolved.
+
+Verification PASS for a Development Task permits downstream development but does not authorize release, merge, signing, publishing, deployment, or production configuration.
+
+Before release, required hosted CI, integration tests, UAT, release approval, and applicable deployment checks must be completed against the release candidate. Every deferred obligation requires a reason, accountable owner, and reactivation milestone.
+
+## Development Scope
 
 ```text
 Sources identified
@@ -102,18 +118,29 @@ Sources identified
 -> Implementation complete
 -> Developer validation complete or limitations recorded
 -> Commit and code review complete
--> CI PASS
--> Verification PASS
+-> Required task-scope checks PASS
+-> Verification PASS for all task AC
+-> Development Complete
+```
+
+## Release Scope
+
+```text
+Release candidate identified
+-> Deferred obligations reactivated
+-> Required hosted CI PASS
+-> Required integration tests PASS
 -> UAT PASS when required
 -> Release approval
 -> Authorized merge/deploy
 -> Required monitoring complete
--> Done
+-> Release Complete
 ```
 
 - `NOT VERIFIED` is never PASS.
+- `deferred` and `not_applicable` are never PASS; they are permitted only where the current completion scope does not require that gate.
 - Verification evaluates a reviewed, committed revision and does not modify production code.
-- Missing required CI, UAT, or release evidence blocks advancement.
+- Missing evidence required by the selected completion scope blocks advancement.
 - Merge, publish, deploy, production configuration, and signing require explicit human authorization.
 
 # Requirement and Change Control
@@ -174,4 +201,4 @@ All work preserves unrelated user changes. Stop when required artifacts are miss
 
 # Completion Report
 
-Report the outcome first, then changed files, validation, unresolved issues, and next action. Do not claim Done while any required gate is failed, pending, blocked, or `NOT VERIFIED`.
+Report the outcome first, then completion scope, changed files, validation, deferred obligations, unresolved issues, and next action. Use `development_complete` for pre-release Task completion and `release_complete` only after all release-scope gates pass. Do not report a gate as PASS while it is failed, pending, blocked, deferred, not applicable, or `NOT VERIFIED`.

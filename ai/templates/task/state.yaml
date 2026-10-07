@@ -18,11 +18,22 @@ planning:
 plan_review:
   status: pending
 
+# status: pending | approved | changes_requested | not_applicable
+code_review:
+  status: pending
+  revision: ""
+
 implementation:
   status: pending
 
 validation:
   status: pending
+
+# scope: development | release
+# status: in_progress | development_complete | release_complete
+completion:
+  scope: development
+  status: in_progress
 
 git:
   branch: ""
@@ -30,16 +41,32 @@ git:
   status: pending
 
 verification:
+  # result: pending | passed | failed | not_verified
   result: pending
   category: null
   failed_acceptance_criteria: []
 
 ci:
+  # Gate values: pending | passed | failed | deferred | not_applicable | not_verified
+  # This block records hosted CI only; local checks belong in validation/execution evidence.
+  status: pending
   build: pending
   test: pending
+  reason: null
+  owner: null
+  reactivate_at: null
+
+# A deferred item requires gate, reason, owner, and reactivate_at.
+# Item status: deferred | reactivated | completed
+# Example: { gate: hosted_ci, status: deferred, reason: pre_release_development, owner: release_owner, reactivate_at: release_candidate }
+deferred_obligations: []
 
 release:
+  # status: pending | not_applicable | ready | approved | deployed | complete
   status: pending
 
 blocking: []
+
+# Normal actions are defined by ai/README.md.
+# `none` is legal only for development_complete or release_complete.
 next_action: planning

@@ -14,6 +14,7 @@
 - 保留既有 canonical paths，避免造成大量引用遷移。
 - 當 Figma MCP 等結構化設計來源不完整或不可信時，AGENTS 必須定義 UI 截圖 evidence 的使用邊界。
 - Gradle runtime 必須有單一 on-demand policy，固定使用 Android Studio JBR。
+- Android device validation 必須定義 Emulator、ADB evidence 與 Physical-device testing 的適用條件。
 
 ## Acceptance Criteria
 
@@ -27,6 +28,7 @@
 - AC-008：不修改 `app/` 與既有 UI-001／UI-002 Task artifacts。
 - AC-009：AGENTS 允許截圖作為可見 UI 的主要 Collection evidence，並要求 Resolution 標記 `visual_observation`、列出不可確認資訊且禁止推論隱藏行為。
 - AC-010：所有 Gradle 指令由共用 Runtime policy 固定使用 `/Applications/Android Studio.app/Contents/jbr/Contents/Home`，Implementation、Testing 與 Infrastructure 均可按需找到此規則。
+- AC-011：Emulator 是預設 Android device-validation environment；只有涉及硬體真實性、OEM、實際 sensor/camera、field performance 或明示裝置風險的 AC 才要求實機。
 
 ## Constraints
 

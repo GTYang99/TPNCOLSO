@@ -70,6 +70,6 @@
   "limitations": [
     "Responsive narrow/font-scale/IME matrix is recorded separately and is not re-captured in this run.",
     "Hosted/authoritative CI is unavailable; local JBR Gradle and emulator evidence only.",
-    "Cross-task logout contract evidence remains unavailable for formal AC-UI002-006/007/008/011."
+    "Cross-task logout contract evidence remains unavailable for formal AC-UI002-006/011."
   ]
 }

@@ -1,0 +1,66 @@
+task:
+  id: DOCS-1002-development-release-gates
+  type: docs
+
+phase: verification
+status: verification_not_verified
+
+knowledge:
+  status: not_required
+  collection: not_required
+  resolution: not_required
+  validation: not_required
+  baseline_id: null
+
+planning:
+  status: completed
+
+plan_review:
+  status: approved
+
+implementation:
+  status: completed
+
+validation:
+  status: completed
+
+code_review:
+  status: pending
+  revision: ""
+
+git:
+  branch: UI-003feat
+  commit: ""
+  status: pending
+
+verification:
+  result: not_verified
+  category: environment
+  failed_acceptance_criteria: []
+
+ci:
+  status: deferred
+  build: deferred
+  test: deferred
+  reason: pre_release_development
+  owner: release_owner
+  reactivate_at: release_candidate
+
+completion:
+  scope: development
+  status: in_progress
+
+deferred_obligations:
+  - gate: hosted_ci
+    status: deferred
+    reason: pre_release_development
+    owner: release_owner
+    reactivate_at: release_candidate
+
+release:
+  status: not_applicable
+
+blocking:
+  - No isolated committed revision or code review is available in the existing dirty working tree.
+  - Existing docs/tasks/UI-002-auth/state.yaml has a pre-existing YAML parse error outside this Task scope.
+next_action: infrastructure

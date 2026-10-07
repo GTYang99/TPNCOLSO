@@ -1,0 +1,101 @@
+{
+  "reviewedRevision": "842e29061238527d21ee51e29a61126ba9cbb32",
+  "source": "docs/design/evidence/auth/auth-reference-2026-09-07.png",
+  "sourceSha256": "75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c",
+  "sourceSize": { "width": 7904, "height": 2916 },
+  "panelCrop": {
+    "coordinateSpace": "source pixels",
+    "scale": 2,
+    "width": 804,
+    "height": 1748,
+    "y": 684,
+    "states": {
+      "login-empty": { "x": 376 },
+      "login-filled": { "x": 1420 },
+      "login-auth-error": { "x": 2464 },
+      "register-empty": { "x": 3508 },
+      "register-filled": { "x": 4552 }
+    }
+  },
+  "referenceNormalization": {
+    "cropSize": { "width": 804, "height": 1748 },
+    "outputSize": { "width": 402, "height": 874 },
+    "operation": "crop panel then resize with sips --resampleHeightWidth 874 402"
+  },
+  "runtimeNormalization": {
+    "rawSize": { "width": 1080, "height": 2400 },
+    "appContentCrop": { "x": 0, "y": 48, "width": 1080, "height": 2296 },
+    "removedSystemChrome": { "top": 48, "bottom": 56 },
+    "outputSize": { "width": 402, "height": 874 },
+    "operation": "crop app content then resize with sips --resampleHeightWidth 874 402"
+  },
+  "comparison": {
+    "colorSpace": "RGB",
+    "threshold": 20,
+    "excludedRegion": { "x": 0, "y": 0, "width": 175, "height": 48, "reason": "debug-only 開發模式 region when present" },
+    "metricUnit": "channel samples",
+    "sampleCount": 1028844,
+    "states": [
+      {
+        "state": "login-empty",
+        "runtimeRaw": "runtime-login-empty-842e290.png",
+        "runtimeRawSha256": "971209d79b9074c65841efe703ae6f719ef668f67058c5a171cd3e8e376fb7fa",
+        "runtimeNormalized": "runtime-login-empty-842e290-content-normalized-402x874.png",
+        "runtimeNormalizedSha256": "81a8abb564e9702d8116c82006409e3d6b35ce98cabefbcf54b8260c9cdf43f6",
+        "referenceNormalized": "reference-composite-login-empty-402x874.png",
+        "referenceNormalizedSha256": "56e2697a13d8e3e4d240ca35147ab568f751b1d1718f59ba9a51862c81d3c822",
+        "mae": 21.3681,
+        "rmse": 58.7782,
+        "overThresholdRatio": 0.156346
+      },
+      {
+        "state": "login-filled",
+        "runtimeRaw": "runtime-login-filled-842e290-approved-fixture.png",
+        "runtimeRawSha256": "ede02aa9f56ada91da2c760528d6d7321477dc1ba9a986a459a5663306d2070f",
+        "runtimeNormalized": "runtime-login-filled-842e290-approved-content-normalized-402x874.png",
+        "runtimeNormalizedSha256": "d258478ecf0a78c0b2a019504f3d4019c8184bce6569c8cf5af5b04ed04d8062",
+        "referenceNormalized": "reference-composite-login-filled-402x874.png",
+        "referenceNormalizedSha256": "c776a200fe1e2b3ca2579251e8ed9df77182e6ea6315198a9f207d64fb2653a32",
+        "mae": 21.6469,
+        "rmse": 59.2477,
+        "overThresholdRatio": 0.156870
+      },
+      {
+        "state": "login-auth-error",
+        "runtimeRaw": "runtime-login-error-842e290-approved-fixture.png",
+        "runtimeRawSha256": "4928a4febf8976e96eae71ab3ad04bfb86a29b35d7094ad20740d853d85ddc12",
+        "runtimeNormalized": "runtime-login-error-842e290-approved-content-normalized-402x874.png",
+        "runtimeNormalizedSha256": "a1248fdd6ce5c85d7eb30516e017c21f4ca48e6373443f85519857ac29130356",
+        "referenceNormalized": "reference-composite-login-auth-error-402x874.png",
+        "referenceNormalizedSha256": "46565f9b6de70a332ec3133b22ffbaef67f5fc9b1db053dc42342681384409eb",
+        "mae": 31.6095,
+        "rmse": 72.2754,
+        "overThresholdRatio": 0.219775
+      },
+      {
+        "state": "register-empty",
+        "runtimeRaw": "runtime-register-empty-842e290.png",
+        "runtimeRawSha256": "d210d86bac112d07f1008bd5cc26fc647ad111ae42c79dc309f00de8e34d13db",
+        "runtimeNormalized": "runtime-register-empty-842e290-content-normalized-402x874.png",
+        "runtimeNormalizedSha256": "f2cd6a2d9eb52810c16f1230a91efb3b498d81b44efc6bcd726d4f35cf0fef53",
+        "referenceNormalized": "reference-composite-register-empty-402x874.png",
+        "referenceNormalizedSha256": "f58d62fcb722397c54be3b4c0da4485b7d1467f3afe93a35a68a0a7111d31ba7",
+        "mae": 12.0194,
+        "rmse": 44.8400,
+        "overThresholdRatio": 0.100315
+      },
+      {
+        "state": "register-filled",
+        "runtimeRaw": "runtime-register-filled-842e290.png",
+        "runtimeRawSha256": "d5afecf154ddd08bfa217bf6517df21227804125549e29dbd9c06c4a6462ff10",
+        "runtimeNormalized": "runtime-register-filled-842e290-content-normalized-402x874.png",
+        "runtimeNormalizedSha256": "864a3a18f77afa980447ed6df1aa2f6274df313d55776352ca82f1d105353745",
+        "referenceNormalized": "reference-composite-register-filled-402x874.png",
+        "referenceNormalizedSha256": "8926fbac386cab2c3a89e0ba0ef324fa094da922c068af526e6ac1f3f68f4bb0",
+        "mae": 12.5398,
+        "rmse": 45.9339,
+        "overThresholdRatio": 0.101072
+      }
+    ]
+  }
+}

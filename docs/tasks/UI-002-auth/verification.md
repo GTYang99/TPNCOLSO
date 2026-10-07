@@ -1,36 +1,40 @@
 # UI-002 Verification Report
 
-## Current Verification Provenance — 2026-09-24, debug-fix re-entry
+## Current Verification Provenance — 2026-09-29, new cross-task and hosted-CI re-verification
 
-This section supersedes the older round summaries for the current formal decision. Historical `PARTIAL` labels are retained as historical progress records only; the current formal result is restricted to `PASS`, `FAIL`, or `NOT VERIFIED`.
+This section supersedes the prior `b193a4a` failure for the current formal decision. Historical failure records remain below as debug provenance.
 
-Current formal result: `NOT VERIFIED` for `b193a4a` (`fix(UI-002): keep auth actions visible with IME`). The five-state visual comparison remains valid for the unchanged non-IME composition, and the new revision adds emulator-authoritative system-IME evidence; the remaining result is blocked only by unexecuted cross-task/logout evidence and unavailable hosted CI. The prior `FAIL` decisions for `db7dfbe782d3537b5f618af2735964913ce580b7` and the responsive finding fixed in `534bcb2` are retained as historical debug input.
+Current formal result: `NOT VERIFIED` for UI-002 reviewed implementation revision `48670ffe9e33b19aea23709abf2f47cc5ed85ff1` (`fix(UI-002): adapt registration options to narrow widths`). The Register narrow-width implementation failure and the Login responsive gaps are closed at local emulator scope. UI-003 implementation and the real local drawer-to-Login handoff are revalidated on the downstream `UI-003feat` checkout. Authoritative CI now has a run for `48670ff`, but both jobs fail during runner/Android SDK setup or the connected-test wrapper before producing usable build/test results; the formal result remains `NOT VERIFIED` and routes to Infrastructure.
 
 | Provenance item | Current evidence | Classification |
 |---|---|---|
 | Requirement baseline | `KB-UI-002-AUTH-R10`; Plan Review iteration 16 `APPROVED` | PASS |
-| Previous failed implementation revision | Branch `UI-002feat`; `0815e6b5c22dc14bd2478a7b66bbb1aa58e7dd08`; `docs(UI-002): normalize implementation handoff` | FAIL; superseded by the post-fix revision |
-| Previous failed implementation revision | Branch `UI-002feat`; `63a2379`; `fix(UI-002): restore auth accessibility and back asset contracts` | FAIL; superseded by post-fix revision |
-| Reviewed implementation revision | Branch `UI-002feat`; `b193a4a`; `fix(UI-002): keep auth actions visible with IME` (based on `f83eaa0`) | PASS; IME inset behavior is reviewed below; normal non-IME composition is unchanged |
-| Verification handoff revision | `1c18088`; task state and verification handoff only | PASS; does not change reviewed production revision |
+| Previous failed implementation revision | Branch `UI-002feat`; `b193a4a`; `fix(UI-002): keep auth actions visible with IME` | FAIL; superseded by the focused responsive fix |
+| Reviewed implementation revision | Branch `UI-002feat`; `48670ffe9e33b19aea23709abf2f47cc5ed85ff1`; `fix(UI-002): adapt registration options to narrow widths` | PASS for the reviewed implementation slice; formal task result remains NOT VERIFIED for missing external evidence |
+| Downstream UI-003 integration revision | Branch `UI-003feat`; implementation `c8120ef`, test evidence `37d957e`, current committed checkout `0e0b609` | PASS for local cross-task verification scope |
 | Unit test evidence | `testDebugUnitTest`; five XML suites, 14 tests, 0 failures/errors/skips; latest run `2026-09-27T06:33:27Z`; includes `ui003LogoutRequestedFixtureClearsBothStatesAndIsIdempotent` | PASS at local contract scope |
-| Connected test evidence | Isolated emulator-only `Medium_Phone(AVD) - 14` run at `2026-09-27T06:41:04Z` recorded 28 tests, 0 failures/errors/skips, device `emulator-5554`; XML: `figma-export-2026-09-24-534bcb2/connected-tests-emulator-5554-2026-09-27T06-41-04.xml` | PASS at local emulator scope |
-| Developer-validation commands | `JAVA_HOME='/Applications/Android Studio.app/Contents/JBR/Contents/Home' ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest` and `./gradlew :app:connectedDebugAndroidTest` | PASS |
+| Connected test evidence | `Medium_Phone(AVD) - 14`, API 34, `emulator-5554`, run at `2026-09-28T14:06:03`; XML records 29 tests, 0 failures/errors/skips: `figma-export-2026-09-24-534bcb2/connected-tests-emulator-5554-2026-09-28T14-06-03.xml` (SHA-256 `bdb0126c7b52b0d44a1560dc2e3298c4a1685b2fdc114f49d73ee865f99ae96e`) | PASS at local emulator scope |
+| Latest downstream connected test evidence | `Medium_Phone(AVD) - 14`, API 34, `emulator-5554`, run at `2026-09-28T23:39:22` (`+0800`); XML records 33 tests, 0 failures/errors/skips: `docs/tasks/UI-003-map-shell/connected-tests-emulator-5554-2026-09-28T23-39-39.xml` (SHA-256 `298f3feb01e302b8b3e54231780ba93171428d7e942fefb319fd26e3b4a2abf4`) | PASS at local emulator scope; includes direct-login → map drawer → logout → clean Login |
+| Developer-validation commands | `JAVA_HOME='/Applications/Android Studio.app/Contents/jbr/Contents/Home' ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest` and `./gradlew :app:connectedDebugAndroidTest` | PASS; full build/lint/release/AndroidTest APK and connected regression completed |
 | Visual primary authority | Requester-approved composite `docs/design/evidence/auth/auth-reference-2026-09-07.png`, SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c` | PASS |
 | Figma authority role | Figma file `HRbRsw6HoNBUCtaieX8xUM`, nodes `2905:2679` / `2997:11541`, direct export SHA-256 `bfde10cd297feb639ecc2b3fc4bc4964258bc4541174032e392c0a104e4ed2e5`; supporting design evidence, not the primary auth acceptance authority | PASS |
 | Comparison normalization | Approved composite panels are `402×874`; current runtime uses Compose semantics-root `1080×2274` captures resized to `402×874`; system chrome and debug-only region are absent from the root capture, so the content-only mask covers the full normalized frame | PASS |
-| Current-revision visual comparison | `numeric-diff-f83eaa0.json` contains Login empty/filled/error and Register empty/filled captures from `emulator-5558`; direct review confirms the skyline baseline and Register action row are aligned and visible | PASS at local emulator visual scope; AC-UI002-009/010 |
-| Responsive runtime evidence | On `emulator-5554`, real system-IME capture `runtime-login-ime-device-2b15d0d-fixed2.png` shows the keyboard and focused field; UI hierarchy proves `ScrollView scrollable=true`, and after swipe the Login button is above the keyboard at `[488,1417][592,1492]` in `ui-ime-fixed-scroll.xml` | PASS at local emulator scope; AC-UI002-007 |
-| Hosted CI | No hosted/authoritative CI run is available; local JBR Gradle and emulator evidence only | NOT VERIFIED |
+| Current-revision visual comparison | `numeric-diff-f83eaa0.json` contains Login empty/filled/error and Register empty/filled captures from `emulator-5558`; direct review confirms the skyline baseline and Register action row are aligned and visible | PASS at local five-state visual scope; current 48670ff responsive matrix is recorded separately |
+| Responsive runtime evidence | On `emulator-5554`, real system-IME capture `runtime-login-ime-device-2b15d0d-fixed2.png` shows the keyboard and focused field; UI hierarchy proves `ScrollView scrollable=true`, and after swipe the Login button is above the keyboard at `[488,1417][592,1492]` in `ui-ime-fixed-scroll.xml` | PASS for the Login IME slice only |
+| Register narrow-width runtime evidence | Current `48670ff` runtime at 720×2400 / API 34 is captured in `runtime-register-narrow-b193a4a-fixed-720x2400.png` (SHA-256 `b98d526febc2b37a15ed12ce22364eb8773e0b19a1a42b3e9a3df12d62058809`); `ui-register-narrow-b193a4a-fixed.xml` (SHA-256 `46a2d8f33c53cf2fd5a7663b7c0448a73f41ab9550d5ead17ec2f224ef76e560`) exposes `外業人員` at `[184,1704][352,1765]` and `內業人員` at `[184,1851][352,1912]`; `取消` and `完成` remain visible | PASS at local emulator scope |
+| Register font-scale runtime evidence | `runtime-register-fontscale-1.3-fixed-1080x2400.png` (SHA-256 `d3aba18827d85760d75ab67731ab8811a815daae67d4da4d110966777a3a5b2b`) and `ui-register-fontscale-1.3-fixed.xml` (SHA-256 `3d3407578d8546d0c094b4a2aa64af610c49491a83a18ac8a157a2c1162f26b4`) expose both work-type labels and both actions at font scale 1.3 | PASS at local emulator scope |
+| Register IME recovery | `runtime-register-ime-b193a4a-scrolled2-fixed-1080x2400.png` (SHA-256 `5bd39d58101f6f92ff3bcf4ae0dde1470c6c8385e4ec25b548bb7624cdf93ecf`) and `ui-register-ime-scrolled2-b193a4a-fixed.xml` (SHA-256 `ae9885853492929d3ba50ec0fcc35d40584c7cad2e139458ac173da431f12b22`) prove `mInputShown=true`, `ScrollView scrollable=true`, both labels at `[184,890][352,951]` and `[599,890][767,951]`, and actions at `[239,1323][343,1398]` and `[737,1323][841,1398]` above the keyboard | PASS at local emulator scope |
+| Login responsive matrix | Current `48670ff` captures cover standard 1080×2400 (`runtime-login-standard-48670ff-1080x2400.png`, SHA-256 `81a162ce0eebc855ff67a03d2eb4d719de0c9948e8262b26d46117c6976ef4be`), narrow 720×2400 (`runtime-login-narrow-48670ff-720x2400.png`, SHA-256 `09138d2638a64b1872674aca81abef8e3d50db1502ceaa252e430ac9517bfc13`), font scale 1.3 (`runtime-login-fontscale-1.3-48670ff-1080x2400.png`, SHA-256 `6a805b6abcfc9e832696ad620ee74cd016813b464f681e814c6e3886e985b32b`), and real IME recovery (`runtime-login-ime-scrolled-48670ff-1080x2400.png`, SHA-256 `424d82ce7446bef73e62c3dbe9a555e6678f49e4a70a65587b89165ef61dbf05`) | PASS at local emulator scope; the hierarchy shows content order and Login at `[488,1417][592,1492]` after scroll |
+| Authoritative CI | [GitHub Actions run `36442276066`](https://github.com/GTYang99/TPNCOLSO/actions/runs/36442276066) / Run #1 for `UI-002feat` at `48670ff` is `failure`: `unit-and-build` fails at `Set up Android SDK`, and `connected` fails at `Connected Android tests`; Gradle test/build steps do not produce a usable hosted result. Public heads currently contain `main` and `UI-002feat`; `UI-003feat` is not published. | NOT VERIFIED; route `infrastructure` |
 | Physical device | Explicitly out of scope by requester; emulator coverage is the applicable environment | NOT APPLICABLE |
 
-### Current formal decision — revision `b193a4a`
+### Current formal decision — revision `48670ff`
 
 `NOT VERIFIED`
 
-The debug fix moves the Login content origin to the approved anchor, removes the bottom white gap by restoring the skyline baseline to the viewport edge, tightens the Login button anchor, and moves the Register action row into the approved 402×874 viewport. Revision `b193a4a` additionally applies `imePadding()` to Login and Register roots. With the real Android keyboard open, the emulator now reports a scrollable auth container and the Login action can be brought above the keyboard; this closes the previous IME implementation defect for AC-UI002-007 at local emulator scope. The five-state artifact records metrics of Login empty `10.5298 / 36.5989 / 0.092699`, filled `10.7950 / 37.2791 / 0.093578`, auth-error `22.9243 / 59.1915 / 0.169002`; Register empty `5.8778 / 28.0635 / 0.064083`, filled `6.3757 / 29.5556 / 0.065932` (MAE / RMSE / over-threshold ratio, RGB threshold `20`). The IME fix does not alter the non-IME composition, so these five states remain applicable to AC-UI002-009/010 by delta-scope review.
+The focused debug fix is committed and locally re-verified. `AppRadioGroup` preserves the horizontal baseline branch and uses a width-aware vertical fallback for narrow content; the new Compose assertion and the full 29-test connected suite pass. The 720×2400 Register runtime now exposes both work-type labels and keeps both action buttons visible. The current Login matrix also passes at standard width, narrow width, font scale 1.3 and real IME conditions. AC-UI002-007, AC-UI002-009 and AC-UI002-010 therefore have no known current implementation failure at local emulator scope. UI-003 implementation revision `c8120ef` and test evidence revision `37d957e` are now present, and the latest 33/33 connected run exercises the real drawer-to-Login path. AC-UI002-006 and AC-UI002-011 are therefore PASS at local UI-002/UI-003 contract scope. `UIR-LOGOUT-005` production remote Token/API behavior remains explicitly delegated to INT-001. The authoritative CI run exists but fails during runner/Android SDK setup, so the formal result remains `NOT VERIFIED` and routes to Infrastructure.
 
-The current artifacts now prove the standard five-state visual scope and the UI state matrix (empty/filled/error/validation/submitting) at local unit/Compose scope. The new debug contract fixture simulates one UI-003 `LogoutRequested` callback and proves that the coordinator clears signed-in state plus all Login/Register transient values, returns to `LOGIN_EMPTY`, and remains idempotent on a repeated callback. It does not prove a real UI-003 drawer integration because UI-003 is still in Knowledge and has no implementation revision. Real emulator IME evidence now proves focus, keyboard visibility, resized scroll container, and recovery of the Login action above the keyboard. Cross-task logout handoff evidence for AC-UI002-006/011 and hosted CI are still unavailable. Under the Verification Rule, the overall result is therefore `NOT VERIFIED`, not PASS.
+The current artifacts prove the standard five-state visual scope and the UI state matrix (empty/filled/error/validation/submitting) at local unit/Compose scope. The debug contract fixture and latest connected run prove that the UI-003 drawer emits one logout event, the coordinator clears signed-in state plus Login/Register transient values, returns to `LOGIN_EMPTY`, and remains idempotent. Real emulator IME evidence proves the Login and Register scroll recovery slices, and the current Login/Register responsive runtime matrices no longer show functional text clipping. Hosted CI is present but unusable because the runner/Android SDK setup failed; production remote logout behavior remains an INT-001 gate. Under the Verification Rule, those gates keep the current revision `NOT VERIFIED` and prevent advancement to Release.
 
 ### Previous formal decision — revision `63a2379`
 
@@ -81,8 +85,8 @@ The Registration illustration is now decorative and the approved candidate vecto
 - Requirement baseline: `KB-UI-002-AUTH-R10`
 - Plan Review: revision 16, `APPROVED`
 - Branch: `UI-002feat`
-- Reviewed revision for the current formal round: `db7dfbe` (`fix(UI-002): align auth visual composition`)
-- Runtime: Android Studio JBR, OpenJDK 25.0.3
+- Reviewed revision for the current formal round: `48670ffe9e33b19aea23709abf2f47cc5ed85ff1` (`fix(UI-002): adapt registration options to narrow widths`)
+- Runtime: Android Studio JBR, OpenJDK 25.0.3; API 34 `Medium_Phone (AVD) - 14`, serial `emulator-5554`
 
 The older round below is retained as historical evidence and is not the reviewed revision for the current formal decision.
 
@@ -104,12 +108,12 @@ The older round below is retained as historical evidence and is not the reviewed
 | AC-UI002-003 | PASS (unit scope) | ViewModel tests cover success effect, sensitive clearing and auth-error retention; debug coordinator guards duplicate session start. |
 | AC-UI002-004 | PASS (connected scope) | Register route, six fields, Back and Cancel events pass `AuthScreenTest` on API 34. |
 | AC-UI002-005 | PASS (unit scope) | Pure validation tests cover account, password, confirmation, vendor, work type and Chinese name rules. |
-| AC-UI002-006 | NOT VERIFIED | New local callback-fixture test proves coordinator clearing/reset/idempotency, but the complete UI-003 cross-task logout contract is not executed because UI-003 has no implementation revision. |
-| AC-UI002-007 | PASS (local emulator scope) | Real system keyboard capture on `emulator-5554` plus UI hierarchy proves `mInputShown=true`, `ScrollView scrollable=true`, and Login button bounds above the keyboard after a swipe; hosted/device-matrix evidence is outside this local scope. |
+| AC-UI002-006 | PASS (local cross-task scope) | `DebugDirectLoginTest.directLoginAndLogoutReturnToSignedOut` executes direct login, opens the UI-003 drawer, activates `登出`, and proves return to the debug wrapper plus clean Login entry points. `MapShellScreenTest.drawerLogoutEmitsOneCallbackAndExposesAccessibleAction` proves the drawer callback is emitted once. |
+| AC-UI002-007 | PASS (local emulator scope) | Current commit `48670ff` passes the 720×2400 narrow runtime, font scale 1.3 runtime, real IME recovery, and the focused Compose assertion; both work-type labels/targets and the action row remain available. |
 | AC-UI002-008 | PASS (local unit/Compose scope) | Preview matrix exists; current tests cover Login empty/filled/error/submitting and Register empty/filled/validation-error/submitting, with replaceable test data sources. |
-| AC-UI002-009 | PASS (local emulator visual scope) | `numeric-diff-f83eaa0.json` covers Login empty/filled/auth-error from `emulator-5558`; direct review confirms the corrected header/form/button/skyline composition. |
-| AC-UI002-010 | PASS (local emulator visual scope) | `numeric-diff-f83eaa0.json` covers Register empty/filled from `emulator-5558`; direct review confirms the corrected top rhythm, horizontal work-type row and visible action row. |
-| AC-UI002-011 | NOT VERIFIED | New local callback-fixture test covers the UI-002 side of the contract; UI-003 contract integration and drawer-owned event evidence are not executed in the current revision. |
+| AC-UI002-009 | PASS (local emulator scope) | Current `UIR-LOGIN-001–010` mapping is complete; `UIR-LOGIN-010` has executed standard, 720×2400 narrow, font scale 1.3 and real IME recovery evidence on `48670ff`. |
+| AC-UI002-010 | PASS (local emulator scope) | Current `UIR-REG-011` runtime evidence at 720×2400, font scale 1.3, and IME conditions exposes both labels and keeps the action row visible; the baseline horizontal branch remains covered by the connected suite. |
+| AC-UI002-011 | PASS (UI-002/UI-003 local contract scope) | `UIR-LOGOUT-001–004` and `UIR-LOGOUT-006` are mapped and exercised by the UI-003 callback/fixture tests plus the direct-login integration test. `UIR-LOGOUT-005` production remote success/failure behavior remains explicitly delegated to INT-001 and is not claimed as UI-002 implementation evidence. |
 
 ## Build and Test Evidence
 
@@ -119,12 +123,12 @@ The older round below is retained as historical evidence and is not the reviewed
 | `assembleDebug` | PASS |
 | `assembleRelease` | PASS |
 | `assembleDebugAndroidTest` | PASS |
-| Current full local regression (`testDebugUnitTest lintDebug assembleDebug assembleRelease assembleDebugAndroidTest`) | PASS; `BUILD SUCCESSFUL` on the reviewed `db7dfbe` validation run; 13/13 unit tests |
+| Current full local regression (`testDebugUnitTest lintDebug assembleDebug assembleRelease assembleDebugAndroidTest`) | PASS on reviewed `48670ff`; 14/14 unit tests; lint, Debug/Release APK and AndroidTest APK all pass |
 | Release isolation scan | PASS |
-| `connectedDebugAndroidTest` | PASS; executed on `XQ-AU52 - 12` / API 34; 24 of 24 tests passed in the `534bcb2` run |
+| `connectedDebugAndroidTest` | PASS; UI-002 reviewed revision suite is 29/29 on `2026-09-28T14:06:03`; downstream UI-003 integration rerun is 33/33 at `2026-09-28T23:39:22+0800`, with XML hash recorded above |
 | Compose Register filled fixture test | PASS at semantics scope; the current connected suite exercises the approved filled fixture, while the five normalized emulator captures are the visual evidence |
-| CI-equivalent local run | PASS; `testDebugUnitTest lintDebug assembleDebug assembleRelease` completed successfully on 2026-09-09 |
-| Authoritative CI | NOT VERIFIED; `.github/workflows/android.yml` now defines hosted unit/build/lint and API 34 emulator jobs, but no hosted run evidence is available yet |
+| CI-equivalent local run | PASS at local JBR scope; current validation command is recorded in the provenance row above |
+| Authoritative CI | NOT VERIFIED; run `36442276066` exists for `48670ff`, but `unit-and-build` fails at Android SDK setup and `connected` fails before a usable hosted test result. Route: `infrastructure` |
 
 ## Visual Evidence
 
@@ -186,8 +190,8 @@ The older round below is retained as historical evidence and is not the reviewed
 
 `FAIL`
 
-Revision `db7dfbe` passed the local build and test gates, but its five-state comparison proved residual Login/Register visual nonconformance. That result is superseded by `f83eaa0`; the current formal result remains `NOT VERIFIED` only because AC-UI002-006/007/008/011 and hosted CI evidence are not available.
+Revision `db7dfbe` passed the local build and test gates, but its five-state comparison proved residual Login/Register visual nonconformance. That result is historical and superseded by the later implementation/debug revisions. The current `48670ff` local matrix has no known Login/Register responsive implementation failure; AC-UI002-006/011 and hosted CI remain `NOT VERIFIED` limitations.
 
 ## Next Action
 
-Next action: keep the task in Verification, collect the current responsive/cross-task evidence that is still in scope, and do not advance to Release until every required gate is evidenced. Physical-device testing remains out of scope.
+Next action: remain in `verification` pending UI-003 logout integration evidence and hosted/authoritative CI. AC-UI002-006/011 remain NOT VERIFIED; do not advance to Release. Physical-device testing remains out of scope.

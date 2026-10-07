@@ -27,6 +27,8 @@ Create/update `plan-review.md` from its template. Record checklist, blocking fin
 
 Check requirement/AC completeness, repository analysis, architecture ownership, dependencies, implementation steps, test/regression strategy, risks, security/data/lifecycle concerns, scope, rollback, and unresolved questions.
 
+Confirm that `completion.scope` is explicit and that each deferred gate has a valid reason, owner, and release reactivation milestone. Reject any plan that relabels a required current-scope gate as deferred or not applicable.
+
 Do not seek perfection; block only material implementation-readiness gaps. Suggestions do not block.
 
 ## Exit

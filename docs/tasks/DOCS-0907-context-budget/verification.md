@@ -23,6 +23,7 @@
 | AC-008 | PASS | Task changed no `app/` or UI-001/UI-002 artifact |
 | AC-009 | PASS | AGENTS limits screenshots to visible UI, requires `visual_observation` classification and explicit unknowns, and forbids hidden-behavior inference |
 | AC-010 | PASS | Runtime policy contains the exact Android Studio JBR path and is linked by the router, Developer, Testing, and Infrastructure |
+| AC-011 | PASS | Testing policy defines Emulator as default, requires ADB target evidence, and limits mandatory physical-device tests to explicit hardware/device-risk AC |
 
 ## Overall
 

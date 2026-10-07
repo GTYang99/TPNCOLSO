@@ -9,6 +9,7 @@
 - Canonical Rule/Template paths 均保留。
 - AGENTS 已加入 Figma MCP 不完整／不可信時的 screenshot evidence 降級邊界。
 - 新增共用 Runtime policy；Gradle 統一使用 Android Studio JBR，避免各 phase 複製 JDK 路徑。
+- Testing Policy 已加入 Emulator 預設、ADB evidence 與 Physical-device required conditions。
 
 ## Size Comparison
 

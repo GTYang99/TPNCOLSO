@@ -1,5 +1,30 @@
 # UI-002 Verification Fix Plan
 
+## Current Debug Fix Plan — IMP-AUTH-021 / revision `b193a4a`
+
+### Fix scope
+
+1. Make the Registration work-type group responsive to available width. Keep the approved horizontal row at the 402×874 baseline and wider widths; use a width-aware fallback only when both labeled options cannot fit within the required 24dp side padding.
+2. Preserve two labeled options, 48dp effective targets, exactly-one selection, `作業性質` semantics/error behavior, and the current `WorkTypeSelected` events. Do not change the approved composite, field order, action buttons, or IME inset behavior.
+3. Add focused narrow-width evidence/assertions proving that both `外業人員` and `內業人員` remain visible and represented in the UI hierarchy. Keep the existing baseline visual comparison to ensure the fallback does not alter the 402×874 horizontal composition.
+
+### Regression checks for this fix
+
+- focused Register Compose semantics test at a narrow width: both work-type labels and both 48dp targets exist;
+- `testDebugUnitTest`, `lintDebug`, `assembleDebug`, `assembleRelease`, and `assembleDebugAndroidTest`;
+- `connectedDebugAndroidTest` on the approved API 34 emulator;
+- current 402×874 Register empty/filled visual captures;
+- 720×2400 Register capture, font scale 1.3 capture, and real-IME scroll/recovery capture;
+- release isolation scan and existing logout/coordinator regression tests.
+
+### Authorization boundary
+
+This is an implementation-debug re-entry within the approved `UIR-REG-011` responsive requirement. No requirement, visual authority, API, persistence, navigation, or UI-003 ownership change is proposed. Production code remains unchanged until the implementation-debug step is explicitly executed.
+
+## Implementation result — revision `48670ff`
+
+The approved debug scope was executed and committed as `48670ffe9e33b19aea23709abf2f47cc5ed85ff1`. `AppRadioGroup` now uses a width-aware fallback: the approved horizontal row remains in place when the labeled options fit, while narrow content stacks both options without changing their labels, targets, selection semantics, or events. The focused narrow-width assertion, full build/lint/APK validation, and 29/29 API 34 connected regression pass. Runtime captures at 720×2400, font scale 1.3, and real IME conditions confirm both labels and actions remain available; the subsequent current-revision Login responsive matrix also passes locally. Formal Verification is re-entered with the remaining cross-task and hosted-CI evidence gaps preserved.
+
 ## Reviewed failure
 
 Fix only the approved-requirement mismatches recorded as `IMP-AUTH-016` for revision `db7dfbe782d3537b5f618af2735964913ce580b7`.

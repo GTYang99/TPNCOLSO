@@ -33,7 +33,7 @@ Any necessary out-of-plan production change stops Implementation and returns to 
 
 ## Exit
 
-- Implementation and developer validation complete: commit, code review/CI, then `verification`.
+- Implementation and developer validation complete: commit, code review, applicable checks, then `verification`.
 - Implementation defect found locally: remain in Implementation.
 - Requirement/planning defect: canonical failure route.
 - Environment-only failure: `infrastructure`.

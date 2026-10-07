@@ -1,5 +1,38 @@
 # UI-002 Verification Failure Root Cause
 
+## Current Debug Re-entry — IMP-AUTH-021 / revision `b193a4a`
+
+### Reproduction and evidence
+
+- Reviewed revision: `b193a4a` (`fix(UI-002): keep auth actions visible with IME`).
+- Environment: `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`, physical display `720×2400`, density `420`, font scale `1.0`.
+- Runtime screenshot: `docs/design/evidence/auth/figma-export-2026-09-24-534bcb2/runtime-register-narrow-b193a4a-720x2400.png`.
+- Runtime hierarchy: `docs/design/evidence/auth/figma-export-2026-09-24-534bcb2/ui-register-narrow-b193a4a.xml`.
+- The first work-type option exposes `外業人員`; the second option keeps a clickable container at `[478,1671][657,1797]` but exposes no `內業人員` text node. The screenshot shows the second radio circle without its label. This is a reproducible implementation failure, not missing evidence or an emulator connection failure.
+- The separate Register IME run proves `ScrollView scrollable=true` and, after two upward swipes, both action labels are fully above the keyboard. The IME path is therefore not the cause of the narrow-width label failure.
+
+### Root cause analysis
+
+1. `RegisterScreen.kt` requests `AppRadioGroup(..., horizontal = true)` unconditionally for the two work-type options.
+2. `AppRadioGroup` implements the horizontal branch as a non-wrapping `Row` with fixed inter-option spacing. Each private `RadioOption` has intrinsic content width plus horizontal padding; the row has no width-aware fallback, wrapping, or shrink policy.
+3. At the 720×2400 emulator configuration, the 24dp outer insets leave less width than the two option intrinsic widths plus the row gap. Compose lays out the second option's container inside the remaining bounds, but its text is clipped/omitted from the accessibility hierarchy.
+4. The current `imePadding()` change only changes the available vertical viewport. It correctly fixes keyboard recovery and cannot resolve this independent horizontal constraint failure.
+
+### Classification and minimum safe fix
+
+`implementation_failure` → `debug`. The approved Registration requirement already requires narrow-width usability and does not need reinterpretation.
+
+- Preserve the approved horizontal two-option appearance at the 402×874 baseline and wider widths.
+- Add a width-aware fallback for the work-type group only when the available content width cannot fit both labeled 48dp targets; the fallback must retain both labels, 48dp touch targets, exactly-one selection semantics, and the existing validation/accessibility contract.
+- Keep the current horizontal layout and visual tokens at the approved baseline; do not change the composite authority, product behavior, field order, or action-row contract.
+- Add a narrow-width Compose/runtime assertion that both `外業人員` and `內業人員` remain exposed and actionable, then rerun the existing 402×874 visual states, narrow-width, font-scale and IME checks.
+
+No production code is changed during this Debug analysis.
+
+## Fix result — revision `48670ff`
+
+The approved minimum fix was implemented and committed as `48670ffe9e33b19aea23709abf2f47cc5ed85ff1`. `AppRadioGroup` now measures available width: the baseline and wider composition stays horizontal, while narrow content uses a vertical full-width fallback so both labeled 48dp targets remain visible and actionable. The focused Compose assertion and 29/29 connected regression pass. Runtime evidence at 720×2400, font scale 1.3, and real IME conditions confirms the original `內業人員` clipping failure is resolved. This closes `IMP-AUTH-021` as an implementation failure; remaining cross-task and hosted-CI limitations stay in Verification.
+
 ## IMP-AUTH-016 — Residual composition failure after `db7dfbe`
 
 ### Reproduction and evidence

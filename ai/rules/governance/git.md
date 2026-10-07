@@ -18,7 +18,7 @@ Read this policy only for branch, commit, diff, review, or revision evidence.
 
 ## Review and Verification
 
-- Code review, CI, and Verification must reference the same committed revision.
+- Code review and Verification must reference the same committed revision. When hosted CI runs, it must also reference that revision.
 - Later changes invalidate stale approval/evidence.
 - Missing Git metadata or commit identity is `NOT VERIFIED`, not PASS.
 

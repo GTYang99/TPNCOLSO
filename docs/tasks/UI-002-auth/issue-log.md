@@ -1,5 +1,31 @@
 # Issue Log
 
+## IMP-AUTH-021 — Register narrow-width work-type label is clipped
+
+- Category: `implementation_failure`
+- Priority: `P1`
+- Status: resolved
+- Revision: `b193a4a` failed; fixed and committed in `48670ffe9e33b19aea23709abf2f47cc5ed85ff1`; current Verification round `2026-09-27`
+- Evidence: the prior `b193a4a` failure is retained above. The fixed 720×2400 runtime `runtime-register-narrow-b193a4a-fixed-720x2400.png` (SHA-256 `b98d526febc2b37a15ed12ce22364eb8773e0b19a1a42b3e9a3df12d62058809`) and hierarchy `ui-register-narrow-b193a4a-fixed.xml` (SHA-256 `46a2d8f33c53cf2fd5a7663b7c0448a73f41ab9550d5ead17ec2f224ef76e560`) expose both `外業人員` and `內業人員`; font scale 1.3 and real IME re-checks also pass. The focused Compose assertion and 29/29 connected suite pass on `emulator-5554`.
+- Requirement: `UIR-REG-011` requires the screen to remain usable at narrow widths without losing field order or actions; `AC-UI002-007` requires the form-level responsive matrix and `AC-UI002-010` requires every Registration UIR item to pass.
+- Impact: The narrow-width implementation failure is closed. AC-UI002-006/011 and hosted CI remain separate NOT VERIFIED limitations.
+- Route: `verification`
+- Owner: UI-002 implementation
+- Root cause: The horizontal `AppRadioGroup` row is unconditional and non-wrapping; at 720×2400 its two labeled options plus spacing exceed the available width, so the second label is clipped. See `root-cause.md` and `fix-plan.md` for the bounded fix scope.
+
+## VER-AUTH-019 — Authoritative CI runner failure after local UI-003 logout integration
+
+- Category: `environment`
+- Priority: `P1`
+- Status: open
+- Revision: UI-002 reviewed `48670ff`; downstream UI-003 implementation `c8120ef`, callback tests `37d957e`, current checkout `0e0b609`; current Verification round `2026-09-29`
+- Evidence: `ui003LogoutRequestedFixtureClearsBothStatesAndIsIdempotent`, `MapShellViewModelTest.logoutEffectIsEmittedOnceForRepeatedEvents`, `MapShellScreenTest.drawerLogoutEmitsOneCallbackAndExposesAccessibleAction`, and `DebugDirectLoginTest.directLoginAndLogoutReturnToSignedOut` prove the local UI-002/UI-003 drawer-to-Login path. The latest API 34 connected evidence is `docs/tasks/UI-003-map-shell/connected-tests-emulator-5554-2026-09-28T23-39-39.xml` with 33/33 tests, 0 failures/errors/skips, SHA-256 `298f3feb01e302b8b3e54231780ba93171428d7e942fefb319fd26e3b4a2abf4`. Authoritative GitHub Actions run `36442276066` for `48670ff` exists but is `failure`: job `unit-and-build` fails at `Set up Android SDK`, and job `connected` fails at `Connected Android tests`; no usable hosted build/test result was produced. The public API exposes failed step names but the logs endpoint returns `403 Must have admin rights`, so the exact runner error is not available from this verification context. Remote heads currently contain `main` and `UI-002feat`; `UI-003feat` is not published.
+- Requirement: `AC-UI002-006` and `AC-UI002-011` are satisfied at local UI-002/UI-003 contract scope; `UIR-LOGOUT-005` production remote behavior remains INT-001-owned, and authoritative CI must complete successfully before release.
+- Impact: The local cross-task integration gap is resolved. The hosted gate is now an environment/CI failure, so the task must not advance to Release until the runner/SDK setup and connected job are repaired and rerun.
+- Route: `infrastructure`
+- Owner: CI / Android runtime infrastructure
+- Recheck `2026-09-29` (Asia/Taipei): remote heads still contain only `main` and `UI-002feat`; GitHub Actions still reports only run `36442276066`, with no new rerun or UI-003 hosted run.
+
 ## INF-AUTH-010 — Emulator-authoritative connected validation is unavailable
 
 - Category: `infrastructure`
@@ -308,5 +334,5 @@
 - Evidence: `emulator-5554` pre-fix UI hierarchy `ui-ime-scrolled.xml`；`mInputShown=true`；Login button bounds `[488,1560][592,1635]`，keyboard 覆蓋下方區域。
 - Root cause: Login/Register root layout 使用 edge-to-edge，但沒有 `imePadding()`；既有 `verticalScroll` 因內容未受 IME 後的可視高度限制而沒有形成可滾動 viewport。
 - Resolution: Revision `b193a4a` 對 LoginScreen/RegisterScreen root 加入 `imePadding()`。Post-fix hierarchy reports `scrollable=true`; after swipe the Login button is `[488,1417][592,1492]`, above the keyboard. Full connected suite is 28/28 PASS on API 34 emulator-5554.
-- Next action: `verification` — AC-UI002-007 PASS at local emulator scope; hosted CI and cross-task logout evidence remain open.
+- Next action: `debug` — the Login IME regression is resolved; the current Register narrow-width failure is tracked in IMP-AUTH-021. The full AC-UI002-007 criterion is therefore FAIL, while hosted CI and cross-task logout evidence remain open.
 - Owner: UI-002 Implementation / Verification

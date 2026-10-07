@@ -11,6 +11,6 @@
     "register-empty": { "mae": 10.4778, "rmse": 40.7509, "overThresholdRatio": 0.092564 },
     "register-filled": { "mae": 11.5888, "rmse": 43.3090, "overThresholdRatio": 0.096830 }
   },
-  "result": "NOT VERIFIED",
-  "limitation": "All five states are now captured. Metrics are evidence of improvement, not a PASS decision; formal result remains NOT VERIFIED pending the applicable authoritative CI gate."
+  "result": "FAIL",
+  "limitation": "All five states are captured. Metrics document improvement, but direct review still proves residual Login/Register placement differences against the approved composite; formal Verification routes to debug. Hosted CI remains unavailable as a separate NOT VERIFIED gate."
 }

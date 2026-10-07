@@ -28,24 +28,22 @@ validation:
 
 git:
   branch: UI-002feat
-  commit: b193a4a
+  commit: 48670ffe9e33b19aea23709abf2f47cc5ed85ff1
   status: committed
 
 verification:
   result: NOT VERIFIED
-  category: evidence_missing
-  failed_acceptance_criteria:
-    - AC-UI002-006
-    - AC-UI002-011
+  category: environment
+  failed_acceptance_criteria: []
 
 ci:
-  build: PASS (local JBR Gradle, b193a4a; assembleDebug, testDebugUnitTest, assembleDebugAndroidTest)
-  test: PASS (14/14 unit at 2026-09-27T06:33:27Z; 28/28 connected on Medium_Phone API 34 emulator-5554 at 2026-09-27T06:41:04Z; XML evidence captured locally; local emulator evidence only)
+  build: PASS local (JBR Gradle, 48670ff; testDebugUnitTest, lintDebug, assembleDebug, assembleRelease, assembleDebugAndroidTest); hosted run 36442276066 unit-and-build FAILURE at Set up Android SDK
+  test: PASS local (14/14 unit; 29/29 UI-002 connected on Medium_Phone API 34 emulator-5554 at 2026-09-28T14:06:03; downstream UI-003 integration rerun 33/33 at 2026-09-28T23:39:22+0800 with XML SHA-256 298f3feb01e302b8b3e54231780ba93171428d7e942fefb319fd26e3b4a2abf4); hosted run 36442276066 connected FAILURE at Connected Android tests
 
 release:
   status: pending
 
 blocking:
-  - Five-state visual evidence remains valid for the unchanged non-IME composition from f83eaa0; b193a4a adds imePadding and emulator-authoritative system-IME evidence, closing AC-UI002-007 at local emulator scope.
-  - Emulator-only connected validation now passes on Medium_Phone after ADB isolation; a local UI-003 callback fixture covers coordinator state clearing/idempotency, but real UI-003 integration and hosted/authoritative CI remain unavailable, so overall Verification is NOT VERIFIED.
-next_action: verification
+  - Authoritative GitHub Actions run 36442276066 for reviewed 48670ff is failure: unit-and-build fails at Set up Android SDK and connected fails at Connected Android tests before usable hosted results. Route: infrastructure. Publishing UI-003feat or rerunning CI requires explicit authorization.
+  - UI-002/UI-003 drawer-to-Login logout is verified at local emulator scope; production remote logout/Token behavior remains INT-001-owned and is not claimed by this task. Current Login and Register responsive evidence has no known local implementation failure after revision 48670ff.
+next_action: infrastructure

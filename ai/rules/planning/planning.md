@@ -31,6 +31,8 @@ Create/update:
 
 Cover current/expected behavior, affected files/ownership, dependencies, implementation steps, technical design, test/regression plan, risks, rollback/recovery, security/data/lifecycle concerns, and open questions proportional to risk.
 
+Declare `completion.scope` as `development` or `release` before Plan Review. For a development scope, list every deferred gate with reason, owner, and reactivation milestone; scope must not be changed during Verification merely to bypass a gate.
+
 Classify Task as `feature`, `bugfix`, `debug`, `refactor`, `hotfix`, or `docs`. Debug may use `root-cause.md` and `fix-plan.md` instead of a full feature plan.
 
 ## Exit

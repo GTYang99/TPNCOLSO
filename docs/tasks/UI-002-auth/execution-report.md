@@ -1,14 +1,20 @@
 # UI-002 Implementation Execution Report
 
+## Downstream logout verification handoff — 2026-09-28
+
+- UI-003 implementation revision `c8120ef` and callback-test revision `37d957e` are now present on `UI-003feat`; current committed checkout is `0e0b609`.
+- The latest API 34 connected run is `33/33` with `0` failures, `0` errors and `0` skipped on `Medium_Phone (AVD) - 14`, serial `emulator-5554`; evidence is `docs/tasks/UI-003-map-shell/connected-tests-emulator-5554-2026-09-28T23-39-39.xml`, SHA-256 `298f3feb01e302b8b3e54231780ba93171428d7e942fefb319fd26e3b4a2abf4`.
+- `DebugDirectLoginTest.directLoginAndLogoutReturnToSignedOut` now exercises the real local path from direct login through the UI-003 drawer to `登出` and back to clean Login. `MapShellScreenTest.drawerLogoutEmitsOneCallbackAndExposesAccessibleAction` and the ViewModel duplicate-event test cover the callback/idempotency boundary.
+- AC-UI002-006 and AC-UI002-011 are PASS at local UI-002/UI-003 contract scope. INT-001 production remote Token/API behavior remains outside this evidence. Authoritative GitHub Actions run `36442276066` exists for `48670ff` but fails during Android SDK/connected-runner setup, so formal Verification remains `NOT VERIFIED` and routes to Infrastructure.
+
 ## Latest debug-fix implementation and validation — 2026-09-27
 
-- Reviewed implementation revision: `b193a4a` (`fix(UI-002): keep auth actions visible with IME`) on branch `UI-002feat`, based on `f83eaa0`.
-- Production changes: Login content origin moved to the approved anchor, the skyline baseline now reaches the approved clipped edge without the bottom white block, Login button spacing was tightened, Register top origin was aligned, and the Register action row was moved into the 402×874 viewport.
-- Local validation: `testDebugUnitTest`, `assembleDebug`, and `assembleDebugAndroidTest` PASS; 14/14 unit tests passed at `2026-09-27T06:33:27Z`. The added `ui003LogoutRequestedFixtureClearsBothStatesAndIsIdempotent` test simulates the UI-003 callback boundary and verifies complete local state clearing plus repeated-event idempotency. The new `imePadding()` fix was installed on `Medium_Phone(AVD) - 14`; the full API 34 connected suite ran 28/28 PASS at `2026-09-27T06:41:04Z` on `emulator-5554`; XML is `connected-tests-emulator-5554-2026-09-27T06-41-04.xml`.
-- Five-state evidence: `numeric-diff-f83eaa0.json` contains emulator-authoritative Login empty/filled/error and Register empty/filled captures. Metrics are Login `10.5298 / 10.7950 / 22.9243` MAE and Register `5.8778 / 6.3757` MAE; direct review confirms skyline baseline and Register action-row visibility. AC-UI002-009/010 are PASS at local emulator visual scope.
-- Responsive evidence is refreshed on `emulator-5554`: narrow and font-scale captures remain valid, while `runtime-login-ime-device-2b15d0d-fixed2.png` and `runtime-login-ime-device-2b15d0d-fixed-scrolled.png` show the real keyboard and the Login button restored above it after scrolling. UI hierarchy snapshots record `ScrollView scrollable=true` and button bounds `[488,1417][592,1492]`. AC-UI002-007 is PASS at local emulator scope. Physical-device testing remains out of scope.
-- State coverage now includes Login empty/filled/error/submitting and Register empty/filled/validation-error/submitting; AC-UI002-008 is PASS at local unit/Compose scope.
-- Current formal verification result: `NOT VERIFIED` for AC-UI002-006/011 and hosted CI. AC-UI002-007 is now PASS at local emulator scope; the callback fixture improves local contract evidence but does not replace UI-003 integration evidence. No `PARTIAL` result is used as the current result.
+- Implementation revision: `48670ffe9e33b19aea23709abf2f47cc5ed85ff1` (`fix(UI-002): adapt registration options to narrow widths`) on branch `UI-002feat`.
+- Production change: `AppRadioGroup` preserves the approved horizontal work-type row when the labeled options fit, and switches only the narrow-width case to a full-width vertical stack. Both options retain 48dp effective targets, selection semantics, and existing events. A focused Compose assertion covers both labels and click actions.
+- Developer validation: `testDebugUnitTest`, `lintDebug`, `assembleDebug`, `assembleRelease`, and `assembleDebugAndroidTest` PASS. The latest full API 34 connected suite is 29/29 PASS at `2026-09-28T14:06:03` on `emulator-5554`; XML is `connected-tests-emulator-5554-2026-09-28T14-06-03.xml`.
+- Responsive runtime validation: the fixed 720×2400 capture exposes `外業人員` and `內業人員` vertically and keeps `取消`/`完成` visible. Font scale 1.3 keeps both labels and actions visible at 1080×2400. Real IME evidence after two swipes keeps both labels and actions above the keyboard. Emulator settings were restored to 1080×2400, font scale 1.0, and IME hidden.
+- Current formal Verification result: `NOT VERIFIED`. AC-UI002-007, AC-UI002-009 and AC-UI002-010 have no known implementation failure at local emulator scope; the downstream UI-003 drawer-to-Login handoff is now verified locally for AC-UI002-006/011. Hosted CI is present but failed in runner/Android SDK setup and requires Infrastructure rerun.
+- Debug analysis and the bounded scope are recorded in `root-cause.md` and `fix-plan.md`; the focused implementation was committed before re-verification. Physical-device testing remains out of scope.
 
 ## Revision
 
@@ -92,13 +98,17 @@ The preceding accessibility/asset fix is committed as `842e290`; the current vis
 | Current auth-error runtime capture | PASS | API 34 emulator frame retains the wrong account/password/captcha values, shows all three error borders and the global error message after the latest token/layout revision. |
 | Release isolation scan | PASS | No debug auth source, direct-login fixture, coordinator, or fixture credential symbols found in `app/src/main` or `app/src/release`. |
 
-## Known Gaps
+## Historical Known Gaps — pre-current handoff
 
 - Figma asset exports and SHA-256 evidence are now recorded in `docs/assets/app-ui-assets.md`; the debug captcha fixture is wired into Login through an injected visual slot. Composite PNG comparison, SVG runtime treatment, and connected runtime evidence remain incomplete.
 - ADB screenshot retrieval outside the instrumentation runner is environment-sensitive; the latest standalone pull returned a blank system-chrome frame, so it is not used as visual evidence.
 - UI-003 drawer fixture and INT-001 production token/remote logout integration are outside this task.
-- Authoritative CI provider is not configured; local Gradle results are not CI evidence.
+- At that historical snapshot, authoritative CI provider evidence was not available; the current handoff above records GitHub Actions run `36442276066`, which failed during Android SDK/connected-runner setup.
 
-## Status
+## Historical Status — superseded
 
 The reviewed implementation revision is committed, but formal Verification is `FAIL` on the current Login/Register visual contract. The task must return to `debug`; it must not be declared PASS or Done until the approved visual correction and the remaining required gates are complete.
+
+## Current Handoff Status — 2026-09-29
+
+The reviewed UI-002 revision and local UI-003 drawer-to-Login integration are locally verified. Formal Verification remains `NOT VERIFIED` because authoritative run `36442276066` failed in CI environment/setup steps; route to Infrastructure for a repaired and rerun CI. No current evidence requires returning to Implementation.

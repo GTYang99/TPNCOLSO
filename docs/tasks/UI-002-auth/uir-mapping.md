@@ -13,7 +13,7 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 | UIR-LOGIN-007 | Remember-me row and register action are visible in the current empty/filled/error captures and connected suite. | PASS (local emulator visual scope) |
 | UIR-LOGIN-008 | `AppPrimaryButton` and `submitting` guard exist; current five-state emulator evidence confirms the action geometry. | PASS (local emulator scope) |
 | UIR-LOGIN-009 | Supporting Figma export, composite-compatible skyline asset, logo, captcha and SHA-256 records are in asset/evidence files; Figma-only skyline candidate was rejected by silhouette comparison. | PASS |
-| UIR-LOGIN-010 | Scroll container is implemented; the full current-revision narrow/IME/font-scale matrix is not re-executed. | NOT VERIFIED |
+| UIR-LOGIN-010 | Current `48670ff` runtime evidence covers standard 1080×2400, narrow 720×2400, font scale 1.3, and real IME recovery; hierarchy confirms content order, controls, Registration entry and Login action remain available without functional text clipping. | PASS (local emulator scope) |
 | UIR-REG-001 | `RegisterScreen.kt` uses the approved content origin/rhythm and scroll; `numeric-diff-f83eaa0.json` confirms emulator-authoritative empty/filled composition. | PASS (local emulator visual scope) |
 | UIR-REG-002 | Balanced 48dp top-bar slots, 80dp illustration slot, and approved left-facing back arrow inside the 48dp control are implemented and covered by the current connected suite. | PASS (local emulator scope) |
 | UIR-REG-003 | Six controls and labels are implemented and covered by the current connected suite/captures. | PASS (local emulator scope) |
@@ -24,7 +24,32 @@ Mapping is against `login-ui-requirement.md` and the approved Figma Login frame 
 | UIR-REG-008 | Back/cancel/success events are implemented in auth coordinator and current connected contract tests pass. | PASS (local emulator scope) |
 | UIR-REG-009 | Validation and plaintext boundary unit tests exist; no persistence/logging path is used by the feature. | PASS |
 | UIR-REG-010 | Illustration asset is runtime-consumed and traceability/comparison artifacts exist; current empty/filled captures are emulator-authoritative. | PASS (local emulator visual scope) |
-| UIR-REG-011 | Scroll support exists and current filled evidence confirms fields/actions are usable without horizontal clipping; full current responsive matrix remains unexecuted. | NOT VERIFIED |
+| UIR-REG-011 | Current `48670ff` evidence covers 720×2400, font scale 1.3, and real IME recovery; both work-type labels and the action row remain available. The preceding `b193a4a` clipping result is retained in the responsive re-entry history below. | PASS (local emulator scope) |
+
+## Logout contract mapping — 2026-09-28
+
+The drawer remains UI-003-owned. This table verifies the stable UI-002 destination contract through the UI-003 callback boundary; it does not claim INT-001 production Token/API behavior.
+
+| Requirement | Implementation/evidence | Status |
+|---|---|---|
+| UIR-LOGOUT-001 | `MapShellCallbacks.onLogoutRequested` is consumed by `MapShellRoute`; debug `AppEntry` wires it to `DebugAuthSessionCoordinator.logout()` without importing Auth screen internals into UI-003. | PASS (local contract scope) |
+| UIR-LOGOUT-002 | `DebugDirectLoginTest.directLoginAndLogoutReturnToSignedOut` enters the map shell, opens the drawer, activates `登出`, and asserts the clean Login entry points after the transition. | PASS (API 34 emulator scope) |
+| UIR-LOGOUT-003 | `DebugAuthSessionCoordinator.logout()` clears the session owner and calls `AuthViewModel.resetToLogin()`; the UI-002 coordinator fixture covers clearing Auth/Register transient values and the connected direct-login test proves the previous signed-in destination is gone. | PASS (local state/integration scope) |
+| UIR-LOGOUT-004 | `MapShellViewModelTest.logoutEffectIsEmittedOnceForRepeatedEvents` covers duplicate event suppression; `MapShellScreenTest.drawerLogoutEmitsOneCallbackAndExposesAccessibleAction` asserts one callback. | PASS (unit/Compose scope) |
+| UIR-LOGOUT-005 | Immediate local return is proven by the coordinator path; production remote logout success/failure and Token/API behavior are explicitly INT-001-owned and are not implemented or verified by UI-002. | DELEGATED / NOT VERIFIED (INT-001 scope) |
+| UIR-LOGOUT-006 | Drawer visual/destination implementation remains in `app/src/main/.../feature/mapshell`; UI-002 evidence consumes only the callback contract and does not implement the drawer. | PASS (ownership scope) |
+
+## Current responsive re-entry — 2026-09-27
+
+On `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`, revision `b193a4a`, the Register screen was exercised at 720×2400, font scale 1.3, and real system IME. The narrow-width hierarchy proves a nonconformance: the second work-type container is present at `[478,1671][657,1797]` but has no `內業人員` text node, while `外業人員` remains present. The narrow screenshot SHA-256 is `7ded3a629a48a6b7eb1cf54f29529aae1fbf94898c4c60938d95180ef94dc05a`; the hierarchy SHA-256 is `125773961d48955068cf6d7970c6480a577cfff8a394444be14c4890c77b6a66`. The IME hierarchy proves `ScrollView scrollable=true`; after two upward swipes both action labels are fully above the keyboard. Therefore `UIR-REG-011` is FAIL for the narrow-width case, while its IME recovery slice passes locally. This directly fails `AC-UI002-007` and `AC-UI002-010`; no production code was changed during Verification.
+
+## Login responsive re-entry — 2026-09-28, revision `48670ff`
+
+On `Medium_Phone (AVD) - 14`, API 34, serial `emulator-5554`, the current committed revision was exercised at standard 1080×2400, narrow 720×2400, font scale 1.3, and with the real system IME. The narrow hierarchy exposes 帳號、密碼、驗證碼、記住我、沒有帳號? 註冊 and 登入 without functional text clipping. With IME shown, the hierarchy remains `scrollable=true`; after one upward swipe the Login action is at `[488,1417][592,1492]` above the keyboard. The standard, narrow, font-scale and scrolled-IME screenshots/hierarchies are recorded in the current Verification provenance table. `UIR-LOGIN-010` is PASS at local emulator scope; hosted CI remains a separate evidence gate.
+
+## Responsive re-entry after `IMP-AUTH-021` — revision `48670ff`
+
+The focused responsive fix is committed in `48670ffe9e33b19aea23709abf2f47cc5ed85ff1`. At 720×2400, `runtime-register-narrow-b193a4a-fixed-720x2400.png` and `ui-register-narrow-b193a4a-fixed.xml` expose both `外業人員` and `內業人員` in the vertical fallback, with `取消` and `完成` still visible. At font scale 1.3, `ui-register-fontscale-1.3-fixed.xml` exposes both labels and actions. With the real IME shown, `ui-register-ime-scrolled2-b193a4a-fixed.xml` exposes both labels at `[184,890][352,951]` and `[599,890][767,951]`, and both actions at `[239,1323][343,1398]` and `[737,1323][841,1398]`. The focused Compose assertion and full 29/29 connected suite pass. `UIR-REG-011` is therefore PASS at local emulator scope for the current commit; the preceding `b193a4a` FAIL record is retained as historical evidence.
 
 ## Current revision comparison addendum — 2026-09-23
 
