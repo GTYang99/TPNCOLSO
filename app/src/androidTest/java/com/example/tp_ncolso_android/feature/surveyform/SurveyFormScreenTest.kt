@@ -97,7 +97,7 @@ class SurveyFormScreenTest {
         composeRule.onNode(hasSetTextAction()).performTextInput("TEST-KEY-002")
         composeRule.onNodeWithTag("parcel-search-submit").performClick()
         composeRule.onNodeWithTag("parcel-open-detail").performClick()
-        composeRule.onNodeWithText("編輯調查").performClick()
+        composeRule.onNodeWithTag("parcel-detail-edit").performClick()
 
         composeRule.onNodeWithTag("survey-form-overlay").assertIsDisplayed()
         composeRule.onNodeWithTag("survey-system-fields").assertIsDisplayed()
