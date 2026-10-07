@@ -2,7 +2,7 @@
 
 ## Revision and Environment
 - Branch: `main` (explicitly requested for this work)
-- Code revision: pending focused commit; working tree based on `b8981e2` during implementation.
+- Code revision: `6ad5dc20988e7a349d70b240f24bb0662d296bf9` (`feat(ui-008): confirm photo delete and discard edits`).
 - Platform: Android debug app; Android Studio JBR `openjdk 25.0.3`.
 - Device: `emulator-5554`, Medium_Phone AVD, Android 14 / API 34.
 - Scope: active baseline `KB-UI-008-ALERTS-R1`, Plan Review iteration 2.
@@ -32,5 +32,4 @@
 - The worktree contains unrelated existing changes in `docs/tasks/UI-006-survey-form/verification.md` and `docs/tasks/UI-007-photo-camera/{state.yaml,verification.md}`; they were left untouched and excluded from the planned commit.
 
 ## Follow-up
-- Record the focused code commit SHA and branch in this report and `state.yaml` after commit.
-- Complete code review and Verification against that committed revision before reporting Development Complete.
+- Code review and Verification are recorded against the focused committed revision in `verification.md`.
