@@ -1,8 +1,8 @@
 task:
   id: UI-006-survey-form
   type: feature
-phase: implementation
-status: implementation_in_progress
+phase: verification
+status: passed
 knowledge:
   status: ready
   collection: completed
@@ -10,33 +10,36 @@ knowledge:
   validation: passed
   baseline_id: KB-UI-006-SURVEY-FORM-R1
 planning:
-  status: in_progress
+  status: completed
 plan_review:
   status: approved
   result: APPROVED
   iteration: 1
 completion:
   scope: development
-  status: in_progress
+  status: development_complete
 implementation:
-  status: in_progress
+  status: completed
 validation:
-  status: pending
+  status: completed
+code_review:
+  status: approved
+  revision: 80ed4ee
 git:
-  branch: ""
-  commit: ""
-  status: pending
+  branch: main
+  commit: 80ed4ee
+  status: committed
 verification:
-  result: pending
+  result: passed
   category: null
   failed_acceptance_criteria: []
 ci:
-  status: pending
-  build: pending
-  test: pending
-  reason: null
-  owner: null
-  reactivate_at: null
+  status: deferred
+  build: deferred
+  test: deferred
+  reason: pre_release_development
+  owner: release/project maintainer
+  reactivate_at: release_candidate
 release:
   status: pending
 deferred_obligations:
@@ -56,4 +59,4 @@ deferred_obligations:
     owner: design/requester
     reactivate_at: before formal pixel-acceptance claim
 blocking: []
-next_action: implementation
+next_action: none

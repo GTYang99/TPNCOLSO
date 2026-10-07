@@ -35,6 +35,9 @@
 
 ## Review and Revision
 
-- Commit: pending until the approved-scope diff is staged and reviewed.
-- Code review: pending commit revision.
+- Implementation commit: `ec75109` (`feat(ui-006): implement survey form UI`).
+- Follow-up test-only commit: `80ed4ee` (`test(ui-006): stabilize form handoff semantics`).
+- Reviewed revision: `80ed4ee`; code review approved by the same-agent reviewer because no independent reviewer was available in the current session.
+- The normal-font UI006 connected rerun after the selector correction passed 4/4.
+- Direct UI006 long-form smoke at emulator font scale 1.3 passed; the UI-005 host handoff case remains limited at 1.3 because the existing UI-005 bottom edit action is clipped from the semantics tree. No UI-005 production code was changed in this task.
 - Hosted CI, API integration, product UAT and release actions remain deferred under the approved development scope.
