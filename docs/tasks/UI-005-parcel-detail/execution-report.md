@@ -16,6 +16,7 @@
 - Added fixed summary, land-data tab with 8 marking + 2 GIS read-only fields, latest/history survey tab with 10 read-only values, return-reason Tag/explanation and UI-006 edit callback.
 - Added a narrow `ParcelSearchCallbacks.onOpenDetail` handoff and debug host overlay wiring while keeping `map-surface` mounted.
 - Added UI-005 unit and Compose host tests; added Knowledge Validation, requirement, analysis, plan, review, issue log and this execution evidence.
+- Stabilized UI005 host assertions for duplicate summary/detail values and scrollable fields; added the non-returned reason negative assertion. Production code was unchanged.
 
 ## Local Validation
 
@@ -23,14 +24,19 @@
 - `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:testDebugUnitTest :app:compileDebugAndroidTestKotlin` — PASS.
 - `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:assembleDebug :app:assembleRelease :app:lint` — PASS.
 - `git diff --check` — PASS before staging.
-- `adb devices` — no connected devices.
-- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest` — NOT VERIFIED / blocked by `DeviceException: No connected devices!`.
+- Test device: `Medium_Phone (AVD) - 14`, serial `emulator-5554`, API 34; physical-device testing was not used.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest` — PASS, 4/4.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchHostTest` — PASS, 2/2.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest` — PASS, 6/6.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:testDebugUnitTest :app:compileDebugAndroidTestKotlin :app:lint` — PASS.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:assembleDebug :app:assembleRelease` — PASS.
+- `git diff --check` — PASS.
 
 ## Review and Revision
 
 - Implementation commit: `f69f8c8` (`feat(ui-005): implement parcel detail view`).
-- Code review: `APPROVED` for `f69f8c8`; same-agent review because independent reviewer was unavailable. The review confirmed the read-only UI-005/UI-006 ownership split, feature-owned fake source, mounted map context and no unrelated file changes.
-- Compose/device evidence for AC-UI005-001 through AC-UI005-006 is `NOT VERIFIED` until an Android emulator is connected; the blocker is recorded as `ENV-UI005-001` in `issue-log.md`.
-- UI-005 unit/state and source compilation evidence is PASS. Debug/release build and lint are PASS.
+- Verification test commits: `18a94f7`, `cb81272`; same-agent review approved the test-only corrections because independent reviewer was unavailable. Production code remained unchanged.
+- Compose/device evidence for AC-UI005-001 through AC-UI005-006 is PASS on `Medium_Phone (AVD) - 14`; AC-UI005-007 is PASS through unit/source evidence.
+- UI-005 unit/state, source compilation, debug/release build and lint evidence is PASS.
 - Figma detail dimensions remain visual observations; no pixel-parity claim is made.
 - Hosted CI, API integration, product UAT and release actions remain deferred under the approved development scope.

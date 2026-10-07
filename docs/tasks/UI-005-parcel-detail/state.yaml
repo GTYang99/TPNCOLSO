@@ -2,7 +2,7 @@ task:
   id: UI-005-parcel-detail
   type: feature
 phase: verification
-status: verification_not_verified
+status: passed
 knowledge:
   status: ready
   collection: completed
@@ -21,23 +21,18 @@ validation:
   status: completed
 code_review:
   status: approved
-  revision: f69f8c8
+  revision: cb81272
 completion:
   scope: development
-  status: in_progress
+  status: development_complete
 git:
   branch: main
-  commit: f69f8c8
+  commit: cb81272
   status: committed
 verification:
-  result: not_verified
-  category: environment
-  failed_acceptance_criteria:
-    - AC-UI005-001
-    - AC-UI005-002
-    - AC-UI005-003
-    - AC-UI005-004
-    - AC-UI005-005
+  result: passed
+  category: null
+  failed_acceptance_criteria: []
 ci:
   status: deferred
   build: deferred
@@ -49,8 +44,8 @@ release:
   status: pending
 deferred_obligations:
   - gate: connected_compose_validation
-    status: reactivated
-    reason: No connected Android device was available during local verification.
+    status: completed
+    reason: Focused UI005 and affected UI003/UI004 connected tests passed on the configured AVD.
     owner: task owner / local Android validation environment
     reactivate_at: before Development Complete
   - gate: hosted_ci
@@ -68,6 +63,5 @@ deferred_obligations:
     reason: Formal Figma revision approval is unavailable; current evidence is visual observation only.
     owner: Design/requester
     reactivate_at: before formal pixel-acceptance claim
-blocking:
-  - ENV-UI005-001: no connected Android device; connected Compose AC evidence is NOT VERIFIED. Route: infrastructure.
-next_action: infrastructure
+blocking: []
+next_action: none
