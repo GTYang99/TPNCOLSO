@@ -1,21 +1,36 @@
 task:
   id: UI-007-photo-camera
   type: feature
-phase: knowledge
-status: knowledge_resolved
+phase: verification
+status: passed
 knowledge:
-  status: validating
+  status: ready
   collection: completed
   resolution: completed
-  validation: pending
-  baseline_id: null
-planning: { status: pending }
-plan_review: { status: pending }
-implementation: { status: pending }
-validation: { status: pending }
-git: { branch: "", commit: "", status: pending }
-verification: { result: pending, category: null, failed_acceptance_criteria: [] }
-ci: { build: pending, test: pending }
+  validation: passed
+  baseline_id: KB-UI-007-PHOTO-CAMERA-R1
+planning: { status: completed }
+plan_review: { status: approved, result: APPROVED, iteration: 1 }
+implementation: { status: completed }
+validation: { status: completed }
+completion: { scope: development, status: development_complete }
+code_review: { status: approved, revision: "57a75f5" }
+git: { branch: main, commit: "57a75f5", status: committed }
+verification: { result: PASS, category: environment_tooling_deferred, failed_acceptance_criteria: [] }
+ci: { build: PASS, test: PASS_TARGETED_FULL_SUITE_DEFERRED }
 release: { status: pending }
-blocking: [UI-006 prerequisite handoff is not complete]
-next_action: knowledge_validation
+deferred_obligations:
+  - gate: hosted_ci
+    status: deferred
+    reason: pre_release_development
+    owner: release/project maintainer
+    reactivate_at: release_candidate
+  - gate: production_photo_upload_integration
+    status: deferred
+    reason: upload API and server storage contract are outside UI007 scope
+    owner: INT-003/API owner
+    reactivate_at: after upload contract approval and before release validation
+release:
+  status: pending
+blocking: []
+next_action: release_validation

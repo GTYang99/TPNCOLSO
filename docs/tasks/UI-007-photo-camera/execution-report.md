@@ -46,5 +46,7 @@
 
 ## Review and Revision
 
-- Production implementation is ready for focused commit and same-agent code review.
+- Implementation commit: `57a75f5` (`feat(ui-007): add local CameraX photo capture`).
+- Focused commit scope contains only UI007 production code, Figma assets, tests and UI007 task evidence.
+- Same-agent code review of `57a75f5` approved: CameraX lifecycle binding, permission/error recovery, app-private capture, UI006 handoff, accessibility semantics and test coverage were inspected; no blocking finding was identified.
 - The pre-existing unrelated change `docs/tasks/UI-006-survey-form/verification.md` remains outside the UI-007 staging scope and must not be committed by this task.
