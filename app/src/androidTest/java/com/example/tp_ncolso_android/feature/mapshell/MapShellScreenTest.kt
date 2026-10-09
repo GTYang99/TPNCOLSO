@@ -5,6 +5,7 @@ import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertWidthIsEqualTo
+import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
@@ -33,19 +34,26 @@ class MapShellScreenTest {
         }
 
         composeRule.onNodeWithTag("map-surface").assertIsDisplayed()
-        composeRule.onNodeWithContentDescription("開啟選單").assertHasClickAction()
-        composeRule.onNodeWithContentDescription("關鍵字搜尋").assertHasClickAction()
-        composeRule.onNodeWithContentDescription("通知").assertHasClickAction()
+        composeRule.onNodeWithContentDescription("開啟選單")
+            .assertHasClickAction().assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
+        composeRule.onNodeWithContentDescription("關鍵字搜尋")
+            .assertHasClickAction().assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
+        composeRule.onNodeWithContentDescription("通知")
+            .assertHasClickAction().assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
+        composeRule.onNodeWithContentDescription("定位目前位置")
+            .assertHasClickAction().assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
         composeRule.onNodeWithText("電子地圖").assertIsDisplayed()
         composeRule.onNodeWithText("正射圖").assertIsDisplayed()
         composeRule.onNodeWithText("地形圖").assertIsDisplayed()
         composeRule.onNodeWithContentDescription("電子地圖").assertIsSelected()
         composeRule.onNodeWithContentDescription("正射圖").assertIsNotSelected()
         composeRule.onNodeWithContentDescription("地形圖").assertIsNotSelected()
+        composeRule.onNodeWithTag("selected-basemap-marker", useUnmergedTree = true).assertIsDisplayed()
         composeRule.onNodeWithContentDescription("正射圖").performClick()
         composeRule.onNodeWithContentDescription("電子地圖").assertIsNotSelected()
         composeRule.onNodeWithContentDescription("正射圖").assertIsSelected()
         composeRule.onNodeWithContentDescription("地形圖").assertIsNotSelected()
+        composeRule.onNodeWithTag("selected-basemap-marker", useUnmergedTree = true).assertIsDisplayed()
     }
 
     @Test fun drawerLogoutEmitsOneCallbackAndExposesAccessibleAction() {

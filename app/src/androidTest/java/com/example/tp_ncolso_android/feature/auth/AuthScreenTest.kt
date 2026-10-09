@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.res.painterResource
 import org.junit.Rule
 import org.junit.Test
+import org.junit.Assert.assertTrue
 import org.junit.runner.RunWith
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.tp_ncolso_android.ui.foundation.theme.AppTheme
@@ -31,6 +32,8 @@ import java.io.FileOutputStream
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.mutableStateOf
+import org.junit.Assert.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class AuthScreenTest {
@@ -49,9 +52,10 @@ class AuthScreenTest {
         composeRule.onNodeWithText("帳號").assertIsDisplayed()
         composeRule.onNodeWithText("密碼").assertIsDisplayed()
         composeRule.onNodeWithText("驗證碼").assertIsDisplayed()
-        composeRule.onNodeWithText("記住我").assertIsDisplayed()
-        composeRule.onNodeWithText("登入").assertIsDisplayed()
-        composeRule.onNodeWithText("沒有帳號? 註冊").assertIsDisplayed()
+        composeRule.onNodeWithText("記住我").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("登入").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("沒有帳號? 註冊").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("login-register").assertHeightIsEqualTo(48.dp)
         composeRule.onNodeWithContentDescription("品牌標誌").assertDoesNotExist()
         composeRule.onNodeWithContentDescription("重新產生驗證碼").assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
     }
@@ -59,7 +63,7 @@ class AuthScreenTest {
     @Test fun loginRegisterEntryDispatchesEvent() {
         var event: AuthEvent? = null
         composeRule.setContent { AppTheme { LoginScreen(LoginFormState(), { event = it }) } }
-        composeRule.onNodeWithText("沒有帳號? 註冊").performClick()
+        composeRule.onNodeWithText("沒有帳號? 註冊").performScrollTo().performClick()
         assert(event == AuthEvent.OpenRegister)
     }
 
@@ -73,9 +77,76 @@ class AuthScreenTest {
                 )
             }
         }
+        val rootWidthDp = composeRule.onRoot().fetchSemanticsNode().boundsInRoot.width / composeRule.density.density
+        if (rootWidthDp < 368f) {
+            val root = composeRule.onRoot().fetchSemanticsNode().boundsInRoot
+            val captcha = composeRule.onNodeWithTag("captcha-image").fetchSemanticsNode().boundsInRoot
+            assertTrue(captcha.left >= root.left && captcha.right <= root.right)
+            return
+        }
         composeRule.onNodeWithTag("captcha-image").assertWidthIsEqualTo(139.dp).assertHeightIsEqualTo(48.dp)
         composeRule.onNodeWithTag("captcha-refresh").assertWidthIsEqualTo(32.dp).assertHeightIsEqualTo(48.dp)
         composeRule.onNodeWithContentDescription("重新產生驗證碼").assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
+    }
+
+    @Test fun enteringCaptchaDoesNotResizeOrMoveFieldOrImage() {
+        val state = mutableStateOf(LoginFormState())
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    state = state.value,
+                    onEvent = { event ->
+                        if (event is AuthEvent.LoginCaptchaChanged) {
+                            state.value = state.value.copy(captcha = event.value)
+                        }
+                    },
+                    captchaVisual = { modifier ->
+                        Image(
+                            painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture),
+                            contentDescription = "驗證碼圖片",
+                            modifier = modifier,
+                        )
+                    },
+                )
+            }
+        }
+
+        val fieldBefore = composeRule.onNodeWithTag("login-captcha").fetchSemanticsNode().boundsInRoot
+        val imageBefore = composeRule.onNodeWithTag("captcha-image").fetchSemanticsNode().boundsInRoot
+        val rootWidthDp = composeRule.onRoot().fetchSemanticsNode().boundsInRoot.width / composeRule.density.density
+        if (rootWidthDp >= 368f) {
+            assertEquals(fieldBefore.bottom, imageBefore.bottom, 0.5f)
+        }
+        composeRule.runOnIdle { state.value = state.value.copy(captcha = "2468") }
+        composeRule.waitForIdle()
+        val fieldAfter = composeRule.onNodeWithTag("login-captcha").fetchSemanticsNode().boundsInRoot
+        val imageAfter = composeRule.onNodeWithTag("captcha-image").fetchSemanticsNode().boundsInRoot
+
+        assertEquals(fieldBefore.width, fieldAfter.width, 0.5f)
+        assertEquals(fieldBefore.height, fieldAfter.height, 0.5f)
+        assertEquals(imageBefore.left, imageAfter.left, 0.5f)
+        assertEquals(imageBefore.top, imageAfter.top, 0.5f)
+        assertEquals(imageBefore.width, imageAfter.width, 0.5f)
+        assertEquals(imageBefore.height, imageAfter.height, 0.5f)
+        if (rootWidthDp >= 368f) {
+            assertEquals(fieldAfter.bottom, imageAfter.bottom, 0.5f)
+        }
+    }
+
+    @Test fun narrowCaptchaArtworkStaysInsideTheAvailableWidth() {
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(
+                    LoginFormState(),
+                    {},
+                    captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
+                )
+            }
+        }
+        val root = composeRule.onRoot().fetchSemanticsNode().boundsInRoot
+        val captcha = composeRule.onNodeWithTag("captcha-image").fetchSemanticsNode().boundsInRoot
+        assertTrue(captcha.left >= root.left)
+        assertTrue(captcha.right <= root.right)
     }
 
     @Test fun loginAuthErrorKeepsValuesAndShowsAccessibleGlobalMessage() {
@@ -88,8 +159,8 @@ class AuthScreenTest {
             }
         }
         composeRule.onNodeWithText("sunrise000").assertIsDisplayed()
-        composeRule.onNodeWithText("帳號、密碼或驗證碼錯誤").assertIsDisplayed()
-        composeRule.onNodeWithTag("login-request-error").assertIsDisplayed()
+        composeRule.onNodeWithText("帳號、密碼或驗證碼錯誤").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("login-request-error").performScrollTo().assertIsDisplayed()
     }
 
     @Test fun loginSubmittingStateDisablesSubmit() {
@@ -99,16 +170,16 @@ class AuthScreenTest {
 
     @Test fun registerRendersSixFieldsAndUnselectedWorkType() {
         composeRule.setContent { AppTheme { RegisterScreen(RegisterFormState(), listOf(VendorOption("1", "廠商")), {}) } }
-        composeRule.onNodeWithText("帳號").assertIsDisplayed()
-        composeRule.onNodeWithText("密碼").assertIsDisplayed()
-        composeRule.onNodeWithText("確認密碼").assertIsDisplayed()
-        composeRule.onNodeWithText("廠商名稱").assertIsDisplayed()
-        composeRule.onNodeWithText("作業性質").assertIsDisplayed()
-        composeRule.onNodeWithText("姓名(請輸入真實姓名)").assertIsDisplayed()
-        composeRule.onNodeWithText("外業人員").assertIsDisplayed()
-        composeRule.onNodeWithText("內業人員").assertIsDisplayed()
+        composeRule.onNodeWithText("帳號").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("密碼").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("確認密碼").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("廠商名稱").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("作業性質").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("姓名(請輸入真實姓名)").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("外業人員").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("內業人員").performScrollTo().assertIsDisplayed()
         composeRule.onNodeWithTag("register-back").assertWidthIsEqualTo(48.dp).assertHeightIsEqualTo(48.dp)
-        composeRule.onNodeWithContentDescription("返回登入頁").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("返回登入頁").performScrollTo().assertIsDisplayed()
         composeRule.onNodeWithContentDescription("註冊插圖").assertDoesNotExist()
     }
 
@@ -120,8 +191,8 @@ class AuthScreenTest {
                 }
             }
         }
-        composeRule.onNodeWithText("外業人員").assertIsDisplayed()
-        composeRule.onNodeWithText("內業人員").assertIsDisplayed()
+        composeRule.onNodeWithText("外業人員").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("內業人員").performScrollTo().assertIsDisplayed()
         composeRule.onNodeWithText("外業人員").assertHasClickAction()
         composeRule.onNodeWithText("內業人員").assertHasClickAction()
     }
@@ -137,7 +208,7 @@ class AuthScreenTest {
         composeRule.setContent {
             AppTheme { RegisterScreen(RegisterFormState(fieldErrors = mapOf(RegisterField.WORK_TYPE to "請選擇作業性質")), emptyList(), {}) }
         }
-        composeRule.onNodeWithText("請選擇作業性質").assertIsDisplayed()
+        composeRule.onNodeWithText("請選擇作業性質").performScrollTo().assertIsDisplayed()
     }
 
     @Test fun registerSubmittingStateDisablesSubmit() {
@@ -158,7 +229,7 @@ class AuthScreenTest {
         composeRule.onNodeWithText("sunrise1234").assertIsDisplayed()
         composeRule.onAllNodesWithText("sfk;wfj1~").assertCountEquals(2)
         composeRule.onNodeWithText("顯示密碼").assertDoesNotExist()
-        composeRule.onNodeWithText("外業人員").assertIsDisplayed()
+        composeRule.onNodeWithText("外業人員").performScrollTo().assertIsDisplayed()
     }
 
     @Test fun captureRegisterFilledStateForVisualEvidence() {

@@ -37,9 +37,9 @@ class ParcelDetailHostTest {
 
         composeRule.onNodeWithTag("map-surface").assertIsDisplayed()
         composeRule.onNodeWithTag("parcel-detail-overlay").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-fixed-summary").assertIsDisplayed()
-        composeRule.onNodeWithText("未調查").assertIsDisplayed()
-        composeRule.onNodeWithText("TEST-KEY-001").assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-fixed-summary").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("未調查").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("TEST-KEY-001").performScrollTo().assertIsDisplayed()
         composeRule.onAllNodesWithText("測試段 0012-0000").assertCountEquals(2)
         composeRule.onNodeWithText("無占用").assertIsDisplayed()
         composeRule.onNodeWithTag("parcel-detail-return-reason").assertDoesNotExist()
@@ -63,26 +63,26 @@ class ParcelDetailHostTest {
         }
 
         openFirstParcelDetail()
-        composeRule.onNodeWithTag("parcel-detail-tab-1").performClick()
+        composeRule.onNodeWithTag("parcel-detail-tab-1").performScrollTo().performClick()
 
-        composeRule.onNodeWithTag("parcel-detail-latest").assertIsDisplayed()
-        composeRule.onNodeWithText("民國 115 年 10 月 7 日").assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-latest").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("民國 115 年 10 月 7 日").performScrollTo().assertIsDisplayed()
         composeRule.onNodeWithTag("parcel-detail-survey-field-現況照片")
             .performScrollTo()
             .assertIsDisplayed()
-        composeRule.onNodeWithText("尚未拍攝").assertIsDisplayed()
+        composeRule.onNodeWithText("尚未拍攝").performScrollTo().assertIsDisplayed()
         composeRule.onNodeWithTag("parcel-detail-period-selector")
             .performScrollTo()
             .assertIsDisplayed()
             .performClick()
         composeRule.onNodeWithText("2025 年歷史期別").performClick()
 
-        composeRule.onNodeWithTag("parcel-detail-history-readonly").assertIsDisplayed()
-        composeRule.onNodeWithText("民國 114 年 9 月 3 日").assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-history-readonly").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("民國 114 年 9 月 3 日").performScrollTo().assertIsDisplayed()
         composeRule.onNodeWithTag("parcel-detail-survey-field-備註")
             .performScrollTo()
             .assertIsDisplayed()
-        composeRule.onNodeWithText("歷史檢視資料").assertIsDisplayed()
+        composeRule.onNodeWithText("歷史檢視資料").performScrollTo().assertIsDisplayed()
         composeRule.onAllNodes(hasSetTextAction()).assertCountEquals(0)
     }
 
@@ -102,12 +102,14 @@ class ParcelDetailHostTest {
         composeRule.onNodeWithContentDescription("關鍵字搜尋").performClick()
         composeRule.onNode(hasSetTextAction()).performTextInput("TEST-KEY-002")
         composeRule.onNodeWithTag("parcel-search-submit").performClick()
-        composeRule.onNodeWithTag("parcel-open-detail").performClick()
+        composeRule.onNodeWithTag("parcel-open-detail").performScrollTo().performClick()
 
-        composeRule.onNodeWithTag("parcel-detail-return-reason").assertIsDisplayed()
-        composeRule.onNodeWithTag("parcel-detail-return-tag").assertIsDisplayed()
-        composeRule.onNodeWithText("請補拍完整現況照片後重新送出。").assertIsDisplayed()
-        composeRule.onNodeWithText("編輯調查").performClick()
+        composeRule.onNodeWithTag("parcel-detail-overlay").assertIsDisplayed()
+        composeRule.onNodeWithText("TEST-KEY-002").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-return-reason").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("parcel-detail-return-tag").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("請補拍完整現況照片後重新送出。").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText("編輯調查").assertIsDisplayed().performClick()
 
         assertEquals("TEST-KEY-002", editKey)
         composeRule.onNodeWithTag("parcel-detail-overlay").assertIsDisplayed()
@@ -124,13 +126,13 @@ class ParcelDetailHostTest {
 
         composeRule.onNodeWithTag("parcel-search-overlay").assertIsDisplayed()
         composeRule.onNodeWithTag("parcel-detail-overlay").assertDoesNotExist()
-        composeRule.onNodeWithText("查看詳情").assertIsDisplayed()
+        composeRule.onNodeWithText("查看詳情").performScrollTo().assertIsDisplayed()
     }
 
     private fun openFirstParcelDetail() {
         composeRule.onNodeWithContentDescription("關鍵字搜尋").performClick()
         composeRule.onNode(hasSetTextAction()).performTextInput("TEST-KEY-001")
         composeRule.onNodeWithTag("parcel-search-submit").performClick()
-        composeRule.onNodeWithTag("parcel-open-detail").performClick()
+        composeRule.onNodeWithTag("parcel-open-detail").performScrollTo().performClick()
     }
 }

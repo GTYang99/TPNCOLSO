@@ -3,6 +3,7 @@ package com.example.tp_ncolso_android.ui.foundation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -19,6 +20,7 @@ import com.example.tp_ncolso_android.ui.foundation.component.AppIconButton
 import com.example.tp_ncolso_android.ui.foundation.component.AppLoadingContent
 import com.example.tp_ncolso_android.ui.foundation.component.AppPasswordField
 import com.example.tp_ncolso_android.ui.foundation.component.AppPrimaryButton
+import com.example.tp_ncolso_android.ui.foundation.component.AppSecondaryButton
 import com.example.tp_ncolso_android.ui.foundation.component.AppRadioGroup
 import com.example.tp_ncolso_android.ui.foundation.component.AppReadOnlyField
 import com.example.tp_ncolso_android.ui.foundation.component.AppSelectField
@@ -178,8 +180,33 @@ class FoundationComponentTest {
             }
         }
 
-        composeRule.onNodeWithContentDescription("關閉").assertHasClickAction().performClick()
+        val target = composeRule.onNodeWithContentDescription("關閉").assertHasClickAction()
+        assertMinimumTouchTarget(target.fetchSemanticsNode().boundsInRoot.width, target.fetchSemanticsNode().boundsInRoot.height)
+        target.performClick()
         assertEquals(1, clicks)
+    }
+
+    @Test
+    fun primaryAndSecondaryButtonsMeetMinimumTouchTarget() {
+        setTestContent {
+            AppTheme {
+                Column {
+                    AppPrimaryButton(text = "主要動作", onClick = {}, modifier = Modifier)
+                    AppSecondaryButton(text = "次要動作", onClick = {}, modifier = Modifier)
+                }
+            }
+        }
+
+        val primary = composeRule.onNodeWithText("主要動作").fetchSemanticsNode().boundsInRoot
+        val secondary = composeRule.onNodeWithText("次要動作").fetchSemanticsNode().boundsInRoot
+        assertMinimumTouchTarget(primary.width, primary.height)
+        assertMinimumTouchTarget(secondary.width, secondary.height)
+    }
+
+    private fun assertMinimumTouchTarget(widthPx: Float, heightPx: Float) {
+        val density = composeRule.density.density
+        assertTrue("互動目標寬度小於 48dp：${widthPx / density}dp", widthPx / density >= 48f)
+        assertTrue("互動目標高度小於 48dp：${heightPx / density}dp", heightPx / density >= 48f)
     }
 
     @Test

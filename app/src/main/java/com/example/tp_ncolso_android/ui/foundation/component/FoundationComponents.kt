@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.CircleShape
@@ -492,7 +493,10 @@ fun AppIconButton(
     IconButton(
         onClick = onClick,
         enabled = enabled,
-        modifier = modifier.heightIn(min = AppThemeTokens.spacing.minimumTouchTarget),
+        modifier = modifier.sizeIn(
+            minWidth = AppThemeTokens.spacing.minimumTouchTarget,
+            minHeight = AppThemeTokens.spacing.minimumTouchTarget,
+        ),
     ) {
         Icon(imageVector = icon, contentDescription = contentDescription)
     }

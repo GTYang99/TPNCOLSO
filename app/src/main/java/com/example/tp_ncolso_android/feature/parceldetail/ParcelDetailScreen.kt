@@ -131,33 +131,38 @@ private fun DetailContent(
             TextButton(onClick = onClose) { Text("關閉詳情") }
         }
 
-        FixedSummary(detail = detail)
-        if (detail.returnReason != null) ReturnReasonBanner(detail.returnReason)
-
-        PrimaryTabRow(
-            selectedTabIndex = state.selectedTab.ordinal,
-            modifier = Modifier.testTag("parcel-detail-tabs"),
-        ) {
-            ParcelDetailTab.entries.forEach { tab ->
-                Tab(
-                    selected = tab == state.selectedTab,
-                    onClick = { onEvent(ParcelDetailEvent.SelectTab(tab)) },
-                    text = { Text(tab.label) },
-                    modifier = Modifier.testTag("parcel-detail-tab-${tab.ordinal}"),
-                )
-            }
-        }
-
         Column(
             modifier = Modifier
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+                .padding(bottom = 8.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
+            FixedSummary(detail = detail)
+            if (detail.returnReason != null) ReturnReasonBanner(detail.returnReason)
+
+            PrimaryTabRow(
+                selectedTabIndex = state.selectedTab.ordinal,
+                modifier = Modifier.testTag("parcel-detail-tabs"),
+            ) {
+                ParcelDetailTab.entries.forEach { tab ->
+                    Tab(
+                        selected = tab == state.selectedTab,
+                        onClick = { onEvent(ParcelDetailEvent.SelectTab(tab)) },
+                        text = { Text(tab.label) },
+                        modifier = Modifier.testTag("parcel-detail-tab-${tab.ordinal}"),
+                    )
+                }
+            }
+
+            Column(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
             when (state.selectedTab) {
                 ParcelDetailTab.LAND_DATA -> LandDataContent(detail)
                 ParcelDetailTab.SURVEY -> SurveyContent(state, detail, onEvent)
+            }
             }
         }
 

@@ -1,6 +1,7 @@
 package com.example.tp_ncolso_android.feature.surveyform
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.SavedStateHandle
 import com.example.tp_ncolso_android.feature.surveyform.data.LocalSurveySubmitResult
 import com.example.tp_ncolso_android.feature.surveyform.data.SurveyFormDataSource
 import kotlinx.coroutines.channels.Channel
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 class SurveyFormViewModel(
     private val keyNo: String,
     private val dataSource: SurveyFormDataSource,
+    private val savedStateHandle: SavedStateHandle = SavedStateHandle(),
 ) : ViewModel() {
     private val seed = dataSource.load(keyNo) ?: SurveyFormSeed(
         status = "未調查",
@@ -20,12 +22,15 @@ class SurveyFormViewModel(
     private val originalValues = seed.values
     private val originalPhotos = seed.photos
 
+    private val restored = restoreDraft(seed)
     private val mutableState = MutableStateFlow(
         SurveyFormUiState(
             keyNo = keyNo,
             status = seed.status,
-            values = seed.values,
-            photos = seed.photos,
+            values = restored.first,
+            photos = restored.second,
+            dirty = restored.first != originalValues || restored.second != originalPhotos,
+            photoError = restored.third,
         ),
     )
     val state: StateFlow<SurveyFormUiState> = mutableState.asStateFlow()
@@ -88,6 +93,7 @@ class SurveyFormViewModel(
             fieldErrors = changedField(current.values, values)?.let { current.fieldErrors - it } ?: current.fieldErrors,
             photoError = null,
         )
+        persistDraft(mutableState.value)
     }
 
     private fun changedField(previous: SurveyFormValues, updated: SurveyFormValues): SurveyFormField? = when {
@@ -110,6 +116,7 @@ class SurveyFormViewModel(
             errorMessage = null,
             photoError = null,
         )
+        persistDraft(mutableState.value)
     }
 
     private fun deletePhoto(photoId: String) {
@@ -123,6 +130,7 @@ class SurveyFormViewModel(
             errorMessage = null,
             photoError = null,
         )
+        persistDraft(mutableState.value)
     }
 
     private fun submit() {
@@ -155,5 +163,59 @@ class SurveyFormViewModel(
                 dirty = true,
             )
         }
+        persistDraft(mutableState.value)
+    }
+
+    private fun restoreDraft(seed: SurveyFormSeed): Triple<SurveyFormValues, List<SurveyFormPhoto>, String?> {
+        if (savedStateHandle.get<Boolean>(KEY_HAS_DRAFT) != true) return Triple(seed.values, seed.photos, null)
+        val values = seed.values.copy(
+            landLocation = savedStateHandle.get<String>(KEY_LAND_LOCATION).orEmpty(),
+            siteConditions = savedStateHandle.get<ArrayList<String>>(KEY_SITE_CONDITIONS)?.toList().orEmpty(),
+            occupyForm = savedStateHandle.get<String>(KEY_OCCUPY_FORM).orEmpty(),
+            householdCount = savedStateHandle.get<String>(KEY_HOUSEHOLD_COUNT).orEmpty(),
+            occupyAddress = savedStateHandle.get<String>(KEY_OCCUPY_ADDRESS).orEmpty(),
+            note = savedStateHandle.get<String>(KEY_NOTE).orEmpty(),
+        )
+        val ids = savedStateHandle.get<ArrayList<String>>(KEY_PHOTO_IDS).orEmpty()
+        val uris = savedStateHandle.get<ArrayList<String>>(KEY_PHOTO_URIS).orEmpty()
+        val dates = savedStateHandle.get<ArrayList<String>>(KEY_PHOTO_DATES).orEmpty()
+        val aspects = savedStateHandle.get<ArrayList<String>>(KEY_PHOTO_ASPECTS).orEmpty()
+        val photosValid = ids.size <= MAX_PHOTOS && ids.size == uris.size && ids.size == dates.size && ids.size == aspects.size
+        val photos = if (photosValid) ids.indices.mapNotNull { index ->
+            val aspect = runCatching { SurveyPhotoAspect.valueOf(aspects[index]) }.getOrNull()
+            aspect?.let { SurveyFormPhoto(ids[index], uris[index], dates[index], it) }
+        } else emptyList()
+        val malformed = !photosValid || (photos.size != ids.size)
+        return Triple(values, if (malformed) seed.photos else photos, if (malformed) PHOTO_RESTORE_ERROR else null)
+    }
+
+    private fun persistDraft(state: SurveyFormUiState) {
+        savedStateHandle[KEY_HAS_DRAFT] = true
+        savedStateHandle[KEY_LAND_LOCATION] = state.values.landLocation
+        savedStateHandle[KEY_SITE_CONDITIONS] = ArrayList(state.values.siteConditions)
+        savedStateHandle[KEY_OCCUPY_FORM] = state.values.occupyForm
+        savedStateHandle[KEY_HOUSEHOLD_COUNT] = state.values.householdCount
+        savedStateHandle[KEY_OCCUPY_ADDRESS] = state.values.occupyAddress
+        savedStateHandle[KEY_NOTE] = state.values.note
+        savedStateHandle[KEY_PHOTO_IDS] = ArrayList(state.photos.map { it.id })
+        savedStateHandle[KEY_PHOTO_URIS] = ArrayList(state.photos.map { it.uri })
+        savedStateHandle[KEY_PHOTO_DATES] = ArrayList(state.photos.map { it.capturedAt })
+        savedStateHandle[KEY_PHOTO_ASPECTS] = ArrayList(state.photos.map { it.aspect.name })
+    }
+
+    private companion object {
+        const val MAX_PHOTOS = 4
+        const val PHOTO_RESTORE_ERROR = "照片資料無法完整還原，請重新檢查照片"
+        const val KEY_HAS_DRAFT = "survey.has-draft"
+        const val KEY_LAND_LOCATION = "survey.land-location"
+        const val KEY_SITE_CONDITIONS = "survey.site-conditions"
+        const val KEY_OCCUPY_FORM = "survey.occupy-form"
+        const val KEY_HOUSEHOLD_COUNT = "survey.household-count"
+        const val KEY_OCCUPY_ADDRESS = "survey.occupy-address"
+        const val KEY_NOTE = "survey.note"
+        const val KEY_PHOTO_IDS = "survey.photo-ids"
+        const val KEY_PHOTO_URIS = "survey.photo-uris"
+        const val KEY_PHOTO_DATES = "survey.photo-dates"
+        const val KEY_PHOTO_ASPECTS = "survey.photo-aspects"
     }
 }

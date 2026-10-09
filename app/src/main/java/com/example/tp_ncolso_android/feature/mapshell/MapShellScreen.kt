@@ -210,7 +210,24 @@ private fun BoxScope.BasemapSwitcher(state: MapShellUiState, onEvent: (MapShellE
                         contentDescription = basemap.label
                     },
                 contentAlignment = Alignment.Center,
-            ) { Text(basemap.label, color = if (selected) AppThemeTokens.colors.onBrandPrimary else AppThemeTokens.colors.textPrimary) }
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    if (selected) {
+                        Text(
+                            "✓",
+                            color = AppThemeTokens.colors.onBrandPrimary,
+                            modifier = Modifier.testTag("selected-basemap-marker"),
+                        )
+                    }
+                    Text(
+                        basemap.label,
+                        color = if (selected) AppThemeTokens.colors.onBrandPrimary else AppThemeTokens.colors.textPrimary,
+                    )
+                }
+            }
         }
     }
 }

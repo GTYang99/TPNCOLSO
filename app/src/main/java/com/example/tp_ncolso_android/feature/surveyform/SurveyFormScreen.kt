@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -188,7 +189,7 @@ fun SurveyFormScreen(
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        modifier = modifier.fillMaxSize().testTag("survey-form-overlay"),
+        modifier = modifier.fillMaxSize().imePadding().testTag("survey-form-overlay"),
         color = AppThemeTokens.colors.surface,
     ) {
         Column(
@@ -422,7 +423,7 @@ private fun PhotoTile(
     onDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val bitmap by rememberPhotoBitmap(photo.uri)
+    val photoLoad by rememberPhotoBitmap(photo.uri)
     Surface(
         modifier = modifier.size(width = 168.dp, height = 126.dp).testTag("survey-photo-${photo.id}"),
         color = Color.Transparent,
@@ -430,9 +431,9 @@ private fun PhotoTile(
         shadowElevation = 6.dp,
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            if (bitmap != null) {
+            if (photoLoad is PhotoBitmapLoadState.Loaded) {
                 Image(
-                    bitmap = bitmap!!,
+                    bitmap = (photoLoad as PhotoBitmapLoadState.Loaded).bitmap,
                     contentDescription = "現場照片",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize(),
@@ -441,7 +442,16 @@ private fun PhotoTile(
                 Box(
                     modifier = Modifier.fillMaxSize().background(AppThemeTokens.colors.surfaceMuted),
                     contentAlignment = Alignment.Center,
-                ) { Text("現場照片", style = AppThemeTokens.typography.body) }
+                ) {
+                    Text(
+                        when (photoLoad) {
+                            PhotoBitmapLoadState.Loading -> "照片讀取中"
+                            PhotoBitmapLoadState.Unavailable -> "照片無法讀取，請重新拍攝"
+                            is PhotoBitmapLoadState.Loaded -> ""
+                        },
+                        style = AppThemeTokens.typography.body,
+                    )
+                }
             }
             Box(
                 modifier = Modifier
@@ -455,7 +465,7 @@ private fun PhotoTile(
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .size(40.dp)
+                    .size(48.dp)
                     .clickable(onClick = onDelete)
                     .semantics { contentDescription = "刪除照片 ${photo.id}" },
                 contentAlignment = Alignment.Center,
@@ -475,10 +485,16 @@ private fun PhotoTile(
     }
 }
 
+private sealed interface PhotoBitmapLoadState {
+    data object Loading : PhotoBitmapLoadState
+    data object Unavailable : PhotoBitmapLoadState
+    data class Loaded(val bitmap: ImageBitmap) : PhotoBitmapLoadState
+}
+
 @Composable
-private fun rememberPhotoBitmap(uriString: String): androidx.compose.runtime.State<ImageBitmap?> {
+private fun rememberPhotoBitmap(uriString: String): androidx.compose.runtime.State<PhotoBitmapLoadState> {
     val context = androidx.compose.ui.platform.LocalContext.current
-    return produceState<ImageBitmap?>(initialValue = null, uriString) {
+    return produceState<PhotoBitmapLoadState>(initialValue = PhotoBitmapLoadState.Loading, uriString) {
         value = withContext(Dispatchers.IO) {
             runCatching {
                 val uri = Uri.parse(uriString)
@@ -488,7 +504,7 @@ private fun rememberPhotoBitmap(uriString: String): androidx.compose.runtime.Sta
                     context.contentResolver.openInputStream(uri)?.use(BitmapFactory::decodeStream)
                 }
                 bitmap?.asImageBitmap()
-            }.getOrNull()
+            }.getOrNull()?.let(PhotoBitmapLoadState::Loaded) ?: PhotoBitmapLoadState.Unavailable
         }
     }
 }

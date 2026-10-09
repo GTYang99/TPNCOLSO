@@ -1,6 +1,8 @@
 package com.example.tp_ncolso_android.feature.surveyform
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertHeightIsEqualTo
+import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.click
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -12,6 +14,7 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.unit.dp
 import androidx.activity.compose.BackHandler
 import com.example.tp_ncolso_android.DebugSignedInContent
 import com.example.tp_ncolso_android.feature.surveyform.data.LocalSurveySubmitResult
@@ -42,7 +45,7 @@ class SurveyFormScreenTest {
 
         composeRule.onNodeWithTag("survey-system-fields").assertIsDisplayed()
         composeRule.onNodeWithTag("survey-occupation-fields").assertDoesNotExist()
-        composeRule.onNodeWithTag("survey-site-option-建物").performClick()
+        composeRule.onNodeWithTag("survey-site-option-建物").performScrollTo().performClick()
         composeRule.onNodeWithTag("survey-occupation-fields").performScrollTo().assertIsDisplayed()
         assertEquals(listOf("建物"), viewModel.state.value.values.siteConditions)
     }
@@ -90,6 +93,25 @@ class SurveyFormScreenTest {
     }
 
     @Test
+    fun invalidRestoredPhotoShowsRecoveryTextAndKeepsFormValues() {
+        val viewModel = SurveyFormViewModel("TEST-KEY-001", FakeSurveyFormDataSource())
+        viewModel.onEvent(SurveyFormEvent.ChangeField(SurveyFormField.NOTE, "保留表單資料"))
+        viewModel.onEvent(SurveyFormEvent.CapturePhoto(SurveyFormPhoto("unavailable", "local://missing", "now")))
+        composeRule.setContent {
+            AppTheme {
+                SurveyFormRoute(
+                    viewModel = viewModel,
+                    callbacks = SurveyFormCallbacks(onCloseRequested = { _, _ -> }),
+                )
+            }
+        }
+
+        composeRule.onNodeWithText("照片無法讀取，請重新拍攝").performScrollTo().assertIsDisplayed()
+        assertEquals("保留表單資料", viewModel.state.value.values.note)
+        assertEquals(1, viewModel.state.value.photos.size)
+    }
+
+    @Test
     fun deletePhotoRequiresConfirmationAndCancelKeepsPhoto() {
         val photos = (1..4).map { SurveyFormPhoto("photo-$it", "local://$it", "now") }
         val source = object : SurveyFormDataSource {
@@ -112,6 +134,10 @@ class SurveyFormScreenTest {
             }
         }
 
+        composeRule.onNodeWithContentDescription("刪除照片 photo-1")
+            .performScrollTo()
+            .assertWidthIsEqualTo(48.dp)
+            .assertHeightIsEqualTo(48.dp)
         composeRule.onNodeWithContentDescription("刪除照片 photo-1").performScrollTo().performClick()
         composeRule.onNodeWithText("刪除確認").assertIsDisplayed()
         composeRule.onNodeWithText("刪除後無法恢復。").assertIsDisplayed()
@@ -223,8 +249,8 @@ class SurveyFormScreenTest {
         composeRule.onNodeWithContentDescription("關鍵字搜尋").performClick()
         composeRule.onNode(hasSetTextAction()).performTextInput("TEST-KEY-002")
         composeRule.onNodeWithTag("parcel-search-submit").performClick()
-        composeRule.onNodeWithTag("parcel-open-detail").performClick()
-        composeRule.onNodeWithTag("parcel-detail-edit").performClick()
+        composeRule.onNodeWithTag("parcel-open-detail").performScrollTo().performClick()
+        composeRule.onNodeWithTag("parcel-detail-edit").assertIsDisplayed().performClick()
 
         composeRule.onNodeWithTag("survey-form-overlay").assertIsDisplayed()
         composeRule.onNodeWithTag("survey-system-fields").assertIsDisplayed()
@@ -234,7 +260,7 @@ class SurveyFormScreenTest {
         composeRule.onNodeWithText("刪除").performClick()
         composeRule.onNodeWithText("關閉填報").performClick()
         composeRule.onNodeWithText("捨棄編輯").performClick()
-        composeRule.onNodeWithTag("parcel-detail-edit").performClick()
+        composeRule.onNodeWithTag("parcel-detail-edit").assertIsDisplayed().performClick()
         composeRule.onNodeWithTag("survey-photo-returned-1").assertExists()
     }
 }

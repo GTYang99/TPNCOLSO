@@ -6,6 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertHeightIsEqualTo
+import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -15,6 +17,7 @@ import com.example.tp_ncolso_android.ui.foundation.theme.AppTheme
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
+import androidx.compose.ui.unit.dp
 
 class PhotoCameraScreenTest {
     @get:Rule
@@ -61,7 +64,10 @@ class PhotoCameraScreenTest {
         }
 
         composeRule.onNodeWithTag("photo-camera-preview-slot").assertIsDisplayed()
-        composeRule.onNodeWithTag("photo-camera-shutter").performClick()
+        composeRule.onNodeWithContentDescription("拍攝現況照片")
+            .assertWidthIsEqualTo(64.dp)
+            .assertHeightIsEqualTo(64.dp)
+            .performClick()
         composeRule.onNodeWithContentDescription("取消拍攝").performClick()
         assertEquals(1, captureCount)
         assertEquals(1, closeCount)

@@ -60,7 +60,7 @@ import com.example.tp_ncolso_android.feature.surveyform.data.FakeSurveyFormDataS
 fun AppEntry() {
     val sessionOwner = remember { DebugSessionOwner() }
     val sessionState by sessionOwner.state.collectAsState()
-    val authViewModel = remember { AuthViewModel(DebugAuthDataSource(), DebugCaptchaProvider()) }
+    val authViewModel = rememberDebugViewModel("auth") { AuthViewModel(DebugAuthDataSource(), DebugCaptchaProvider()) }
     val coordinator = remember { DebugAuthSessionCoordinator(sessionOwner, authViewModel) }
 
     AppRoot(
@@ -90,22 +90,23 @@ internal fun DebugSignedInContent(
     onLogout: () -> Unit,
     onEditSurvey: (String) -> Unit = {},
 ) {
-    val mapShellViewModel = remember(identity) { MapShellViewModel(identity) }
-    val parcelSearchViewModel = remember(identity) { ParcelSearchViewModel(FakeParcelSearchDataSource()) }
+    val mapShellViewModel = rememberDebugViewModel("map-shell-${identity.role}") { MapShellViewModel(identity, it) }
+    val parcelSearchViewModel = rememberDebugViewModel("parcel-search-${identity.role}") { ParcelSearchViewModel(FakeParcelSearchDataSource(), it) }
     var parcelSearchOpen by rememberSaveable(identity) { mutableStateOf(false) }
     var detailKeyNo by rememberSaveable(identity) { mutableStateOf<String?>(null) }
     var detailOpen by rememberSaveable(identity) { mutableStateOf(false) }
     var surveyKeyNo by rememberSaveable(identity) { mutableStateOf<String?>(null) }
     var surveyOpen by rememberSaveable(identity) { mutableStateOf(false) }
+    var surveyInstance by rememberSaveable(identity) { mutableStateOf(0) }
     var cameraOpen by rememberSaveable(identity) { mutableStateOf(false) }
     var nextPhotoNumber by rememberSaveable(identity) { mutableStateOf(1) }
-    val detailViewModel = remember(identity, detailKeyNo) {
-        detailKeyNo?.let { ParcelDetailViewModel(it, FakeParcelDetailDataSource()) }
+    val detailViewModel = detailKeyNo?.let { keyNo ->
+        rememberDebugViewModel("parcel-detail-$keyNo") { ParcelDetailViewModel(keyNo, FakeParcelDetailDataSource(), it) }
     }
-    val surveyViewModel = remember(identity, surveyKeyNo) {
-        surveyKeyNo?.let { SurveyFormViewModel(it, FakeSurveyFormDataSource()) }
+    val surveyViewModel = surveyKeyNo?.let { keyNo ->
+        rememberDebugViewModel("survey-form-$keyNo-$surveyInstance") { SurveyFormViewModel(keyNo, FakeSurveyFormDataSource(), it) }
     }
-    val photoCameraViewModel = remember(identity) { PhotoCameraViewModel() }
+    val photoCameraViewModel = rememberDebugViewModel("photo-camera-${identity.role}") { PhotoCameraViewModel(it) }
 
     Box(Modifier.fillMaxSize()) {
         MapShellRoute(
@@ -146,6 +147,7 @@ internal fun DebugSignedInContent(
                     onEditRequested = { keyNo ->
                         onEditSurvey(keyNo)
                         surveyKeyNo = keyNo
+                        surveyInstance += 1
                         surveyOpen = true
                     },
                 ),

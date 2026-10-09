@@ -1,14 +1,27 @@
 package com.example.tp_ncolso_android.feature.mapshell
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 
-class MapShellViewModel(identity: com.example.tp_ncolso_android.session.AppIdentity) : ViewModel() {
-    private val mutableState = MutableStateFlow(MapShellUiState(identity = identity))
+class MapShellViewModel(
+    identity: com.example.tp_ncolso_android.session.AppIdentity,
+    private val savedStateHandle: SavedStateHandle = SavedStateHandle(),
+) : ViewModel() {
+    private val mutableState = MutableStateFlow(
+        MapShellUiState(
+            identity = identity,
+            selectedBasemap = savedStateHandle.get<String>(KEY_BASEMAP)?.let { runCatching { Basemap.valueOf(it) }.getOrNull() } ?: Basemap.ELECTRONIC,
+            overlay = MapOverlayFixture(
+                activeQuery = savedStateHandle[KEY_QUERY] ?: "",
+                selectedTarget = savedStateHandle[KEY_TARGET] ?: MapOverlayFixture().selectedTarget,
+            ),
+        ),
+    )
     val state: StateFlow<MapShellUiState> = mutableState.asStateFlow()
 
     private val effects = Channel<MapShellEffect>(capacity = Channel.BUFFERED)
@@ -17,7 +30,7 @@ class MapShellViewModel(identity: com.example.tp_ncolso_android.session.AppIdent
 
     fun onEvent(event: MapShellEvent) {
         when (event) {
-            is MapShellEvent.SelectBasemap -> mutableState.value = mutableState.value.copy(selectedBasemap = event.basemap)
+            is MapShellEvent.SelectBasemap -> update(mutableState.value.copy(selectedBasemap = event.basemap))
             MapShellEvent.OpenDrawer -> mutableState.value = mutableState.value.copy(drawerOpen = true)
             MapShellEvent.CloseDrawer -> mutableState.value = mutableState.value.copy(drawerOpen = false)
             MapShellEvent.SearchClicked,
@@ -25,12 +38,12 @@ class MapShellViewModel(identity: com.example.tp_ncolso_android.session.AppIdent
             MapShellEvent.MapNavigationClicked,
             MapShellEvent.MapPlatformClicked,
             MapShellEvent.DashboardClicked -> Unit
-            is MapShellEvent.UpdateSearchContext -> mutableState.value = mutableState.value.copy(
+            is MapShellEvent.UpdateSearchContext -> update(mutableState.value.copy(
                 overlay = mutableState.value.overlay.copy(
                     activeQuery = event.query,
                     selectedTarget = event.selectedTarget,
                 ),
-            )
+            ))
             MapShellEvent.LocationClicked -> mutableState.value = mutableState.value.copy(locationState = LocationState.LOADING)
             MapShellEvent.RetryLocation -> mutableState.value = mutableState.value.copy(locationState = LocationState.LOADING)
             is MapShellEvent.SetLocationState -> mutableState.value = mutableState.value.copy(locationState = event.state)
@@ -43,5 +56,18 @@ class MapShellViewModel(identity: com.example.tp_ncolso_android.session.AppIdent
         logoutRequested = true
         mutableState.value = mutableState.value.copy(drawerOpen = false)
         effects.trySend(MapShellEffect.LogoutRequested)
+    }
+
+    private fun update(state: MapShellUiState) {
+        mutableState.value = state
+        savedStateHandle[KEY_BASEMAP] = state.selectedBasemap.name
+        savedStateHandle[KEY_QUERY] = state.overlay.activeQuery
+        savedStateHandle[KEY_TARGET] = state.overlay.selectedTarget
+    }
+
+    private companion object {
+        const val KEY_BASEMAP = "map.basemap"
+        const val KEY_QUERY = "map.query"
+        const val KEY_TARGET = "map.target"
     }
 }

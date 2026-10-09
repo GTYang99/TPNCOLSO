@@ -1,0 +1,28 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <activity
+            android:name=".Ui009StateRestoreActivity"
+            android:exported="true"
+            android:label="UI009 狀態還原測試"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.TP_NCOLSO_ANDROID" />
+        <activity
+            android:name=".Ui009CameraStateRestoreActivity"
+            android:exported="true"
+            android:label="UI009 相機狀態還原測試"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.TP_NCOLSO_ANDROID" />
+        <activity
+            android:name=".Ui009StatefulRouteRestoreActivity"
+            android:exported="true"
+            android:label="UI009 路由狀態還原測試"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.TP_NCOLSO_ANDROID" />
+        <activity
+            android:name=".Ui009StatefulFlowTestActivity"
+            android:exported="false"
+            android:label="UI009 路由狀態測試"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.TP_NCOLSO_ANDROID" />
+    </application>
+</manifest>

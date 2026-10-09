@@ -161,7 +161,11 @@ fun LoginScreen(
                     captchaRefresh()
                 }
             } else {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.Bottom,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
                     captchaField(Modifier.width(133.dp))
                     captchaArtwork(Modifier.width(139.dp))
                     captchaRefresh()
@@ -175,8 +179,9 @@ fun LoginScreen(
             AppCheckboxRow(state.rememberMe, { onEvent(AuthEvent.RememberMeChanged(it)) }, "記住我", modifier = Modifier.weight(1f))
             Box(
                 modifier = Modifier
-                    .height(40.dp)
-                    .clickable(role = Role.Button) { onEvent(AuthEvent.OpenRegister) },
+                    .height(48.dp)
+                    .clickable(role = Role.Button) { onEvent(AuthEvent.OpenRegister) }
+                    .testTag("login-register"),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
