@@ -2,12 +2,12 @@
 
 ## Revision and Environment
 - Branch: `developer`.
-- Tested source revision: `06092e8566887def8363418e8dee092e40364e54` (`HEAD`); UI-009 changes are uncommitted working-tree changes on top of this revision.
+- Tested source revision: base `06092e8566887def8363418e8dee092e40364e54` plus the UI-009 application/test changes, committed unchanged as `221a160e0a2140d99c81266a482f9215a29b58cc`. No application, test, Gradle, or script source was changed after the final matrix; the later edits were task-document updates only.
 - Tested application/test working-tree fingerprint (SHA-256 over `git diff --binary -- app gradle/libs.versions.toml`, followed by each sorted untracked `app/` or `scripts/` path and its file bytes): `fc3d51b4d6e26a0d051ce446418fefa5dd73ea359fedb08ad7a079fc071156eb`.
 - Knowledge baseline: `KB-UI-009-UI-HARDENING-R1`; Plan Review iteration 5 is the current approved test design before implementation validation.
 - Runtime: Android Studio JBR `/Applications/Android Studio.app/Contents/jbr/Contents/Home`, OpenJDK `25.0.3`.
 - Devices: `Medium_Phone (AVD) - 14`, Android 14 / API 34, 1080×2400 at 420 dpi; and `UI009_API28_EXT`, Android 9 / API 28, 1080×1920 at 420 dpi. The API 28 Google APIs ARM64 image, Emulator, platform-tools, and Pixel 2 AVD are installed in a dedicated APFS sparse image at `/Volumes/Elements/Android28SDK.sparseimage` because the internal volume lacks extraction space.
-- Scope: implementation and emulator Developer Validation complete for AC-001–AC-007; Git commit, code review, and formal Verification remain outstanding.
+- Scope: implementation, emulator Developer Validation, Code Review, and development-scope Verification are complete for AC-001–AC-007 on revision `221a160e0a2140d99c81266a482f9215a29b58cc`. Hosted CI remains deferred as recorded below.
 
 ## Changes
 - Added a debug-only `SavedStateHandle` ViewModel factory and connected the existing debug flow ViewModels to lifecycle owners.
@@ -34,7 +34,7 @@
 - `AC-002`: PASS for the emulator matrix below. All 62 connected UI tests passed on Android 9 and Android 14 at 320dp, 360dp, and approximately 402×874dp. These flow and scroll assertions found no viewport condition that blocked the registered route actions.
 - `AC-003`: PASS for the registered route flows at font scale 1.3 across the same three widths and both Android versions. Each complete suite passed with no functional text/action assertion failure; scrollable route content remains reachable in the tested flows.
 - `AC-004`: PASS for the tested text-entry routes on API 28 and API 34. On both emulators, login, registration, parcel search and UI-006 survey form were focused with the real system Gboard open. Login and registration primary actions were brought above Gboard by scrolling; search and survey primary actions remained visible above it. The latest API 34 captures are `evidence/api34-ac004-login-ime-scroll.png`, `evidence/api34-ac004-register-ime-scroll.png`, `evidence/api34-ac004-search-ime.png`, and `evidence/api34-ac004-survey-ime.png`. API 28 captures are `evidence/api28-login-captcha-ime-visible.png`, `evidence/api28-register-complete-ime-visible-after-scroll.png`, `evidence/api28-parcel-search-ime-visible.png`, and `evidence/api28-survey-ime-submit-visible.png`. Visual review found the route content and actions outside the status-bar and navigation-gesture areas in these captures; API 28 `dumpsys input_method` also confirmed the IME was visible. No API/backend was called.
-- `AC-005`: PASS for the registered UI-002–UI-008 routes. Tests verify named map/auth/camera controls, 48dp map and photo-delete targets, the 64dp shutter, and 48dp shared icon/primary/secondary controls on API 28 and API 34. Source review confirms text-based actions and error/status messages retain labels; checkbox/radio controls expose checked/selected semantics and visible marks, and the selected map basemap now has a visible check mark. The full developer-validation matrix is recorded below; formal Verification remains outstanding.
+- `AC-005`: PASS for the registered UI-002–UI-008 routes. Tests verify named map/auth/camera controls, 48dp map and photo-delete targets, the 64dp shutter, and 48dp shared icon/primary/secondary controls on API 28 and API 34. Source review confirms text-based actions and error/status messages retain labels; checkbox/radio controls expose checked/selected semantics and visible marks, and the selected map basemap now has a visible check mark. The formal per-AC Verification result is recorded in `verification.md`.
 - `AC-006`: PASS for the registered stateful UI flows. Activity recreation and host-side process-death flows cover map selection, parcel-search query/summary, parcel-detail selection, survey draft/photo/dirty state, camera return, login sensitive-value reset, and both discard/photo-delete dialog outcomes on API 28 and API 34. Raw UIAutomator evidence is under `evidence/`.
 - `AC-007`: PASS for the scoped source audit. The implementation uses transient `SavedStateHandle` values and debug-only test hosts; the diff introduces no endpoint, API call, DTO, database or long-term form persistence. Release-manifest checks recorded below confirm the UI-009 test Activities stay out of release.
 
@@ -42,7 +42,7 @@
 - API 28 uses a Google APIs ARM64 image and AVD on a dedicated APFS sparse image on the external volume. An initial full suite encountered a transient System UI ANR; after recovery, the focused form class, subsequent full suites, and final viewport/text-scale matrix passed. The initial failure remains documented under resolved issue UI009-011 with `evidence/api28-systemui-anr.png`.
 - An AndroidTest attempt to kill the target package also terminated the AndroidJUnitRunner process and failed before post-restart assertions. It was removed and replaced by the external host ADB script, which passed the API 34 UI-006 scenario.
 - Hosted CI remains deferred for pre-release development; owner: release/project maintainer; reactivate at release candidate.
-- No commit, independent code review, or Verification PASS is claimed.
+- Revision `221a160e0a2140d99c81266a482f9215a29b58cc` is committed, reviewed, and passed development-scope Verification; see `verification.md`. No hosted CI PASS or release authorization is claimed.
 - Existing UI-008/UI-010 changes in the working tree were preserved and are outside this report's implementation scope.
 
 ## Developer Validation Update — 2026-10-08
@@ -268,3 +268,11 @@
 - `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:testDebugUnitTest` — PASS on the current working tree (`BUILD SUCCESSFUL`; 24 actionable tasks, 3 executed).
 - Physical overrides used 420 dpi: API 28 `840×1920` (320dp), `945×2100` (360×800dp), and `1055×2294` (about 402×874dp); API 34 used matching widths and its corresponding height. Both emulators were restored and verified at physical resolution with system font scale 1.0.
 - AC-001–AC-007 have local Developer Validation evidence recorded above, including the API 28/34 viewport, text-scale, IME, and process-state flows. This completes the emulator Developer Validation scope. Commit, code review, and formal Verification remain subsequent workflow gates; no hosted CI PASS or release authorization is claimed.
+
+## Post-commit Code Review — 2026-10-09
+
+- Reviewed revision: `221a160e0a2140d99c81266a482f9215a29b58cc` on branch `developer`.
+- Review scope: committed UI-009 production changes, lifecycle/test hosts, UI tests, saved-state unit tests, process-death scripts, release manifest evidence, and the UI-009 task diff.
+- Checks: changes follow the approved cross-screen UI hardening plan; saved state contains only the approved local UI values and photo references; login password/captcha are not added to saved state; no API, DTO, database, durable form storage, or permission change is introduced; test Activities remain in the debug source set and are absent from the merged release manifest.
+- Findings: none. `git show --check` and the staged `git diff --cached --check` passed before commit. This review was performed by Codex in the task session; it is not an additional human review.
+- Review result: approved for task-scoped Verification.

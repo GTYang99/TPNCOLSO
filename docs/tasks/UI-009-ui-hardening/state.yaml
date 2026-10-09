@@ -1,15 +1,34 @@
 task:
   id: UI-009-ui-hardening
   type: feature
-phase: implementation
-status: implementation_in_progress
-knowledge: { status: ready, collection: completed, resolution: completed, validation: passed, baseline_id: KB-UI-009-UI-HARDENING-R1 }
+
+phase: verification
+status: passed
+
+knowledge:
+  status: ready
+  collection: completed
+  resolution: completed
+  validation: passed
+  baseline_id: KB-UI-009-UI-HARDENING-R1
+
 planning: { status: completed }
 plan_review: { status: approved, result: APPROVED, iteration: 5 }
-implementation: { status: in_progress }
-validation: { status: passed }
-git: { branch: "developer", commit: "", status: pending }
-verification: { result: not_verified, category: null, failed_acceptance_criteria: [] }
+implementation: { status: completed }
+validation: { status: completed }
+code_review: { status: approved, revision: "221a160e0a2140d99c81266a482f9215a29b58cc" }
+completion: { scope: development, status: development_complete }
+
+git:
+  branch: developer
+  commit: "221a160e0a2140d99c81266a482f9215a29b58cc"
+  status: committed
+
+verification:
+  result: passed
+  category: null
+  failed_acceptance_criteria: []
+
 ci:
   status: deferred
   build: deferred
@@ -17,13 +36,14 @@ ci:
   reason: pre_release_development
   owner: release/project maintainer
   reactivate_at: release_candidate
-completion: { scope: development, status: in_progress }
+
 deferred_obligations:
   - gate: hosted_ci
     status: deferred
     reason: pre_release_development
     owner: release/project maintainer
     reactivate_at: release_candidate
+
 release: { status: pending }
 blocking: []
-next_action: implementation
+next_action: none
