@@ -2,7 +2,7 @@
 
 ## Revision and Environment
 - Branch: `developer`.
-- HEAD: `1a11dff4d8c081235b090aaa6a6e8549016721ca`; tested worktree was dirty and UI-010 source changes remain uncommitted.
+- Implementation commit: `01a9a10200001ff572bc7a7f89d192a94f58b656` on `developer`. The focused AVD checks ran against the same UI-010 source content immediately before this commit; unrelated UI-008 working-tree changes remain uncommitted.
 - Gradle JDK: `/Applications/Android Studio.app/Contents/jbr/Contents/Home`, OpenJDK `25.0.3` (2026-04-21).
 - Scope: Android v0.1 implementation against `KB-UI-010-RETURN-FLOW-R1`, approved Plan Review iteration 1.
 - Test-target authorization: the user explicitly approved `Medium_Phone` AVD after clarifying that the available target was an emulator. Runtime validation is authorized on serial `emulator-5554`, API 36; no physical-device requirement is listed in the approved ACs.
@@ -44,8 +44,16 @@
 | Figma context | Inspected the approved list, returned detail, correction, dialog, and corrected-state nodes; downloaded two local Figma icon exports. | Source reviewed; no implementation screenshot comparison. |
 
 ## Limitations and Deferred Gates
-- Debug buildability, test-source compilation, lint, focused UI-010 instrumentation, and the affected survey-form regression class are verified on the dirty worktree. JVM unit-test execution and runtime screenshots remain NOT VERIFIED. The initial full suite failed 64/65; two reruns were interrupted by concurrent instrumentation, and a third was stopped at the user's request. No full-suite rerun produced a complete result.
+- Debug buildability, test-source compilation, lint, focused UI-010 instrumentation, and the affected survey-form regression class are verified for implementation commit `01a9a10200001ff572bc7a7f89d192a94f58b656`. JVM unit-test execution and runtime screenshots remain NOT VERIFIED. The initial full suite failed 64/65; two reruns were interrupted by concurrent instrumentation, and a third was stopped at the user's request. No full-suite rerun produced a complete result.
 - Approved AVD results: focused UI-010 host class 3/3 PASS; affected `SurveyFormScreenTest` class 9/9 PASS; initial full connected suite 64/65 with one existing survey-form focus failure, while the exact method passed in isolation. The full-suite result remains a recorded regression limitation and is not reported as PASS.
 - UI010-IMP-001, UI010-IMP-002, UI010-IMP-003, and the isolated UI010-VAL-001 focus incident are resolved as recorded. UI010-VAL-002 records both concurrent-AVD interruptions.
-- Task-scoped developer validation is complete for AC-001–AC-003; JVM unit-test execution and runtime screenshots remain NOT VERIFIED limitations. Code review, commit, and Verification remain pending. Hosted CI remains deferred to the release candidate per the approved plan.
+- Task-scoped developer validation is complete for AC-001–AC-003; JVM unit-test execution and runtime screenshots remain NOT VERIFIED limitations. Code review and Verification remain pending. Hosted CI remains deferred to the release candidate per the approved plan.
 - Existing unrelated UI-008/UI-010 working-tree changes were preserved and left unstaged.
+
+## Code Review Result
+- Reviewed revision: `01a9a10200001ff572bc7a7f89d192a94f58b656` (`feat(ui010): add returned parcel correction flow`) on branch `developer`.
+- Result: `APPROVED`; same-agent review because no independent reviewer was available.
+- Reviewed the shared in-memory return-flow store, stable parcel-key routing, notification overlay semantics and dismissal paths, save-before-confirm status transition, correction confirmation cancel/confirm behavior, dirty-form discard/continue behavior, login-session store generation, read-only behavior after `已修正`, and task-scoped test coverage.
+- Confirmed the change stays within the approved local Android UI scope: no API calls, persistence, permissions, credentials, or unrelated production refactoring were introduced.
+- `git show --check 01a9a10200001ff572bc7a7f89d192a94f58b656` — PASS.
+- Findings: no blocking defects. JVM unit-test execution, runtime screenshots, and a complete full-suite PASS remain documented limitations; they do not replace the focused AC evidence.

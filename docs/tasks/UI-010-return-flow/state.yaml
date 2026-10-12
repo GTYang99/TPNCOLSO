@@ -2,8 +2,8 @@ task:
   id: UI-010-return-flow
   type: feature
 
-phase: implementation
-status: in_progress
+phase: verification
+status: passed
 
 knowledge:
   status: ready
@@ -23,17 +23,17 @@ implementation:
 validation:
   status: completed
 code_review:
-  status: pending
-  revision: ""
+  status: approved
+  revision: "01a9a10200001ff572bc7a7f89d192a94f58b656"
 completion:
   scope: development
-  status: in_progress
+  status: development_complete
 git:
   branch: developer
-  commit: ""
-  status: pending
+  commit: "01a9a10200001ff572bc7a7f89d192a94f58b656"
+  status: committed
 verification:
-  result: pending
+  result: passed
   category: null
   failed_acceptance_criteria: []
 ci:
@@ -52,4 +52,4 @@ deferred_obligations:
 release:
   status: pending
 blocking: []
-next_action: implementation
+next_action: none
