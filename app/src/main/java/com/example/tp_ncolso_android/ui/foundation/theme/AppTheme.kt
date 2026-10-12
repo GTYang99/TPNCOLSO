@@ -31,6 +31,11 @@ data class AppColors(
     val onError: Color,
     val fieldErrorBorder: Color,
     val errorText: Color,
+    val success: Color,
+    val onSuccess: Color,
+    val successContainer: Color,
+    val onSuccessContainer: Color,
+    val successBorder: Color,
     val scrim: Color,
 )
 
@@ -75,6 +80,11 @@ private val LightAppColors = AppColors(
     onError = Color.White,
     fieldErrorBorder = Color(0xFFC8320A),
     errorText = Color(0xFFE00000),
+    success = Color(0xFF1A7A4A),
+    onSuccess = Color.White,
+    successContainer = Color(0xFFEAF4EF),
+    onSuccessContainer = Color(0xFF1A7A4A),
+    successBorder = Color(0xFFD4E9DF),
     scrim = Color(0x99000000),
 )
 
@@ -90,6 +100,11 @@ private val DarkAppColors = AppColors(
     onError = Color(0xFF690005),
     fieldErrorBorder = Color(0xFFFFB4AB),
     errorText = Color(0xFFFFB4AB),
+    success = Color(0xFF53B787),
+    onSuccess = Color(0xFF002114),
+    successContainer = Color(0xFF17382A),
+    onSuccessContainer = Color(0xFFC3EBD3),
+    successBorder = Color(0xFF3D5A48),
     scrim = Color(0xCC000000),
 )
 

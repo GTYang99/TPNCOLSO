@@ -1,18 +1,29 @@
 package com.example.tp_ncolso_android.feature.parceldetail
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.PrimaryTabRow
@@ -26,10 +37,14 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailEffect.EditRequested
+import com.example.tp_ncolso_android.R
 import com.example.tp_ncolso_android.ui.foundation.component.AppErrorContent
 import com.example.tp_ncolso_android.ui.foundation.component.AppLoadingContent
 import com.example.tp_ncolso_android.ui.foundation.component.AppPrimaryButton
@@ -38,6 +53,9 @@ import com.example.tp_ncolso_android.ui.foundation.component.AppSelectField
 import com.example.tp_ncolso_android.ui.foundation.component.AppStatusBadge
 import com.example.tp_ncolso_android.ui.foundation.component.AppStatusTone
 import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
+import kotlinx.coroutines.delay
+
+private const val CORRECTION_FEEDBACK_DURATION_MS = 2_500L
 
 data class ParcelDetailCallbacks(
     val onClose: () -> Unit,
@@ -59,6 +77,18 @@ fun ParcelDetailRoute(
                 ParcelDetailEffect.Close -> currentCallbacks.onClose()
                 is EditRequested -> currentCallbacks.onEditRequested(effect.keyNo)
             }
+        }
+    }
+    LaunchedEffect(state.showCorrectionSaved) {
+        if (state.showCorrectionSaved) {
+            delay(CORRECTION_FEEDBACK_DURATION_MS)
+            viewModel.onEvent(ParcelDetailEvent.DismissCorrectionSaved)
+        }
+    }
+    LaunchedEffect(state.showCorrectionSuccess) {
+        if (state.showCorrectionSuccess) {
+            delay(CORRECTION_FEEDBACK_DURATION_MS)
+            viewModel.onEvent(ParcelDetailEvent.DismissCorrectionSuccess)
         }
     }
 
@@ -111,6 +141,63 @@ fun ParcelDetailScreen(
                 }
             }
         }
+        if (state.showCorrectionSaved) {
+            CorrectionToast("編輯成功", Modifier.align(Alignment.TopCenter).padding(top = 24.dp).testTag("parcel-detail-correction-saved"))
+        }
+        if (state.showCorrectionSuccess) {
+            CorrectionToast("修正成功", Modifier.align(Alignment.TopCenter).padding(top = 24.dp).testTag("parcel-detail-correction-success"))
+        }
+        if (state.showCorrectionConfirmation) {
+            AlertDialog(
+                onDismissRequest = { onEvent(ParcelDetailEvent.DismissCorrectionConfirmation) },
+                modifier = Modifier.widthIn(min = 280.dp, max = 312.dp).fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                containerColor = AppThemeTokens.colors.surface,
+                tonalElevation = 0.dp,
+                title = { Text("是否確認資料已修正？", style = AppThemeTokens.typography.sectionTitle) },
+                text = { Text("送出後將無法再編輯，請確認資料已修正完成。", style = AppThemeTokens.typography.body) },
+                confirmButton = {
+                    TextButton(onClick = { onEvent(ParcelDetailEvent.ConfirmCorrection) }) {
+                        Text("確認", color = AppThemeTokens.colors.brandPrimary, style = AppThemeTokens.typography.fieldLabel)
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { onEvent(ParcelDetailEvent.DismissCorrectionConfirmation) }) {
+                        Text("取消", color = AppThemeTokens.colors.error, style = AppThemeTokens.typography.fieldLabel)
+                    }
+                },
+            )
+        }
+    }
+}
+
+@Composable
+private fun CorrectionToast(
+    message: String,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        modifier = modifier.semantics {
+            contentDescription = message
+            liveRegion = LiveRegionMode.Polite
+        },
+        color = AppThemeTokens.colors.successContainer,
+        shape = RoundedCornerShape(8.dp),
+        border = BorderStroke(1.dp, AppThemeTokens.colors.successBorder),
+        shadowElevation = 3.dp,
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 13.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(
+                painter = painterResource(R.drawable.ic_success_message),
+                contentDescription = null,
+                modifier = Modifier.size(20.dp),
+            )
+            Text(message, color = AppThemeTokens.colors.onSuccessContainer, style = AppThemeTokens.typography.body)
+        }
     }
 }
 
@@ -140,6 +227,9 @@ private fun DetailContent(
         ) {
             FixedSummary(detail = detail)
             if (detail.returnReason != null) ReturnReasonBanner(detail.returnReason)
+            if (detail.status == "退回" && detail.correctionSaved) {
+                CorrectionConfirmAction(onClick = { onEvent(ParcelDetailEvent.RequestCorrectionConfirmation) })
+            }
 
             PrimaryTabRow(
                 selectedTabIndex = state.selectedTab.ordinal,
@@ -166,12 +256,41 @@ private fun DetailContent(
             }
         }
 
-        detail.editActionLabel?.let { actionLabel ->
+        if (detail.editActionLabel != null && detail.status != "已修正" && !detail.correctionSaved) {
             AppPrimaryButton(
-                text = actionLabel,
+                text = detail.editActionLabel,
                 onClick = { onEvent(ParcelDetailEvent.RequestEdit) },
                 modifier = Modifier.fillMaxWidth().padding(16.dp).testTag("parcel-detail-edit"),
             )
+        }
+    }
+}
+
+@Composable
+private fun CorrectionConfirmAction(onClick: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.End,
+    ) {
+        Button(
+            onClick = onClick,
+            modifier = Modifier.heightIn(min = AppThemeTokens.spacing.minimumTouchTarget)
+                .testTag("parcel-detail-confirm-correction"),
+            shape = CircleShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = AppThemeTokens.colors.success,
+                contentColor = AppThemeTokens.colors.onSuccess,
+            ),
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+        ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_file_check),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp),
+                )
+                Text("確認修正", style = AppThemeTokens.typography.fieldLabel)
+            }
         }
     }
 }
@@ -189,7 +308,11 @@ private fun FixedSummary(detail: ParcelDetailRecord) {
             Text("調查狀態", style = AppThemeTokens.typography.fieldLabel)
             AppStatusBadge(
                 label = detail.status,
-                tone = AppStatusTone.Neutral,
+                tone = when (detail.status) {
+                    "已修正" -> AppStatusTone.Success
+                    "退回" -> AppStatusTone.Warning
+                    else -> AppStatusTone.Neutral
+                },
                 modifier = Modifier.testTag("parcel-detail-status"),
             )
         }
@@ -203,13 +326,13 @@ private fun FixedSummary(detail: ParcelDetailRecord) {
 private fun ReturnReasonBanner(reason: ParcelReturnReason) {
     Surface(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).testTag("parcel-detail-return-reason"),
-        color = AppThemeTokens.colors.surfaceMuted,
+        color = MaterialTheme.colorScheme.errorContainer,
         shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, AppThemeTokens.colors.borderDefault),
+        border = BorderStroke(1.dp, AppThemeTokens.colors.error),
     ) {
         Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("退回原因", style = AppThemeTokens.typography.fieldLabel)
+                Text("退回原因", color = AppThemeTokens.colors.error, style = AppThemeTokens.typography.fieldLabel)
                 AppStatusBadge(label = reason.category, tone = AppStatusTone.Warning, modifier = Modifier.testTag("parcel-detail-return-tag"))
             }
             Text(reason.explanation, style = AppThemeTokens.typography.body)

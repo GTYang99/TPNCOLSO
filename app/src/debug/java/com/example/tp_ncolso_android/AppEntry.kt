@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,6 +26,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.tp_ncolso_android.session.AppIdentity
 import com.example.tp_ncolso_android.session.AppRole
+import com.example.tp_ncolso_android.session.AppSessionState
 import com.example.tp_ncolso_android.ui.foundation.component.AppPrimaryButton
 import com.example.tp_ncolso_android.ui.foundation.component.AppRadioGroup
 import com.example.tp_ncolso_android.ui.foundation.component.AppSecondaryButton
@@ -43,9 +45,9 @@ import com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchRoute
 import com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchViewModel
 import com.example.tp_ncolso_android.feature.parcelsearch.data.FakeParcelSearchDataSource
 import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailCallbacks
+import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailEvent
 import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailRoute
 import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailViewModel
-import com.example.tp_ncolso_android.feature.parceldetail.data.FakeParcelDetailDataSource
 import com.example.tp_ncolso_android.feature.photocamera.PhotoCameraCallbacks
 import com.example.tp_ncolso_android.feature.photocamera.PhotoCameraRoute
 import com.example.tp_ncolso_android.feature.photocamera.PhotoCameraViewModel
@@ -54,7 +56,10 @@ import com.example.tp_ncolso_android.feature.surveyform.SurveyFormEvent
 import com.example.tp_ncolso_android.feature.surveyform.SurveyFormPhoto
 import com.example.tp_ncolso_android.feature.surveyform.SurveyFormRoute
 import com.example.tp_ncolso_android.feature.surveyform.SurveyFormViewModel
-import com.example.tp_ncolso_android.feature.surveyform.data.FakeSurveyFormDataSource
+import com.example.tp_ncolso_android.feature.notifications.NotificationsCallbacks
+import com.example.tp_ncolso_android.feature.notifications.NotificationsRoute
+import com.example.tp_ncolso_android.feature.notifications.NotificationsViewModel
+import com.example.tp_ncolso_android.feature.notifications.data.FakeReturnFlowStore
 
 @Composable
 fun AppEntry() {
@@ -62,6 +67,18 @@ fun AppEntry() {
     val sessionState by sessionOwner.state.collectAsState()
     val authViewModel = rememberDebugViewModel("auth") { AuthViewModel(DebugAuthDataSource(), DebugCaptchaProvider()) }
     val coordinator = remember { DebugAuthSessionCoordinator(sessionOwner, authViewModel) }
+    var sessionGeneration by rememberSaveable { mutableIntStateOf(0) }
+    val login: (AppRole) -> Unit = { role ->
+        val wasSignedOut = sessionOwner.state.value is AppSessionState.SignedOut
+        coordinator.login(role)
+        if (wasSignedOut && sessionOwner.state.value is AppSessionState.SignedIn) {
+            sessionGeneration += 1
+        }
+    }
+    val logout: () -> Unit = {
+        coordinator.logout()
+        sessionGeneration += 1
+    }
 
     AppRoot(
         sessionState = sessionState,
@@ -70,16 +87,16 @@ fun AppEntry() {
                 authContent = {
                     AuthHost(
                         viewModel = authViewModel,
-                        onLoginSucceeded = { coordinator.login(AppRole.INVESTIGATOR) },
-                        onLogoutRequested = coordinator::logout,
+                        onLoginSucceeded = { login(AppRole.INVESTIGATOR) },
+                        onLogoutRequested = logout,
                         captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
                     )
                 },
-                directLoginContent = { DebugDirectLogin(onLogin = coordinator::login) },
+                directLoginContent = { DebugDirectLogin(onLogin = login) },
             )
         },
         signedInContent = { identity ->
-            DebugSignedInContent(identity = identity, onLogout = coordinator::logout)
+            DebugSignedInContent(identity = identity, sessionGeneration = sessionGeneration, onLogout = logout)
         },
     )
 }
@@ -89,22 +106,27 @@ internal fun DebugSignedInContent(
     identity: AppIdentity,
     onLogout: () -> Unit,
     onEditSurvey: (String) -> Unit = {},
+    sessionGeneration: Int = 0,
 ) {
     val mapShellViewModel = rememberDebugViewModel("map-shell-${identity.role}") { MapShellViewModel(identity, it) }
     val parcelSearchViewModel = rememberDebugViewModel("parcel-search-${identity.role}") { ParcelSearchViewModel(FakeParcelSearchDataSource(), it) }
-    var parcelSearchOpen by rememberSaveable(identity) { mutableStateOf(false) }
-    var detailKeyNo by rememberSaveable(identity) { mutableStateOf<String?>(null) }
-    var detailOpen by rememberSaveable(identity) { mutableStateOf(false) }
-    var surveyKeyNo by rememberSaveable(identity) { mutableStateOf<String?>(null) }
-    var surveyOpen by rememberSaveable(identity) { mutableStateOf(false) }
-    var surveyInstance by rememberSaveable(identity) { mutableStateOf(0) }
-    var cameraOpen by rememberSaveable(identity) { mutableStateOf(false) }
-    var nextPhotoNumber by rememberSaveable(identity) { mutableStateOf(1) }
+    val returnFlowStore = remember(identity, sessionGeneration) { FakeReturnFlowStore() }
+    val notificationsViewModel = rememberDebugViewModel("notifications-${identity.role}-$sessionGeneration") { NotificationsViewModel(returnFlowStore, it) }
+    var notificationsOpen by rememberSaveable(identity, sessionGeneration) { mutableStateOf(false) }
+    var detailFromNotifications by rememberSaveable(identity, sessionGeneration) { mutableStateOf(false) }
+    var parcelSearchOpen by rememberSaveable(identity, sessionGeneration) { mutableStateOf(false) }
+    var detailKeyNo by rememberSaveable(identity, sessionGeneration) { mutableStateOf<String?>(null) }
+    var detailOpen by rememberSaveable(identity, sessionGeneration) { mutableStateOf(false) }
+    var surveyKeyNo by rememberSaveable(identity, sessionGeneration) { mutableStateOf<String?>(null) }
+    var surveyOpen by rememberSaveable(identity, sessionGeneration) { mutableStateOf(false) }
+    var surveyInstance by rememberSaveable(identity, sessionGeneration) { mutableStateOf(0) }
+    var cameraOpen by rememberSaveable(identity, sessionGeneration) { mutableStateOf(false) }
+    var nextPhotoNumber by rememberSaveable(identity, sessionGeneration) { mutableStateOf(1) }
     val detailViewModel = detailKeyNo?.let { keyNo ->
-        rememberDebugViewModel("parcel-detail-$keyNo") { ParcelDetailViewModel(keyNo, FakeParcelDetailDataSource(), it) }
+        rememberDebugViewModel("parcel-detail-$keyNo-$sessionGeneration") { ParcelDetailViewModel(keyNo, returnFlowStore, it) }
     }
     val surveyViewModel = surveyKeyNo?.let { keyNo ->
-        rememberDebugViewModel("survey-form-$keyNo-$surveyInstance") { SurveyFormViewModel(keyNo, FakeSurveyFormDataSource(), it) }
+        rememberDebugViewModel("survey-form-$keyNo-$surveyInstance-$sessionGeneration") { SurveyFormViewModel(keyNo, returnFlowStore, it) }
     }
     val photoCameraViewModel = rememberDebugViewModel("photo-camera-${identity.role}") { PhotoCameraViewModel(it) }
 
@@ -114,9 +136,24 @@ internal fun DebugSignedInContent(
             viewModel = mapShellViewModel,
             callbacks = MapShellCallbacks(
                 onSearch = { parcelSearchOpen = true },
+                onNotifications = { notificationsOpen = true },
                 onLogoutRequested = onLogout,
             ),
         )
+        if (notificationsOpen) {
+            NotificationsRoute(
+                viewModel = notificationsViewModel,
+                callbacks = NotificationsCallbacks(
+                    onClose = { notificationsOpen = false },
+                    onParcelSelected = { keyNo ->
+                        notificationsOpen = false
+                        detailFromNotifications = true
+                        detailKeyNo = keyNo
+                        detailOpen = true
+                    },
+                ),
+            )
+        }
         if (parcelSearchOpen) {
             ParcelSearchRoute(
                 viewModel = parcelSearchViewModel,
@@ -130,6 +167,7 @@ internal fun DebugSignedInContent(
                     },
                     onOpenDetail = { keyNo ->
                         detailKeyNo = keyNo
+                        detailFromNotifications = false
                         parcelSearchOpen = false
                         detailOpen = true
                     },
@@ -142,7 +180,12 @@ internal fun DebugSignedInContent(
                 callbacks = ParcelDetailCallbacks(
                     onClose = {
                         detailOpen = false
-                        parcelSearchOpen = true
+                        if (detailFromNotifications) {
+                            detailFromNotifications = false
+                            notificationsOpen = true
+                        } else {
+                            parcelSearchOpen = true
+                        }
                     },
                     onEditRequested = { keyNo ->
                         onEditSurvey(keyNo)
@@ -164,6 +207,12 @@ internal fun DebugSignedInContent(
                         surveyKeyNo = null
                     },
                     onCaptureRequested = { cameraOpen = true },
+                    onCorrectionSaved = { savedKeyNo ->
+                        cameraOpen = false
+                        surveyOpen = false
+                        surveyKeyNo = null
+                        if (savedKeyNo == detailKeyNo) detailViewModel?.onEvent(ParcelDetailEvent.CorrectionSaved)
+                    },
                 ),
             )
         }

@@ -27,6 +27,7 @@ class SurveyFormViewModel(
         SurveyFormUiState(
             keyNo = keyNo,
             status = seed.status,
+            returnContext = seed.returnContext,
             values = restored.first,
             photos = restored.second,
             dirty = restored.first != originalValues || restored.second != originalPhotos,
@@ -153,10 +154,13 @@ class SurveyFormViewModel(
             errorMessage = null,
         )
         when (val result = dataSource.submit(keyNo, current.values, current.photos)) {
-            LocalSurveySubmitResult.Success -> mutableState.value = mutableState.value.copy(
-                dirty = false,
-                submitState = SurveyFormSubmitState.SUCCESS,
-            )
+            LocalSurveySubmitResult.Success -> {
+                mutableState.value = mutableState.value.copy(
+                    dirty = false,
+                    submitState = SurveyFormSubmitState.SUCCESS,
+                )
+                if (seed.returnContext != null) effects.trySend(SurveyFormEffect.CorrectionSaved(keyNo))
+            }
             is LocalSurveySubmitResult.Failure -> mutableState.value = mutableState.value.copy(
                 submitState = SurveyFormSubmitState.IDLE,
                 errorMessage = result.message,

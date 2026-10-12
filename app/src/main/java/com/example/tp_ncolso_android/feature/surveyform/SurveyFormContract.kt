@@ -38,10 +38,17 @@ data class SurveyFormValues(
 )
 
 @Immutable
+data class SurveyReturnContext(
+    val category: String,
+    val explanation: String,
+)
+
+@Immutable
 data class SurveyFormSeed(
     val status: String,
     val values: SurveyFormValues,
     val photos: List<SurveyFormPhoto> = emptyList(),
+    val returnContext: SurveyReturnContext? = null,
 )
 
 enum class SurveyFormSubmitState {
@@ -54,6 +61,7 @@ enum class SurveyFormSubmitState {
 data class SurveyFormUiState(
     val keyNo: String,
     val status: String = "未調查",
+    val returnContext: SurveyReturnContext? = null,
     val values: SurveyFormValues = SurveyFormValues("", "", ""),
     val photos: List<SurveyFormPhoto> = emptyList(),
     val dirty: Boolean = false,
@@ -76,11 +84,13 @@ sealed interface SurveyFormEvent {
 sealed interface SurveyFormEffect {
     data object CaptureRequested : SurveyFormEffect
     data class CloseRequested(val keyNo: String, val dirty: Boolean) : SurveyFormEffect
+    data class CorrectionSaved(val keyNo: String) : SurveyFormEffect
 }
 
 data class SurveyFormCallbacks(
     val onCloseRequested: (keyNo: String, dirty: Boolean) -> Unit,
     val onCaptureRequested: () -> Unit = {},
+    val onCorrectionSaved: (keyNo: String) -> Unit = {},
 )
 
 val SurveyConditionOptions = listOf(

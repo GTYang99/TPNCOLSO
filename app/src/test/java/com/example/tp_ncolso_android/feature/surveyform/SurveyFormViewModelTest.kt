@@ -3,7 +3,9 @@ package com.example.tp_ncolso_android.feature.surveyform
 import com.example.tp_ncolso_android.feature.surveyform.data.FakeSurveyFormDataSource
 import com.example.tp_ncolso_android.feature.surveyform.data.LocalSurveySubmitResult
 import com.example.tp_ncolso_android.feature.surveyform.data.SurveyFormDataSource
+import com.example.tp_ncolso_android.feature.notifications.data.FakeReturnFlowStore
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -11,6 +13,27 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SurveyFormViewModelTest {
+    @Test
+    fun successfulReturnedCorrectionSubmitEmitsHandoffWithUpdatedValues() = runBlocking {
+        val store = FakeReturnFlowStore()
+        val keyNo = store.returnedNotifications.value.first().keyNo
+        val viewModel = SurveyFormViewModel(keyNo, store)
+        val effect = async { viewModel.effect.first() }
+        val original = viewModel.state.value
+
+        assertEquals("退回", original.status)
+        assertEquals("照片資料不足", original.returnContext?.category)
+        viewModel.onEvent(SurveyFormEvent.ChangeField(SurveyFormField.NOTE, "補充現場說明"))
+        viewModel.onEvent(SurveyFormEvent.CapturePhoto(SurveyFormPhoto("new-photo", "local://new-photo", "now")))
+        viewModel.onEvent(SurveyFormEvent.Submit)
+
+        assertEquals(SurveyFormEffect.CorrectionSaved(keyNo), effect.await())
+        assertEquals(SurveyFormSubmitState.SUCCESS, viewModel.state.value.submitState)
+        assertFalse(viewModel.state.value.dirty)
+        assertEquals("補充現場說明", store.findDetail(keyNo)?.surveyRecords?.first()?.note)
+        assertEquals("退回", store.findDetail(keyNo)?.status)
+    }
+
     @Test
     fun selectingNoOccupancyClearsAndHidesOccupationValues() {
         val source = FakeSurveyFormDataSource()

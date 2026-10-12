@@ -8,6 +8,7 @@
 ## Candidate Knowledge Baseline
 - Baseline ID: `KB-UI-010-RETURN-FLOW-R1`
 - Created date: 2026-09-08 (Asia/Taipei)
+- Resolution update: 2026-10-08 (Asia/Taipei)
 - Status: draft
 
 ## Material Claims and Traceability
@@ -17,6 +18,7 @@
 | KCL-UI010-002 | Correction reuses UI-006 editing/validation/photo/submit UI and adds return context. | SRC-UI010-003, 004; requester decision 2026-09-08 | resolved |
 | KCL-UI010-003 | Read status, pagination, API contract and error handling are deferred. | SRC-UI010-004; requester decision 2026-09-08 | resolved as deferred |
 | KCL-UI010-004 | Figma MCP confirms Android screen references at `402 x 874` where present. | SRC-UI010-001 | resolved |
+| KCL-UI010-005 | Correction confirmation uses an Android dialog sized `312 x 204` with title `是否確認資料已修正？`, body `送出後將無法再編輯，請確認資料已修正完成。`, and actions `取消`／`確認`. | SRC-UI010-005; requester decision | resolved |
 
 ## Conflicts and Gaps
 | Conflict ID | Description | Decision | Status |
@@ -32,9 +34,15 @@
 - Approver and date: Requester, 2026-09-08.
 - Revalidation trigger: API or notification feature decision changes.
 
+### KD-UI010-002
+- Decision: Use the Figma-confirmed Android correction confirmation dialog copy and geometry for UI-010; the confirm action is the only action that advances the record to `已修正`.
+- Source / Conflict IDs: SRC-UI010-005; KCL-UI010-005
+- Rationale: The exact title, body, actions and Android dialog size are now directly observed in the cited Figma node and match the requester-provided copy.
+- Approver and date: Requester, 2026-10-08.
+- Revalidation trigger: Figma node, dialog copy or correction state transition changes.
+
 ## Unresolved Non-blocking Items
 - Final API, read/pagination and error contracts.
-- Final Alert/copy details for correction confirmation.
 
 ## Blocking Items
 - None for Knowledge Validation.

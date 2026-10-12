@@ -2,6 +2,8 @@ package com.example.tp_ncolso_android.feature.parceldetail
 
 import com.example.tp_ncolso_android.feature.parceldetail.data.FakeParcelDetailDataSource
 import com.example.tp_ncolso_android.feature.parceldetail.data.ParcelDetailDataSource
+import com.example.tp_ncolso_android.feature.notifications.data.FakeReturnFlowStore
+import com.example.tp_ncolso_android.feature.surveyform.SurveyFormPhoto
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -64,5 +66,35 @@ class ParcelDetailViewModelTest {
         assertEquals(ParcelDetailLoadState.ERROR, viewModel.state.value.loadState)
         assertNull(viewModel.state.value.detail)
         assertEquals("找不到土地詳情資料", viewModel.state.value.errorMessage)
+    }
+
+    @Test
+    fun correctionConfirmationRequiresSavedDataAndOnlyConfirmChangesStatus() {
+        val store = FakeReturnFlowStore()
+        val keyNo = store.returnedNotifications.value.first().keyNo
+        val seed = requireNotNull(store.load(keyNo))
+        val viewModel = ParcelDetailViewModel(keyNo, store)
+
+        viewModel.onEvent(ParcelDetailEvent.RequestCorrectionConfirmation)
+        assertFalse(viewModel.state.value.showCorrectionConfirmation)
+        assertEquals("退回", viewModel.state.value.detail?.status)
+
+        val correctedValues = seed.values.copy(note = "已儲存修正")
+        val correctedPhotos = seed.photos + SurveyFormPhoto("new-photo", "local://new-photo", "now")
+        store.submit(keyNo, correctedValues, correctedPhotos)
+        viewModel.onEvent(ParcelDetailEvent.CorrectionSaved)
+        assertEquals("退回", viewModel.state.value.detail?.status)
+        assertTrue(viewModel.state.value.showCorrectionSaved)
+
+        viewModel.onEvent(ParcelDetailEvent.RequestCorrectionConfirmation)
+        viewModel.onEvent(ParcelDetailEvent.DismissCorrectionConfirmation)
+        assertEquals("退回", viewModel.state.value.detail?.status)
+        assertEquals("已儲存修正", viewModel.state.value.detail?.surveyRecords?.first()?.note)
+
+        viewModel.onEvent(ParcelDetailEvent.RequestCorrectionConfirmation)
+        viewModel.onEvent(ParcelDetailEvent.ConfirmCorrection)
+        assertEquals("已修正", viewModel.state.value.detail?.status)
+        assertFalse(viewModel.state.value.showCorrectionConfirmation)
+        assertTrue(viewModel.state.value.showCorrectionSuccess)
     }
 }

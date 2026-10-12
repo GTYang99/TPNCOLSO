@@ -37,13 +37,51 @@ class ParcelDetailViewModel(
                     savedStateHandle[KEY_PERIOD] = event.periodId
                 }
             }
-            ParcelDetailEvent.Retry -> load()
+            ParcelDetailEvent.Retry, ParcelDetailEvent.Refresh -> load()
+            ParcelDetailEvent.CorrectionSaved -> {
+                load()
+                val loaded = mutableState.value
+                mutableState.value = loaded.copy(showCorrectionSaved = loaded.detail?.correctionSaved == true)
+            }
             ParcelDetailEvent.RequestEdit -> {
-                mutableState.value.detail?.editActionLabel?.let {
+                mutableState.value.detail?.takeIf { it.editActionLabel != null && it.status != "已修正" }?.let {
                     effects.trySend(ParcelDetailEffect.EditRequested(keyNo))
                 }
             }
+            ParcelDetailEvent.RequestCorrectionConfirmation -> {
+                val detail = mutableState.value.detail
+                if (detail?.status == "退回" && detail.correctionSaved) {
+                    mutableState.value = mutableState.value.copy(showCorrectionConfirmation = true)
+                }
+            }
+            ParcelDetailEvent.DismissCorrectionConfirmation -> {
+                mutableState.value = mutableState.value.copy(showCorrectionConfirmation = false)
+            }
+            ParcelDetailEvent.ConfirmCorrection -> confirmCorrection()
+            ParcelDetailEvent.DismissCorrectionSaved -> {
+                mutableState.value = mutableState.value.copy(showCorrectionSaved = false)
+            }
+            ParcelDetailEvent.DismissCorrectionSuccess -> {
+                mutableState.value = mutableState.value.copy(showCorrectionSuccess = false)
+            }
         }
+    }
+
+    private fun confirmCorrection() {
+        val current = mutableState.value
+        if (!current.showCorrectionConfirmation || !dataSource.confirmCorrection(keyNo)) {
+            mutableState.value = current.copy(showCorrectionConfirmation = false)
+            return
+        }
+        val refreshed = dataSource.findDetail(keyNo)
+        mutableState.value = current.copy(
+            loadState = if (refreshed == null) ParcelDetailLoadState.ERROR else ParcelDetailLoadState.CONTENT,
+            detail = refreshed,
+            errorMessage = if (refreshed == null) "找不到土地詳情資料" else null,
+            showCorrectionSaved = false,
+            showCorrectionConfirmation = false,
+            showCorrectionSuccess = refreshed != null,
+        )
     }
 
     private fun load() {

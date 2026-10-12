@@ -4,4 +4,6 @@ import com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailRecord
 
 interface ParcelDetailDataSource {
     fun findDetail(keyNo: String): ParcelDetailRecord?
+
+    fun confirmCorrection(keyNo: String): Boolean = false
 }

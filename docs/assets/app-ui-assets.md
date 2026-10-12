@@ -34,6 +34,13 @@
 | `UI-001` | Registration radio glyph | No independent Figma asset layer; rendered as radio geometry | N/A | Use `AppRadioGroup` / Material default; no custom source required | N/A | Material default selected |
 | `UI-003-map-shell` | Map shell and drawer-specific icons | Must be exported or implemented by UI-003; not provided by UI-001. |
 
+### UI-010 runtime asset
+
+| Consumer | Asset | Figma source node | Source file | Runtime file | SHA-256 (source / runtime) | Retrieved |
+|---|---|---|---|---|---|---|
+| `UI-010-return-flow` | Correction button file-check icon, white 24 × 24 Figma PNG export | `4990:6809` in file `HRbRsw6HoNBUCtaieX8xUM` | `docs/assets/source/ui010/return-correction-file-check.svg` | `app/src/main/res/drawable-nodpi/ic_file_check.png` | `adf08724ceb51ebff844c5b5545f800e3ab86ded323c8523bfcafa496f1c7c70` / `1e76255f1cc12021e41fe19757460f8eaf0a7dd8c5dbafec02c8303056a64b8f` | 2026-10-12 |
+| `UI-010-return-flow` | Correction success toast icon, green 20 × 20 Figma PNG export | `I4990:6648;2985:3593` in file `HRbRsw6HoNBUCtaieX8xUM` | `docs/assets/source/ui010/correction-success-message.svg` | `app/src/main/res/drawable-nodpi/ic_success_message.png` | `e51f5ab32bedf3f1dd1690198286941de9a6f516c2f3ea03fbfbb598a88e19af` / `1970866f67fe28d0bd067d3828122a38408c852f08ea1c1511d55df8f3f61f59` | 2026-10-12 |
+
 ## Constraints
 
 - Do not recreate logos, captcha images, custom icons, or city illustrations from screenshots for UI-001.

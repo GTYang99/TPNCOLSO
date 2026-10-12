@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -26,6 +27,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -56,6 +58,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.example.tp_ncolso_android.feature.surveyform.SurveyFormEffect.CaptureRequested
 import com.example.tp_ncolso_android.feature.surveyform.SurveyFormEffect.CloseRequested
+import com.example.tp_ncolso_android.feature.surveyform.SurveyFormEffect.CorrectionSaved
 import com.example.tp_ncolso_android.ui.foundation.component.AppCheckboxRow
 import com.example.tp_ncolso_android.ui.foundation.component.AppErrorContent
 import com.example.tp_ncolso_android.ui.foundation.component.AppPrimaryButton
@@ -89,6 +92,7 @@ fun SurveyFormRoute(
             when (effect) {
                 CaptureRequested -> currentCallbacks.onCaptureRequested()
                 is CloseRequested -> requestClose()
+                is CorrectionSaved -> currentCallbacks.onCorrectionSaved(effect.keyNo)
             }
         }
     }
@@ -218,6 +222,19 @@ fun SurveyFormScreen(
                     .testTag("survey-form-content"),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
+                state.returnContext?.let { context ->
+                    Surface(
+                        modifier = Modifier.fillMaxWidth().testTag("survey-return-context"),
+                        color = MaterialTheme.colorScheme.errorContainer,
+                        shape = RoundedCornerShape(12.dp),
+                        border = BorderStroke(1.dp, AppThemeTokens.colors.error),
+                    ) {
+                        Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text("退回原因 · ${context.category}", color = AppThemeTokens.colors.error, style = AppThemeTokens.typography.fieldLabel)
+                            Text(context.explanation, style = AppThemeTokens.typography.body)
+                        }
+                    }
+                }
                 SystemFields(state)
                 AppTextField(
                     value = state.values.landLocation,
@@ -263,7 +280,7 @@ fun SurveyFormScreen(
             }
 
             AppPrimaryButton(
-                text = "送出調查",
+                text = if (state.returnContext != null) "儲存修正" else "送出調查",
                 onClick = { onEvent(SurveyFormEvent.Submit) },
                 enabled = state.submitState != SurveyFormSubmitState.SUBMITTING,
                 loading = state.submitState == SurveyFormSubmitState.SUBMITTING,

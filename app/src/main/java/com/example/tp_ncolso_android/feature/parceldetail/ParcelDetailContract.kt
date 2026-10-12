@@ -46,6 +46,7 @@ data class ParcelDetailRecord(
     val surveyRecords: List<ParcelSurveyRecord>,
     val returnReason: ParcelReturnReason? = null,
     val editActionLabel: String? = null,
+    val correctionSaved: Boolean = false,
 )
 
 enum class ParcelDetailLoadState {
@@ -62,6 +63,9 @@ data class ParcelDetailUiState(
     val selectedTab: ParcelDetailTab = ParcelDetailTab.LAND_DATA,
     val selectedPeriodId: String? = null,
     val errorMessage: String? = null,
+    val showCorrectionSaved: Boolean = false,
+    val showCorrectionConfirmation: Boolean = false,
+    val showCorrectionSuccess: Boolean = false,
 ) {
     val selectedSurvey: ParcelSurveyRecord?
         get() = detail?.surveyRecords?.firstOrNull { it.periodId == selectedPeriodId }
@@ -74,7 +78,14 @@ sealed interface ParcelDetailEvent {
     data class SelectTab(val tab: ParcelDetailTab) : ParcelDetailEvent
     data class SelectPeriod(val periodId: String) : ParcelDetailEvent
     data object Retry : ParcelDetailEvent
+    data object Refresh : ParcelDetailEvent
+    data object CorrectionSaved : ParcelDetailEvent
     data object RequestEdit : ParcelDetailEvent
+    data object RequestCorrectionConfirmation : ParcelDetailEvent
+    data object DismissCorrectionConfirmation : ParcelDetailEvent
+    data object ConfirmCorrection : ParcelDetailEvent
+    data object DismissCorrectionSaved : ParcelDetailEvent
+    data object DismissCorrectionSuccess : ParcelDetailEvent
 }
 
 sealed interface ParcelDetailEffect {
