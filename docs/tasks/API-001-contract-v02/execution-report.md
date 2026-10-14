@@ -21,7 +21,7 @@ Implemented the approved API-001 document handoff only. No Android client, backe
 
 ## Developer Validation
 
-Environment: local macOS shell; branch `codex/api-001-contract-v02`; working tree before commit.
+Environment: local macOS shell; branch `codex/api-001-contract-v02`; reviewed committed revision `742117124db0401f7e0dc58892692c8382d3978d`.
 
 | Check | Command | Result |
 |---|---|---|
@@ -44,8 +44,8 @@ No Gradle build or Android tests were run because this approved documentation ta
 
 The response/error/permission schemas, Upload Photo local attachment binding, `site_condtion`/`site_condition` interpretation, missing notification/history contracts, and executable runtime contract tests remain deferred with owners and reactivation milestones in `state.yaml` and `integration-plan-split.md`. Postman lint is artifact validation and does not establish API runtime behavior.
 
-## Revision
+## Code Review and Verification Handoff
 
-- Commit: pending
-- Code review: pending
-- Verification: pending
+- Post-commit review inspected the full 15-path diff against the approved requirement and plan; no out-of-scope changes or AC mismatch found. Review was a separate pass by the same Codex agent; no external reviewer was available.
+- Reviewed revision: `742117124db0401f7e0dc58892692c8382d3978d`.
+- Verification: PASS for AC-API001-001～006; see `verification.md`.

@@ -2,8 +2,8 @@ task:
   id: API-001-contract-v02
   type: docs
 
-phase: implementation
-status: in_progress
+phase: verification
+status: completed
 
 knowledge:
   status: ready
@@ -19,26 +19,26 @@ plan_review:
   status: approved
 
 implementation:
-  status: in_progress
+  status: completed
 
 validation:
-  status: pending
+  status: passed
 
 code_review:
-  status: pending
-  revision: ""
+  status: approved
+  revision: "742117124db0401f7e0dc58892692c8382d3978d"
 
 completion:
   scope: development
-  status: in_progress
+  status: development_complete
 
 git:
   branch: codex/api-001-contract-v02
-  commit: ""
-  status: pending
+  commit: "742117124db0401f7e0dc58892692c8382d3978d"
+  status: committed
 
 verification:
-  result: pending
+  result: passed
   category: null
   failed_acceptance_criteria: []
 
@@ -77,4 +77,4 @@ release:
 
 blocking: []
 
-next_action: implementation
+next_action: none
