@@ -15,6 +15,16 @@
 - Connected emulator: `Medium_Phone (AVD) - 14`, serial `emulator-5554`, Android 14 / API 34.
 - Emulator font scale: 1.0 for standard screenshots; 1.3 for increased-text screenshot, then restored to 1.0.
 
+## Emulator Verification Rerun (2026-10-08)
+
+- Tested revision: `06092e8566887def8363418e8dee092e40364e54` (`HEAD`). The UI008 production and test paths have no diff from reviewed revision `6ad5dc20988e7a349d70b240f24bb0662d296bf9`.
+- Device: `emulator-5554`, `Medium_Phone (AVD) - 14`, Android 14 / API 34. No physical device was used.
+- Focused connected test command: `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest`.
+- Result: PASS; 8 tests, 0 failures, 0 errors, 0 skipped.
+- Compilation/unit command: `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:compileDebugAndroidTestKotlin :app:testDebugUnitTest`.
+- Result: PASS; `BUILD SUCCESSFUL`.
+- `git diff --check`: PASS.
+
 ## Code Review Result
 - Exact reviewed revision: `6ad5dc20988e7a349d70b240f24bb0662d296bf9`.
 - Result: `APPROVED` by same-agent review; independence limitation is recorded here and in Plan Review.

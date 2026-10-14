@@ -26,6 +26,15 @@
 | Standard-scale discard alert | Runtime screenshot and visual inspection against Figma Android node `3225:12772` / dialog `3225:12775`. | PASS for copy, dimensions, wrapping, and action emphasis. Evidence: `runtime-discard-alert.png`. |
 | Increased font scale | Emulator `font_scale=1.3`; discard alert inspected; emulator setting restored to `1.0`. | PASS; body wraps and dialog grows while both actions remain visible. Evidence: `runtime-discard-fontscale-1.3.png`. |
 
+## Verification Rerun (2026-10-08)
+
+- Tested revision: `06092e8566887def8363418e8dee092e40364e54` (`HEAD`); UI008 production and test paths are unchanged from reviewed revision `6ad5dc20988e7a349d70b240f24bb0662d296bf9`.
+- Device: Android emulator `emulator-5554`, `Medium_Phone (AVD) - 14`, API 34; no physical device used.
+- JBR: Android Studio JBR `/Applications/Android Studio.app/Contents/jbr/Contents/Home`, OpenJDK `25.0.3`.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest` — PASS; 8 tests, 0 failures, 0 errors, 0 skipped.
+- `JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" ./gradlew :app:compileDebugAndroidTestKotlin :app:testDebugUnitTest` — PASS; `BUILD SUCCESSFUL`.
+- `git diff --check` — PASS.
+
 ## Limitations and Deferred Gates
 - Hosted CI remains deferred for pre-release development; owner: release/project maintainer; reactivate at release candidate.
 - No release build, formal pixel-diff threshold, or hosted CI result is claimed by this report.
