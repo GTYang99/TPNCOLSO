@@ -24,12 +24,20 @@
 
 ## Deferred Integration Queue
 
+### API Knowledge Baseline
+
+| Task ID | Deliverable | Active baseline |
+|---|---|---|
+| [`API-001-contract-v02`](./API-001-contract-v02/) | Postman-defined API v0.2 contract, resolved conflicts and integration handoff | `KB-API-001-CONTRACT-V02-R1` |
+
+四個 Integration Task 的候選 plan 邊界、依賴與啟動條件見 [API v0.2 Integration Plan Split](./API-001-contract-v02/integration-plan-split.md)；候選切分不代表各 Task 已通過 Plan Review。
+
 下列項目不得混入前述 UI Tasks；等 API request／response schema、錯誤與權限契約核定後另立 Task：
 
 1. `INT-001-auth-api`：註冊、登入、登出、Token lifecycle 與 401。
-2. `INT-002-map-parcel-api`：圖台範圍、搜尋、詳情與歷史期別。
+2. `INT-002-map-parcel-api`：圖台範圍、搜尋與詳情；歷史期別須先取得 Collection 外的新合約。
 3. `INT-003-survey-photo-api`：首次送出、編輯、照片上傳、重試與錯誤映射。
-4. `INT-004-return-notification-api`：退回清單、已讀、修正重送與狀態同步。
+4. `INT-004-return-notification-api`：先取得退回清單、已讀與狀態同步合約；目前 Collection 只有供修正使用的 Survey PUT，沒有通知 API。
 
 ## Start Rule
 

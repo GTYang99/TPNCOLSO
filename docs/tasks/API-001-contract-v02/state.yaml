@@ -1,0 +1,80 @@
+task:
+  id: API-001-contract-v02
+  type: docs
+
+phase: implementation
+status: in_progress
+
+knowledge:
+  status: ready
+  collection: completed
+  resolution: completed
+  validation: passed
+  baseline_id: KB-API-001-CONTRACT-V02-R1
+
+planning:
+  status: completed
+
+plan_review:
+  status: approved
+
+implementation:
+  status: in_progress
+
+validation:
+  status: pending
+
+code_review:
+  status: pending
+  revision: ""
+
+completion:
+  scope: development
+  status: in_progress
+
+git:
+  branch: codex/api-001-contract-v02
+  commit: ""
+  status: pending
+
+verification:
+  result: pending
+  category: null
+  failed_acceptance_criteria: []
+
+ci:
+  status: not_applicable
+  build: not_applicable
+  test: not_applicable
+  reason: Knowledge baseline task; no production implementation.
+  owner: null
+  reactivate_at: null
+
+deferred_obligations:
+  - gate: affected_api_response_error_permission_schemas
+    status: deferred
+    reason: The v0.2 Collection lacks complete response, error and per-route permission evidence for affected integration calls; implementation must not infer it.
+    owner: API owner
+    reactivate_at: before affected INT-001～INT-003 Plan Review
+  - gate: int003_upload_file_and_wire_name_contract
+    status: deferred
+    reason: Upload Photo uses a Postman cloud attachment and the options/payload wire-name relationship is unresolved.
+    owner: API / integration owner
+    reactivate_at: before INT-003 Plan Review
+  - gate: notification_and_history_endpoint_contracts
+    status: deferred
+    reason: Notification/read-state and history-period endpoints are absent from the active 12-request Collection.
+    owner: API owner
+    reactivate_at: before INT-004 or INT-002 history-scope Knowledge Validation
+  - gate: executable_runtime_contract_tests
+    status: deferred
+    reason: API-001 validates Collection artifacts only; no live service execution or usable integration environment is evidenced.
+    owner: Integration owner
+    reactivate_at: during affected INT-001～INT-003 Developer Validation before Verification
+
+release:
+  status: not_applicable
+
+blocking: []
+
+next_action: implementation

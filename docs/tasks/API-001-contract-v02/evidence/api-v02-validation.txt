@@ -1,0 +1,37 @@
+API v0.2 Knowledge Validation Evidence
+=======================================
+
+Validation date: 2026-10-14 11:18:15 CST
+Working tree: uncommitted source and API-001 task artifacts; no production code changed.
+Postman CLI: 1.73.0
+jq: jq-1.7.1-apple
+
+Source parity
+------------
+SHA-256 local:  5f5bd988f36d564743da9180550485ae2f30c5a23f8d10eb8e124c190de8db52
+SHA-256 source: 5f5bd988f36d564743da9180550485ae2f30c5a23f8d10eb8e124c190de8db52
+
+Artifact checks
+---------------
+jq empty: PASS
+info.name: TP NCOLSO API v0.2
+folders: AUTH,MAP_AND_LAND,SURVEY_AND_PHOTO
+requests: 12
+response examples: 14
+response gaps: Group Options=0; Update Survey=0; Upload Photo error examples=0
+forbidden named items (CAPTCHA/PENDING_CONTRACT): none
+resubmit request fields (URL/query/body): 0
+Upload Photo file source: postman-cloud attachment; collection variable photoFilePath is declared but not referenced by the request
+option wire name: site_condtion; survey payload field: site_condition
+
+Postman CLI
+-----------
+Command: postman collection lint docs/api/postman/tp-ncolso-api-v0.2.postman_collection.json
+Result: No issues found. Errors: 0. Warnings: 0.
+Note: Postman CLI reported Scanned: 0; this evidence does not treat that line as request-coverage proof. The 12-request inventory is independently reproduced by jq above.
+
+Interpretation
+--------------
+The literal word `resubmit` remains only in the Update Survey description as a statement that the request does not use that field. The contract check is based on request URL/query/body fields and found zero `resubmit` fields.
+The missing Group Options and Update Survey responses, missing Upload Photo 409/422 examples, formal GeoJSON/error schemas, and local Upload Photo attachment binding remain documented follow-up gaps; no schema was inferred during Validation.
+The `site_condtion` option wire name is preserved as declared by the authoritative Collection; its relationship to the `site_condition` survey payload field requires an explicit integration note.
