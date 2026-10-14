@@ -13,13 +13,13 @@ private fun LoginEmptyPreview() = AppTheme { LoginScreen(LoginFormState(), {}) }
 @Preview(name = "Login filled", showBackground = true)
 @Composable
 private fun LoginFilledPreview() = AppTheme {
-    LoginScreen(LoginFormState(account = "sunrise000", password = "password", captcha = "0926", rememberMe = true), {})
+    LoginScreen(LoginFormState(account = "sunrise000", password = "password", rememberMe = true), {})
 }
 
 @Preview(name = "Login auth error", showBackground = true)
 @Composable
 private fun LoginErrorPreview() = AppTheme {
-    LoginScreen(LoginFormState(account = "sunrise000", password = "password", captcha = "0926", rememberMe = true, requestError = "帳號、密碼或驗證碼錯誤"), {})
+    LoginScreen(LoginFormState(account = "sunrise000", password = "password", rememberMe = true, requestError = "帳號或密碼錯誤"), {})
 }
 
 @Preview(name = "Login submitting", showBackground = true)

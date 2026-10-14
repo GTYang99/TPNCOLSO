@@ -2,7 +2,7 @@ task:
   id: UI-002-auth
   type: feature
 
-phase: verification
+phase: implementation
 status: in_progress
 
 knowledge:
@@ -10,40 +10,62 @@ knowledge:
   collection: completed
   resolution: completed
   validation: passed
-  baseline_id: KB-UI-002-AUTH-R10
+  baseline_id: KB-UI-002-AUTH-R11
 
 planning:
   status: completed
+  revision: 18
 
 plan_review:
   status: approved
   result: APPROVED
-  iteration: 16
+  iteration: 19
+
+code_review:
+  status: pending
+  revision: ""
 
 implementation:
-  status: completed
+  status: in_progress
 
 validation:
-  status: passed
+  status: pending
 
 git:
-  branch: UI-002feat
-  commit: 48670ffe9e33b19aea23709abf2f47cc5ed85ff1
-  status: committed
+  branch: codex/ui-002-auth-r11
+  commit: d74bcd8192e6ea6e2d06306867af74f198c20580
+  status: in_progress
 
 verification:
-  result: NOT VERIFIED
-  category: environment
+  result: not_verified
+  category: requirement_change
   failed_acceptance_criteria: []
 
 ci:
-  build: PASS local (JBR Gradle, 48670ff; testDebugUnitTest, lintDebug, assembleDebug, assembleRelease, assembleDebugAndroidTest); hosted run 36442276066 unit-and-build FAILURE at Set up Android SDK
-  test: PASS local (14/14 unit; 29/29 UI-002 connected on Medium_Phone API 34 emulator-5554 at 2026-09-28T14:06:03; downstream UI-003 integration rerun 33/33 at 2026-09-28T23:39:22+0800 with XML SHA-256 298f3feb01e302b8b3e54231780ba93171428d7e942fefb319fd26e3b4a2abf4); hosted run 36442276066 connected FAILURE at Connected Android tests
+  status: failed
+  build: failed
+  test: failed
+  reason: R10 hosted run 36442276066 failed during runner/Android SDK setup and connected tests; no CI has run for the R11 revision.
+  owner: infrastructure owner
+  reactivate_at: after R11 implementation commit
+
+completion:
+  scope: development
+  status: in_progress
+
+deferred_obligations:
+  - gate: hosted_ci_release_candidate
+    status: deferred
+    reason: Pre-release development scope; local validation cannot be reported as hosted CI PASS.
+    owner: release/project maintainer
+    reactivate_at: before release-candidate validation
 
 release:
   status: pending
 
 blocking:
-  - Authoritative GitHub Actions run 36442276066 for reviewed 48670ff is failure: unit-and-build fails at Set up Android SDK and connected fails at Connected Android tests before usable hosted results. Route: infrastructure. Publishing UI-003feat or rerunning CI requires explicit authorization.
-  - UI-002/UI-003 drawer-to-Login logout is verified at local emulator scope; production remote logout/Token behavior remains INT-001-owned and is not claimed by this task. Current Login and Register responsive evidence has no known local implementation failure after revision 48670ff.
-next_action: infrastructure
+  - Full app regression runs exposed failures outside Auth scope: one FakeReturnFlowStore JVM test and one SurveyForm connected test; investigate with owning tasks.
+  - R11 screenshot is captured and Auth layout tests pass, but unchanged-region pixel comparison against the source composite remains not verified.
+  - R10 verification and CI evidence do not apply to R11; the hosted run failed during runner/Android SDK setup and connected tests, and no CI has run for R11.
+
+next_action: investigation

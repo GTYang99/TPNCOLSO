@@ -3,10 +3,9 @@ package com.example.tp_ncolso_android.feature.auth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 
 @Composable
-fun AuthRoute(viewModel: AuthViewModel, onLoginSucceeded: () -> Unit = {}, onRegistrationSucceeded: () -> Unit = {}, onLogoutRequested: () -> Unit = {}, captchaVisual: @Composable (Modifier) -> Unit = {}) {
+fun AuthRoute(viewModel: AuthViewModel, onLoginSucceeded: () -> Unit = {}, onRegistrationSucceeded: () -> Unit = {}, onLogoutRequested: () -> Unit = {}) {
     val state by viewModel.state.collectAsState()
     androidx.compose.runtime.LaunchedEffect(viewModel) {
         viewModel.effect.collect { effect ->
@@ -18,7 +17,7 @@ fun AuthRoute(viewModel: AuthViewModel, onLoginSucceeded: () -> Unit = {}, onReg
         }
     }
     when (state.screen) {
-        AuthScreen.Login -> LoginScreen(state.login, viewModel::onEvent, captchaVisual = captchaVisual)
+        AuthScreen.Login -> LoginScreen(state.login, viewModel::onEvent)
         AuthScreen.Register -> RegisterScreen(state.register, state.vendors, viewModel::onEvent)
     }
 }

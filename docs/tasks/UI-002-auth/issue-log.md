@@ -1,5 +1,36 @@
 # Issue Log
 
+## Current R11 Change — 2026-10-14
+- Requester decisions: remove Login CAPTCHA; keep brand/account/password positions; remove the CAPTCHA row and adjacent spacing; reflow Remember me, registration entry, and Login button upward using UI-001 spacing tokens. Auth failure copy is `帳號或密碼錯誤`.
+- Impact: R10 code/evidence did not establish R11 compliance. Plan Review iteration 19 approved plan revision 18 on isolated branch `codex/ui-002-auth-r11`, base `d74bcd8192e6ea6e2d06306867af74f198c20580`.
+- Implementation: main/debug contracts, Login layout, fake source, previews and tests updated; CAPTCHA fixture removed. Static source scan finds only negative absence assertions.
+- Validation: Auth JVM tests 9/9, Auth connected tests 17/17, lint and debug/release/androidTest builds pass. R11 runtime capture is recorded; source-composite pixel comparison remains NOT VERIFIED. A broad app JVM and connected run each exposed a failure in other feature modules; see `execution-report.md`.
+- Route: `investigation`; classify the broad-suite failures and finish visual comparison before Verification.
+- Status: Auth-scoped checks pass; task completion remains in progress until the open regression and visual evidence items are resolved.
+
+## INF-AUTH-011 — Required Gradle JBR path is unavailable on the current host
+
+- Category: `environment`
+- Priority: `P1`
+- Status: resolved
+- Originating phase: Implementation; required checks: affected JVM tests, Compose connected tests, debug/release build and R11 runtime capture.
+- Evidence: `ai/rules/operations/runtime.md` mandates `/Applications/Android Studio.app/Contents/jbr/Contents/Home`, which is absent on this Windows host; `JAVA_HOME` is unset. A candidate Windows Android Studio JBR exists at `C:\Program Files\Android\Android Studio1\jbr` and reports OpenJDK 25.0.3; the wrapper is Gradle 9.6.0 with AGP 9.4.1.
+- Action: requester authorized `C:\Program Files\Android\Android Studio1\jbr` on 2026-10-14; Runtime Rule now lists platform-specific paths and preserves no-fallback. Return to Implementation to run affected checks.
+- Impact: the Runtime policy blocker is resolved. Developer validation is partly complete; broad regression failures and pixel comparison remain open.
+- Resolution: authorized JBR path and Runtime Rule update completed; no product behavior changed.
+- Return route: `implementation`.
+- Owner: Android build/runtime infrastructure
+
+## REG-AUTH-012 — Broad local regression suites fail outside Auth scope
+
+- Category: `investigation`
+- Priority: `P1`
+- Status: open
+- Evidence: The unfiltered `testDebugUnitTest` run failed `FakeReturnFlowStoreTest.confirmationChangesStatusRemovesReturnContextAndHidesNotification` at test line 76. The unfiltered `connectedDebugAndroidTest` run reported `SurveyFormScreenTest.cleanCloseSkipsDiscardDialogAndRouteBackIsDisabledWhenNotForeground`; it was stopped after that failure. Filtered Auth JVM tests passed 9/9 and `AuthScreenTest` passed 17/17 on API 36.
+- Impact: app-wide regression status is not green; these failures are outside the R11 Auth source diff and their root cause has not been investigated.
+- Route: `investigation` for the owning notification/survey tasks; keep UI-002 Verification NOT VERIFIED until the approved regression scope is reviewed.
+- Owner: Notifications / Survey Form task owners
+
 ## IMP-AUTH-021 — Register narrow-width work-type label is clipped
 
 - Category: `implementation_failure`

@@ -40,6 +40,8 @@
 | SRC-014 | `/Users/a10362/Desktop/截圖 2026-09-07 下午5.39.20.png` | prior requester screenshot | Design / requester | PNG 568×1202, Display P3, SHA-256 `aa77c69b…cf86`, 2026-09-07 | historical | superseded | prior Login base only | available | Replaced in full by SRC-015. |
 | SRC-015 | `/var/folders/wm/_jpdxgws6mn1jxpy1k6jjmj80000gp/T/codex-clipboard-52d4f92d-7688-4c67-99f9-f6e97ce5f1dc.png` | requester-provided composite | Product／Design / requester | PNG 7904×2916, sRGB, SHA-256 `75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c`, 2026-09-07 | authoritative | current | all Login／Register visual AC and Logout interface context | available; temporary path | Sole formal visual source. Contains three Login panels, two Register panels, home and drawer examples; gray board/headings excluded. Drawer visuals remain UI-003-owned. |
 | SRC-016 | `docs/tasks/UI-002-auth/logout-interface-requirement.md` | normalized interface requirement | Product／Architecture / requester | revision 1, 2026-09-07 | authoritative derived baseline | current | FR-UI002-006, 009; AC-UI002-006, 011 | available | Defines immediate local clear and return to Login without confirmation or remote wait; excludes drawer UI. |
+| SRC-017 | Current user reply in this task | authorized product decision | Product / requester | 2026-10-14 | authoritative | current | Login CAPTCHA visibility and behavior | available | Requester selected “更新 UI 需求移除”; remove CAPTCHA from Login requirement and implementation. |
+| SRC-018 | Current user reply in this task | authorized product decision | Product / requester | 2026-10-14 | authoritative | current | R11 Login layout geometry | available | Keep brand/account/password positions; remove CAPTCHA row and adjacent spacing; move Remember me, registration entry, and Login button upward using UI-001 spacing. Use R10 composite only for unchanged regions and R11 runtime capture for reflowed controls; do not require old y-coordinates. |
 
 ## Missing or Inaccessible Sources
 - 正式登入／註冊 request／response schema、錯誤 payload、廠商代碼表 schema 尚未提供。
@@ -55,6 +57,7 @@
 - `KCF-AUTH-011`: 舊 Registration requirement 預設外業；requester 決定初始不預選且完成必填。
 - `KCF-AUTH-012`: 舊安全推導要求遮罩 Registration 密碼；requester 明確要求依圖顯示明文。
 - `KCF-AUTH-013`: 登出位置與行為跨 UI-002／UI-003／INT-001；requester 決定 drawer 不在本次範圍，但點擊後必須立即清除登入狀態並回 Login。
+- `KCF-AUTH-014`: R10 composite contains Login CAPTCHA, while current requester decision SRC-017 removes it and SRC-018 explicitly establishes unchanged anchors and the lower-control reflow validation rule.
 - Subsequent resolution: `KCF-AUTH-001–004` 已由 `KD-AUTH-005` 核定；`KCF-AUTH-007` 由 `KD-AUTH-008` 解決；`KCF-AUTH-009–013` 由最新 requester 決策與 `KD-AUTH-012` 解決。
 
 ## Collection Limitations

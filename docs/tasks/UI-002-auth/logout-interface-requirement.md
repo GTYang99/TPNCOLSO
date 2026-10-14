@@ -21,7 +21,7 @@
 
 1. UI-003 emits one `LogoutRequested` event when the user activates the drawer row labeled `登出`.
 2. The session owner immediately clears the local signed-in state and any in-memory identity.
-3. Auth state clears account, password, captcha, Remember me, Registration values, request errors and transient effects, then renders `LOGIN_EMPTY` from `login-ui-requirement.md` revision 3.
+3. Auth state clears account, password, Remember me, Registration values, request errors and transient effects, then renders `LOGIN_EMPTY` from `login-ui-requirement.md` revision 4.
 4. No confirmation dialog is shown.
 5. The transition does not wait for a remote logout response. INT-001 may perform remote cleanup, but failure must not restore the signed-in UI or block return to Login.
 6. Repeated Logout events are idempotent and must not create duplicate navigation/effect delivery.

@@ -1,0 +1,49 @@
+task:
+  id: UI-002-auth
+  type: feature
+
+phase: verification
+status: in_progress
+
+knowledge:
+  status: ready
+  collection: completed
+  resolution: completed
+  validation: passed
+  baseline_id: KB-UI-002-AUTH-R10
+
+planning:
+  status: completed
+
+plan_review:
+  status: approved
+  result: APPROVED
+  iteration: 16
+
+implementation:
+  status: completed
+
+validation:
+  status: passed
+
+git:
+  branch: UI-002feat
+  commit: 48670ffe9e33b19aea23709abf2f47cc5ed85ff1
+  status: committed
+
+verification:
+  result: NOT VERIFIED
+  category: environment
+  failed_acceptance_criteria: []
+
+ci:
+  build: PASS local (JBR Gradle, 48670ff; testDebugUnitTest, lintDebug, assembleDebug, assembleRelease, assembleDebugAndroidTest); hosted run 36442276066 unit-and-build FAILURE at Set up Android SDK
+  test: PASS local (14/14 unit; 29/29 UI-002 connected on Medium_Phone API 34 emulator-5554 at 2026-09-28T14:06:03; downstream UI-003 integration rerun 33/33 at 2026-09-28T23:39:22+0800 with XML SHA-256 298f3feb01e302b8b3e54231780ba93171428d7e942fefb319fd26e3b4a2abf4); hosted run 36442276066 connected FAILURE at Connected Android tests
+
+release:
+  status: pending
+
+blocking:
+  - Authoritative GitHub Actions run 36442276066 for reviewed 48670ff is failure: unit-and-build fails at Set up Android SDK and connected fails at Connected Android tests before usable hosted results. Route: infrastructure. Publishing UI-003feat or rerunning CI requires explicit authorization.
+  - UI-002/UI-003 drawer-to-Login logout is verified at local emulator scope; production remote logout/Token behavior remains INT-001-owned and is not claimed by this task. Current Login and Register responsive evidence has no known local implementation failure after revision 48670ff.
+next_action: infrastructure

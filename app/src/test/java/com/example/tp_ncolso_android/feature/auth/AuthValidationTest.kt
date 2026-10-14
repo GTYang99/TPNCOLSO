@@ -4,9 +4,11 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class AuthValidationTest {
-    @Test fun loginRequiresFourDigitCaptcha() {
-        val errors = validateLogin(LoginFormState(account = "a", password = "password", captcha = "12"))
-        assertTrue(errors.containsKey(LoginField.CAPTCHA))
+    @Test fun loginRequiresOnlyAccountAndPassword() {
+        val errors = validateLogin(LoginFormState())
+        assertTrue(errors.containsKey(LoginField.ACCOUNT))
+        assertTrue(errors.containsKey(LoginField.PASSWORD))
+        assertTrue(validateLogin(LoginFormState(account = "a", password = "password")).isEmpty())
     }
 
     @Test fun registerRequiresChineseNameAndWorkType() {

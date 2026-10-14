@@ -1,15 +1,21 @@
 # Knowledge Resolution
 
+## Active R11 Resolution Addendum — 2026-10-14
+- Candidate baseline: `KB-UI-002-AUTH-R11`; supersedes R10 only for Login CAPTCHA-related clauses.
+- `SRC-017` is current requester authority: remove Login CAPTCHA from UI, local validation, fake provider/fixture and error text. New Login auth-failure copy is `帳號或密碼錯誤`.
+- `SRC-018` is current requester authority for geometry: keep brand/account/password positions; remove CAPTCHA row and adjacent spacing; move Remember me, registration entry and Login button upward using existing UI-001 spacing tokens. R10 composite comparison applies only to unchanged regions; R11 runtime capture validates reflowed controls and no old y-coordinates are required.
+- Other R10 decisions remain current. This re-entry is not yet validated and does not authorize implementation.
+
 ## Question and Scope
 - Task question: 如何以 requester 最新 composite 重建 Login／Register 視覺權威，並定義不包含 drawer UI 的立即 Logout 契約？
 - In scope: `SCR-AUTH-01`、`SCR-AUTH-02`、本機表單狀態、可替換事件邊界、與 `UI-003`／`INT-001` 的 handoff。
 - Out of scope: `OVL-NAV-01` 視覺實作、地圖內容、Token persistence／expiry、HTTP integration。
 
 ## Candidate Knowledge Baseline
-- Baseline ID: `KB-UI-002-AUTH-R10`
+- Baseline ID: `KB-UI-002-AUTH-R11`
 - Created date: 2026-09-07 (Asia/Taipei)
 - Supersedes: `KB-UI-002-AUTH-R9`（只以 prior standalone screenshot 定義 Login，且仍以 Figma／安全推導定義 Register）
-- Status: validated
+- Status: validated; active R11 baseline
 
 ## Source Register
 
@@ -26,6 +32,8 @@
 
 Figma MCP inspection on 2026-09-08 confirmed auth source node `2905:2680` contains six Android screen frames at `402 x 874`; the drawer frame is `2926:282` and the home frame is `2908:2792`.
 | SRC-016 | `logout-interface-requirement.md` | normalized interface requirement | Product／Architecture / requester | revision 1, 2026-09-07 | authoritative derived baseline | current | Logout boundary / AC-UI002-006, 011 | Immediate local clear, no confirmation, return to clean Login without waiting remote. |
+| SRC-017 | Current user reply in this task | authorized product decision | Product / requester | 2026-10-14 | authoritative | current | Login CAPTCHA visibility and behavior | Requester selected “更新 UI 需求移除”; remove CAPTCHA from Login requirement and implementation. |
+| SRC-018 | Current user reply in this task | authorized product decision | Product / requester | 2026-10-14 | authoritative | current | R11 Login layout geometry | Preserve brand/account/password; remove CAPTCHA row and adjacent spacing; reflow lower controls with UI-001 spacing; runtime-capture reflowed area. |
 | SRC-004–008 | Product chapters 1–5 | product/data/behavior/interface/API specifications | Product/API / unknown | 2026-09-07 working tree | authoritative by domain | current | auth and navigation | 已依 SRC-001 統一 Token、copy、註冊導覽與帳號長度；詳細 API schema 仍待補。 |
 | SRC-009 | `KB-UI-ROADMAP-0907-R1` | task-split baseline | Process / repository | 2026-09-07 | authoritative for sequencing | current | boundaries | UI-002 不包含 map drawer implementation 或 API integration。 |
 | SRC-010 | Current Compose repository | implementation evidence | Repository | working tree 2026-09-07 | authoritative | current | current behavior | UI-001 foundation/debug entry 已有 committed implementation，但需針對詳細 Login baseline re-plan／re-implementation。 |
@@ -49,6 +57,7 @@ Figma MCP inspection on 2026-09-08 confirmed auth source node `2905:2680` contai
 | KCL-AUTH-013 | UI-002 owns Auth MVVM state/effects and debug AuthHost integration; debug direct-login remains available, while release fake/bypass wiring is deferred and prohibited. | SRC-009, SRC-010, SRC-013 | Earlier unspecified host/state design | architecture / high | AC-UI002-006, 008 | resolved |
 | KCL-AUTH-014 | Each auth screen panel in the current composite represents a 402×874 canvas at approximately 2× display scale; raster-derived anchors use ±3dp tolerance while fixed sizes/copy do not. | SRC-015, SRC-011, SRC-013 | None | design / high | UIR-LOGIN-001–005, UIR-REG-001–003 | resolved |
 | KCL-AUTH-015 | UI-003 owns the drawer UI; UI-002 owns a callable Logout destination contract that immediately clears local state and returns clean Login without confirmation or remote wait. | SRC-001, SRC-015, SRC-016 | prior INT-001-only session split | product/architecture / high | FR-UI002-006, 009 / AC-UI002-006, 011 | resolved by KD-AUTH-012 |
+| KCL-AUTH-016 | Login CAPTCHA, its local validation/provider/fixture and CAPTCHA-specific error copy are removed; brand/account/password keep their positions and lower controls reflow upward using UI-001 spacing. | SRC-017, SRC-018 | R10 Login composite for prior state only | Product / requester / high | FR-UI002-001/002, AC-UI002-001/002/003, UIR-LOGIN-001/004/006/007/008 | resolved by KD-AUTH-013/014 |
 
 ## Conflicts and Gaps
 
@@ -67,6 +76,7 @@ Figma MCP inspection on 2026-09-08 confirmed auth source node `2905:2680` contai
 | KCF-AUTH-011 | Register default external vs no initial selection | Product/UI state | P1; wrong initial state and validation | default / null required | Requester | resolved by KD-AUTH-012: null and required |
 | KCF-AUTH-012 | Register masked runtime vs plaintext current panel | Product/security UI | P1; visible behavior differs | masked / plaintext | Requester | resolved by KD-AUTH-012: plaintext/no eye; retain no-persistence controls |
 | KCF-AUTH-013 | Drawer/logout responsibility split | Architecture/navigation | P1; duplicate drawer or delayed logout | UI-002 owns all / UI-003 owns visual with UI-002 destination contract | Requester | resolved by KD-AUTH-012 |
+| KCF-AUTH-014 | R10 composite shows a CAPTCHA row; R11 removes it. Requester specifies unchanged upper anchors and the lower-control reflow, while runtime evidence establishes changed-area rendering. | Visual geometry | P2; old pixel comparison cannot validate reflowed controls. | Compare unchanged regions to composite; validate reflowed controls against R11 capture, order and UI-001 spacing tokens. | Design / Planning | resolved by KD-AUTH-014; runtime evidence remains an implementation acceptance check |
 
 ## Decision Records
 
@@ -128,7 +138,7 @@ Figma MCP inspection on 2026-09-08 confirmed auth source node `2905:2680` contai
 
 ### KD-AUTH-005
 
-- Decision: Token 效期永久；登入失敗統一顯示「帳號、密碼或驗證碼錯誤」；註冊成功返回登入頁；帳號僅限英數且最多 30 字元。
+- Decision: Token 效期永久；R10 時登入失敗文案核定為「帳號、密碼或驗證碼錯誤」；註冊成功返回登入頁；帳號僅限英數且最多 30 字元。登入文案已由 KD-AUTH-013 取代。
 - Alternatives: 半小時滑動 Token；不含驗證碼的錯誤文案；註冊後自動登入；帳號不限制長度。
 - Source / Conflict IDs: SRC-001, KCF-AUTH-001–004
 - Rationale: requester 以產品權責明確核定。
@@ -241,9 +251,26 @@ Figma MCP inspection on 2026-09-08 confirmed auth source node `2905:2680` contai
 - 後續提供新 Figma 或 screenshot 時，必須明確比對並記錄是否 supersede SRC-015。
 
 ## Validation Handoff
-- Candidate baseline: `KB-UI-002-AUTH-R10`
-- Decisions and constraints Validation must check: KD-AUTH-001–012；SRC-015 SHA-256／outer-chrome exclusion／panel normalization；`UIR-LOGIN-001–010`；`UIR-REG-001–011`；`UIR-LOGOUT-001–006`；Register null-required work type／plaintext no-eye；immediate Logout；MVVM and variant-host ownership；UI/API/task ownership 不重疊。
+- Candidate baseline: `KB-UI-002-AUTH-R11`
+- Decisions and constraints Validation must check: KD-AUTH-001–014；SRC-015 unchanged-area authority, SRC-017 CAPTCHA removal and SRC-018 layout reflow; `UIR-LOGIN-001–010` revision 4; `UIR-REG-001–011`; `UIR-LOGOUT-001–006`; Register null-required work type/plaintext no-eye; immediate Logout; MVVM/variant-host ownership; UI/API/task ownership do not overlap.
 - Safe assumptions: KA-AUTH-001–003。
 - Required follow-up evidence: UI-001 output；exact asset inventory；詳細 auth API schema。
-- Material blockers: no for UI-only Planning
-- Ready for Validation: yes
+- Material blockers: none for Planning; changed-area runtime capture remains required implementation evidence.
+- Ready for Validation: yes; validate the explicit requester geometry rule and do not infer lower-control coordinates from R10.
+
+### KD-AUTH-013 — Requester decision, 2026-10-14
+- Decision: Remove Login CAPTCHA input, image, reload control, local validation, fake provider/fixture, related semantics/IME behavior, and CAPTCHA-specific error copy. Use auth-failure copy `帳號或密碼錯誤`.
+- Alternatives: Retain the R10 local-only CAPTCHA or add an API CAPTCHA contract.
+- Source / Conflict IDs: SRC-017; KCF-AUTH-014.
+- Rationale: Requester explicitly answered “更新 UI 需求移除”.
+- Affected requirements / AC / artifacts: FR-UI002-001/002/007, AC-UI002-001/002/003, Login detailed requirement, plan, tests and assets.
+- Supersedes: R10 CAPTCHA-specific clauses only; all unrelated R10 decisions remain active.
+- Revalidation trigger: Further requester decision or new visual/API contract.
+
+### KD-AUTH-014 — Requester decision, 2026-10-14
+- Decision: Keep brand/account/password positions; remove the CAPTCHA row and adjacent spacing; move Remember me, registration entry, and Login button upward using existing UI-001 spacing tokens. Use R10 source pixels only for unchanged regions; validate reflowed controls with an R11 runtime capture using control order and approved spacing, without requiring old y-coordinates.
+- Source / Conflict IDs: SRC-018; KCF-AUTH-014.
+- Rationale: Requester explicitly approved the proposed R11 reflow rule.
+- Affected requirements / AC / artifacts: Login requirement revision 4 `UIR-LOGIN-001/005/007/008`; `FR-UI002-007`, `AC-UI002-009`; plan revision 18 and visual test evidence.
+- Supersedes: R10 y-position requirements for the removed CAPTCHA row and the reflowed lower controls only.
+- Revalidation trigger: Further requester decision or a changed source/spacing-token contract.

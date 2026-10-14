@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.foundation.Image
-import androidx.compose.ui.res.painterResource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -34,7 +32,6 @@ import com.example.tp_ncolso_android.ui.foundation.theme.AppThemeTokens
 import com.example.tp_ncolso_android.feature.auth.AuthHost
 import com.example.tp_ncolso_android.feature.auth.AuthViewModel
 import com.example.tp_ncolso_android.feature.auth.DebugAuthDataSource
-import com.example.tp_ncolso_android.feature.auth.DebugCaptchaProvider
 import com.example.tp_ncolso_android.feature.mapshell.MapShellCallbacks
 import com.example.tp_ncolso_android.feature.mapshell.MapShellEvent
 import com.example.tp_ncolso_android.feature.mapshell.MapShellRoute
@@ -65,7 +62,7 @@ import com.example.tp_ncolso_android.feature.notifications.data.FakeReturnFlowSt
 fun AppEntry() {
     val sessionOwner = remember { DebugSessionOwner() }
     val sessionState by sessionOwner.state.collectAsState()
-    val authViewModel = rememberDebugViewModel("auth") { AuthViewModel(DebugAuthDataSource(), DebugCaptchaProvider()) }
+    val authViewModel = rememberDebugViewModel("auth") { AuthViewModel(DebugAuthDataSource()) }
     val coordinator = remember { DebugAuthSessionCoordinator(sessionOwner, authViewModel) }
     var sessionGeneration by rememberSaveable { mutableIntStateOf(0) }
     val login: (AppRole) -> Unit = { role ->
@@ -89,7 +86,6 @@ fun AppEntry() {
                         viewModel = authViewModel,
                         onLoginSucceeded = { login(AppRole.INVESTIGATOR) },
                         onLogoutRequested = logout,
-                        captchaVisual = { modifier -> Image(painterResource(com.example.tp_ncolso_android.R.drawable.login_captcha_fixture), contentDescription = "驗證碼圖片", modifier = modifier) },
                     )
                 },
                 directLoginContent = { DebugDirectLogin(onLogin = login) },

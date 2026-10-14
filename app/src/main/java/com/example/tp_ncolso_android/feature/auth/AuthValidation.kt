@@ -2,12 +2,9 @@ package com.example.tp_ncolso_android.feature.auth
 
 private val accountPattern = Regex("^[A-Za-z0-9]{1,30}$")
 private val chineseNamePattern = Regex("^[\\u4E00-\\u9FFF]+$")
-private val captchaPattern = Regex("^\\d{4}$")
-
 fun validateLogin(state: LoginFormState): Map<LoginField, String> = buildMap {
     if (state.account.isBlank()) put(LoginField.ACCOUNT, "請輸入帳號")
     if (state.password.isBlank()) put(LoginField.PASSWORD, "請輸入密碼")
-    if (!captchaPattern.matches(state.captcha)) put(LoginField.CAPTCHA, "請輸入 4 碼數字驗證碼")
 }
 
 fun validateRegister(state: RegisterFormState): Map<RegisterField, String> = buildMap {

@@ -21,7 +21,7 @@ class AuthViewModelTest {
 
     @Test fun invalidLoginDoesNotCallSource() = runTest {
         val source = RecordingAuthSource()
-        val viewModel = AuthViewModel(source, FixedCaptchaProvider())
+        val viewModel = AuthViewModel(source)
         viewModel.onEvent(AuthEvent.SubmitLogin)
         advanceUntilIdle()
         assertEquals(0, source.loginCalls)
@@ -30,35 +30,32 @@ class AuthViewModelTest {
 
     @Test fun successfulLoginEmitsOneEffectAndClearsSensitiveState() = runTest(StandardTestDispatcher()) {
         val source = RecordingAuthSource(loginResult = true)
-        val viewModel = AuthViewModel(source, FixedCaptchaProvider())
+        val viewModel = AuthViewModel(source)
         viewModel.onEvent(AuthEvent.LoginAccountChanged("sunrise000"))
         viewModel.onEvent(AuthEvent.LoginPasswordChanged("password"))
-        viewModel.onEvent(AuthEvent.LoginCaptchaChanged("0926"))
         viewModel.onEvent(AuthEvent.SubmitLogin)
         advanceUntilIdle()
         assertEquals(1, source.loginCalls)
         assertEquals(AuthEffect.LoginSucceeded, viewModel.effect.first())
         assertEquals("", viewModel.state.value.login.account)
         assertEquals("", viewModel.state.value.login.password)
-        assertEquals("", viewModel.state.value.login.captcha)
     }
 
     @Test fun failedLoginRetainsAccountAndRememberMe() = runTest {
         val source = RecordingAuthSource(loginResult = false)
-        val viewModel = AuthViewModel(source, FixedCaptchaProvider())
+        val viewModel = AuthViewModel(source)
         viewModel.onEvent(AuthEvent.LoginAccountChanged("sunrise000"))
         viewModel.onEvent(AuthEvent.LoginPasswordChanged("password"))
-        viewModel.onEvent(AuthEvent.LoginCaptchaChanged("0926"))
         viewModel.onEvent(AuthEvent.RememberMeChanged(true))
         viewModel.onEvent(AuthEvent.SubmitLogin)
         advanceUntilIdle()
         assertEquals("sunrise000", viewModel.state.value.login.account)
         assertTrue(viewModel.state.value.login.rememberMe)
-        assertEquals("帳號、密碼或驗證碼錯誤", viewModel.state.value.login.requestError)
+        assertEquals("帳號或密碼錯誤", viewModel.state.value.login.requestError)
     }
 
     @Test fun logoutResetsAuthStateAndEmitsEffect() = runTest {
-        val viewModel = AuthViewModel(RecordingAuthSource(), FixedCaptchaProvider())
+        val viewModel = AuthViewModel(RecordingAuthSource())
         viewModel.onEvent(AuthEvent.LoginAccountChanged("account"))
         viewModel.onEvent(AuthEvent.RememberMeChanged(true))
         viewModel.onEvent(AuthEvent.LogoutRequested)
@@ -68,23 +65,9 @@ class AuthViewModelTest {
         assertTrue(!viewModel.state.value.login.rememberMe)
     }
 
-    @Test fun captchaRefreshFailureRetainsFormAndExposesRetryError() = runTest {
-        val viewModel = AuthViewModel(RecordingAuthSource(), FailingCaptchaProvider())
-        viewModel.onEvent(AuthEvent.LoginAccountChanged("account"))
-        viewModel.onEvent(AuthEvent.RememberMeChanged(true))
-        viewModel.onEvent(AuthEvent.RefreshCaptcha)
-        advanceUntilIdle()
-        assertEquals("account", viewModel.state.value.login.account)
-        assertTrue(viewModel.state.value.login.rememberMe)
-        assertEquals("驗證碼更新失敗，請重試", viewModel.state.value.login.captchaError)
-    }
-
-    private class FixedCaptchaProvider : CaptchaProvider { override suspend fun refresh() = "next" }
-    private class FailingCaptchaProvider : CaptchaProvider { override suspend fun refresh(): String = error("fixture failure") }
-
     private class RecordingAuthSource(private val loginResult: Boolean = true) : AuthDataSource {
         var loginCalls = 0
-        override suspend fun login(account: String, password: String, captcha: String): Boolean { loginCalls++; return loginResult }
+        override suspend fun login(account: String, password: String): Boolean { loginCalls++; return loginResult }
         override suspend fun register(input: RegistrationInput) = true
         override suspend fun vendors() = emptyList<VendorOption>()
     }

@@ -4,7 +4,6 @@ import com.example.tp_ncolso_android.feature.auth.AuthDataSource
 import com.example.tp_ncolso_android.feature.auth.AuthEvent
 import com.example.tp_ncolso_android.feature.auth.AuthScreen
 import com.example.tp_ncolso_android.feature.auth.AuthViewModel
-import com.example.tp_ncolso_android.feature.auth.CaptchaProvider
 import com.example.tp_ncolso_android.feature.auth.RegistrationInput
 import com.example.tp_ncolso_android.feature.auth.VendorOption
 import com.example.tp_ncolso_android.session.AppRole
@@ -23,7 +22,7 @@ class DebugAuthSessionCoordinatorTest {
 
     @Test fun loginIsGuardedAndLogoutClearsSessionAndAuth() {
         val owner = DebugSessionOwner()
-        val viewModel = AuthViewModel(NoopSource(), NoopCaptcha())
+        val viewModel = AuthViewModel(NoopSource())
         val coordinator = DebugAuthSessionCoordinator(owner, viewModel)
         coordinator.login(AppRole.INVESTIGATOR)
         coordinator.login(AppRole.ADMINISTRATOR)
@@ -35,12 +34,11 @@ class DebugAuthSessionCoordinatorTest {
 
     @Test fun ui003LogoutRequestedFixtureClearsBothStatesAndIsIdempotent() {
         val owner = DebugSessionOwner()
-        val viewModel = AuthViewModel(NoopSource(), NoopCaptcha())
+        val viewModel = AuthViewModel(NoopSource())
         val coordinator = DebugAuthSessionCoordinator(owner, viewModel)
 
         viewModel.onEvent(AuthEvent.LoginAccountChanged("old-account"))
         viewModel.onEvent(AuthEvent.LoginPasswordChanged("old-password"))
-        viewModel.onEvent(AuthEvent.LoginCaptchaChanged("1234"))
         viewModel.onEvent(AuthEvent.RememberMeChanged(true))
         viewModel.onEvent(AuthEvent.OpenRegister)
         viewModel.onEvent(AuthEvent.RegisterAccountChanged("old-register"))
@@ -60,7 +58,6 @@ class DebugAuthSessionCoordinatorTest {
         assertEquals(AuthScreen.Login, viewModel.state.value.screen)
         assertEquals("", viewModel.state.value.login.account)
         assertEquals("", viewModel.state.value.login.password)
-        assertEquals("", viewModel.state.value.login.captcha)
         assertEquals(false, viewModel.state.value.login.rememberMe)
         assertEquals("", viewModel.state.value.register.account)
         assertEquals("", viewModel.state.value.register.password)
@@ -70,9 +67,8 @@ class DebugAuthSessionCoordinatorTest {
         assertEquals("", viewModel.state.value.register.name)
     }
 
-    private class NoopCaptcha : CaptchaProvider { override suspend fun refresh() = "fixture" }
     private class NoopSource : AuthDataSource {
-        override suspend fun login(account: String, password: String, captcha: String) = false
+        override suspend fun login(account: String, password: String) = false
         override suspend fun register(input: RegistrationInput) = false
         override suspend fun vendors() = listOf(VendorOption("test", "測試廠商"))
     }

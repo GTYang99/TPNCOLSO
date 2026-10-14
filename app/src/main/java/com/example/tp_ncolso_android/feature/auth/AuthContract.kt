@@ -3,16 +3,13 @@ package com.example.tp_ncolso_android.feature.auth
 data class LoginFormState(
     val account: String = "",
     val password: String = "",
-    val captcha: String = "",
     val rememberMe: Boolean = false,
-    val captchaImageKey: String = "default",
-    val captchaError: String? = null,
     val fieldErrors: Map<LoginField, String> = emptyMap(),
     val requestError: String? = null,
     val submitting: Boolean = false,
 )
 
-enum class LoginField { ACCOUNT, PASSWORD, CAPTCHA }
+enum class LoginField { ACCOUNT, PASSWORD }
 
 data class RegisterFormState(
     val account: String = "",
@@ -49,11 +46,9 @@ sealed interface AuthEvent {
     data object CancelRegister : AuthEvent
     data object SubmitLogin : AuthEvent
     data object SubmitRegister : AuthEvent
-    data object RefreshCaptcha : AuthEvent
     data object LogoutRequested : AuthEvent
     data class LoginAccountChanged(val value: String) : AuthEvent
     data class LoginPasswordChanged(val value: String) : AuthEvent
-    data class LoginCaptchaChanged(val value: String) : AuthEvent
     data class RememberMeChanged(val value: Boolean) : AuthEvent
     data class RegisterAccountChanged(val value: String) : AuthEvent
     data class RegisterPasswordChanged(val value: String) : AuthEvent
