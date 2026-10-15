@@ -95,10 +95,16 @@ On 2026-10-14 the requester authorized `C:\Program Files\Android\Android Studio1
 - A full connected retry was started with `ANDROID_SERIAL=emulator-5554` and stopped after more than five minutes without a result file. No current-revision full-suite PASS is claimed; the previously archived 70/70 emulator result remains the latest completed full-suite evidence.
 - Geometry and unchanged-region artifacts were rebound to the current source/test revision; their updated SHA-256 values are `5a0d66ee0fe75f60f49af88aa466de64ebc11ba76a37b52b797478c40da6e800` and `22ff41b1df41ee8ef24ec26d504b59e9db83c2ddbd062ab9e92dcaff398e7d10`.
 
+### 2026-10-15 infrastructure and JVM refresh
+
+- Current Auth-filtered JVM validation with `/Applications/Android Studio.app/Contents/jbr/Contents/Home` completed `BUILD SUCCESSFUL`; no device was required.
+- The owning `FakeReturnFlowStoreTest` rerun reproduced the existing 1-of-3 failure at `FakeReturnFlowStoreTest.kt:76`; this remains outside the approved UI-002 production scope.
+- A current full connected retry was started with `ANDROID_SERIAL=emulator-5554` and stopped after more than five minutes without a result. Direct ADB reproduction failed before device connection with `ADB server didn't ACK` / `could not install *smartsocket* listener: Operation not permitted`; no physical device was used and no ADB reset was attempted. This is recorded as `INFRA-AUTH-001` and routed to Infrastructure.
+
 ## Outcome and Next Action
 
 - Auth implementation, task-scoped local tests, lint, variant builds, and the completed reviewed full connected emulator suite pass. The latest Auth-only responsive slice is 26/26; the unfiltered JVM suite still has one unrelated FakeReturnFlowStore failure.
 - R11 verification remains NOT VERIFIED until the external JVM regression and complete cross-device/API responsive visual matrix are reviewed; local filled/error unchanged-region metrics and the local responsive slice are recorded.
 - Hosted CI remains the previously recorded R10 failure; no R11 CI has run. The hosted gate is deferred for development scope with reactivation before release-candidate validation.
-- Current action: `investigation`. Review the remaining external JVM regression and responsive matrix limitation before Code Review and Verification.
+- Current action: `infrastructure`. Restore the authorized emulator/ADB service, then rerun connected validation; review the remaining external JVM regression and responsive matrix limitation before Code Review and Verification.
 - Commit `65daddca4c605dada861a65e3c02fac1978d2572` is the original R11 implementation commit on `codex/ui-002-auth-r11`; the current reviewed source/test revision is `9d241994d29057a16aa68c4f4c323ed232158b18`, with evidence/report updates following it. Code Review and Verification remain pending.

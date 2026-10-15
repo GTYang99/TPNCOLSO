@@ -40,6 +40,27 @@
 - Route: `verification`
 - Owner: UI-002 implementation
 
+## INFRA-AUTH-001 — ADB daemon unavailable for current connected rerun
+
+- Category: `infrastructure`
+- Priority: `P1`
+- Status: open
+- Evidence: On 2026-10-15, `~/Library/Android/sdk/platform-tools/adb -s emulator-5554 get-state` repeatedly failed before connecting to the authorized API 36 emulator with `ADB server didn't ACK` and `could not install *smartsocket* listener: Operation not permitted`; the daemon log also reported `usb_osx.cpp:168 Unable to create an interface plug-in (e00002be)`. The full connected retry had no result after more than five minutes and was stopped.
+- Impact: Current-revision full connected validation and additional emulator captures cannot be rerun. No physical device was used.
+- Action: No ADB restart, device reset, or production-code workaround was attempted. Restore the local ADB/emulator service, then rerun `ANDROID_SERIAL=emulator-5554 ./gradlew :app:connectedDebugAndroidTest`.
+- Route: `infrastructure`
+- Owner: local Android emulator/ADB environment owner
+
+## VAL-AUTH-028 — Current JVM classification refresh
+
+- Category: `validation`
+- Priority: `P1`
+- Status: recorded
+- Evidence: With the required macOS Android Studio JBR, `:app:testDebugUnitTest --tests '*Auth*'` completed `BUILD SUCCESSFUL` on the current committed source/test revision. The owning out-of-scope `FakeReturnFlowStoreTest` rerun reproduced 3 tests with 1 failure at `FakeReturnFlowStoreTest.kt:76`; no UI-002 production code was changed.
+- Scope: Auth JVM validation remains PASS; the Notifications/Parcel regression remains open and is not evidence against the Auth implementation.
+- Route: `verification`
+- Owner: UI-002 implementation / Notifications owner
+
 ## IMP-AUTH-022 — Login password visibility action is inert
 
 - Category: `implementation_failure`

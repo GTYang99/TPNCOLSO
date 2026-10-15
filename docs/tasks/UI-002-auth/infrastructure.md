@@ -41,4 +41,14 @@ Decision: requester approved `C:\Program Files\Android\Android Studio1\jbr` on 2
 
 ## Return Route
 
-Return route: `implementation`. JBR/SDK access is restored. Investigate the unrelated suite failures and complete the remaining source-composite visual comparison; do not report task Verification PASS while those required gates remain open.
+## Current macOS emulator check — 2026-10-15
+
+- Symptom: a new `ANDROID_SERIAL=emulator-5554 ./gradlew :app:connectedDebugAndroidTest` retry reached the connected-test task but produced no result after more than five minutes and was stopped. A direct check with the same authorized serial could not connect because the ADB daemon failed to start.
+- Reproduction: `~/Library/Android/sdk/platform-tools/adb -s emulator-5554 get-state` repeatedly returned `ADB server didn't ACK` and `could not install *smartsocket* listener: Operation not permitted`; the daemon log also reported `usb_osx.cpp:168 Unable to create an interface plug-in (e00002be)`.
+- Classification: environment/tooling, affecting only connected-test execution. No physical device was selected or tested.
+- Affected gates: current-revision full connected suite and any additional emulator visual matrix capture. Existing archived 70/70 and 26/26 results remain valid for their recorded revisions/runs; this failed retry is not a PASS.
+- Action: no ADB restart, device reset, or production-code workaround was attempted. The smallest required owner action is to restore the local ADB/emulator service, then rerun the task-scoped connected suite.
+
+## Return Route
+
+Return route: `infrastructure` until the authorized API 36 emulator/ADB service is restored, then return to `implementation` for the remaining verification work. JBR/SDK access is restored; do not report task Verification PASS while the external JVM regression, connected-test environment, or complete visual matrix remain open.

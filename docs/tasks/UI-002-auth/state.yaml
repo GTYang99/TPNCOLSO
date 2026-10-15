@@ -64,8 +64,8 @@ release:
   status: pending
 
 blocking:
-  - The latest full connected retry on the API 36 emulator was stopped after more than five minutes without a result file; the prior reviewed revision remains green at 70/70, while the current Auth-only responsive suite is green at 26/26. The unfiltered JVM suite still has the deterministic FakeReturnFlowStoreTest correctionSaved failure outside Auth scope; source-classified as an owning Notifications/Parcel defect, with owner action still required.
+  - The latest full connected retry on the API 36 emulator was stopped after more than five minutes without a result file; direct `adb -s emulator-5554 get-state` checks reproduce `ADB server didn't ACK` / `Operation not permitted`. The prior reviewed revision remains green at 70/70, while the current Auth-only responsive suite is green at 26/26. The unfiltered JVM suite still has the deterministic FakeReturnFlowStoreTest correctionSaved failure outside Auth scope; source-classified as an owning Notifications/Parcel defect, with owner action still required.
   - R11 exact 402dp×874dp unchanged-region comparison is PASS for empty, filled, and auth-error metrics in docs/design/evidence/auth/figma-export-2026-10-15-r11/numeric-diff-r11-unchanged.json. The local emulator responsive slice is PASS in responsive-matrix-r11.json; complete cross-device/API coverage remains not verified, while the reflowed band is separately covered by geometry evidence.
   - R10 verification and CI evidence do not apply to R11; the hosted run failed during runner/Android SDK setup and connected tests, and no CI has run for R11.
 
-next_action: investigation
+next_action: infrastructure
