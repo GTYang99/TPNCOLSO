@@ -18,7 +18,23 @@ class AuthValidationTest {
     }
 
     @Test fun registerAcceptsValidBoundary() {
-        val errors = validateRegister(RegisterFormState(account = "A1", password = "password", confirmPassword = "password", vendor = VendorOption("v", "廠商"), workType = WorkType.FIELD, name = "王小明"))
+        val errors = validateRegister(RegisterFormState(account = "A".repeat(30), password = "password", confirmPassword = "password", vendor = VendorOption("v", "廠商"), workType = WorkType.FIELD, name = "王小明"))
         assertTrue(errors.isEmpty())
+    }
+
+    @Test fun registerRejectsAccountAndPasswordBoundaries() {
+        val errors = validateRegister(
+            RegisterFormState(
+                account = "A".repeat(31) + "!",
+                password = "short",
+                confirmPassword = "different",
+                vendor = VendorOption("v", "廠商"),
+                workType = WorkType.FIELD,
+                name = "王小明",
+            ),
+        )
+        assertTrue(errors.containsKey(RegisterField.ACCOUNT))
+        assertTrue(errors.containsKey(RegisterField.PASSWORD))
+        assertTrue(errors.containsKey(RegisterField.CONFIRM_PASSWORD))
     }
 }
