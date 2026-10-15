@@ -12,7 +12,7 @@
     "targetedFailures": 0,
     "targetedErrors": 0,
     "xml": "docs/tasks/UI-002-auth/evidence/authscreen-rerun-2026-10-15-r11-emulator-only-responsive-viewport.xml",
-    "xmlSha256": "3a5905cac651570915580e82585ab86945a947bdaed1dd839a7e2857c3f01815"
+    "xmlSha256": "4b952b0125e6dc6ec701f541cdf5a8f3d4bc329228d38e892885fdccd0c952cc"
   },
   "cases": [
     {

@@ -49,6 +49,11 @@ Decision: requester approved `C:\Program Files\Android\Android Studio1\jbr` on 2
 - Affected gates: current-revision full connected suite and any additional emulator visual matrix capture. Existing archived 70/70 and 26/26 results remain valid for their recorded revisions/runs; this failed retry is not a PASS.
 - Action: no ADB restart, device reset, or production-code workaround was attempted. The smallest required owner action is to restore the local ADB/emulator service, then rerun the task-scoped connected suite.
 
+## Resolution — 2026-10-15
+
+- Host-access execution of the same ADB probe (`adb -s emulator-5554 get-state`) returned `device`; no physical device was used and no device reset was performed.
+- The task-scoped Auth suite then completed 26/26, and the full emulator-only suite completed 72 tests with one unrelated SurveyForm failure. The ADB issue is resolved for host-access commands; connected validation now returns to Verification with the owning regression and matrix limitations recorded.
+
 ## Return Route
 
-Return route: `infrastructure` until the authorized API 36 emulator/ADB service is restored, then return to `implementation` for the remaining verification work. JBR/SDK access is restored; do not report task Verification PASS while the external JVM regression, connected-test environment, or complete visual matrix remain open.
+Return route: `verification`. JBR/SDK and host-access ADB are restored; do not report task Verification PASS while the external JVM regression, connected-test result, or complete visual matrix remain open.

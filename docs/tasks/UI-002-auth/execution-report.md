@@ -100,7 +100,7 @@ On 2026-10-14 the requester authorized `C:\Program Files\Android\Android Studio1
 - Current Auth-filtered JVM validation with `/Applications/Android Studio.app/Contents/jbr/Contents/Home` completed `BUILD SUCCESSFUL`; no device was required.
 - Current non-device build validation with the same JBR completed `BUILD SUCCESSFUL` for `:app:lintDebug :app:assembleRelease :app:assembleDebugAndroidTest`.
 - The owning `FakeReturnFlowStoreTest` rerun reproduced the existing 1-of-3 failure at `FakeReturnFlowStoreTest.kt:76`; this remains outside the approved UI-002 production scope.
-- A current full connected retry was started with `ANDROID_SERIAL=emulator-5554` and stopped after more than five minutes without a result. Direct ADB reproduction failed before device connection with `ADB server didn't ACK` / `could not install *smartsocket* listener: Operation not permitted`; no physical device was used and no ADB reset was attempted. This is recorded as `INFRA-AUTH-001` and routed to Infrastructure.
+- Default-sandbox ADB reproduced `ADB server didn't ACK` / `could not install *smartsocket* listener: Operation not permitted`; host-access ADB then returned `device` for `emulator-5554` without a device reset. The current Auth-only run completed 26/26, and the current full connected run completed 72 tests with one unrelated SurveyForm failure. Full XML: `docs/tasks/UI-002-auth/evidence/full-connected-rerun-2026-10-15-api36-emulator-only-current.xml` (SHA-256 `eb4f76ddf898da7424dd1037d009b2b04ed4c0e6dcc0ef2ad194912d98a11c93`). No physical device was used; `INFRA-AUTH-001` is resolved for host-access execution.
 
 ### Post-commit Code Review — 2026-10-15
 
@@ -112,8 +112,8 @@ On 2026-10-14 the requester authorized `C:\Program Files\Android\Android Studio1
 
 ## Outcome and Next Action
 
-- Auth implementation, task-scoped local tests, lint, variant builds, and the completed reviewed full connected emulator suite pass. The latest Auth-only responsive slice is 26/26; the unfiltered JVM suite still has one unrelated FakeReturnFlowStore failure.
+- Auth implementation, task-scoped local tests, lint, variant builds, and the current Auth connected suite pass. The full emulator suite now executes 72 tests with one unrelated SurveyForm failure; the unfiltered JVM suite still has one unrelated FakeReturnFlowStore failure.
 - R11 verification remains NOT VERIFIED until the external JVM regression and complete cross-device/API responsive visual matrix are reviewed; local filled/error unchanged-region metrics and the local responsive slice are recorded.
 - Hosted CI remains the previously recorded R10 failure; no R11 CI has run. The hosted gate is deferred for development scope with reactivation before release-candidate validation.
-- Current action: `infrastructure`. Restore the authorized emulator/ADB service, then rerun connected validation; review the remaining external JVM regression and responsive matrix limitation before Verification.
+- Current action: `verification`. Review the recorded external regressions and remaining responsive-matrix limitations against each AC; do not claim task Verification PASS while any required AC remains `NOT VERIFIED`.
 - Commit `65daddca4c605dada861a65e3c02fac1978d2572` is the original R11 implementation commit on `codex/ui-002-auth-r11`; the current reviewed source/test revision is `9d241994d29057a16aa68c4f4c323ed232158b18`, with evidence/report updates following it. Code Review is approved; Verification remains pending.

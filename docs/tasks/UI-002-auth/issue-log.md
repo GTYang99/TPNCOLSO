@@ -34,9 +34,9 @@
 - Category: `validation`
 - Priority: `P1`
 - Status: recorded
-- Evidence: Source/test revision `9d241994d29057a16aa68c4f4c323ed232158b18` adds narrow-width and font-scale Compose node captures. The Auth-only emulator run completed 26/26 with 0 failures, errors, or skips on `emulator-5554` / API 36. XML: `docs/tasks/UI-002-auth/evidence/authscreen-rerun-2026-10-15-r11-emulator-only-responsive-viewport.xml`; SHA-256 `3a5905cac651570915580e82585ab86945a947bdaed1dd839a7e2857c3f01815`.
+- Evidence: Source/test revision `9d241994d29057a16aa68c4f4c323ed232158b18` adds narrow-width and font-scale Compose node captures. The latest Auth-only emulator run completed 26/26 with 0 failures, errors, or skips on `emulator-5554` / API 36. XML: `docs/tasks/UI-002-auth/evidence/authscreen-rerun-2026-10-15-r11-emulator-only-responsive-viewport.xml`; SHA-256 `4b952b0125e6dc6ec701f541cdf5a8f3d4bc329228d38e892885fdccd0c952cc`.
 - Observation: The 320dp capture keeps fields, lower actions, and skyline visible with the header stacked; the 1.3 font-scale capture keeps fields, error message, and actions visible; IME focus/action reachability remains covered by the existing semantics tests. The IME Compose root capture excludes the system keyboard raster.
-- Scope: `responsive-matrix-r11.json` is PASS for this local emulator slice only. Captures are deleted from ignored output after hash extraction; complete cross-device/API visual coverage remains NOT VERIFIED. The current full connected retry was stopped after more than five minutes without a result file.
+- Scope: `responsive-matrix-r11.json` is PASS for this local emulator slice only. Captures are deleted from ignored output after hash extraction; complete cross-device/API visual coverage remains NOT VERIFIED. The current full connected run completed with one unrelated SurveyForm failure, recorded separately below.
 - Route: `verification`
 - Owner: UI-002 implementation
 
@@ -44,12 +44,23 @@
 
 - Category: `infrastructure`
 - Priority: `P1`
-- Status: open
+- Status: resolved
 - Evidence: On 2026-10-15, `~/Library/Android/sdk/platform-tools/adb -s emulator-5554 get-state` repeatedly failed before connecting to the authorized API 36 emulator with `ADB server didn't ACK` and `could not install *smartsocket* listener: Operation not permitted`; the daemon log also reported `usb_osx.cpp:168 Unable to create an interface plug-in (e00002be)`. The full connected retry had no result after more than five minutes and was stopped.
-- Impact: Current-revision full connected validation and additional emulator captures cannot be rerun. No physical device was used.
-- Action: No ADB restart, device reset, or production-code workaround was attempted. Restore the local ADB/emulator service, then rerun `ANDROID_SERIAL=emulator-5554 ./gradlew :app:connectedDebugAndroidTest`.
-- Route: `infrastructure`
+- Impact: Default sandbox ADB commands could not connect, but host-access ADB restored the authorized emulator. No physical device was used.
+- Resolution: Host-access `adb -s emulator-5554 get-state` returned `device`; the Auth-only suite then completed 26/26 and the full suite completed 72 tests. No device reset or production-code workaround was attempted.
+- Route: `verification`
 - Owner: local Android emulator/ADB environment owner
+
+## VAL-AUTH-029 — Current full emulator connected run
+
+- Category: `validation`
+- Priority: `P1`
+- Status: recorded
+- Evidence: With host-access ADB and `ANDROID_SERIAL=emulator-5554`, `:app:connectedDebugAndroidTest` completed 72 tests, 1 failure, 0 errors, and 0 skips on `Medium_Phone(AVD) - 16`, API 36. AuthScreenTest passed 26/26. XML: `docs/tasks/UI-002-auth/evidence/full-connected-rerun-2026-10-15-api36-emulator-only-current.xml`; SHA-256 `eb4f76ddf898da7424dd1037d009b2b04ed4c0e6dcc0ef2ad194912d98a11c93`.
+- Failure: `SurveyFormScreenTest.dirtyCloseAndBackUseDiscardDialogAndContinuePreservesEdits` failed outside UI-002 Auth; no unrelated production code was changed.
+- Scope: Emulator-only local evidence; no physical device and no hosted CI PASS claimed.
+- Route: `verification`
+- Owner: UI-002 implementation / SurveyForm owner
 
 ## VAL-AUTH-028 — Current JVM classification refresh
 
