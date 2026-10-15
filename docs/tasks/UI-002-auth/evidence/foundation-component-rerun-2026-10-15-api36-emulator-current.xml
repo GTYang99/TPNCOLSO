@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuites tests="10" failures="0" errors="0" skipped="0" time="0.000" timestamp="2026-10-15T02:06:39" hostname="localhost">
+  <testsuite name="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" tests="10" failures="0" errors="0" skipped="0" time="57.653" timestamp="2026-10-15T02:06:39" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="passwordVisibilityActionTogglesCallerState" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="4.744" />
+    <testcase name="passwordFieldCanDisableVisibilityAction" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="4.350" />
+    <testcase name="primaryAndSecondaryButtonsMeetMinimumTouchTarget" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="8.005" />
+    <testcase name="checkboxRowUsesFullSelectableRow" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="5.314" />
+    <testcase name="radioGroupAllowsExactlyOneSelectedOption" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="5.449" />
+    <testcase name="loadingButtonSuppressesClick" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="4.301" />
+    <testcase name="iconButtonExposesDescriptionAndClickAction" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="6.428" />
+    <testcase name="passwordFieldSupportsRequiredDisabledReadonlyAndErrorSemantics" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="3.812" />
+    <testcase name="textFieldShowsRequiredLabelAndErrorText" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="4.937" />
+    <testcase name="selectStatusReadOnlyLoadingAndErrorExposeContent" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="10.313" />
+  </testsuite>
+</testsuites>

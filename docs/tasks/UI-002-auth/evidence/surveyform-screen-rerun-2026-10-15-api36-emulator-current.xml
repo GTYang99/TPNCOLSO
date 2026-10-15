@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuites tests="9" failures="2" errors="0" skipped="0" time="0.000" timestamp="2026-10-15T02:05:22" hostname="localhost">
+  <testsuite name="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" tests="9" failures="2" errors="0" skipped="0" time="69.540" timestamp="2026-10-15T02:05:22" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="invalidPhotoCountBlocksSubmitWithLocalError" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="5.265" />
+    <testcase name="cleanCloseSkipsDiscardDialogAndRouteBackIsDisabledWhenNotForegrounded" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="4.526" />
+    <testcase name="ui005EditCallbackOpensSurveyFormInDebugHost" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="21.622" />
+    <testcase name="noOccupancyHidesOccupationAndSelectingOccupiedShowsIt" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="7.162" />
+    <testcase name="dirtyCloseAndBackUseDiscardDialogAndContinuePreservesEdits" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="6.535">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest.dirtyCloseAndBackUseDiscardDialogAndContinuePreservesEdits(SurveyFormScreenTest.kt:177)
+</failure>
+    </testcase>
+    <testcase name="cameraEntryUsesAccessibleCaptureCallbackAndFourPhotoSubmitSucceeds" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="5.074">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest.cameraEntryUsesAccessibleCaptureCallbackAndFourPhotoSubmitSucceeds(SurveyFormScreenTest.kt:74)
+</failure>
+    </testcase>
+    <testcase name="invalidRestoredPhotoShowsRecoveryTextAndKeepsFormValues" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="4.378" />
+    <testcase name="cleanSystemBackClosesWithoutDiscardDialog" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="5.266" />
+    <testcase name="deletePhotoRequiresConfirmationAndCancelKeepsPhoto" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="9.712" />
+  </testsuite>
+</testsuites>

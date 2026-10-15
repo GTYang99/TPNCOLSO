@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuites tests="3" failures="0" errors="0" skipped="0" time="0.000" timestamp="2026-10-15T02:03:53" hostname="localhost">
+  <testsuite name="com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest" tests="3" failures="0" errors="0" skipped="0" time="36.582" timestamp="2026-10-15T02:03:53" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="notificationListShowsSixRowsClosesAndOpensTheMatchingDetail" classname="com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest" time="8.719" />
+    <testcase name="correctionSaveCancelAndConfirmKeepAllSurfacesConsistent" classname="com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest" time="13.007" />
+    <testcase name="dirtyCorrectionCanContinueOrDiscardAndCleanExitSkipsPrompt" classname="com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest" time="14.856" />
+  </testsuite>
+</testsuites>
