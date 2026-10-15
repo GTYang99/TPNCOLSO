@@ -8,6 +8,18 @@
 - Route: `investigation`; classify the broad-suite failures and finish visual comparison before Verification.
 - Status: Auth-scoped checks pass; task completion remains in progress until the open regression and visual evidence items are resolved.
 
+## IMP-AUTH-022 — Login password visibility action is inert
+
+- Category: `implementation_failure`
+- Priority: `P1`
+- Status: resolved
+- Evidence: `LoginScreen.kt` renders `AppPasswordField` with `visible = false` and an empty `onVisibilityChange` callback. The approved UI-001 foundation contract requires Login masked plus an effective eye action, and `login-ui-requirement.md` requires the action semantics `顯示密碼` / `隱藏密碼`.
+- Impact: The eye target is present and accessible but cannot reveal or re-mask the Login password, so the Login password interaction contract is incomplete.
+- Resolution: `LoginFormState` now owns a non-sensitive `passwordVisible` flag reset by the normal Auth state reset, and `LoginScreen` forwards the toggle through `AuthViewModel`; the screen-level test verifies both `顯示密碼` → `隱藏密碼` and the reverse transition. No password value is added to saved state or logs.
+- Evidence: AuthScreenTest 18/18 PASS, Auth JVM-filtered tests PASS, `lintDebug` and `assembleRelease` PASS after the fix.
+- Route: `verification`; retain broader task limitations separately.
+- Owner: UI-002 implementation
+
 ## INF-AUTH-011 — Required Gradle JBR path is unavailable on the current host
 
 - Category: `environment`

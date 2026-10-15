@@ -3,6 +3,7 @@ package com.example.tp_ncolso_android.feature.auth
 data class LoginFormState(
     val account: String = "",
     val password: String = "",
+    val passwordVisible: Boolean = false,
     val rememberMe: Boolean = false,
     val fieldErrors: Map<LoginField, String> = emptyMap(),
     val requestError: String? = null,
@@ -49,6 +50,7 @@ sealed interface AuthEvent {
     data object LogoutRequested : AuthEvent
     data class LoginAccountChanged(val value: String) : AuthEvent
     data class LoginPasswordChanged(val value: String) : AuthEvent
+    data class LoginPasswordVisibilityChanged(val value: Boolean) : AuthEvent
     data class RememberMeChanged(val value: Boolean) : AuthEvent
     data class RegisterAccountChanged(val value: String) : AuthEvent
     data class RegisterPasswordChanged(val value: String) : AuthEvent

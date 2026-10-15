@@ -32,6 +32,9 @@ import java.io.FileOutputStream
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import org.junit.Assert.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -99,6 +102,23 @@ class AuthScreenTest {
     @Test fun loginSubmittingStateDisablesSubmit() {
         composeRule.setContent { AppTheme { LoginScreen(LoginFormState(submitting = true), {}) } }
         composeRule.onNodeWithText("登入").assertIsNotEnabled()
+    }
+
+    @Test fun loginPasswordVisibilityActionTogglesMaskedState() {
+        var state by mutableStateOf(LoginFormState(password = "password"))
+        composeRule.setContent {
+            AppTheme {
+                LoginScreen(state, onEvent = { event ->
+                    if (event is AuthEvent.LoginPasswordVisibilityChanged) {
+                        state = state.copy(passwordVisible = event.value)
+                    }
+                })
+            }
+        }
+        composeRule.onNodeWithText("顯示密碼").performClick()
+        composeRule.onNodeWithText("隱藏密碼").assertIsDisplayed()
+        composeRule.onNodeWithText("隱藏密碼").performClick()
+        composeRule.onNodeWithText("顯示密碼").assertIsDisplayed()
     }
 
     @Test fun registerRendersSixFieldsAndUnselectedWorkType() {

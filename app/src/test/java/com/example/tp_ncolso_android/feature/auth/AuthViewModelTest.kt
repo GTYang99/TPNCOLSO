@@ -58,11 +58,13 @@ class AuthViewModelTest {
         val viewModel = AuthViewModel(RecordingAuthSource())
         viewModel.onEvent(AuthEvent.LoginAccountChanged("account"))
         viewModel.onEvent(AuthEvent.RememberMeChanged(true))
+        viewModel.onEvent(AuthEvent.LoginPasswordVisibilityChanged(true))
         viewModel.onEvent(AuthEvent.LogoutRequested)
         assertEquals(AuthEffect.LogoutRequested, viewModel.effect.first())
         assertEquals(AuthScreen.Login, viewModel.state.value.screen)
         assertEquals("", viewModel.state.value.login.account)
         assertTrue(!viewModel.state.value.login.rememberMe)
+        assertTrue(!viewModel.state.value.login.passwordVisible)
     }
 
     private class RecordingAuthSource(private val loginResult: Boolean = true) : AuthDataSource {

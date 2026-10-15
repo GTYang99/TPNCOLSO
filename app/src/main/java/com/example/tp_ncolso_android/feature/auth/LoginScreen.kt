@@ -113,7 +113,7 @@ fun LoginScreen(
         val authError = state.requestError != null
         Column(verticalArrangement = Arrangement.spacedBy(AppThemeTokens.spacing.sm), modifier = Modifier.fillMaxWidth()) {
             AppTextField(state.account, { onEvent(AuthEvent.LoginAccountChanged(it)) }, "帳號", placeholder = "請輸入", isError = authError || state.fieldErrors.containsKey(LoginField.ACCOUNT), supportingText = state.fieldErrors[LoginField.ACCOUNT], modifier = Modifier.testTag("login-account"))
-            AppPasswordField(state.password, { onEvent(AuthEvent.LoginPasswordChanged(it)) }, "密碼", visible = false, onVisibilityChange = {}, placeholder = "請輸入", isError = authError || state.fieldErrors.containsKey(LoginField.PASSWORD), supportingText = state.fieldErrors[LoginField.PASSWORD], modifier = Modifier.testTag("login-password"))
+            AppPasswordField(state.password, { onEvent(AuthEvent.LoginPasswordChanged(it)) }, "密碼", visible = state.passwordVisible, onVisibilityChange = { onEvent(AuthEvent.LoginPasswordVisibilityChanged(it)) }, placeholder = "請輸入", isError = authError || state.fieldErrors.containsKey(LoginField.PASSWORD), supportingText = state.fieldErrors[LoginField.PASSWORD], modifier = Modifier.testTag("login-password"))
             state.requestError?.let { Text(it, color = AppThemeTokens.colors.errorText, modifier = Modifier.testTag("login-request-error").semantics { error(it) }) }
         }
         androidx.compose.foundation.layout.Spacer(Modifier.height(AppThemeTokens.spacing.md))

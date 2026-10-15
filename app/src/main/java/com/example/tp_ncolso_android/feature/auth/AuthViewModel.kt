@@ -28,6 +28,7 @@ class AuthViewModel(
             AuthEvent.LogoutRequested -> { resetToLogin(); effects.trySend(AuthEffect.LogoutRequested) }
             is AuthEvent.LoginAccountChanged -> updateLogin { copy(account = event.value, requestError = null) }
             is AuthEvent.LoginPasswordChanged -> updateLogin { copy(password = event.value, requestError = null) }
+            is AuthEvent.LoginPasswordVisibilityChanged -> updateLogin { copy(passwordVisible = event.value) }
             is AuthEvent.RememberMeChanged -> updateLogin { copy(rememberMe = event.value) }
             is AuthEvent.RegisterAccountChanged -> updateRegister { copy(account = event.value) }
             is AuthEvent.RegisterPasswordChanged -> updateRegister { copy(password = event.value) }
