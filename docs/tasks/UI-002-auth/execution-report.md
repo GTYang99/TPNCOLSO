@@ -98,6 +98,7 @@ On 2026-10-14 the requester authorized `C:\Program Files\Android\Android Studio1
 ### 2026-10-15 infrastructure and JVM refresh
 
 - Current Auth-filtered JVM validation with `/Applications/Android Studio.app/Contents/jbr/Contents/Home` completed `BUILD SUCCESSFUL`; no device was required.
+- Current non-device build validation with the same JBR completed `BUILD SUCCESSFUL` for `:app:lintDebug :app:assembleRelease :app:assembleDebugAndroidTest`.
 - The owning `FakeReturnFlowStoreTest` rerun reproduced the existing 1-of-3 failure at `FakeReturnFlowStoreTest.kt:76`; this remains outside the approved UI-002 production scope.
 - A current full connected retry was started with `ANDROID_SERIAL=emulator-5554` and stopped after more than five minutes without a result. Direct ADB reproduction failed before device connection with `ADB server didn't ACK` / `could not install *smartsocket* listener: Operation not permitted`; no physical device was used and no ADB reset was attempted. This is recorded as `INFRA-AUTH-001` and routed to Infrastructure.
 
