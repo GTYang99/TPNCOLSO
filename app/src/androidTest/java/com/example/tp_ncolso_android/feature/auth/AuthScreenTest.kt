@@ -179,6 +179,30 @@ class AuthScreenTest {
         composeRule.onNodeWithTag("login-submit").performScrollTo().assertIsDisplayed().assertHasClickAction()
     }
 
+    @Test fun captureLoginR11NarrowWidthForResponsiveEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                Box(Modifier.width(320.dp).height(874.dp)) {
+                    LoginScreen(
+                        LoginFormState(),
+                        {},
+                        modifier = Modifier.testTag("login-r11-narrow-responsive-viewport"),
+                    )
+                }
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-r11-narrow-responsive-viewport.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onNodeWithTag("login-r11-narrow-responsive-viewport")
+                .captureToImage()
+                .asAndroidBitmap()
+                .compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "login-r11-narrow-responsive-viewport.png")
+        check(output.length() > 0)
+    }
+
     @Test fun loginFontScaleKeepsPrimaryActionsAndErrorReachable() {
         val baseDensity = composeRule.density
         composeRule.setContent {
@@ -202,6 +226,40 @@ class AuthScreenTest {
         composeRule.onNodeWithTag("login-request-error").performScrollTo().assertIsDisplayed()
         composeRule.onNodeWithTag("login-register").performScrollTo().assertIsDisplayed().assertHasClickAction()
         composeRule.onNodeWithTag("login-submit").performScrollTo().assertIsDisplayed().assertHasClickAction()
+    }
+
+    @Test fun captureLoginR11FontScaleForResponsiveEvidence() {
+        val baseDensity = composeRule.density
+        composeRule.setContent {
+            CompositionLocalProvider(
+                LocalDensity provides Density(baseDensity.density, fontScale = 1.3f),
+            ) {
+                AppTheme {
+                    Box(Modifier.width(402.dp).height(874.dp)) {
+                        LoginScreen(
+                            LoginFormState(
+                                account = "sunrise000",
+                                password = "password",
+                                rememberMe = true,
+                                requestError = "帳號或密碼錯誤",
+                            ),
+                            {},
+                            modifier = Modifier.testTag("login-r11-fontscale-responsive-viewport"),
+                        )
+                    }
+                }
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-r11-fontscale-responsive-viewport.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onNodeWithTag("login-r11-fontscale-responsive-viewport")
+                .captureToImage()
+                .asAndroidBitmap()
+                .compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "login-r11-fontscale-responsive-viewport.png")
+        check(output.length() > 0)
     }
 
     @Test fun registerRendersSixFieldsAndUnselectedWorkType() {
