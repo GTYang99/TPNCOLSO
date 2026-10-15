@@ -1,6 +1,6 @@
 # UI-002 UIR mapping — R11
 
-Reviewed source/test revision: `7cc3eabc925385c6962cf3275f848cd52240c6d7`.
+Reviewed source/test revision: `9d241994d29057a16aa68c4f4c323ed232158b18`.
 The mapping is against the active `login-ui-requirement.md`,
 `registration-ui-requirement.md`, and `logout-interface-requirement.md`. A
 local PASS is scoped to the evidence named in the row; it is not a task-level
@@ -20,7 +20,7 @@ acceptance criterion open.
 | UIR-LOGIN-007 | `login-r11-reflow-geometry.json` and `AuthScreenTest.loginActionsReflowAfterPasswordAndUseFoundationSpacing` prove order and 16dp spacing for Remember me, registration, and Login. | PASS (local geometry/Compose scope) |
 | UIR-LOGIN-008 | `AuthScreenTest.loginSubmittingStateDisablesSubmit` covers duplicate-action suppression; the same R11 geometry artifact records the reflowed button bounds. | PASS (local behavior/geometry scope) |
 | UIR-LOGIN-009 | Current composite SHA-256, exact logical runtime capture, reflow artifact, and source/runtime checksums are recorded under `docs/design/evidence/auth/figma-export-2026-10-15-r11/`; the unchanged-region artifact is `PASS` within its explicit scope. | PASS (traceability/local visual scope) |
-| UIR-LOGIN-010 | Current API 36 AuthScreenTest covers Login narrow width, font scale, and IME action reachability; the current emulator-only full connected suite is 70/70 PASS. A complete current-R11 runtime visual matrix is still unavailable. | NOT VERIFIED (device matrix) |
+| UIR-LOGIN-010 | `responsive-matrix-r11.json` records the API 36 emulator responsive slice: 320dp narrow width, 1.3 font scale, and IME focus/action reachability. The current full connected retry was stopped without a result file, and other device/API combinations remain unavailable. | PASS (local emulator responsive slice); NOT VERIFIED (complete device matrix) |
 
 ## Registration
 
@@ -58,8 +58,8 @@ remote Token/API behavior remains INT-001-owned.
 
 ## Overall mapping result
 
-Auth implementation and task-scoped local checks pass, and the current
-emulator-only full connected suite is green. UIR-LOGIN-010 remains
-`NOT VERIFIED` because a complete R11 device visual matrix is unavailable;
-filled/error unchanged-region metrics are recorded without retaining credential
-images. Formal Verification and Code Review therefore remain pending.
+Auth implementation and task-scoped local checks pass. UIR-LOGIN-010 is
+PASS only for the documented local emulator responsive slice; the complete
+R11 device/API visual matrix remains `NOT VERIFIED`. Filled/error
+unchanged-region metrics are recorded without retaining credential images.
+Formal Verification and Code Review therefore remain pending.

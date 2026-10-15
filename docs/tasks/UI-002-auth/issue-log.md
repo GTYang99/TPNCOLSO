@@ -4,9 +4,9 @@
 - Requester decisions: remove Login CAPTCHA; keep brand/account/password positions; remove the CAPTCHA row and adjacent spacing; reflow Remember me, registration entry, and Login button upward using UI-001 spacing tokens. Auth failure copy is `帳號或密碼錯誤`.
 - Impact: R10 code/evidence did not establish R11 compliance. Plan Review iteration 19 approved plan revision 18 on isolated branch `codex/ui-002-auth-r11`, base `d74bcd8192e6ea6e2d06306867af74f198c20580`.
 - Implementation: main/debug contracts, Login layout, fake source, previews and tests updated; CAPTCHA fixture removed. Static source scan finds only negative absence assertions.
-- Validation: Auth JVM tests pass, the latest responsive Auth connected run is 24/24, and the current API 36 emulator-only full connected rerun is 70/70. Lint plus debug/release/androidTest builds pass. R11 exact logical viewport capture, reflow geometry, and unchanged-region comparison are recorded in `docs/design/evidence/auth/figma-export-2026-10-15-r11/`; the comparison is PASS for unchanged regions, while filled/error unchanged-region metrics now have local PASS evidence; the complete responsive matrix remains NOT VERIFIED. A broad app JVM failure remains outside Auth; see `execution-report.md`.
+- Validation: Auth JVM tests pass, the latest responsive Auth connected run is 26/26, and the latest completed API 36 emulator-only full connected rerun is 70/70. Lint plus debug/release/androidTest builds pass. R11 exact logical viewport capture, reflow geometry, unchanged-region comparison, and the local responsive slice are recorded in `docs/design/evidence/auth/figma-export-2026-10-15-r11/`; the complete cross-device/API matrix remains NOT VERIFIED. A broad app JVM failure remains outside Auth; see `execution-report.md`.
 - Route: `investigation`; classify the broad-suite failures and finish visual comparison before Verification.
-- Status: Auth-scoped checks pass and the current API 36 emulator-only full connected suite is green; task completion remains in progress until the external JVM regression, visual evidence, and hosted CI limitations are resolved.
+- Status: Auth-scoped checks pass and the completed API 36 emulator-only full connected suite is green; a newer full retry had no result and was stopped. Task completion remains in progress until the external JVM regression, complete visual matrix, and hosted CI limitations are resolved.
 
 ## VAL-AUTH-025 — Current reviewed revision full connected emulator rerun
 
@@ -26,6 +26,17 @@
 - Evidence: At reviewed test revision `7cc3eabc925385c6962cf3275f848cd52240c6d7`, `AuthScreenTest.captureLoginR11FilledReferenceViewportForVisualEvidence` and `captureLoginR11AuthErrorReferenceViewportForVisualEvidence` passed on `emulator-5554` / API 36. Exact 402dp×874dp captures were normalized to RGB 402×874 rasters and compared against the approved filled/error panels only in unchanged regions (`y < 400` and `y >= 640`). Filled: combined MAE `5.1737`, RMSE `23.6205`; auth-error: combined MAE `6.2931`, RMSE `24.3805`. Raw and normalized hashes are recorded in `docs/design/evidence/auth/figma-export-2026-10-15-r11/numeric-diff-r11-unchanged.json`.
 - Observation: Direct review of the ephemeral captures confirmed the shared header, account/password anchor region, and bottom skyline remain aligned; the expected filled text, error borders/message, and R11 lower-control changes are confined to the excluded/reflowed state regions.
 - Scope: Credential-bearing filled/error rasters remain ephemeral ignored test output and are not retained in task artifacts. The changed R11 vertical band is excluded and covered by the reflow geometry artifact.
+- Route: `verification`
+- Owner: UI-002 implementation
+
+## VAL-AUTH-027 — Local responsive viewport evidence extension
+
+- Category: `validation`
+- Priority: `P1`
+- Status: recorded
+- Evidence: Source/test revision `9d241994d29057a16aa68c4f4c323ed232158b18` adds narrow-width and font-scale Compose node captures. The Auth-only emulator run completed 26/26 with 0 failures, errors, or skips on `emulator-5554` / API 36. XML: `docs/tasks/UI-002-auth/evidence/authscreen-rerun-2026-10-15-r11-emulator-only-responsive-viewport.xml`; SHA-256 `3a5905cac651570915580e82585ab86945a947bdaed1dd839a7e2857c3f01815`.
+- Observation: The 320dp capture keeps fields, lower actions, and skyline visible with the header stacked; the 1.3 font-scale capture keeps fields, error message, and actions visible; IME focus/action reachability remains covered by the existing semantics tests. The IME Compose root capture excludes the system keyboard raster.
+- Scope: `responsive-matrix-r11.json` is PASS for this local emulator slice only. Captures are deleted from ignored output after hash extraction; complete cross-device/API visual coverage remains NOT VERIFIED. The current full connected retry was stopped after more than five minutes without a result file.
 - Route: `verification`
 - Owner: UI-002 implementation
 
