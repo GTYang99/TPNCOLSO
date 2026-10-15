@@ -69,7 +69,7 @@ Date: 2026-10-15 (Asia/Taipei)
 - Current-HEAD full JVM rerun (reviewed revision `ec2f18e3dd8745887f7937810411f848391180b7`) completed 50 tests with the same single external failure at `FakeReturnFlowStoreTest.kt:76`; no new Auth failure was introduced.
 - Registration ViewModel coverage (current working revision): added invalid-submit suppression plus valid registration exactly-once and success-reset tests. `:app:testDebugUnitTest --tests '*Auth*'` completed `BUILD SUCCESSFUL` after the additions.
 - Registration validation coverage (current working revision): added direct boundary assertions for 30-character acceptance, 31-character/non-alphanumeric rejection, short password and mismatched confirmation. The Auth-filtered JVM suite remains `BUILD SUCCESSFUL`.
-- Current reviewed implementation/test revision is `3e681444ba4348f69c243572ffa6d04c41d1b02f`; the working tree is clean after the evidence/state commits.
+- Current reviewed implementation/test revision is `6ca90f82bd77e38f64d923f2658b76fbf6124aba`; the working tree is clean after the evidence/state commits.
 
 On 2026-10-14 the requester authorized `C:\Program Files\Android\Android Studio1\jbr` as the Windows Gradle JBR. The Runtime Rule now lists this Windows path alongside the macOS path and preserves the no-fallback requirement. Android SDK Platform 37 was installed into the existing SDK at `C:\Users\GT.YANG\AppData\Local\Android\Sdk`; command-local `ANDROID_HOME`/`ANDROID_SDK_ROOT` were used. JBR identity and commands are recorded in `infrastructure.md`.
 
