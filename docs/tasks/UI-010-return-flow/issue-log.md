@@ -1,5 +1,21 @@
 # Issue Log
 
+## UI010-IMP-004 — Correction confirmation leaves stale saved flag
+
+- Category: `implementation_regression`
+- Priority: P1
+- Status: resolved
+- Affected acceptance criterion: AC-002
+- Base revision: `d74bcd8192e6ea6e2d06306867af74f198c20580`; fix branch: `codex/ui010-correction-state`.
+- Expected: explicit confirmation marks the parcel corrected and clears pending correction state.
+- Actual: `confirmCorrection()` clears return metadata and changes status but leaves `correctionSaved = true`.
+- Reproduction: `:app:testDebugUnitTest --tests com.example.tp_ncolso_android.feature.notifications.data.FakeReturnFlowStoreTest --no-daemon`; 3 tests completed, 1 failed at `FakeReturnFlowStoreTest.kt:76`.
+- Root cause and minimum fix: `confirmCorrection()` omits resetting the flag; set it false in the same state transition. See `root-cause.md` and `fix-plan.md`.
+- Route: `debug` → `implementation_debug`.
+- Owner: UI-010 implementation.
+- Resolution: added `correctionSaved = false` to the confirmed-state copy; no other transition or filtering changed.
+- Verification: focused fake-store test PASS; full JVM suite PASS (51/51); UI-010 connected host suite PASS (3/3) on API 36 emulator; `git diff --check` PASS. Full environment/revision evidence is in `execution-report.md`.
+
 ## UI010-IMP-001 — Notifications row semantics import blocks Kotlin compilation
 
 - Category: `implementation_regression`

@@ -1,4 +1,27 @@
-# Root Cause — UI010-IMP-001
+# UI-010 Root Cause Analysis
+
+## UI010-IMP-004 — Correction confirmation leaves stale saved flag
+
+### Reproduction
+
+- Base revision: `d74bcd8192e6ea6e2d06306867af74f198c20580`; isolated branch: `codex/ui010-correction-state`.
+- Environment: Windows, Android Studio JBR OpenJDK `25.0.3`, Gradle `9.6.0`, Android SDK `C:\Users\GT.YANG\AppData\Local\Android\Sdk`.
+- Command: `:app:testDebugUnitTest --tests com.example.tp_ncolso_android.feature.notifications.data.FakeReturnFlowStoreTest --no-daemon`.
+- Result: FAIL, 3 tests completed; `confirmationChangesStatusRemovesReturnContextAndHidesNotification` failed at `FakeReturnFlowStoreTest.kt:76` because `correctionSaved` remained true after confirmation.
+
+### Root Cause and Scope
+
+`submit()` sets `correctionSaved = true` to represent a saved correction awaiting confirmation. `confirmCorrection()` changes status to `已修正` and clears return metadata, but omits resetting that flag. The test already asserts the expected false value. This is a production fake-store state-transition defect affecting UI-010 `AC-002`, not a test-harness or environment failure.
+
+Minimum fix: set `correctionSaved = false` in the same detail copy that applies the confirmed status. Preserve the existing guard, metadata clearing, edit-action removal, and notification filtering. No requirement, architecture, persistence, or API change is needed; the approved plan and review remain applicable.
+
+### Fix and Validation Result
+
+- Implemented on `codex/ui010-correction-state`: `confirmCorrection()` now resets `correctionSaved` in the confirmed-state copy.
+- Focused `FakeReturnFlowStoreTest`: PASS after the fix.
+- Full `:app:testDebugUnitTest`: PASS, 51 tests, 0 failures.
+- Focused `ReturnFlowHostTest`: PASS, 3 tests, 0 failures on `Medium_Phone_API_36.0(AVD) - 16`, API 36, `emulator-5554`.
+- `git diff --check`: PASS. See the current UI-010 `execution-report.md` entry for revision and environment details.
 
 ## Reproduction
 - Revision under validation: `1a11dff4d8c081235b090aaa6a6e8549016721ca` plus the current uncommitted UI-010 worktree.

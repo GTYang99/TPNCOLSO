@@ -96,6 +96,7 @@ class FakeReturnFlowStore : NotificationsDataSource, ParcelDetailDataSource, Sur
             status = "已修正",
             returnReason = null,
             editActionLabel = null,
+            correctionSaved = false,
         )
         mutableReturnedNotifications.value = activeNotifications()
         return true

@@ -1,4 +1,20 @@
-# Fix Plan — UI010-IMP-001
+# UI-010 Fix Plan
+
+## UI010-IMP-004 — Correction confirmation leaves stale saved flag
+
+1. In `FakeReturnFlowStore.confirmCorrection()`, set `correctionSaved = false` together with `status = "已修正"`, `returnReason = null`, and `editActionLabel = null`.
+2. Keep the guard and active returned-notification filtering unchanged.
+3. Re-run `:app:testDebugUnitTest --tests com.example.tp_ncolso_android.feature.notifications.data.FakeReturnFlowStoreTest --no-daemon`; require all 3 tests to pass.
+4. Run `git diff --check` and record the exact source revision and environment.
+
+This is an internal state correction within approved UI-010 `AC-002`; it does not change the approved design or scope and requires no new Plan Review.
+
+### Validation Result
+
+- Focused fake-store JVM test: PASS.
+- Full JVM suite: PASS, 51 tests, 0 failures.
+- UI-010 connected host suite: PASS, 3 tests, 0 failures on the approved API 36 AVD.
+- `git diff --check`: PASS.
 
 1. Add the missing `androidx.compose.ui.semantics.role` import in `NotificationsScreen.kt`.
 2. Re-run debug assembly plus unit/instrumented test-source compilation with the required Android Studio JBR; do not execute tests while no Android test machine is connected.

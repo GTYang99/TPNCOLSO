@@ -1,5 +1,19 @@
 # UI-010 Execution Report
 
+## Debug Re-entry — UI010-IMP-004
+
+- Base revision: `d74bcd8192e6ea6e2d06306867af74f198c20580`; isolated branch: `codex/ui010-correction-state`.
+- Change: `FakeReturnFlowStore.confirmCorrection()` now clears `correctionSaved` in the same transition that marks the record `已修正` and removes its return context.
+- Environment: Windows; Android Studio JBR OpenJDK `25.0.3`; Gradle `9.6.0`; Android SDK `C:\Users\GT.YANG\AppData\Local\Android\Sdk`.
+- Reproduction before fix: `:app:testDebugUnitTest --tests com.example.tp_ncolso_android.feature.notifications.data.FakeReturnFlowStoreTest --no-daemon` failed 1/3 at `FakeReturnFlowStoreTest.kt:76`.
+- Focused JVM after fix: `:app:testDebugUnitTest --tests com.example.tp_ncolso_android.feature.notifications.data.FakeReturnFlowStoreTest --no-daemon` — PASS; Gradle `BUILD SUCCESSFUL`.
+- Full JVM after fix: `:app:testDebugUnitTest --no-daemon` — PASS; 51 tests, 0 failures.
+- Connected host after fix: `:app:connectedDebugAndroidTest --no-daemon '-Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest'` — PASS; 3 tests, 0 failures on `Medium_Phone_API_36.0(AVD) - 16`, API 36, serial `emulator-5554`.
+- `git diff --check` — PASS.
+- The first build attempt lacked SDK discovery because the isolated worktree had no ignored `local.properties`; rerunning with command-local `ANDROID_HOME` succeeded. No project configuration file was added or modified.
+- The failed unquoted PowerShell Gradle-property attempt stopped during task selection and ran no tests; the quoted command above is the successful connected run.
+- Validation is local evidence on the current branch/worktree, not hosted CI. No physical device was used.
+
 ## Revision and Environment
 - Branch: `developer`.
 - Implementation commit: `01a9a10200001ff572bc7a7f89d192a94f58b656` on `developer`. The focused AVD checks ran against the same UI-010 source content immediately before this commit; unrelated UI-008 working-tree changes remain uncommitted.
