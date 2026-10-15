@@ -22,7 +22,7 @@ class AuthViewModel(
     fun onEvent(event: AuthEvent) {
         when (event) {
             AuthEvent.OpenRegister -> mutableState.value = mutableState.value.copy(screen = AuthScreen.Register)
-            AuthEvent.BackToLogin, AuthEvent.CancelRegister -> resetToLogin()
+            AuthEvent.BackToLogin, AuthEvent.CancelRegister -> if (!mutableState.value.register.submitting) resetToLogin()
             AuthEvent.SubmitLogin -> submitLogin()
             AuthEvent.SubmitRegister -> submitRegister()
             AuthEvent.LogoutRequested -> { resetToLogin(); effects.trySend(AuthEffect.LogoutRequested) }

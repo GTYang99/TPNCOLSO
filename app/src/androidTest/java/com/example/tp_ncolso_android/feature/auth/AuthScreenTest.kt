@@ -204,6 +204,8 @@ class AuthScreenTest {
     @Test fun registerSubmittingStateDisablesSubmit() {
         composeRule.setContent { AppTheme { RegisterScreen(RegisterFormState(submitting = true), emptyList(), {}) } }
         composeRule.onNodeWithText("完成").assertIsNotEnabled()
+        composeRule.onNodeWithText("取消").assertIsNotEnabled()
+        composeRule.onNodeWithContentDescription("返回登入頁").assertIsNotEnabled()
     }
 
     @Test fun registerFilledStateUsesPlaintextFieldsWithoutVisibilityAction() {

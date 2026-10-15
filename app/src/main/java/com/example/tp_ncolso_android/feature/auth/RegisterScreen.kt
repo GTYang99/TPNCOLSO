@@ -40,7 +40,7 @@ fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEven
     val registerLabelStyle = AppThemeTokens.typography.fieldLabel.copy(fontWeight = FontWeight.Medium)
     Column(modifier.fillMaxWidth().imePadding().background(Color.White).padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 24.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(36.dp)) {
         Row(modifier = Modifier.fillMaxWidth().height(48.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-            TextButton(onClick = { onEvent(AuthEvent.BackToLogin) }, modifier = Modifier.size(48.dp).testTag("register-back")) {
+            TextButton(onClick = { onEvent(AuthEvent.BackToLogin) }, enabled = !state.submitting, modifier = Modifier.size(48.dp).testTag("register-back")) {
                 Image(
                     painter = painterResource(com.example.tp_ncolso_android.R.drawable.ic_register_back_chevron),
                     contentDescription = "返回登入頁",
@@ -63,7 +63,7 @@ fun RegisterScreen(state: RegisterFormState, vendors: List<VendorOption>, onEven
         AppTextField(state.name, { onEvent(AuthEvent.RegisterNameChanged(it)) }, "姓名(請輸入真實姓名)", placeholder = "請輸入", isError = state.fieldErrors.containsKey(RegisterField.NAME), supportingText = state.fieldErrors[RegisterField.NAME], labelStyle = registerLabelStyle)
         }
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth().offset(y = (-12).dp)) {
-            AppSecondaryButton("取消", { onEvent(AuthEvent.CancelRegister) }, modifier = Modifier.weight(1f))
+            AppSecondaryButton("取消", { onEvent(AuthEvent.CancelRegister) }, enabled = !state.submitting, modifier = Modifier.weight(1f))
             AppPrimaryButton("完成", { onEvent(AuthEvent.SubmitRegister) }, enabled = !state.submitting, modifier = Modifier.weight(1f).testTag("register-submit"))
         }
     }

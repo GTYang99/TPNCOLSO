@@ -1,5 +1,6 @@
 package com.example.tp_ncolso_android.feature.auth
 
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -96,6 +97,24 @@ class AuthViewModelTest {
         assertEquals("", viewModel.state.value.login.account)
     }
 
+    @Test fun registerCancelIsIgnoredWhileSubmitting() = runTest(StandardTestDispatcher()) {
+        val gate = CompletableDeferred<Boolean>()
+        val viewModel = AuthViewModel(RecordingAuthSource(registerGate = gate))
+        viewModel.onEvent(AuthEvent.OpenRegister)
+        viewModel.onEvent(AuthEvent.RegisterAccountChanged("abc123"))
+        viewModel.onEvent(AuthEvent.RegisterPasswordChanged("password"))
+        viewModel.onEvent(AuthEvent.RegisterConfirmChanged("password"))
+        viewModel.onEvent(AuthEvent.VendorSelected(VendorOption("v", "廠商")))
+        viewModel.onEvent(AuthEvent.WorkTypeSelected(WorkType.FIELD))
+        viewModel.onEvent(AuthEvent.RegisterNameChanged("王小明"))
+        viewModel.onEvent(AuthEvent.SubmitRegister)
+        assertTrue(viewModel.state.value.register.submitting)
+        viewModel.onEvent(AuthEvent.CancelRegister)
+        assertEquals(AuthScreen.Register, viewModel.state.value.screen)
+        gate.complete(true)
+        advanceUntilIdle()
+    }
+
     @Test fun logoutResetsAuthStateAndEmitsEffect() = runTest {
         val viewModel = AuthViewModel(RecordingAuthSource())
         viewModel.onEvent(AuthEvent.LoginAccountChanged("account"))
@@ -109,11 +128,14 @@ class AuthViewModelTest {
         assertTrue(!viewModel.state.value.login.passwordVisible)
     }
 
-    private class RecordingAuthSource(private val loginResult: Boolean = true) : AuthDataSource {
+    private class RecordingAuthSource(
+        private val loginResult: Boolean = true,
+        private val registerGate: CompletableDeferred<Boolean>? = null,
+    ) : AuthDataSource {
         var loginCalls = 0
         var registerCalls = 0
         override suspend fun login(account: String, password: String): Boolean { loginCalls++; return loginResult }
-        override suspend fun register(input: RegistrationInput): Boolean { registerCalls++; return true }
+        override suspend fun register(input: RegistrationInput): Boolean { registerCalls++; return registerGate?.await() ?: true }
         override suspend fun vendors() = emptyList<VendorOption>()
     }
 }

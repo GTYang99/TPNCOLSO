@@ -32,6 +32,18 @@
 - Route: `verification`; broader task limitations remain separate.
 - Owner: UI-002 implementation
 
+## IMP-AUTH-024 — Registration navigation remains active while submitting
+
+- Category: `implementation_failure`
+- Priority: `P1`
+- Status: resolved
+- Evidence: `RegisterScreen` disables only the `完成` button when `state.submitting`; the `取消` button and top `返回登入頁` TextButton remain enabled. `AuthViewModel` also resets to Login for Cancel/Back without checking the register submitting state.
+- Impact: A user or callback can leave the Registration flow while a register request is in flight, creating the destructive navigation race explicitly excluded by `UIR-REG-007`/`UIR-REG-008`.
+- Resolution: Disabled Registration `取消` and top `返回登入頁` while submitting, and made `AuthViewModel` ignore Back/Cancel events during an in-flight register request. Added Compose and JVM race assertions.
+- Evidence: AuthScreenTest 19/19 PASS on API 36; Auth-filtered JVM tests PASS.
+- Route: `verification`; broader task limitations remain separate.
+- Owner: UI-002 implementation
+
 ## INF-AUTH-011 — Required Gradle JBR path is unavailable on the current host
 
 - Category: `environment`
