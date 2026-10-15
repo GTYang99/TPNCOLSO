@@ -1,0 +1,710 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuites tests="65" failures="51" errors="0" skipped="0" time="0.000" timestamp="2026-10-15T01:42:45" hostname="localhost">
+  <testsuite name="com.example.tp_ncolso_android.DebugDirectLoginTest" tests="2" failures="2" errors="0" skipped="0" time="24.446" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="directLoginAndLogoutReturnToSignedOut" classname="com.example.tp_ncolso_android.DebugDirectLoginTest" time="12.825">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.DebugDirectLoginTest.directLoginAndLogoutReturnToSignedOut(DebugDirectLoginTest.kt:34)
+</failure>
+    </testcase>
+    <testcase name="initialStateShowsDebugModeAndRoles" classname="com.example.tp_ncolso_android.DebugDirectLoginTest" time="11.621">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.DebugDirectLoginTest.initialStateShowsDebugModeAndRoles(DebugDirectLoginTest.kt:23)
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.ExampleInstrumentedTest" tests="1" failures="0" errors="0" skipped="0" time="0.000" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="useAppContext" classname="com.example.tp_ncolso_android.ExampleInstrumentedTest" time="0.000" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.PhotoCameraUiFlowTest" tests="1" failures="1" errors="0" skipped="0" time="7.752" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="surveyCameraFlowSurvivesActivityRecreationAndReturnsToSurvey" classname="com.example.tp_ncolso_android.feature.PhotoCameraUiFlowTest" time="7.752">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.PhotoCameraUiFlowTest.surveyCameraFlowSurvivesActivityRecreationAndReturnsToSurvey(PhotoCameraUiFlowTest.kt:30)
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.StateRestorationHostTest" tests="1" failures="1" errors="0" skipped="0" time="10.458" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="surveyUiFlowKeepsDraftAndRemainsUsableAfterActivityRecreation" classname="com.example.tp_ncolso_android.feature.StateRestorationHostTest" time="10.458">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.StateRestorationHostTest.surveyUiFlowKeepsDraftAndRemainsUsableAfterActivityRecreation(StateRestorationHostTest.kt:25)
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.StatefulUiFlowRecreationTest" tests="3" failures="3" errors="0" skipped="0" time="22.859" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="parcelSearchUiFlowRestoresQueryAndSummaryAfterActivityRecreation" classname="com.example.tp_ncolso_android.feature.StatefulUiFlowRecreationTest" time="7.630">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.StatefulUiFlowRecreationTest.parcelSearchUiFlowRestoresQueryAndSummaryAfterActivityRecreation(StatefulUiFlowRecreationTest.kt:35)
+</failure>
+    </testcase>
+    <testcase name="parcelDetailHistoryUiFlowRestoresRouteAndSelectionAfterActivityRecreation" classname="com.example.tp_ncolso_android.feature.StatefulUiFlowRecreationTest" time="7.630">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.StatefulUiFlowRecreationTest.parcelDetailHistoryUiFlowRestoresRouteAndSelectionAfterActivityRecreation(StatefulUiFlowRecreationTest.kt:50)
+</failure>
+    </testcase>
+    <testcase name="mapBasemapSelectionSurvivesActivityRecreation" classname="com.example.tp_ncolso_android.feature.StatefulUiFlowRecreationTest" time="7.599">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.StatefulUiFlowRecreationTest.mapBasemapSelectionSurvivesActivityRecreation(StatefulUiFlowRecreationTest.kt:25)
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" tests="19" failures="19" errors="0" skipped="0" time="195.720" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="registerRendersSixFieldsAndUnselectedWorkType" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.852">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:81)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.registerRendersSixFieldsAndUnselectedWorkType(AuthScreenTest.kt:163)
+</failure>
+    </testcase>
+    <testcase name="loginAuthErrorKeepsValuesAndShowsAccessibleGlobalMessage" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.633">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.loginAuthErrorKeepsValuesAndShowsAccessibleGlobalMessage(AuthScreenTest.kt:134)
+</failure>
+    </testcase>
+    <testcase name="loginRegisterEntryDispatchesEvent" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.561">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:81)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.loginRegisterEntryDispatchesEvent(AuthScreenTest.kt:70)
+</failure>
+    </testcase>
+    <testcase name="loginRendersRequiredEntryPoints" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.566">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.loginRendersRequiredEntryPoints(AuthScreenTest.kt:54)
+</failure>
+    </testcase>
+    <testcase name="loginPasswordVisibilityActionTogglesMaskedState" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.571">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.loginPasswordVisibilityActionTogglesMaskedState(AuthScreenTest.kt:155)
+</failure>
+    </testcase>
+    <testcase name="captureLoginFilledStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="11.604">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AndroidImageHelpers_androidKt.captureToImage(AndroidImageHelpers.android.kt:51)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.captureLoginFilledStateForVisualEvidence(AuthScreenTest.kt:271)
+</failure>
+    </testcase>
+    <testcase name="captureRegisterEmptyStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="11.831">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AndroidImageHelpers_androidKt.captureToImage(AndroidImageHelpers.android.kt:51)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.captureRegisterEmptyStateForVisualEvidence(AuthScreenTest.kt:253)
+</failure>
+    </testcase>
+    <testcase name="registerFilledStateUsesPlaintextFieldsWithoutVisibilityAction" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.769">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.registerFilledStateUsesPlaintextFieldsWithoutVisibilityAction(AuthScreenTest.kt:221)
+</failure>
+    </testcase>
+    <testcase name="registerSubmittingStateDisablesSubmit" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.791">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AssertionsKt.assert(Assertions.kt:262)
+	at androidx.compose.ui.test.AssertionsKt.assert$default(Assertions.kt:254)
+	at androidx.compose.ui.test.AssertionsKt.assertIsNotEnabled(Assertions.kt:67)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.registerSubmittingStateDisablesSubmit(AuthScreenTest.kt:206)
+</failure>
+    </testcase>
+    <testcase name="captureLoginR11ReflowGeometryForEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="11.539">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode$default(SemanticsNodeInteraction.kt:83)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.captureLoginR11ReflowGeometryForEvidence(AuthScreenTest.kt:91)
+</failure>
+    </testcase>
+    <testcase name="registerNarrowWidthKeepsBothWorkTypeLabelsAndTargets" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.879">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:81)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.registerNarrowWidthKeepsBothWorkTypeLabelsAndTargets(AuthScreenTest.kt:184)
+</failure>
+    </testcase>
+    <testcase name="captureLoginAuthErrorStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="11.561">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AndroidImageHelpers_androidKt.captureToImage(AndroidImageHelpers.android.kt:51)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.captureLoginAuthErrorStateForVisualEvidence(AuthScreenTest.kt:307)
+</failure>
+    </testcase>
+    <testcase name="loginActionsReflowAfterPasswordAndUseFoundationSpacing" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.533">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode$default(SemanticsNodeInteraction.kt:83)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.loginActionsReflowAfterPasswordAndUseFoundationSpacing(AuthScreenTest.kt:78)
+</failure>
+    </testcase>
+    <testcase name="registerCancelDispatchesBackToLogin" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.774">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:81)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.registerCancelDispatchesBackToLogin(AuthScreenTest.kt:193)
+</failure>
+    </testcase>
+    <testcase name="loginSubmittingStateDisablesSubmit" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.579">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AssertionsKt.assert(Assertions.kt:262)
+	at androidx.compose.ui.test.AssertionsKt.assert$default(Assertions.kt:254)
+	at androidx.compose.ui.test.AssertionsKt.assertIsNotEnabled(Assertions.kt:67)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.loginSubmittingStateDisablesSubmit(AuthScreenTest.kt:141)
+</failure>
+    </testcase>
+    <testcase name="captureRegisterFilledStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="11.799">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AndroidImageHelpers_androidKt.captureToImage(AndroidImageHelpers.android.kt:51)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.captureRegisterFilledStateForVisualEvidence(AuthScreenTest.kt:240)
+</failure>
+    </testcase>
+    <testcase name="captureLoginEmptyStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="11.590">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AndroidImageHelpers_androidKt.captureToImage(AndroidImageHelpers.android.kt:51)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.captureLoginEmptyStateForVisualEvidence(AuthScreenTest.kt:289)
+</failure>
+    </testcase>
+    <testcase name="captureLoginImeStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.575">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.captureLoginImeStateForVisualEvidence(AuthScreenTest.kt:322)
+</failure>
+    </testcase>
+    <testcase name="registerShowsWorkTypeValidationMessage" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="9.713">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:81)
+	at com.example.tp_ncolso_android.feature.auth.AuthScreenTest.registerShowsWorkTypeValidationMessage(AuthScreenTest.kt:201)
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" tests="7" failures="7" errors="0" skipped="0" time="67.087" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="drawerNavigationCallbacksAreForwarded" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="9.604">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest.drawerNavigationCallbacksAreForwarded(MapShellScreenTest.kt:149)
+</failure>
+    </testcase>
+    <testcase name="permissionDeniedStateShowsReadableRetryAction" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="9.553">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest.permissionDeniedStateShowsReadableRetryAction(MapShellScreenTest.kt:94)
+</failure>
+    </testcase>
+    <testcase name="deniedRetryForwardsLocationCallbackThroughRoute" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="9.587">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest.deniedRetryForwardsLocationCallbackThroughRoute(MapShellScreenTest.kt:113)
+</failure>
+    </testcase>
+    <testcase name="topAndLocationControlsForwardExplicitCallbacks" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="9.598">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest.topAndLocationControlsForwardExplicitCallbacks(MapShellScreenTest.kt:176)
+</failure>
+    </testcase>
+    <testcase name="loadingStateUsesCommonLoadingSemantics" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="9.587">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest.loadingStateUsesCommonLoadingSemantics(MapShellScreenTest.kt:128)
+</failure>
+    </testcase>
+    <testcase name="drawerLogoutEmitsOneCallbackAndExposesAccessibleAction" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="9.606">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest.drawerLogoutEmitsOneCallbackAndExposesAccessibleAction(MapShellScreenTest.kt:72)
+</failure>
+    </testcase>
+    <testcase name="shellRendersControlsAndExactlyThreeBasemaps" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="9.552">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest.shellRendersControlsAndExactlyThreeBasemaps(MapShellScreenTest.kt:36)
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest" tests="3" failures="3" errors="0" skipped="0" time="22.683" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="notificationListShowsSixRowsClosesAndOpensTheMatchingDetail" classname="com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest" time="7.530">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest.notificationListShowsSixRowsClosesAndOpensTheMatchingDetail(ReturnFlowHostTest.kt:35)
+</failure>
+    </testcase>
+    <testcase name="correctionSaveCancelAndConfirmKeepAllSurfacesConsistent" classname="com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest" time="7.619">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest.correctionSaveCancelAndConfirmKeepAllSurfacesConsistent(ReturnFlowHostTest.kt:65)
+</failure>
+    </testcase>
+    <testcase name="dirtyCorrectionCanContinueOrDiscardAndCleanExitSkipsPrompt" classname="com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest" time="7.534">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest.dirtyCorrectionCanContinueOrDiscardAndCleanExitSkipsPrompt(ReturnFlowHostTest.kt:111)
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest" tests="4" failures="4" errors="0" skipped="0" time="38.426" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="closeDetailReturnsToSearchContext" classname="com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest" time="9.602">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest.openFirstParcelDetail(ParcelDetailHostTest.kt:133)
+	at com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest.closeDetailReturnsToSearchContext(ParcelDetailHostTest.kt:124)
+</failure>
+    </testcase>
+    <testcase name="matchedSummaryOpensReadOnlyDetailOverMountedMap" classname="com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest" time="9.639">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest.openFirstParcelDetail(ParcelDetailHostTest.kt:133)
+	at com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest.matchedSummaryOpensReadOnlyDetailOverMountedMap(ParcelDetailHostTest.kt:36)
+</failure>
+    </testcase>
+    <testcase name="returnedParcelShowsReasonAndEditOnlyHandsOffToUi006" classname="com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest" time="9.577">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest.returnedParcelShowsReasonAndEditOnlyHandsOffToUi006(ParcelDetailHostTest.kt:102)
+</failure>
+    </testcase>
+    <testcase name="surveyTabShowsLatestAndHistoryAsReadOnly" classname="com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest" time="9.608">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest.openFirstParcelDetail(ParcelDetailHostTest.kt:133)
+	at com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest.surveyTabShowsLatestAndHistoryAsReadOnly(ParcelDetailHostTest.kt:65)
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchHostTest" tests="2" failures="2" errors="0" skipped="0" time="19.147" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="noMatchKeepsQueryAndMapContainerVisible" classname="com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchHostTest" time="9.535">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchHostTest.noMatchKeepsQueryAndMapContainerVisible(ParcelSearchHostTest.kt:63)
+</failure>
+    </testcase>
+    <testcase name="toolbarSearchSelectsFakeParcelAndShowsSummaryOverMap" classname="com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchHostTest" time="9.612">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchHostTest.toolbarSearchSelectsFakeParcelAndShowsSummaryOverMap(ParcelSearchHostTest.kt:34)
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.photocamera.PhotoCameraScreenTest" tests="3" failures="3" errors="0" skipped="0" time="28.770" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="deniedPermissionShowsRetryAction" classname="com.example.tp_ncolso_android.feature.photocamera.PhotoCameraScreenTest" time="9.624">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at com.example.tp_ncolso_android.feature.photocamera.PhotoCameraScreenTest.deniedPermissionShowsRetryAction(PhotoCameraScreenTest.kt:42)
+</failure>
+    </testcase>
+    <testcase name="grantedCameraExposesFourByThreePreviewAndCloseAction" classname="com.example.tp_ncolso_android.feature.photocamera.PhotoCameraScreenTest" time="9.551">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at com.example.tp_ncolso_android.feature.photocamera.PhotoCameraScreenTest.grantedCameraExposesFourByThreePreviewAndCloseAction(PhotoCameraScreenTest.kt:66)
+</failure>
+    </testcase>
+    <testcase name="capturingDisablesShutter" classname="com.example.tp_ncolso_android.feature.photocamera.PhotoCameraScreenTest" time="9.595">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AssertionsKt.assert(Assertions.kt:262)
+	at androidx.compose.ui.test.AssertionsKt.assert$default(Assertions.kt:254)
+	at androidx.compose.ui.test.AssertionsKt.assertIsNotEnabled(Assertions.kt:67)
+	at com.example.tp_ncolso_android.feature.photocamera.PhotoCameraScreenTest.capturingDisablesShutter(PhotoCameraScreenTest.kt:93)
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" tests="9" failures="6" errors="0" skipped="0" time="140.478" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="invalidPhotoCountBlocksSubmitWithLocalError" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="9.742">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest.invalidPhotoCountBlocksSubmitWithLocalError(SurveyFormScreenTest.kt:91)
+</failure>
+    </testcase>
+    <testcase name="cleanCloseSkipsDiscardDialogAndRouteBackIsDisabledWhenNotForegrounded" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="46.947">
+      <failure>androidx.test.espresso.NoActivityResumedException: No activities in stage RESUMED. Did you forget to launch the activity. (test.getActivity() or similar)?
+	at dalvik.system.VMStack.getThreadStackTrace(Native Method)
+	at java.lang.Thread.getStackTrace(Thread.java:2849)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:2)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:1)
+	at androidx.test.espresso.base.DefaultFailureHandler$TypedFailureHandler.handle(DefaultFailureHandler.java:4)
+	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:5)
+	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:8)
+	at androidx.test.espresso.ViewInteraction.desugaredPerform(ViewInteraction.java:11)
+	at androidx.test.espresso.ViewInteraction.perform(ViewInteraction.java:8)
+	at androidx.test.espresso.Espresso.pressBack(Espresso.java:2)
+	at com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest.cleanCloseSkipsDiscardDialogAndRouteBackIsDisabledWhenNotForegrounded(SurveyFormScreenTest.kt:229)
+</failure>
+    </testcase>
+    <testcase name="ui005EditCallbackOpensSurveyFormInDebugHost" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="9.503">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest.ui005EditCallbackOpensSurveyFormInDebugHost(SurveyFormScreenTest.kt:249)
+</failure>
+    </testcase>
+    <testcase name="noOccupancyHidesOccupationAndSelectingOccupiedShowsIt" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="9.763">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest.noOccupancyHidesOccupationAndSelectingOccupiedShowsIt(SurveyFormScreenTest.kt:46)
+</failure>
+    </testcase>
+    <testcase name="dirtyCloseAndBackUseDiscardDialogAndContinuePreservesEdits" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="9.856">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest.dirtyCloseAndBackUseDiscardDialogAndContinuePreservesEdits(SurveyFormScreenTest.kt:176)
+</failure>
+    </testcase>
+    <testcase name="cameraEntryUsesAccessibleCaptureCallbackAndFourPhotoSubmitSucceeds" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="10.425" />
+    <testcase name="invalidRestoredPhotoShowsRecoveryTextAndKeepsFormValues" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="2.128" />
+    <testcase name="cleanSystemBackClosesWithoutDiscardDialog" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="38.300">
+      <failure>androidx.test.espresso.NoActivityResumedException: No activities in stage RESUMED. Did you forget to launch the activity. (test.getActivity() or similar)?
+	at dalvik.system.VMStack.getThreadStackTrace(Native Method)
+	at java.lang.Thread.getStackTrace(Thread.java:2849)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:2)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:1)
+	at androidx.test.espresso.base.DefaultFailureHandler$TypedFailureHandler.handle(DefaultFailureHandler.java:4)
+	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:5)
+	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:8)
+	at androidx.test.espresso.ViewInteraction.desugaredPerform(ViewInteraction.java:11)
+	at androidx.test.espresso.ViewInteraction.perform(ViewInteraction.java:8)
+	at androidx.test.espresso.Espresso.pressBack(Espresso.java:2)
+	at com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest.cleanSystemBackClosesWithoutDiscardDialog(SurveyFormScreenTest.kt:208)
+</failure>
+    </testcase>
+    <testcase name="deletePhotoRequiresConfirmationAndCancelKeepsPhoto" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="3.814" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" tests="10" failures="0" errors="0" skipped="0" time="7.411" timestamp="2026-10-15T01:42:45" hostname="localhost">
+    <properties>
+      <property name="device" value="adb-QV710EDR3A-hF5XZF._adb-tls-connect._tcp" />
+    </properties>
+    <testcase name="passwordVisibilityActionTogglesCallerState" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="0.997" />
+    <testcase name="passwordFieldCanDisableVisibilityAction" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="0.871" />
+    <testcase name="primaryAndSecondaryButtonsMeetMinimumTouchTarget" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="0.500" />
+    <testcase name="checkboxRowUsesFullSelectableRow" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="0.922" />
+    <testcase name="radioGroupAllowsExactlyOneSelectedOption" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="0.813" />
+    <testcase name="loadingButtonSuppressesClick" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="0.480" />
+    <testcase name="iconButtonExposesDescriptionAndClickAction" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="0.676" />
+    <testcase name="passwordFieldSupportsRequiredDisabledReadonlyAndErrorSemantics" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="0.798" />
+    <testcase name="textFieldShowsRequiredLabelAndErrorText" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="0.671" />
+    <testcase name="selectStatusReadOnlyLoadingAndErrorExposeContent" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="0.683" />
+  </testsuite>
+</testsuites>
