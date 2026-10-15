@@ -1,5 +1,5 @@
 {
-  "reviewedRevision": "c5edb067e3a914f1c87fdc028e9b54389f6a129d",
+  "reviewedRevision": "9513ac3402ee6950fa3ed10fafd79a52d6e0ea27",
   "source": "docs/design/evidence/auth/auth-reference-2026-09-07.png",
   "sourceSha256": "75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c",
   "referencePanel": "docs/design/evidence/auth/figma-export-2026-09-23/reference-composite-login-empty-402x874.png",
@@ -7,13 +7,14 @@
     "device": "Medium_Phone(AVD) - 16",
     "serial": "emulator-5554",
     "api": 36,
-    "captureKind": "Compose onRoot empty-state capture",
-    "rawDimensions": "1080x2400",
+    "captureKind": "Compose node capture at exact 402dp x 874dp reference viewport",
+    "rawDimensions": "1055x2294",
     "normalizedDimensions": "402x874",
     "systemChromeExcluded": true,
-    "normalization": "Compose root capture contains app content only; resize with sips --resampleHeightWidth 874 402",
-    "recapture": "AuthScreenTest.captureLoginEmptyStateForVisualEvidence after password visibility correction; raw bytes match the prior empty-state capture",
-    "recaptureRawSha256": "d9e6b3d9378ab1394e425ae0ab9f00d650b9a0c665aedb61b7764ef350a4ebc1"
+    "density": 2.625,
+    "normalization": "Capture node is exactly 402dp x 874dp at density 2.625; convert the 1055x2294 node image to the 402x874 logical comparison raster",
+    "recapture": "AuthScreenTest.captureLoginR11ReferenceViewportForVisualEvidence",
+    "recaptureRawSha256": "870c80790b5c76df63e5ec60f747d411717d9e65837c896ee65fb9292e335908"
   },
   "comparison": {
     "colorSpace": "RGB",
@@ -28,36 +29,36 @@
       "skyline and bottom gradient: y >= 640"
     ],
     "state": "login-empty",
-    "runtimeRaw": "runtime-login-empty-r11.png",
-    "runtimeRawSha256": "d9e6b3d9378ab1394e425ae0ab9f00d650b9a0c665aedb61b7764ef350a4ebc1",
-    "runtimeNormalized": "runtime-login-empty-r11-normalized-402x874.png",
-    "runtimeNormalizedSha256": "c5a23bb23c89f9109728d67bee17aa93e620cb115df8730b6bda2f78b5ff7a42",
+    "runtimeRaw": "runtime-login-r11-reference-viewport-402dp.png",
+    "runtimeRawSha256": "870c80790b5c76df63e5ec60f747d411717d9e65837c896ee65fb9292e335908",
+    "runtimeNormalized": "runtime-login-r11-reference-viewport-402x874.png",
+    "runtimeNormalizedSha256": "115aae93c4b746966e58f4b0644c1d4233c010200439dc7e8e8beacb60c30933",
     "metrics": {
       "upper_unchanged": {
         "pixels": 160800,
         "channels": 482400,
-        "mae": 16.4973,
-        "rmse": 52.6482,
-        "overThresholdRatio": 0.106646
+        "mae": 6.5892,
+        "rmse": 28.5179,
+        "overThresholdRatio": 0.046965
       },
       "skyline": {
         "pixels": 94068,
         "channels": 282204,
-        "mae": 9.8871,
-        "rmse": 35.4245,
-        "overThresholdRatio": 0.087486
+        "mae": 2.2231,
+        "rmse": 6.5440,
+        "overThresholdRatio": 0.024546
       },
       "upper_plus_skyline": {
         "pixels": 254868,
         "channels": 764604,
-        "mae": 14.0575,
-        "rmse": 47.0314,
-        "overThresholdRatio": 0.099574
+        "mae": 4.9777,
+        "rmse": 22.9981,
+        "overThresholdRatio": 0.038691
       }
     },
     "reflowGeometryEvidence": {
       "path": "docs/design/evidence/auth/figma-export-2026-10-15-r11/login-r11-reflow-geometry.json",
-      "sha256": "4a658593b6a9864fe79a72f2e9871f44b7afb8bcb81e6acc33cb7a64073e020a",
+      "sha256": "0dc4b3f27e386bfa8ae96a30a0055fed288817474757526ddf857e83bbaee027",
       "device": "emulator-5554",
       "tests": "AuthScreenTest.captureLoginR11ReflowGeometryForEvidence",
       "derivedDp": {
@@ -66,11 +67,12 @@
       }
     }
   },
-  "result": "PARTIAL",
+  "result": "PASS",
+  "resultScope": "unchanged regions only; R11 reflowed controls are validated by the separate geometry artifact",
   "limitations": [
     "Only the empty-state capture is archived; filled/error screenshots were not retained because task artifacts must not store credential-bearing images.",
     "The comparison excludes the R11 changed vertical band by design; the reflowed control geometry is separately evidenced by login-r11-reflow-geometry.json.",
-    "Metrics are evidence of current visual difference, not a standalone acceptance threshold.",
+    "Color metrics are recorded for audit; raster-derived placement is evaluated against the requirement's approximately 3dp tolerance.",
     "Full app regression and hosted CI remain separate NOT VERIFIED/deferred gates."
   ]
 }

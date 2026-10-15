@@ -33,7 +33,7 @@ validation:
 
 git:
   branch: codex/ui-002-auth-r11
-  commit: c5edb067e3a914f1c87fdc028e9b54389f6a129d
+  commit: 9513ac3402ee6950fa3ed10fafd79a52d6e0ea27
   status: committed
 
 verification:
@@ -64,8 +64,8 @@ release:
   status: pending
 
 blocking:
-  - Full connected regression is now green on the API 36 emulator (67/67), but the unfiltered JVM suite still has the deterministic FakeReturnFlowStoreTest correctionSaved failure outside Auth scope; investigate with the owning task.
-  - R11 Compose-root comparison is archived in docs/design/evidence/auth/figma-export-2026-10-15-r11/numeric-diff-r11-unchanged.json, but the included-region result is PARTIAL and the reflowed band is intentionally excluded; visual AC remain not verified.
+  - Full connected regression is now green on the API 36 emulator (68/68), but the unfiltered JVM suite still has the deterministic FakeReturnFlowStoreTest correctionSaved failure outside Auth scope; investigate with the owning task.
+  - R11 exact 402dp×874dp unchanged-region comparison is PASS in docs/design/evidence/auth/figma-export-2026-10-15-r11/numeric-diff-r11-unchanged.json; filled/error visual evidence and the complete responsive matrix remain not verified, while the reflowed band is separately covered by geometry evidence.
   - R10 verification and CI evidence do not apply to R11; the hosted run failed during runner/Android SDK setup and connected tests, and no CI has run for R11.
 
 next_action: investigation
