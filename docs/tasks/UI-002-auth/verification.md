@@ -40,6 +40,7 @@
 
 - No physical device was used, per requester instruction.
 - The current responsive visual artifact is an emulator-only slice; the IME Compose root raster does not include the system keyboard.
+- The configured AVD profiles available for this run are API 36 profiles; no Android 9/API 28 system image is installed in the active SDK path, so Android 9 runtime coverage cannot be claimed.
 - Local results are not hosted CI PASS.
 
 ## Deferred Obligations
