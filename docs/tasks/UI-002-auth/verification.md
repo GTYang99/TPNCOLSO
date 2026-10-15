@@ -6,6 +6,7 @@
 - Plan/review: plan revision 18, Plan Review iteration 19 `APPROVED`
 - Completion scope: development
 - Reviewed source/test revision: `9d241994d29057a16aa68c4f4c323ed232158b18`
+- Verification checkout: `HEAD 6e5a7e550d522e9281e9dec9f1090d43d69de766`; comparison with the reviewed revision shows documentation/evidence changes only, with no `app/src` changes. The task's committed implementation/test revision remains `9d241994d29057a16aa68c4f4c323ed232158b18`.
 - Code Review: `APPROVED` by same-agent review; no blocking finding
 - Hosted CI: deferred for pre-release development; the recorded R10 run is failed and no R11 hosted run exists
 
@@ -23,11 +24,12 @@
 | AC-UI002-008 | PASS | Debug Preview state inventory, replaceable fake source, JVM tests, current Auth connected tests, and release source-set checks are recorded in the execution report. |
 | AC-UI002-009 | PASS (emulator scope) | UIR-LOGIN-001–010 now have implementation mapping plus executed visual/Compose/accessibility evidence across API 28 and API 36 emulator profiles. Physical/OEM coverage is deferred and does not change the local development scope result. |
 | AC-UI002-010 | PASS (local scope) | All Registration UIR rows have implementation/test mapping and current local Compose evidence; complete cross-device responsive coverage remains a documented limitation. |
-| AC-UI002-011 | NOT VERIFIED | Local logout contract/idempotency evidence passes, while remote logout behavior is explicitly INT-001-owned and remains delegated/not verified. |
+| AC-UI002-011 | NOT VERIFIED | `DebugAuthSessionCoordinatorTest.ui003LogoutRequestedFixtureClearsBothStatesAndIsIdempotent`, `MapShellViewModelTest.logoutEffectIsEmittedOnceForRepeatedEvents`, and `DebugDirectLoginTest.directLoginAndLogoutReturnToSignedOut` support local contract/state/idempotency. They do not exercise remote success, failure, or latency. `plan.md` explicitly requires remote failure/latency not to block or reverse the local transition. That behavior is INT-001-owned, and no active INT-001 implementation evidence is present; do not claim the full AC PASS. |
 
 ## Regression
 
 - Full emulator-only connected run on `emulator-5554`, API 36, completed 72 tests with 1 failure and 0 errors/skips. AuthScreenTest completed 26/26; the only failure was `SurveyFormScreenTest.dirtyCloseAndBackUseDiscardDialogAndContinuePreservesEdits`, outside UI-002 Auth scope. XML SHA-256: `eb4f76ddf898da7424dd1037d009b2b04ed4c0e6dcc0ef2ad194912d98a11c93`.
+- The archived current Auth-only connected XML reports 26 tests, 0 failures/errors/skips. The archived full connected XML reports 72 tests, 1 failure; these match the task-scoped and regression summaries above.
 - The unfiltered JVM suite still reproduces the out-of-scope `FakeReturnFlowStoreTest` failure at line 76. The Auth-filtered JVM suite, lint, release assembly, and Android test APK assembly pass.
 
 ## Issues

@@ -8,6 +8,19 @@
 - Route: `investigation`; classify the broad-suite failures and finish visual comparison before Verification.
 - Status: Auth-scoped checks pass and the completed API 36 emulator-only full connected suite is green; a newer full retry had no result and was stopped. Task completion remains in progress until the external JVM regression, complete visual matrix, and hosted CI limitations are resolved.
 
+## VER-AUTH-020 — AC-UI002-011 awaits INT-001 remote logout evidence
+
+- Category: `verification_failure` (root cause: missing cross-task implementation/evidence dependency)
+- Priority: `P1`
+- Status: open
+- Reviewed Auth revision: `9d241994d29057a16aa68c4f4c323ed232158b18`; Verification checkout: `6e5a7e550d522e9281e9dec9f1090d43d69de766`.
+- Evidence: `DebugAuthSessionCoordinatorTest.ui003LogoutRequestedFixtureClearsBothStatesAndIsIdempotent` covers immediate local clearing/idempotency. `DebugAuthSessionCoordinator.logout()` clears the local session then resets Auth state and has no remote call. Current API-001 v0.2 artifacts contain only the integration split; no active INT-001 implementation evidence is present.
+- Root cause: `AC-UI002-011` includes `UIR-LOGOUT-005` (remote success/failure/latency independence), but the approved UI-002 scope forbids production Token/API implementation and delegates it to INT-001. The downstream adapter and tests needed to exercise that row do not exist in the current evidence set.
+- Impact: Keep `AC-UI002-011` and overall UI-002 Verification `NOT VERIFIED`; local logout PASS does not establish remote independence.
+- Required resolution: INT-001 must provide an approved adapter and reproducible success/failure/latency tests asserting local logout completes first and cannot be reversed. Then rerun the cross-task logout verification. Do not implement remote behavior in UI-002.
+- Route: `planning` / INT-001 integration planning, then `verification` after evidence is available.
+- Owner: INT-001 owner with UI-002 verification owner
+
 ## VAL-AUTH-025 — Current reviewed revision full connected emulator rerun
 
 - Category: `validation`
@@ -185,8 +198,8 @@
 - Status: open
 - Revision: UI-002 reviewed `48670ff`; downstream UI-003 implementation `c8120ef`, callback tests `37d957e`, current checkout `0e0b609`; current Verification round `2026-09-29`
 - Evidence: `ui003LogoutRequestedFixtureClearsBothStatesAndIsIdempotent`, `MapShellViewModelTest.logoutEffectIsEmittedOnceForRepeatedEvents`, `MapShellScreenTest.drawerLogoutEmitsOneCallbackAndExposesAccessibleAction`, and `DebugDirectLoginTest.directLoginAndLogoutReturnToSignedOut` prove the local UI-002/UI-003 drawer-to-Login path. The latest API 34 connected evidence is `docs/tasks/UI-003-map-shell/connected-tests-emulator-5554-2026-09-28T23-39-39.xml` with 33/33 tests, 0 failures/errors/skips, SHA-256 `298f3feb01e302b8b3e54231780ba93171428d7e942fefb319fd26e3b4a2abf4`. Authoritative GitHub Actions run `36442276066` for `48670ff` exists but is `failure`: job `unit-and-build` fails at `Set up Android SDK`, and job `connected` fails at `Connected Android tests`; no usable hosted build/test result was produced. The public API exposes failed step names but the logs endpoint returns `403 Must have admin rights`, so the exact runner error is not available from this verification context. Remote heads currently contain `main` and `UI-002feat`; `UI-003feat` is not published.
-- Requirement: `AC-UI002-006` and `AC-UI002-011` are satisfied at local UI-002/UI-003 contract scope; `UIR-LOGOUT-005` production remote behavior remains INT-001-owned, and authoritative CI must complete successfully before release.
-- Impact: The local cross-task integration gap is resolved. The hosted gate is now an environment/CI failure, so the task must not advance to Release until the runner/SDK setup and connected job are repaired and rerun.
+- Requirement: `AC-UI002-006` is satisfied at local UI-002/UI-003 contract scope. `AC-UI002-011` remains `NOT VERIFIED`: local contract/state/idempotency cases pass, but the required remote success/failure/latency behavior in `UIR-LOGOUT-005` has no test evidence. Production Token/API behavior remains INT-001-owned. Hosted CI must complete successfully before release.
+- Impact: The local cross-task transition is verified, but the complete logout interface AC remains open until the approved remote failure/latency invariant is evidenced. The hosted gate is also a release obligation; do not advance to Release until the runner/SDK setup and connected job are repaired and rerun.
 - Route: `infrastructure`
 - Owner: CI / Android runtime infrastructure
 - Recheck `2026-09-29` (Asia/Taipei): remote heads still contain only `main` and `UI-002feat`; GitHub Actions still reports only run `36442276066`, with no new rerun or UI-003 hosted run.

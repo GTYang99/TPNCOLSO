@@ -1,5 +1,28 @@
 # UI-002 Verification Failure Root Cause
 
+## Current R11 Verification — AC-UI002-011
+
+### Finding
+
+- Current reviewed Auth revision: `9d241994d29057a16aa68c4f4c323ed232158b18`; verification checkout: `6e5a7e550d522e9281e9dec9f1090d43d69de766` (documentation/evidence changes only after the reviewed source revision).
+- `AC-UI002-011` is `NOT VERIFIED`, not a reproduced Auth implementation failure. Local contract/state/idempotency evidence exists, but there is no active INT-001 implementation or test evidence for remote logout success, failure, and latency.
+- Source inspection confirms `DebugAuthSessionCoordinator.logout()` performs `sessionOwner.clear()` followed by `authViewModel.resetToLogin()`; it has no remote dependency. `AuthRoute` only forwards the logout effect to its host callback. This matches the UI-002 fake/local boundary.
+
+### Root Cause
+
+The acceptance criterion includes `UIR-LOGOUT-005` remote-independence evidence, while the approved UI-002 constraint assigns production Token/API and remote logout to INT-001. The approved plan also assigns remote cleanup to a future adapter after the immediate local transition. Since that adapter has not been implemented, the required cross-task behavior cannot be exercised on the current revision. The verification gap is a missing downstream integration dependency/evidence, not evidence of a UI-002 production bug.
+
+### Verification and Scope
+
+- Classification: `verification_failure` caused by a missing cross-task implementation/evidence dependency; retain `NOT VERIFIED` for `AC-UI002-011`.
+- UI-002 local logout behavior is supported by `DebugAuthSessionCoordinatorTest.ui003LogoutRequestedFixtureClearsBothStatesAndIsIdempotent`; this does not prove INT-001 remote behavior.
+- Do not add remote API/Token code to UI-002 or claim the AC passes from a local-only fake. Re-enter verification after INT-001 supplies an approved adapter and tests for remote success/failure/latency while asserting the local signed-out transition is immediate and irreversible.
+
+### Other Current Regression Findings
+
+- The current unfiltered JVM failure is an actual Notifications/Parcel fixture defect: `FakeReturnFlowStore.confirmCorrection()` clears return metadata but leaves `correctionSaved = true`, contrary to `FakeReturnFlowStoreTest.confirmationChangesStatusRemovesReturnContextAndHidesNotification`. It is outside UI-002 Auth ownership and is already recorded under `REG-AUTH-012` in `issue-log.md`.
+- The SurveyForm connected failure is not yet a stable product root cause: the full suite and two isolated runs failed with Compose hierarchy/focus errors, while another isolated/current full run passed. Keep it as an owning-task regression investigation; do not attribute it to Auth.
+
 ## Current Debug Re-entry — IMP-AUTH-021 / revision `b193a4a`
 
 ### Reproduction and evidence
