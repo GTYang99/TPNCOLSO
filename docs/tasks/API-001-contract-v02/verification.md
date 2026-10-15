@@ -4,7 +4,7 @@
 
 - Requirement: `requirement.md`, AC-API001-001～006
 - Plan: `plan.md`; Plan Review: `plan-review.md` (APPROVED)
-- Reviewed revision: `a39a67aa2cd9328c875c4474bbe736fca828f59a`
+- Reviewed revision: `9065aa69050108011385da05d6ed80339224a124`
 - Branch: `codex/ui-002-auth-r11`
 - Completion scope: development
 - Code review: approved by a separate post-commit review pass in this task; same Codex agent performed implementation and review, with no external reviewer available.
