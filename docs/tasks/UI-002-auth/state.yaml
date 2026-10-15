@@ -33,7 +33,7 @@ validation:
 
 git:
   branch: codex/ui-002-auth-r11
-  commit: c2e73e77b5f7cac5124d57f559b2d36058bacd48
+  commit: ec2f18e3dd8745887f7937810411f848391180b7
   status: in_progress
 
 verification:
