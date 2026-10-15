@@ -22,8 +22,8 @@ plan_review:
   iteration: 19
 
 code_review:
-  status: pending
-  revision: ""
+  status: approved
+  revision: "9d241994d29057a16aa68c4f4c323ed232158b18"
 
 implementation:
   status: completed

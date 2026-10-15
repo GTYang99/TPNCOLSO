@@ -62,4 +62,5 @@ Auth implementation and task-scoped local checks pass. UIR-LOGIN-010 is
 PASS only for the documented local emulator responsive slice; the complete
 R11 device/API visual matrix remains `NOT VERIFIED`. Filled/error
 unchanged-region metrics are recorded without retaining credential images.
-Formal Verification and Code Review therefore remain pending.
+Formal Verification remains pending; Code Review is approved for the current
+reviewed source/test revision.
