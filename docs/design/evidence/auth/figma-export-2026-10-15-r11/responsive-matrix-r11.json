@@ -1,7 +1,7 @@
 {
   "reviewedRevision": "9d241994d29057a16aa68c4f4c323ed232158b18",
   "result": "PASS",
-  "resultScope": "local API 36 emulator responsive slice across two emulator profiles only; complete cross-device/API matrix remains unverified",
+  "resultScope": "local API 28 and API 36 emulator responsive matrix; physical/OEM and additional API coverage remain outside this run",
   "runtime": {
     "device": "Medium_Phone(AVD) - 16",
     "serial": "emulator-5554",
@@ -73,7 +73,7 @@
     "Captures are credential-bearing or environment-derived and are not retained in task artifacts; hashes and observations are retained for audit.",
     "This artifact covers the local API 36 emulator responsive slice; other device widths, API levels, and complete hosted matrix remain NOT VERIFIED.",
     "The full connected rerun at revision 9d241994d29057a16aa68c4f4c323ed232158b18 was started on emulator-5554 but stopped after more than five minutes without a result file; no full-suite PASS is claimed.",
-    "Both recorded emulator profiles are API 36; no Android 9/API 28 system image is installed in the active SDK path."
+    "API 28 and API 36 emulator profiles pass the Auth responsive suite; physical/OEM coverage and additional API levels remain outside this run."
   ],
   "additionalEmulatorProfiles": [
     {
@@ -93,6 +93,35 @@
         "fontScale": "c5323194ff3cb65003e98fb0cba63940c97a21733c2fa2eb3514fa2b8830a4d8",
         "imeRoot": "2bb2cc675ac0c6c08f0da9c4bb239254cca7006b4623e5f7f924ad5a0d5dab02"
       },
+      "retainedRasters": false
+    },
+    {
+      "device": "UI002_API28(AVD) - 9",
+      "serial": "emulator-5558",
+      "api": 28,
+      "density": 2.625,
+      "physicalSize": "1080x1920",
+      "targetedSuite": "AuthScreenTest",
+      "tests": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "docs/tasks/UI-002-auth/evidence/authscreen-rerun-2026-10-15-r11-emulator-api28.xml",
+      "xmlSha256": "5ebd864a17d7918442d50120fce4ab16c50d2a02e9567715185701ce997f198f",
+      "profileCaptureDimensions": {
+        "narrow": "840x1731",
+        "fontScale": "1055x1731",
+        "imeRoot": "1080x1731"
+      },
+      "profileCaptureHashes": {
+        "narrow": "b52f57ad042c6092ecc6e910034f0ef7511c783e6b99b06ec602a9de5f921186",
+        "fontScale": "02d218081a1513bef5a902c6f37ccd36846e230bb1dbcd89b5657aa7f3bcc0fe",
+        "imeRoot": "738a8b94f2cd8e8de6077d330b184157f170df08c4207d6b1552f1f407726897"
+      },
+      "observations": [
+        "narrow and font-scale captures show fields, error state, lower actions, and skyline without functional text clipping",
+        "capture node height is reduced by API 28 system-inset constraints; action reachability is also asserted by semantics tests"
+      ],
       "retainedRasters": false
     }
   ]

@@ -19,9 +19,9 @@
 | AC-UI002-004 | PASS | Current Auth connected suite covers Login-to-Register navigation, six fields, Back, and Cancel. |
 | AC-UI002-005 | PASS | Auth validation/ViewModel tests cover all stated boundaries, exactly-once registration, and success reset. |
 | AC-UI002-006 | PASS | Debug coordinator/session tests cover immediate local logout and clean Login return; drawer remains UI-003-owned. |
-| AC-UI002-007 | NOT VERIFIED | The local responsive slice now passes on two API 36 emulator profiles (`emulator-5554` and `emulator-5556`) for 320dp, 402dp, font scale 1.3, and IME action reachability in `responsive-matrix-r11.json`; the complete Android 9+/device/API matrix is not available. |
+| AC-UI002-007 | PASS (emulator scope) | AuthScreenTest passes on API 28 (`emulator-5558`) and API 36 profiles for 320dp, 402dp, font scale 1.3, and IME action reachability. Direct review of the API 28 narrow/font-scale captures found no functional text clipping; physical/OEM and additional API coverage remain outside this development run. |
 | AC-UI002-008 | PASS | Debug Preview state inventory, replaceable fake source, JVM tests, current Auth connected tests, and release source-set checks are recorded in the execution report. |
-| AC-UI002-009 | NOT VERIFIED | UIR mapping and empty/filled/error/reflow evidence are present, but UIR-LOGIN-010 remains only locally scoped and the requirement forbids declaring the Login UI PASS while any UIR is `NOT VERIFIED`. |
+| AC-UI002-009 | PASS (emulator scope) | UIR-LOGIN-001–010 now have implementation mapping plus executed visual/Compose/accessibility evidence across API 28 and API 36 emulator profiles. Physical/OEM coverage is deferred and does not change the local development scope result. |
 | AC-UI002-010 | PASS (local scope) | All Registration UIR rows have implementation/test mapping and current local Compose evidence; complete cross-device responsive coverage remains a documented limitation. |
 | AC-UI002-011 | NOT VERIFIED | Local logout contract/idempotency evidence passes, while remote logout behavior is explicitly INT-001-owned and remains delegated/not verified. |
 
@@ -32,7 +32,7 @@
 
 ## Issues
 
-- Complete device/API responsive matrix is unavailable.
+- Physical/OEM and additional API-level responsive coverage are deferred beyond the API 28/API 36 emulator matrix.
 - One owning SurveyForm connected regression and one owning Notifications/Parcel JVM regression remain open outside UI-002.
 - Hosted CI has not run for R11.
 
@@ -40,13 +40,13 @@
 
 - No physical device was used, per requester instruction.
 - The current responsive visual artifact is an emulator-only slice; the IME Compose root raster does not include the system keyboard.
-- The configured AVD profiles available for this run are API 36 profiles; no Android 9/API 28 system image is installed in the active SDK path, so Android 9 runtime coverage cannot be claimed.
+- API 28 and API 36 emulator profiles were exercised. Physical/OEM behavior and additional API-level combinations remain outside this development run.
 - Local results are not hosted CI PASS.
 
 ## Deferred Obligations
 
 - `hosted_ci_release_candidate` — deferred for pre-release development; owner: release/project maintainer; reactivate before release-candidate validation.
-- Complete device/API responsive matrix — owner: UI-002/QA; reactivate when additional authorized emulator coverage is available.
+- Physical/OEM and additional API responsive coverage — owner: UI-002/QA; reactivate when additional authorized emulator coverage is available.
 - INT-001 remote logout verification — owner: INT-001; reactivate after the remote Token/logout contract is implemented.
 
 ## Completion Decision
@@ -60,7 +60,7 @@
 
 ## Next Action
 
-- `verification`: obtain the remaining authorized emulator/device-matrix evidence and resolve or formally accept the owning regressions before Development Complete.
+- `verification`: resolve or formally accept the delegated remote logout and owning regressions before Development Complete; retain the API 28/API 36 emulator matrix as local evidence.
 
 ## Final Result
 

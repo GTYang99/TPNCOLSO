@@ -72,6 +72,17 @@
 - Route: `verification`
 - Owner: UI-002 implementation / QA
 
+## VAL-AUTH-031 — Android 9/API 28 emulator responsive run
+
+- Category: `validation`
+- Priority: `P1`
+- Status: recorded
+- Evidence: Temporary `UI002_API28(AVD)` / `emulator-5558`, API 28, completed AuthScreenTest with 26 tests, 0 failures, 0 errors, and 0 skips. XML: `docs/tasks/UI-002-auth/evidence/authscreen-rerun-2026-10-15-r11-emulator-api28.xml`; SHA-256 `5ebd864a17d7918442d50120fce4ab16c50d2a02e9567715185701ce997f198f`.
+- Observation: Narrow-width and font-scale captures show the Login fields, request error, lower actions, and skyline without functional text clipping; IME/action reachability assertions pass. The capture node is inset-constrained on API 28, so its raw height differs from the API 36 reference raster.
+- Scope: Emulator-only minSdk coverage; the temporary AVD was stopped and credential-bearing rasters were deleted after hash extraction. No physical device was used.
+- Route: `verification`
+- Owner: UI-002 implementation / QA
+
 ## VAL-AUTH-028 — Current JVM classification refresh
 
 - Category: `validation`
