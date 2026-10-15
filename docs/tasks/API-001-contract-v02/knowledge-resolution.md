@@ -6,7 +6,7 @@
 - Out of scope: 後端實作、Android integration、真實 request 執行、WMTS 與未列入 Collection 的 API。
 
 ## Candidate Knowledge Baseline
-- Baseline ID: `KB-API-001-CONTRACT-V02-R1`
+- Baseline ID: `KB-API-001-CONTRACT-V02-R2`
 - Created date: 2026-10-14 (Asia/Taipei)
 - Supersedes: None; this is the first API v0.2 baseline artifact in the repository.
 - Status: validated
@@ -15,7 +15,8 @@
 
 | Source ID | Title / Location | Type | Domain / Owner | Version / Date | Authority | Freshness | Scope / AC | Notes |
 |---|---|---|---|---|---|---|---|---|
-| SRC-API001-001 | `docs/api/postman/tp-ncolso-api-v0.2.postman_collection.json` | API contract | API / requester + engineering | v0.2; SHA-256 `5f5bd988f36d564743da9180550485ae2f30c5a23f8d10eb8e124c190de8db52`; 2026-10-14 | authoritative | current | AC-API001-001～005 | Sole contract authority for v0.2 by requester decision. |
+| SRC-API001-001 | `docs/api/postman/tp-ncolso-api-v0.2.postman_collection.json` | API contract | API / requester + engineering | v0.2; SHA-256 `0178ea57e953cc2094a03d546d2a78b44f7ddfa0984b015c66f624d9f781342f`; 2026-10-15 | authoritative | current | AC-API001-001～005 | Sole contract authority for v0.2 by requester decision. |
+| SRC-API001-005 | Current requester message in this task | API contract change | API / requester | 2026-10-15 | authoritative for login update | current | INT-001 login request/response | The update requires `platform=app` and shows `data.user_id`; credential and token literals are excluded from repository evidence. |
 | SRC-API001-002 | `docs/product/land-survey-115/5 API規格.md` | product API specification | Product / API owner | current repository source | supporting | current but conflicting | context only | Not used to override the v0.2 Collection. |
 | SRC-API001-003 | `/Users/a10362/Desktop/markdown file/TP/tp_req_api.md` | requester requirements | Product / requester | reviewed 2026-10-14 | supporting historical | stale/conflicting for v0.2 | OQ history | Postman Collection supersedes conflicting v0.2 contract claims. |
 | SRC-API001-004 | Current requester decisions in this thread | authorized decision record | Product / requester | 2026-10-14 | authoritative for conflict resolution | current | OQ-017, OQ-019～OQ-034 | Establishes Postman authority and final API decisions. |
@@ -25,7 +26,7 @@
 | Claim ID | Statement | Supporting Sources | Contradicting Sources | Authority / Confidence | Requirement / AC | Status |
 |---|---|---|---|---|---|---|
 | KCL-API001-001 | v0.2 contract consists of exactly 12 requests in AUTH, MAP_AND_LAND and SURVEY_AND_PHOTO. | SRC-API001-001 | None | Collection / high | AC-API001-001, 002 | resolved |
-| KCL-API001-002 | Login and register are JSON POST requests; login has no CAPTCHA; register requires `role` with `內業` or `外業`; logout is GET. | SRC-API001-001, 004 | SRC-API001-002, 003 for legacy differences | requester + Collection / high | AC-API001-003, 004 | resolved |
+| KCL-API001-002 | Login and register are JSON POST requests; login requires `platform`, `account` and `password` with current platform value `app`; login has no CAPTCHA; the observed success response contains `token`, `user_id`, `name`, `group_id`, `company` and `role`; register requires `role` with `內業` or `外業`; logout is GET. | SRC-API001-001, SRC-API001-004, SRC-API001-005 | SRC-API001-002, 003 for legacy differences | requester + Collection / high | AC-API001-003, 004; INT-001 | resolved |
 | KCL-API001-003 | Token has no expiry limit; re-login immediately invalidates the old Token; logout invalidates the current Token. | SRC-API001-001, 004 | None in active v0.2 source | requester + Collection / high | AC-API001-003 | resolved |
 | KCL-API001-004 | Map scope search returns a GeoJSON example under `data.geojson`; coordinates are WGS84-style longitude/latitude pairs; full formal schema remains a follow-up. | SRC-API001-001, 004 | None | Collection example / high for observed shape | AC-API001-003 | resolved with documented gap |
 | KCL-API001-005 | Land list pagination uses caller-supplied `page` and `perPage`; response pagination uses Int `total` and `total_page` with `item`. | SRC-API001-001, 004 | Older wording in SRC-API001-002 | requester + Collection / high | AC-API001-003 | resolved |
@@ -64,6 +65,17 @@
 - Rationale: These values are explicitly resolved and represented in the active Collection.
 - Approver and date: Requester, 2026-10-14.
 - Affected requirements / AC / artifacts: INT-001 auth integration planning.
+
+### KD-API001-006
+
+- Decision: Update the v0.2 Login request to require `platform`, `account`, and `password`; use `app` as the current platform value. Record the observed success response field `data.user_id` alongside `token`, `name`, `group_id`, `company`, and `role`.
+- Alternatives: Keep the previous two-field request; infer a different platform value; omit `user_id` because it was absent from the previous example.
+- Source / Conflict IDs: SRC-API001-001, SRC-API001-005.
+- Rationale: The requester supplied the newer login contract directly; the Postman Collection is the active API authority.
+- Approver and date: Requester, 2026-10-15.
+- Affected requirements / AC / artifacts: INT-001 login serialization, response mapping, and session integration planning.
+- Supersedes: The prior login example in `KB-API-001-CONTRACT-V02-R1`.
+- Revalidation trigger: A newer requester/API-owner login schema or backend response example.
 - Supersedes: Older auth contract variants.
 - Revalidation trigger: auth Postman request or backend auth contract changes.
 
@@ -110,7 +122,7 @@
 ## Resolved Items
 - Postman Collection is the sole v0.2 API authority.
 - v0.2 contains 12 requests in three active folders.
-- CAPTCHA is removed; role is required; auth Token lifecycle is defined by the Collection.
+- CAPTCHA is removed; login `platform=app` and `data.user_id` are part of the updated observed contract; role is required; auth Token lifecycle is defined by the Collection.
 - Map/land paths, repeatable filters, GeoJSON example and pagination metadata follow the Collection.
 - Survey/photo structure, minimum four photos, PUT correction flow and 409/422 split follow the Collection and requester resolutions.
 - PENDING/unfinished API endpoints are excluded from v0.2.
@@ -123,7 +135,7 @@
 - None for Knowledge Validation or activation of the Collection-defined v0.2 baseline.
 
 ## Downstream Impact
-- Requirements / AC: INT-001～INT-004 must cite `KB-API-001-CONTRACT-V02-R1` and must not resurrect excluded endpoints or legacy `resubmit`/CAPTCHA behavior.
+- Requirements / AC: INT-001～INT-004 must cite `KB-API-001-CONTRACT-V02-R2` and must not resurrect excluded endpoints or legacy `resubmit`/CAPTCHA behavior.
 - Plan / design: Integration plans must identify known response gaps and avoid speculative DTO fields.
 - Code / data / API: No production code is changed by this Knowledge task; API clients must use the active Collection paths and request shapes.
 - Tests / verification: Add authenticated contract tests, schema tests and error mapping once a test environment and complete responses are available.
@@ -136,8 +148,8 @@
 - New API endpoints leave the currently excluded/PENDING state.
 
 ## Validation Handoff
-- Candidate baseline: `KB-API-001-CONTRACT-V02-R1`
-- Decisions and constraints Validation must check: KD-API001-001～005; exact Collection checksum; 12-request inventory; no CAPTCHA/PENDING requests; no `resubmit`; photo/error/filter rules.
+- Candidate baseline: `KB-API-001-CONTRACT-V02-R2`
+- Decisions and constraints Validation must check: KD-API001-001～006; exact Collection checksum; 12-request inventory; login platform and `user_id`; no CAPTCHA/PENDING requests; no `resubmit`; photo/error/filter rules.
 - Safe assumptions: KA-API001-001～002.
 - Required follow-up evidence: backend formal schemas, Update Survey response, exhaustive error payloads and real contract-test execution.
 - Material blockers: no.

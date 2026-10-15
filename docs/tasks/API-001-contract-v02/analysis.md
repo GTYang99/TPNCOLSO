@@ -2,7 +2,7 @@
 
 ## Current Behavior
 
-- `KB-API-001-CONTRACT-V02-R1` 已通過 Knowledge Validation；權威 Collection 的 SHA-256 為 `5f5bd988f36d564743da9180550485ae2f30c5a23f8d10eb8e124c190de8db52`，包含三個資料夾、12 支 request。
+- `KB-API-001-CONTRACT-V02-R2` 已通過 Knowledge Validation；權威 Collection 的 SHA-256 為 `0178ea57e953cc2094a03d546d2a78b44f7ddfa0984b015c66f624d9f781342f`，包含三個資料夾、12 支 request。
 - UI-001～UI-010 已建立 Compose 畫面與 fake/local 資料接點；`docs/tasks/README.md` 已列出 INT-001～INT-004，API-001 目錄已有四個候選工作包的切分文件。
 - `app` 是單一 module，架構要求 integration 實作依 feature-owned ports 接入；目前 API-001 只擁有文件和 Collection，沒有 production code 變更。
 - Git 目前只有 `developer` 工作樹（HEAD `f16f7fa9194f6330f2df0b5f8ab796fc34e29a8a`）：Collection 與 API-001 目錄尚未追蹤，Task Index 有 API-001 改動，同時 `UI-008-alerts` 的兩份文件另有未提交改動。API-001 必須在獨立 task worktree 建立可審查的提交。

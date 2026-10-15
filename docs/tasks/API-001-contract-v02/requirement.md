@@ -26,13 +26,13 @@
 | AC-API001-002 | Collection 僅包含 AUTH、MAP_AND_LAND、SURVEY_AND_PHOTO 三個資料夾，共 12 支 request；未把 PENDING API 或 CAPTCHA request 當作 v0.2 合約。 |
 | AC-API001-003 | Resolution 明確記錄 Token lifecycle、role、日期時間、GeoJSON、分頁、filters、照片張數、PUT 修正送出與 409/422 規則。 |
 | AC-API001-004 | 舊產品 API 規格與 `tp_req_api.md` 的衝突，均記錄為已由需求方決定以 Postman Collection 優先，不做未授權的靜默合併。 |
-| AC-API001-005 | `jq empty` 與 Postman CLI lint 通過；Knowledge Validation 為 PASS，state 啟用 `KB-API-001-CONTRACT-V02-R1` 並 handoff 至 Planning。 |
+| AC-API001-005 | `jq empty` 與 Postman CLI lint 通過；Knowledge Validation 為 PASS，state 啟用 `KB-API-001-CONTRACT-V02-R2` 並 handoff 至 Planning。 |
 | AC-API001-006 | 規劃交接列出 INT-001～INT-004 各自的 API 範圍、既有 UI 接點、依賴、啟動條件與驗證方向，並標明 Collection 未涵蓋的通知及歷史期別等功能仍需後續權威合約。 |
 
 ## Constraints and Dependencies
 
 - Planning 只修改文件，不修改 production code，也不把候選 integration plan 當成已通過 Plan Review 的實作授權。
-- 候選 plan 均依賴 `KB-API-001-CONTRACT-V02-R1`；正式建立 Integration Task 時須依當時有效 Collection 和 UI 狀態重新確認需求、AC、風險及測試環境。
+- 候選 plan 均依賴 `KB-API-001-CONTRACT-V02-R2`；正式建立 Integration Task 時須依當時有效 Collection 和 UI 狀態重新確認需求、AC、風險及測試環境。
 - 不得自行補完缺少的 response/error schema、照片附件綁定、`site_condtion` 與 `site_condition` 的關係，或 Collection 外的 API。
 
 ## Risks and Open Decisions

@@ -4,7 +4,7 @@
 - Task question: 是否可依核定的 Postman Collection 建立並啟用 API v0.2 Knowledge baseline？
 - In scope: API v0.2 的可用 endpoint inventory、request/response examples、認證、參數、照片與錯誤規則，以及明確排除的 API。
 - Out of scope: 後端實作、Android API client、真實 request 執行、部署與未完成 API 的推測合約。
-- Collection date: 2026-10-14 (Asia/Taipei)
+- Collection date: 2026-10-15 (Asia/Taipei)
 - Collector: Codex Knowledge Collection and Resolution Agent
 
 ## Source Coverage
@@ -24,10 +24,11 @@
 
 | Source ID | Title / Location | Type | Domain / Owner | Version / Date | Authority | Freshness | Scope / AC | Access | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| SRC-API001-001 | `docs/api/postman/tp-ncolso-api-v0.2.postman_collection.json` | API contract / Postman Collection | API / requester + engineering | `TP NCOLSO API v0.2`; SHA-256 `5f5bd988f36d564743da9180550485ae2f30c5a23f8d10eb8e124c190de8db52`; 2026-10-14 | authoritative by explicit requester decision | current | AC-API001-001～005 | available | 同步自 `/Volumes/Elements/下載項目_WD/TP NCOLSO API v0.2.postman_collection.json`；包含 AUTH、MAP_AND_LAND、SURVEY_AND_PHOTO，共 12 requests。 |
+| SRC-API001-001 | `docs/api/postman/tp-ncolso-api-v0.2.postman_collection.json` | API contract / Postman Collection | API / requester + engineering | `TP NCOLSO API v0.2`; SHA-256 `0178ea57e953cc2094a03d546d2a78b44f7ddfa0984b015c66f624d9f781342f`; 2026-10-15 | authoritative by explicit requester decision | current | AC-API001-001～005 | available | 由 requester-approved Collection 經 2026-10-15 login contract update 重新同步；包含 AUTH、MAP_AND_LAND、SURVEY_AND_PHOTO，共 12 requests。 |
 | SRC-API001-002 | `docs/product/land-survey-115/5 API規格.md` | product API specification | Product / API owner | working tree; date not declared | supporting; not authoritative for v0.2 conflicts | current repository source | background only | available | Contains older paths, POST logout, `resubmit`, code and PENDING endpoint intent; conflicts are recorded and resolved in Resolution. |
 | SRC-API001-003 | `/Users/a10362/Desktop/markdown file/TP/tp_req_api.md` | requester API requirements | Product / requester | 2026-10-14 review | supporting historical source; overridden for v0.2 contract | stale/conflicting for v0.2 | OQ-017～OQ-034 | available | Still contains older CAPTCHA / `resubmit` / pending material; requester explicitly selected Postman Collection as source of truth. |
 | SRC-API001-004 | `docs/tasks/README.md` deferred integration queue | task boundary | Process / repository | current working tree | authoritative for downstream task split | current | INT-001～INT-004 handoff | available | API baseline precedes integration tasks; it does not implement them. |
+| SRC-API001-005 | Current requester message in this task | API contract change | API / requester | 2026-10-15 | authoritative for login contract update | current | INT-001 login request/response | available | Adds required `platform` request field (current value `app`) and observed `data.user_id`; credentials and token are not stored. |
 
 ## Missing or Inaccessible Sources
 - No missing source blocks the v0.2 baseline within the Collection-defined scope.
@@ -35,7 +36,7 @@
 
 ## Initial Conflicts and Gaps
 - Product API specification and the older `tp_req_api.md` do not fully match the requester-approved Postman Collection. The conflict includes CAPTCHA, logout method, endpoint naming, `resubmit`, and PENDING APIs.
-- The Collection has no formal response example for `Update Survey`, and the full GeoJSON schema beyond the captured example is not separately formalized.
+- The 2026-10-15 requester update supersedes the previous login example by adding required `platform` and observed `data.user_id`; the Collection has no formal response example for `Update Survey`, and the full GeoJSON schema beyond the captured example is not separately formalized.
 - Real network execution was not performed; local validation proves artifact integrity and lint only.
 
 ## Collection Limitations
@@ -44,7 +45,7 @@
 
 ## Handoff to Resolution
 - Coverage sufficient: yes
-- Sources requiring authority or freshness resolution: SRC-API001-001 versus SRC-API001-002/SRC-API001-003.
-- Questions Resolution must answer: Which source governs v0.2? Which legacy endpoints are excluded? Which confirmed OQ decisions must be encoded in the active contract?
+- Sources requiring authority or freshness resolution: SRC-API001-001/SRC-API001-005 versus SRC-API001-002/SRC-API001-003.
+- Questions Resolution must answer: Which source governs v0.2? How are the updated login `platform` and `data.user_id` fields represented? Which legacy endpoints are excluded? Which confirmed OQ decisions must be encoded in the active contract?
 - Blocking items: none for the Collection-defined baseline.
 - Recommended next action: knowledge_resolution

@@ -4,9 +4,9 @@
 - Collection artifact: `docs/tasks/API-001-contract-v02/knowledge-collection.md`
 - Resolution artifact: `docs/tasks/API-001-contract-v02/knowledge-resolution.md`
 - Reproducible evidence: `docs/tasks/API-001-contract-v02/evidence/api-v02-validation.txt`
-- Candidate baseline ID: `KB-API-001-CONTRACT-V02-R1`
+- Candidate baseline ID: `KB-API-001-CONTRACT-V02-R2`
 - Validator: Codex (same agent; no independent validator available)
-- Validation date: 2026-10-14 (Asia/Taipei)
+- Validation date: 2026-10-15 (Asia/Taipei)
 - Independence note: Validation reproduced the local/external Collection checksum, JSON parse, request inventory, request-field checks and Postman CLI result. The evidence is bound to the current uncommitted working tree; no production code was changed.
 
 ## Validation Checklist
@@ -14,10 +14,10 @@
 | Check | Result | Evidence | Finding / Route |
 |---|---|---|---|
 | Collection scope and source coverage | PASS | Collection lists AUTH, MAP_AND_LAND and SURVEY_AND_PHOTO with 4 requests each, 12 total; Collection and Resolution cover auth, map/land, survey/photo and explicit exclusions. | No Collection blocker. |
-| Source identity and version | PASS | `evidence/api-v02-validation.txt` records `info.name = TP NCOLSO API v0.2` and equal local/source SHA-256 `5f5bd988f36d564743da9180550485ae2f30c5a23f8d10eb8e124c190de8db52`. | Revalidate on a newer Collection. |
+| Source identity and version | PASS | `evidence/api-v02-validation.txt` records `info.name = TP NCOLSO API v0.2` and the current Collection SHA-256 `0178ea57e953cc2094a03d546d2a78b44f7ddfa0984b015c66f624d9f781342f`; the requester message is the source update for the login fields. | Revalidate on a newer Collection or login schema. |
 | Domain authority | PASS | Current requester decision explicitly assigns API v0.2 authority to the Postman Collection; legacy product/requirements documents are recorded as supporting/conflicting sources. | KD-API001-001 resolves source authority. |
-| Freshness and supersession | PASS | Local and external files have identical SHA-256 on 2026-10-14. Collection request names contain no CAPTCHA or `PENDING_CONTRACT` item; legacy conflicting claims are marked overridden for v0.2. | Revalidate on source update. |
-| Claim-to-source traceability | PASS | KCL-API001-001～010 each cite the Collection and/or current requester decisions; the evidence reproduces the 12-request inventory, method set, response-example count, forbidden-item check and request-field check. | No traceability gap for the active scope. |
+| Freshness and supersession | PASS | The 2026-10-15 requester login update is registered as SRC-API001-005 and applied to the Collection. Collection request names contain no CAPTCHA or `PENDING_CONTRACT` item; legacy conflicting claims are marked overridden for v0.2. | Revalidate on source update. |
+| Claim-to-source traceability | PASS | KCL-API001-001～010 cite the Collection and/or current requester decisions; the evidence reproduces the 12-request inventory, method set, response-example count, login platform/response fields, forbidden-item check and request-field check. | No traceability gap for the active scope. |
 | Requirement / AC traceability | PASS | AC-API001-001～005 are implemented by the source checksum/inventory, Resolution decisions, exclusion record and local validation evidence. | No requirement gap for baseline activation. |
 | Conflict resolution and approval | PASS | KCF-API001-001～003 are resolved by KD-API001-001～005; no silent merge was used. | Legacy documents remain supporting/history only. |
 | Assumption safety and expiry | PASS | KA-API001-001～002 do not infer hidden schema and explicitly route real execution/schema work to integration follow-up. | Safe for Planning, not proof of production integration. |
@@ -36,7 +36,7 @@
 
 ## Baseline Decision
 - Result: PASS
-- Active baseline ID: `KB-API-001-CONTRACT-V02-R1`
+- Active baseline ID: `KB-API-001-CONTRACT-V02-R2`
 - Supersedes: None
 - Activation or rejection reason: The requester-approved Postman Collection is identified, equal to the source by checksum, JSON-valid, inventory-checked and lint-clean with zero reported errors/warnings; all material legacy conflicts are explicitly resolved; the response-example, attachment, naming and runtime gaps are bounded, documented and non-blocking for this Collection-defined baseline. This PASS does not claim clean-checkout Upload Photo execution or complete backend schemas.
 
@@ -46,7 +46,7 @@
 
 ## Planning Handoff
 - Ready for Planning: yes
-- Decisions and constraints to cite: KD-API001-001～005; 12-request inventory; no CAPTCHA; role required; Token lifecycle; GET logout; Collection paths and filters; four-photo minimum; PUT without `resubmit`; 409/422 split; excluded PENDING APIs.
+- Decisions and constraints to cite: KD-API001-001～006; 12-request inventory; login `platform=app` and `user_id`; no CAPTCHA; role required; Token lifecycle; GET logout; Collection paths and filters; four-photo minimum; PUT without `resubmit`; 409/422 split; excluded PENDING APIs.
 - Required follow-up evidence: Group Options response, Update Survey response, Upload Photo 409/422 payloads, formal backend schemas, a reproducible local Upload Photo file binding, explicit option wire-name decision, HTTPS production base URL and real contract-test execution.
 - Revalidation triggers: newer Collection, explicit source-authority change, backend contract changes, or activation of excluded APIs.
 - Next action: planning

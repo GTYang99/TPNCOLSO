@@ -14,11 +14,11 @@
 
 | AC | Result | Evidence |
 |---|---|---|
-| AC-API001-001 | PASS | The committed Collection is at the required path, `info.name` is `TP NCOLSO API v0.2`, and SHA-256 is `5f5bd988f36d564743da9180550485ae2f30c5a23f8d10eb8e124c190de8db52`, matching the Knowledge baseline. Rechecked with `jq` and `shasum -a 256` on the reviewed revision. |
+| AC-API001-001 | PASS | The committed Collection is at the required path, `info.name` is `TP NCOLSO API v0.2`, and SHA-256 is `0178ea57e953cc2094a03d546d2a78b44f7ddfa0984b015c66f624d9f781342f`, matching the Knowledge baseline. Rechecked with `jq` and `shasum -a 256` on the reviewed revision. |
 | AC-API001-002 | PASS | `jq` confirmed AUTH, MAP_AND_LAND and SURVEY_AND_PHOTO with four requests each (12 total). A separate `jq` check found no CAPTCHA or PENDING_CONTRACT request. |
 | AC-API001-003 | PASS | `knowledge-resolution.md` records the required Token lifecycle, role, date/time, GeoJSON, pagination, filters, photo minimums, PUT correction flow and 409/422 rules. |
 | AC-API001-004 | PASS | `knowledge-resolution.md` records both legacy conflicts and the requester decision making the Postman Collection authoritative for v0.2. |
-| AC-API001-005 | PASS | The committed `knowledge-validation.md` activates `KB-API-001-CONTRACT-V02-R1` as PASS. On the reviewed revision, `jq empty` and `postman collection lint` passed; Postman CLI returned 0 errors and 0 warnings. State retains the active baseline. |
+| AC-API001-005 | PASS | The committed `knowledge-validation.md` activates `KB-API-001-CONTRACT-V02-R2` as PASS. On the reviewed revision, `jq empty` and `postman collection lint` passed; Postman CLI returned 0 errors and 0 warnings. State retains the active baseline. |
 | AC-API001-006 | PASS | `integration-plan-split.md` lists API scope, UI touchpoints, dependencies, start gates and validation direction for INT-001～INT-004; the Task Index links to the split. Both link targets exist. |
 
 ## Regression

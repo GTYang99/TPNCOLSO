@@ -35,7 +35,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"account\": \"{{account}}\",\n  \"password\": \"{{password}}\"\n}",
+              "raw": "{\n  \"platform\": \"{{platform}}\",\n  \"account\": \"{{account}}\",\n  \"password\": \"{{password}}\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -53,7 +53,7 @@
                 "login"
               ]
             },
-            "description": "成功回傳 token、name、group_id、company。Token 無時效限制；同一使用者只能有一個 token，再次登入時舊 Token 立即失效；登出使目前 Token 失效。"
+            "description": "登入需要 platform、account、password；目前 platform 使用 app。成功回傳 token、user_id、name、group_id、company、role。Token 無時效限制；同一使用者只能有一個 token，再次登入時舊 Token 立即失效；登出使目前 Token 失效。"
           },
           "response": [
             {
@@ -71,7 +71,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"account\": \"{{account}}\",\n  \"password\": \"{{password}}\"\n}",
+                  "raw": "{\n  \"platform\": \"{{platform}}\",\n  \"account\": \"{{account}}\",\n  \"password\": \"{{password}}\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -89,7 +89,7 @@
                     "login"
                   ]
                 },
-                "description": "成功回傳 token、name、group_id、company。Token 無時效限制；同一使用者只能有一個 token。"
+                "description": "登入 request 必須包含 platform=app、account、password；成功回傳 token、user_id、name、group_id、company、role。"
               },
               "status": "OK",
               "code": 200,
@@ -157,7 +157,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n  \"success\": true,\n  \"code\": null,\n  \"message\": \"登入成功\",\n  \"data\": {\n    \"token\": \"{{token}}\",\n    \"name\": \"tester\",\n    \"group_id\": 2,\n    \"company\": \"傳襲\",\n    \"role\": \"外業\"\n  }\n}"
+              "body": "{\n  \"success\": true,\n  \"code\": null,\n  \"message\": \"登入成功\",\n  \"data\": {\n    \"token\": \"{{token}}\",\n    \"name\": \"tester\",\n    \"group_id\": 2,\n    \"company\": \"傳襲\",\n    \"role\": \"外業\",\n    \"user_id\": \"{{userId}}\"\n  }\n}"
             }
           ]
         },
@@ -1736,12 +1736,22 @@
       "description": "登入成功回傳的 Bearer Token。"
     },
     {
+      "key": "userId",
+      "value": "",
+      "description": "登入成功回傳的 user_id。"
+    },
+    {
       "key": "account",
       "value": ""
     },
     {
       "key": "password",
       "value": ""
+    },
+    {
+      "key": "platform",
+      "value": "app",
+      "description": "登入來源平台；目前正式值為 app。"
     },
     {
       "key": "groupId",

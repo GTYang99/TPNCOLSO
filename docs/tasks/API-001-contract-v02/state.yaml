@@ -10,7 +10,7 @@ knowledge:
   collection: completed
   resolution: completed
   validation: passed
-  baseline_id: KB-API-001-CONTRACT-V02-R1
+  baseline_id: KB-API-001-CONTRACT-V02-R2
 
 planning:
   status: completed

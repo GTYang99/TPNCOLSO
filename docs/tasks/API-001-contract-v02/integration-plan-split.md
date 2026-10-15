@@ -3,7 +3,7 @@
 ## Status and Source
 
 - Status: Planning candidate; each Integration Task needs its own approved requirement, Knowledge check, plan and Plan Review before code changes.
-- Source: `KB-API-001-CONTRACT-V02-R1`, Collection SHA-256 `5f5bd988f36d564743da9180550485ae2f30c5a23f8d10eb8e124c190de8db52`.
+- Source: `KB-API-001-CONTRACT-V02-R2`, Collection SHA-256 `0178ea57e953cc2094a03d546d2a78b44f7ddfa0984b015c66f624d9f781342f`.
 - Boundary: The 12 requests below are the entire active v0.2 Collection. This split allocates ownership, not new API behavior.
 
 | Candidate plan | Collection requests | Existing UI / state touchpoint | Earliest safe outcome |

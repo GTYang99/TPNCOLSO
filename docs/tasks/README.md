@@ -28,7 +28,7 @@
 
 | Task ID | Deliverable | Active baseline |
 |---|---|---|
-| [`API-001-contract-v02`](./API-001-contract-v02/) | Postman-defined API v0.2 contract, resolved conflicts and integration handoff | `KB-API-001-CONTRACT-V02-R1` |
+| [`API-001-contract-v02`](./API-001-contract-v02/) | Postman-defined API v0.2 contract, resolved conflicts and integration handoff | `KB-API-001-CONTRACT-V02-R2` |
 
 四個 Integration Task 的候選 plan 邊界、依賴與啟動條件見 [API v0.2 Integration Plan Split](./API-001-contract-v02/integration-plan-split.md)；候選切分不代表各 Task 已通過 Plan Review。
 
