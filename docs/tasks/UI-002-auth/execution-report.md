@@ -4,7 +4,7 @@ Task: UI-002-auth
 Plan Review: iteration 19, approved
 Plan revision: 18
 Knowledge baseline: `KB-UI-002-AUTH-R11`
-Date: 2026-10-14 (Asia/Taipei)
+Date: 2026-10-15 (Asia/Taipei)
 
 ## Revision and Isolation
 
@@ -42,6 +42,17 @@ Date: 2026-10-14 (Asia/Taipei)
 | Full app JVM suite | `testDebugUnitTest` | FAIL outside Auth scope: `FakeReturnFlowStoreTest.confirmationChangesStatusRemovesReturnContextAndHidesNotification`, assertion at test line 76; filtered Auth suite passes |
 | Full app connected suite | `connectedDebugAndroidTest` | Aborted after unrelated `SurveyFormScreenTest.cleanCloseSkipsDiscardDialogAndRouteBackIsDisabledWhenNotForeground` failure; AuthScreenTest was rerun separately and passed 17/17 |
 
+### 2026-10-15 validation rerun
+
+- Revision under test: current branch HEAD before this evidence update, `f82710d85a63f2d5704fe8cdbaf3c107192613e5`; production Auth source is unchanged from the R11 implementation commit `65daddca4c605dada861a65e3c02fac1978d2572`.
+- Required JBR: `/Applications/Android Studio.app/Contents/jbr/Contents/Home`, OpenJDK `25.0.3`; emulator `emulator-5554`, `Medium_Phone(AVD) - 16`, API 36.
+- `JAVA_HOME=... ./gradlew :app:testDebugUnitTest --tests '*Auth*'`: PASS, all Auth JVM tests completed successfully.
+- `JAVA_HOME=... ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.auth.AuthScreenTest`: PASS, AuthScreenTest 17/17.
+- `JAVA_HOME=... ./gradlew :app:lintDebug :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest`: PASS.
+- Release APK scan for `DebugAuth`, `Captcha`, `login_captcha`, and auth debug symbols: PASS; no matching entries.
+- `JAVA_HOME=... ./gradlew :app:testDebugUnitTest`: FAIL outside UI-002 at `FakeReturnFlowStoreTest.kt:76`; this reproduces the existing Notifications/Parcel correction regression.
+- First full connected retry failed before test execution because `emulator-5554` went offline during package uninstall. A second retry remained active without a terminal result while the runner process continued; it was stopped after no progress. Full-app connected verification remains `NOT VERIFIED`.
+
 On 2026-10-14 the requester authorized `C:\Program Files\Android\Android Studio1\jbr` as the Windows Gradle JBR. The Runtime Rule now lists this Windows path alongside the macOS path and preserves the no-fallback requirement. Android SDK Platform 37 was installed into the existing SDK at `C:\Users\GT.YANG\AppData\Local\Android\Sdk`; command-local `ANDROID_HOME`/`ANDROID_SDK_ROOT` were used. JBR identity and commands are recorded in `infrastructure.md`.
 
 ## Outcome and Next Action
@@ -50,4 +61,4 @@ On 2026-10-14 the requester authorized `C:\Program Files\Android\Android Studio1
 - R11 verification remains NOT VERIFIED until the outstanding regression and visual comparison evidence are resolved/reviewed.
 - Hosted CI remains the previously recorded R10 failure; no R11 CI has run. The hosted gate is deferred for development scope with reactivation before release-candidate validation.
 - Current action: `investigation`. Classify the app-wide failures and complete the remaining visual comparison before Code Review and Verification.
-- Commit `65daddc1b7ad9ef05d9033fa1e485d901a4d1d8f` on `codex/ui-002-auth-r11` was pushed to `origin`. Code Review and Verification remain pending.
+- Commit `65daddca4c605dada861a65e3c02fac1978d2572` is the R11 implementation commit on `codex/ui-002-auth-r11`; the current evidence update is based on HEAD `f82710d85a63f2d5704fe8cdbaf3c107192613e5`. Code Review and Verification remain pending.
