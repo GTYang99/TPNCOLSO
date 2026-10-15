@@ -46,7 +46,7 @@ Date: 2026-10-15 (Asia/Taipei)
 
 ### 2026-10-15 validation rerun
 
-- Revision under test: current branch HEAD before this evidence update, `f82710d85a63f2d5704fe8cdbaf3c107192613e5`; production Auth source is unchanged from the R11 implementation commit `65daddca4c605dada861a65e3c02fac1978d2572`.
+- Historical validation revision (before the current source/test corrections): `f82710d85a63f2d5704fe8cdbaf3c107192613e5`; production Auth source in that run was unchanged from the R11 implementation commit `65daddca4c605dada861a65e3c02fac1978d2572`.
 - Required JBR: `/Applications/Android Studio.app/Contents/jbr/Contents/Home`, OpenJDK `25.0.3`; emulator `emulator-5554`, `Medium_Phone(AVD) - 16`, API 36.
 - `JAVA_HOME=... ./gradlew :app:testDebugUnitTest --tests '*Auth*'`: PASS, all Auth JVM tests completed successfully.
 - `JAVA_HOME=... ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.auth.AuthScreenTest`: PASS, AuthScreenTest 17/17.
