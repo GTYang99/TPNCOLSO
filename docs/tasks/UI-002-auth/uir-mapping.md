@@ -1,6 +1,6 @@
 # UI-002 UIR mapping — R11
 
-Reviewed source/test revision: `4f6db9b52a88d36f1d4dbb76c400f9e97fdaba7f`.
+Reviewed source/test revision: `c5edb067e3a914f1c87fdc028e9b54389f6a129d`.
 The mapping is against the active `login-ui-requirement.md`,
 `registration-ui-requirement.md`, and `logout-interface-requirement.md`. A
 local PASS is scoped to the evidence named in the row; it is not a task-level
