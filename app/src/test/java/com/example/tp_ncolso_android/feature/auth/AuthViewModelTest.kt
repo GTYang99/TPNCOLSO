@@ -41,6 +41,18 @@ class AuthViewModelTest {
         assertEquals("", viewModel.state.value.login.password)
     }
 
+    @Test fun duplicateLoginSubmitCallsSourceOnce() = runTest(StandardTestDispatcher()) {
+        val source = RecordingAuthSource(loginResult = true)
+        val viewModel = AuthViewModel(source)
+        viewModel.onEvent(AuthEvent.LoginAccountChanged("sunrise000"))
+        viewModel.onEvent(AuthEvent.LoginPasswordChanged("password"))
+        viewModel.onEvent(AuthEvent.SubmitLogin)
+        viewModel.onEvent(AuthEvent.SubmitLogin)
+        advanceUntilIdle()
+        assertEquals(1, source.loginCalls)
+        assertEquals(AuthEffect.LoginSucceeded, viewModel.effect.first())
+    }
+
     @Test fun failedLoginRetainsAccountAndRememberMe() = runTest {
         val source = RecordingAuthSource(loginResult = false)
         val viewModel = AuthViewModel(source)
