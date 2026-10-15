@@ -20,7 +20,7 @@ acceptance criterion open.
 | UIR-LOGIN-007 | `login-r11-reflow-geometry.json` and `AuthScreenTest.loginActionsReflowAfterPasswordAndUseFoundationSpacing` prove order and 16dp spacing for Remember me, registration, and Login. | PASS (local geometry/Compose scope) |
 | UIR-LOGIN-008 | `AuthScreenTest.loginSubmittingStateDisablesSubmit` covers duplicate-action suppression; the same R11 geometry artifact records the reflowed button bounds. | PASS (local behavior/geometry scope) |
 | UIR-LOGIN-009 | Current composite SHA-256, normalized runtime capture, reflow artifact, and source/runtime checksums are recorded under `docs/design/evidence/auth/figma-export-2026-10-15-r11/`. The unchanged-region visual result is `PARTIAL`. | NOT VERIFIED (visual) |
-| UIR-LOGIN-010 | Standard API 36 Auth runtime evidence and prior IME/narrow/font checks exist, but a complete current-R11 responsive matrix and a green full connected run are not available. | NOT VERIFIED (device matrix) |
+| UIR-LOGIN-010 | Current API 36 AuthScreenTest covers Login narrow width, font scale, and IME action reachability; the current emulator-only full connected suite is 67/67 PASS. A complete current-R11 runtime visual matrix is still unavailable. | NOT VERIFIED (device matrix) |
 
 ## Registration
 
@@ -58,7 +58,8 @@ remote Token/API behavior remains INT-001-owned.
 
 ## Overall mapping result
 
-Auth implementation and task-scoped local checks pass, but UIR-LOGIN-001/002/
-003/005/009/010 remain `NOT VERIFIED` because the current visual comparison is
-`PARTIAL` and the complete R11 device matrix/full regression is unavailable.
-Formal Verification and Code Review therefore remain pending.
+Auth implementation and task-scoped local checks pass, and the current
+emulator-only full connected suite is green. UIR-LOGIN-001/002/003/005/009/010
+remain `NOT VERIFIED` because the current visual comparison is `PARTIAL` and a
+complete R11 device visual matrix is unavailable. Formal Verification and Code
+Review therefore remain pending.
