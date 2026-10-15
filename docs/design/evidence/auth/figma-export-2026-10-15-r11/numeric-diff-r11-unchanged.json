@@ -1,5 +1,5 @@
 {
-  "reviewedRevision": "ed5e448",
+  "reviewedRevision": "4f6db9b52a88d36f1d4dbb76c400f9e97fdaba7f",
   "source": "docs/design/evidence/auth/auth-reference-2026-09-07.png",
   "sourceSha256": "75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c",
   "referencePanel": "docs/design/evidence/auth/figma-export-2026-09-23/reference-composite-login-empty-402x874.png",
@@ -57,7 +57,7 @@
     },
     "reflowGeometryEvidence": {
       "path": "docs/design/evidence/auth/figma-export-2026-10-15-r11/login-r11-reflow-geometry.json",
-      "sha256": "6c1462d3d59c851bc597ccd35db676da4edb860c63b35d7890a80d24b663a64f",
+      "sha256": "e3da63fdc686c32b6972223a0c17c68fae56a37a31b6bc33289b35f03f574c68",
       "device": "emulator-5554",
       "tests": "AuthScreenTest.captureLoginR11ReflowGeometryForEvidence",
       "derivedDp": {
