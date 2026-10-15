@@ -362,6 +362,59 @@ class AuthScreenTest {
         check(output.length() > 0)
     }
 
+    @Test fun captureLoginR11FilledReferenceViewportForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                Box(Modifier.width(402.dp).height(874.dp)) {
+                    LoginScreen(
+                        LoginFormState(account = "sunrise000", password = "password", rememberMe = true),
+                        {},
+                        modifier = Modifier.testTag("login-r11-filled-reference-viewport"),
+                    )
+                }
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-r11-filled-reference-viewport.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onNodeWithTag("login-r11-filled-reference-viewport")
+                .captureToImage()
+                .asAndroidBitmap()
+                .compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "login-r11-filled-reference-viewport.png")
+        check(output.length() > 0)
+    }
+
+    @Test fun captureLoginR11AuthErrorReferenceViewportForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                Box(Modifier.width(402.dp).height(874.dp)) {
+                    LoginScreen(
+                        LoginFormState(
+                            account = "sunrise000",
+                            password = "password",
+                            rememberMe = true,
+                            requestError = "帳號或密碼錯誤",
+                        ),
+                        {},
+                        modifier = Modifier.testTag("login-r11-auth-error-reference-viewport"),
+                    )
+                }
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-r11-auth-error-reference-viewport.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onNodeWithTag("login-r11-auth-error-reference-viewport")
+                .captureToImage()
+                .asAndroidBitmap()
+                .compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "login-r11-auth-error-reference-viewport.png")
+        check(output.length() > 0)
+    }
+
     @Test fun captureLoginAuthErrorStateForVisualEvidence() {
         composeRule.setContent {
             AppTheme {
