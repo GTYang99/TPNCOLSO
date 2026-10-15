@@ -26,7 +26,7 @@ validation:
 
 code_review:
   status: approved
-  revision: "9065aa69050108011385da05d6ed80339224a124"
+  revision: "d93da6b"
 
 completion:
   scope: development
@@ -34,7 +34,7 @@ completion:
 
 git:
   branch: codex/ui-002-auth-r11
-  commit: "9065aa69050108011385da05d6ed80339224a124"
+  commit: "d93da6b"
   status: committed
 
 verification:
