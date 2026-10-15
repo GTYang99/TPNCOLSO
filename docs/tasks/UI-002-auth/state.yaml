@@ -64,7 +64,7 @@ release:
   status: pending
 
 blocking:
-  - Full connected regression is now green on the API 36 emulator (70/70), but the unfiltered JVM suite still has the deterministic FakeReturnFlowStoreTest correctionSaved failure outside Auth scope; investigate with the owning task.
+  - Full connected regression is now green on the API 36 emulator (70/70), but the unfiltered JVM suite still has the deterministic FakeReturnFlowStoreTest correctionSaved failure outside Auth scope; source-classified as an owning Notifications/Parcel defect, with owner action still required.
   - R11 exact 402dp×874dp unchanged-region comparison is PASS for empty, filled, and auth-error metrics in docs/design/evidence/auth/figma-export-2026-10-15-r11/numeric-diff-r11-unchanged.json; the complete responsive matrix remains not verified, while the reflowed band is separately covered by geometry evidence.
   - R10 verification and CI evidence do not apply to R11; the hosted run failed during runner/Android SDK setup and connected tests, and no CI has run for R11.
 
