@@ -26,15 +26,15 @@ validation:
 
 code_review:
   status: approved
-  revision: "742117124db0401f7e0dc58892692c8382d3978d"
+  revision: "a39a67aa2cd9328c875c4474bbe736fca828f59a"
 
 completion:
   scope: development
   status: development_complete
 
 git:
-  branch: codex/api-001-contract-v02
-  commit: "742117124db0401f7e0dc58892692c8382d3978d"
+  branch: codex/ui-002-auth-r11
+  commit: "a39a67aa2cd9328c875c4474bbe736fca828f59a"
   status: committed
 
 verification:

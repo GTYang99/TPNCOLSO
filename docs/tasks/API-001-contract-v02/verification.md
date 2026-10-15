@@ -4,8 +4,8 @@
 
 - Requirement: `requirement.md`, AC-API001-001～006
 - Plan: `plan.md`; Plan Review: `plan-review.md` (APPROVED)
-- Reviewed revision: `742117124db0401f7e0dc58892692c8382d3978d`
-- Branch: `codex/api-001-contract-v02`
+- Reviewed revision: `a39a67aa2cd9328c875c4474bbe736fca828f59a`
+- Branch: `codex/ui-002-auth-r11`
 - Completion scope: development
 - Code review: approved by a separate post-commit review pass in this task; same Codex agent performed implementation and review, with no external reviewer available.
 - Hosted CI: not applicable to this documentation-only Task; no production code or deployable artifact is changed.
@@ -25,7 +25,7 @@
 
 - `jq` found no request URL/query/body field named `resubmit`.
 - No CAPTCHA or PENDING_CONTRACT request is present.
-- The source `developer` worktree still contains the pre-existing UI-008 and API-001 changes; this task did not stage or commit them.
+- The reviewed revision contains only the allowlisted API Collection and API-001 contract artifacts; no production code was changed.
 - `git show --check` passed for the reviewed revision.
 
 ## Issues

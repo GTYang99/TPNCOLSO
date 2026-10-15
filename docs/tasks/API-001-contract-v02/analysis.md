@@ -5,7 +5,7 @@
 - `KB-API-001-CONTRACT-V02-R2` 已通過 Knowledge Validation；權威 Collection 的 SHA-256 為 `0178ea57e953cc2094a03d546d2a78b44f7ddfa0984b015c66f624d9f781342f`，包含三個資料夾、12 支 request。
 - UI-001～UI-010 已建立 Compose 畫面與 fake/local 資料接點；`docs/tasks/README.md` 已列出 INT-001～INT-004，API-001 目錄已有四個候選工作包的切分文件。
 - `app` 是單一 module，架構要求 integration 實作依 feature-owned ports 接入；目前 API-001 只擁有文件和 Collection，沒有 production code 變更。
-- Git 目前只有 `developer` 工作樹（HEAD `f16f7fa9194f6330f2df0b5f8ab796fc34e29a8a`）：Collection 與 API-001 目錄尚未追蹤，Task Index 有 API-001 改動，同時 `UI-008-alerts` 的兩份文件另有未提交改動。API-001 必須在獨立 task worktree 建立可審查的提交。
+- 本次 R2 contract update 已提交於 `codex/ui-002-auth-r11`，revision `a39a67a`；只包含 API Collection、API-001 contract artifacts、history archive 與 Task Index 的 API-001 內容，沒有 production code。
 
 ## Expected Behavior
 
@@ -22,7 +22,7 @@
 ## Dependencies
 
 - 權威 API：`docs/api/postman/tp-ncolso-api-v0.2.postman_collection.json` 和 Knowledge Validation handoff。
-- Git 交付：從執行時確認的 `developer` HEAD 建立 `codex/api-001-contract-v02` 獨立 worktree，只移入 API-001 檔案及 Task Index 的 API-001 hunk；原工作樹中的 UI-008 改動保持原狀。
+- Git 交付：R2 contract update 已在目前 implementation worktree 以 allowlist 提交；後續 INT-001 仍需自己的 task worktree 與 approved plan。
 - 下游 Task 必須遵守 `docs/architecture/overview.md` 的 feature-owned port、session、生命週期及敏感資料限制。
 - 真實整合驗證需要可用測試環境、測試帳號、完整 schema 和可重現的上傳檔案綁定；不得將憑證寫入 Task artifact。
 
