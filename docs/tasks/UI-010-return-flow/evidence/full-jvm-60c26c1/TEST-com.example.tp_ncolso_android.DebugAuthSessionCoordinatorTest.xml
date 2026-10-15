@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.tp_ncolso_android.DebugAuthSessionCoordinatorTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-15T15:43:32.536Z" hostname="DESKTOP-JMU4F31" time="0.12">
+  <properties/>
+  <testcase name="loginIsGuardedAndLogoutClearsSessionAndAuth" classname="com.example.tp_ncolso_android.DebugAuthSessionCoordinatorTest" time="0.101"/>
+  <testcase name="ui003LogoutRequestedFixtureClearsBothStatesAndIsIdempotent" classname="com.example.tp_ncolso_android.DebugAuthSessionCoordinatorTest" time="0.012"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

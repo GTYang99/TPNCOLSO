@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.tp_ncolso_android.ExampleUnitTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-15T15:43:32.658Z" hostname="DESKTOP-JMU4F31" time="0.0">
+  <properties/>
+  <testcase name="addition_isCorrect" classname="com.example.tp_ncolso_android.ExampleUnitTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

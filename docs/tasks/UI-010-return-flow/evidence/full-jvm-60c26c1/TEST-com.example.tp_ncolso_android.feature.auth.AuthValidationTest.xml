@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.tp_ncolso_android.feature.auth.AuthValidationTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-15T15:43:32.714Z" hostname="DESKTOP-JMU4F31" time="0.006">
+  <properties/>
+  <testcase name="registerRequiresChineseNameAndWorkType" classname="com.example.tp_ncolso_android.feature.auth.AuthValidationTest" time="0.005"/>
+  <testcase name="loginRequiresFourDigitCaptcha" classname="com.example.tp_ncolso_android.feature.auth.AuthValidationTest" time="0.0"/>
+  <testcase name="registerAcceptsValidBoundary" classname="com.example.tp_ncolso_android.feature.auth.AuthValidationTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

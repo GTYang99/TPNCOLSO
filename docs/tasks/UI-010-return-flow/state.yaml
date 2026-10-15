@@ -3,7 +3,7 @@ task:
   type: feature
 
 phase: verification
-status: in_progress
+status: development_complete
 
 knowledge:
   status: ready
@@ -23,17 +23,17 @@ implementation:
 validation:
   status: passed
 code_review:
-  status: pending
-  revision: ""
+  status: approved
+  revision: "60c26c1eb67cbdb8be62b99210da21647522fc2a"
 completion:
   scope: development
-  status: in_progress
+  status: development_complete
 git:
   branch: codex/ui010-correction-state
-  commit: "d74bcd8192e6ea6e2d06306867af74f198c20580"
+  commit: "60c26c1eb67cbdb8be62b99210da21647522fc2a"
   status: committed
 verification:
-  result: pending
+  result: passed
   category: null
   failed_acceptance_criteria: []
 ci:
@@ -52,4 +52,4 @@ deferred_obligations:
 release:
   status: pending
 blocking: []
-next_action: verification
+next_action: none

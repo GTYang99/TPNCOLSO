@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.tp_ncolso_android.feature.SavedStateRestorationTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-15T15:43:32.662Z" hostname="DESKTOP-JMU4F31" time="0.05">
+  <properties/>
+  <testcase name="searchRestoresQueryAndRecomputesResultFromFakeSource" classname="com.example.tp_ncolso_android.feature.SavedStateRestorationTest" time="0.029"/>
+  <testcase name="surveyRestoresDraftAndPhotoReferencesWithoutDurableStorage" classname="com.example.tp_ncolso_android.feature.SavedStateRestorationTest" time="0.009"/>
+  <testcase name="detailRestoresTabAndOnlyValidPeriodSelection" classname="com.example.tp_ncolso_android.feature.SavedStateRestorationTest" time="0.005"/>
+  <testcase name="mapRestoresBasemapAndSearchContextButNotTransientLocationState" classname="com.example.tp_ncolso_android.feature.SavedStateRestorationTest" time="0.005"/>
+  <testcase name="cameraResetsRuntimePermissionAndCaptureStateWhileKeepingLocalError" classname="com.example.tp_ncolso_android.feature.SavedStateRestorationTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

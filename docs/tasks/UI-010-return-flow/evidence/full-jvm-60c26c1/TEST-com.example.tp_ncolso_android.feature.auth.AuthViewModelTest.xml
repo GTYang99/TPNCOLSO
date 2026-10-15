@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.tp_ncolso_android.feature.auth.AuthViewModelTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-15T15:43:32.722Z" hostname="DESKTOP-JMU4F31" time="0.091">
+  <properties/>
+  <testcase name="invalidLoginDoesNotCallSource" classname="com.example.tp_ncolso_android.feature.auth.AuthViewModelTest" time="0.074"/>
+  <testcase name="failedLoginRetainsAccountAndRememberMe" classname="com.example.tp_ncolso_android.feature.auth.AuthViewModelTest" time="0.004"/>
+  <testcase name="captchaRefreshFailureRetainsFormAndExposesRetryError" classname="com.example.tp_ncolso_android.feature.auth.AuthViewModelTest" time="0.003"/>
+  <testcase name="successfulLoginEmitsOneEffectAndClearsSensitiveState" classname="com.example.tp_ncolso_android.feature.auth.AuthViewModelTest" time="0.008"/>
+  <testcase name="logoutResetsAuthStateAndEmitsEffect" classname="com.example.tp_ncolso_android.feature.auth.AuthViewModelTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

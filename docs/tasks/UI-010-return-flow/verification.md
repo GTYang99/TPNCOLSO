@@ -1,60 +1,55 @@
 # Verification Report
 
 ## Inputs
-- Requirement: `docs/tasks/UI-010-return-flow/requirement.md`.
-- Plan: `docs/tasks/UI-010-return-flow/plan.md`.
-- Knowledge baseline: `KB-UI-010-RETURN-FLOW-R1`.
+- Requirement: `docs/tasks/UI-010-return-flow/requirement.md`; baseline `KB-UI-010-RETURN-FLOW-R1`.
+- Plan: `docs/tasks/UI-010-return-flow/plan.md`; approved Plan Review iteration 1.
+- Diff: UI010-IMP-004 resets the saved-correction marker when explicit confirmation changes status to `已修正`.
 - Completion scope: `development`.
-- Reviewed committed revision: `01a9a10200001ff572bc7a7f89d192a94f58b656` (`feat(ui010): add returned parcel correction flow`), branch `developer`.
-- Code review: `APPROVED` at the same revision; same-agent review because no independent reviewer was available.
 - Developer validation: `docs/tasks/UI-010-return-flow/execution-report.md`.
+- Code review: `APPROVED`, same-agent review, exact source revision `60c26c1eb67cbdb8be62b99210da21647522fc2a`.
+- Committed source revision: `60c26c1eb67cbdb8be62b99210da21647522fc2a` on `codex/ui010-correction-state`.
 - Hosted CI: deferred for pre-release development; owner `release/project maintainer`; reactivate at `release_candidate`.
 
 ## Test Environment
-- Android Studio JBR: `/Applications/Android Studio.app/Contents/jbr/Contents/Home`, OpenJDK `25.0.3`.
-- Approved runtime target: `Medium_Phone (AVD) - 16`, Android 16 / API 36, serial `emulator-5554`.
-- The physical ADB device was not used. Runtime checks were limited to the user-approved emulator.
-
-## Code Review Result
-- Exact reviewed revision: `01a9a10200001ff572bc7a7f89d192a94f58b656`.
-- Result: `APPROVED` by same-agent review; the independence limitation is recorded here and in the execution report.
-- Reviewed shared store ownership and stable keys across notification, detail, and survey routes; save-before-confirm transition; confirmation cancel/confirm and list removal; dirty-form Back/close behavior; session-generation reset; accessibility semantics; and absence of API, persistence, permissions, and secret handling.
-- `git show --check 01a9a10200001ff572bc7a7f89d192a94f58b656` — PASS.
+- Windows Android Studio JBR, OpenJDK `25.0.3`; Gradle `9.6.0`.
+- Android SDK: `C:\Users\GT.YANG\AppData\Local\Android\Sdk`.
+- Connected tests: `Medium_Phone_API_36.0(AVD) - 16`, Android 16 / API 36, serial `emulator-5554`.
+- No physical device was used.
 
 ## Acceptance Criteria
 
 | AC | Result | Evidence |
 |---|---|---|
-| AC-001 | PASS | `ReturnFlowHostTest.notificationListShowsSixRowsClosesAndOpensTheMatchingDetail` passed in the focused class run (3/3 class tests). It checks six stable rows, `退回` status labels, close via Back, map return, matching parcel-key routing, and the complete reason for the selected record. |
-| AC-002 | PASS | `ReturnFlowHostTest.correctionSaveCancelAndConfirmKeepAllSurfacesConsistent` passed in the focused class run (3/3). It verifies valid correction save keeps `退回`, exposes `確認修正`, checks the exact Android dialog copy, confirms cancel preserves edits/status, and confirms only `確認` changes the status to `已修正`, removes return context/edit action, shows success, and removes the item from the active returned list. |
-| AC-003 | PASS | `ReturnFlowHostTest.dirtyCorrectionCanContinueOrDiscardAndCleanExitSkipsPrompt` passed in the focused class run (3/3). The affected `SurveyFormScreenTest` class also passed 9/9 with zero failures/errors/skips, and the historical exact focus-failure method passed 1/1 in isolation. Evidence covers continue/dismiss preservation, discard restoration of original values/photos, and clean exit without a prompt. |
+| AC-001 | PASS | `ReturnFlowHostTest.notificationListShowsSixRowsClosesAndOpensTheMatchingDetail` passed in the current committed-revision `ReturnFlowHostTest` run (class 3/3). |
+| AC-002 | PASS | `FakeReturnFlowStoreTest.confirmationChangesStatusRemovesReturnContextAndHidesNotification` now passes and asserts `correctionSaved == false` after confirmation. `ReturnFlowHostTest.correctionSaveCancelAndConfirmKeepAllSurfacesConsistent` also passes, covering save/cancel/confirm, status, return-context removal, and list consistency. |
+| AC-003 | PASS | `ReturnFlowHostTest.dirtyCorrectionCanContinueOrDiscardAndCleanExitSkipsPrompt` passed in the current committed-revision host run (class 3/3). |
 
-## Regression and Non-functional Checks
-- `:app:assembleDebug`, `:app:compileDebugUnitTestKotlin`, `:app:compileDebugAndroidTestKotlin`, and `:app:lintDebug` — PASS in the recorded JBR build; lint reported 31 non-blocking findings and did not fail.
-- `git show --check 01a9a10200001ff572bc7a7f89d192a94f58b656` — PASS.
-- Focused Android instrumentation on the approved AVD — PASS: UI-010 host class 3/3 and affected survey-form class 9/9.
-- Accessibility/lifecycle review: notification rows expose merged status, land number, and reason semantics; Back and outside dismissal are routed; session generation recreates the in-memory store after a fresh login; corrected investigator records no longer expose the edit/return actions.
-- Android compatibility: the implementation remains Compose/local-only and does not add permissions, network, persistent storage, or API contracts. Runtime coverage is emulator API 36 only.
-- Full connected regression suite: historical initial result 64/65 with an existing survey-form root-focus failure; isolated method 1/1 PASS. Two later full-suite attempts were interrupted by concurrent use of the shared approved AVD and one was stopped at the user's request. No complete full-suite result is reported as PASS.
+## Regression
+- `:app:testDebugUnitTest --no-daemon --rerun-tasks` — PASS, 51 tests, 0 failures/errors on the committed revision.
+- `:app:connectedDebugAndroidTest --no-daemon '-Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest'` — PASS, 3 tests, 0 failures/errors/skips on API 36 emulator.
+- Owning `FakeReturnFlowStoreTest` XML: `evidence/fake-return-flow-store-60c26c1.xml`, SHA-256 `8D8C5EFB55EDC1CE3D887E0F39B644404209FD952277729800F7654DB3E565DE`; it is also included in the full suite report set `evidence/full-jvm-60c26c1/` (15 XML files, 51 tests total, 0 failures/errors).
+- Connected XML: `evidence/return-flow-host-api36-60c26c1.xml`, SHA-256 `27C833EDE04CD229B1DEF807DF04FEABCC04DB1AA34211C66C8D4A99412BDBDD`.
+- `git show --check 60c26c1eb67cbdb8be62b99210da21647522fc2a` — PASS.
+- Full app connected suite was not rerun. The earlier 64/65 run had a SurveyForm root-focus failure; the exact method passed in isolation. This remains an owning-feature/environment regression limitation, not an Auth or correction-state failure.
+- Existing behavior remains local-only: no API, persistence, permissions, or new data contract was added.
 
 ## Issues
-- 無。The full-suite focus event and shared-AVD interruptions are recorded as environment limitations in `issue-log.md`; no task-scoped AC defect remains.
+- No task-scoped acceptance failure remains. The historical SurveyForm focus event and hosted-CI deferral remain documented limitations.
 
 ## Validation Limitations
-- JVM unit-test execution was not started; only unit-test source compilation is verified.
-- Runtime screenshots and Figma visual comparison were not captured.
-- No physical-device or API 28 runtime check was performed.
-- Code review was same-agent; no independent reviewer was available.
-- Hosted CI is deferred outside the pre-release development completion scope.
+- Full app connected regression was not rerun on this revision; focused UI-010 host coverage passed.
+- Runtime screenshots/Figma comparison, physical-device coverage, and API 28 runtime coverage were not part of this state-transition fix validation.
+- Code review was same-agent because no independent reviewer was available.
+- Local results are not hosted CI PASS.
 
 ## Deferred Obligations
-- `hosted_ci` — status `deferred`; reason `pre_release_development`; owner `release/project maintainer`; reactivate at `release_candidate`.
+- `hosted_ci` — deferred for pre-release development; owner `release/project maintainer`; reactivate at `release_candidate`.
 
 ## Completion Decision
 - `development_complete`.
 
 ## Failure Classification
-- 不適用 (PASS).
+- `不適用` (PASS).
 
 ## Next Action
 - `none`.

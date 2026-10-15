@@ -2,17 +2,20 @@
 
 ## Debug Re-entry — UI010-IMP-004
 
-- Base revision: `d74bcd8192e6ea6e2d06306867af74f198c20580`; isolated branch: `codex/ui010-correction-state`.
+- Base revision: `d74bcd8192e6ea6e2d06306867af74f198c20580`; implementation commit: `60c26c1eb67cbdb8be62b99210da21647522fc2a`; isolated branch: `codex/ui010-correction-state`.
 - Change: `FakeReturnFlowStore.confirmCorrection()` now clears `correctionSaved` in the same transition that marks the record `已修正` and removes its return context.
 - Environment: Windows; Android Studio JBR OpenJDK `25.0.3`; Gradle `9.6.0`; Android SDK `C:\Users\GT.YANG\AppData\Local\Android\Sdk`.
 - Reproduction before fix: `:app:testDebugUnitTest --tests com.example.tp_ncolso_android.feature.notifications.data.FakeReturnFlowStoreTest --no-daemon` failed 1/3 at `FakeReturnFlowStoreTest.kt:76`.
 - Focused JVM after fix: `:app:testDebugUnitTest --tests com.example.tp_ncolso_android.feature.notifications.data.FakeReturnFlowStoreTest --no-daemon` — PASS; Gradle `BUILD SUCCESSFUL`.
 - Full JVM after fix: `:app:testDebugUnitTest --no-daemon` — PASS; 51 tests, 0 failures.
 - Connected host after fix: `:app:connectedDebugAndroidTest --no-daemon '-Pandroid.testInstrumentationRunnerArguments.class=com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest'` — PASS; 3 tests, 0 failures on `Medium_Phone_API_36.0(AVD) - 16`, API 36, serial `emulator-5554`.
+- Archived XML: `evidence/fake-return-flow-store-60c26c1.xml` (SHA-256 `8D8C5EFB55EDC1CE3D887E0F39B644404209FD952277729800F7654DB3E565DE`); `evidence/return-flow-host-api36-60c26c1.xml` (SHA-256 `27C833EDE04CD229B1DEF807DF04FEABCC04DB1AA34211C66C8D4A99412BDBDD`).
+- Full JVM XML set: `evidence/full-jvm-60c26c1/` contains all 15 class reports; independently aggregated total is 51 tests, 0 failures, 0 errors.
 - `git diff --check` — PASS.
 - The first build attempt lacked SDK discovery because the isolated worktree had no ignored `local.properties`; rerunning with command-local `ANDROID_HOME` succeeded. No project configuration file was added or modified.
 - The failed unquoted PowerShell Gradle-property attempt stopped during task selection and ran no tests; the quoted command above is the successful connected run.
-- Validation is local evidence on the current branch/worktree, not hosted CI. No physical device was used.
+- Code review: same-agent review approved commit `60c26c1eb67cbdb8be62b99210da21647522fc2a`; it confirmed the one-field state fix preserves the existing guard and return-list transition. No independent reviewer was available.
+- Validation is local evidence on committed revision `60c26c1eb67cbdb8be62b99210da21647522fc2a`, not hosted CI. No physical device was used.
 
 ## Revision and Environment
 - Branch: `developer`.
@@ -58,16 +61,14 @@
 | Figma context | Inspected the approved list, returned detail, correction, dialog, and corrected-state nodes; downloaded two local Figma icon exports. | Source reviewed; no implementation screenshot comparison. |
 
 ## Limitations and Deferred Gates
-- Debug buildability, test-source compilation, lint, focused UI-010 instrumentation, and the affected survey-form regression class are verified for implementation commit `01a9a10200001ff572bc7a7f89d192a94f58b656`. JVM unit-test execution and runtime screenshots remain NOT VERIFIED. The initial full suite failed 64/65; two reruns were interrupted by concurrent instrumentation, and a third was stopped at the user's request. No full-suite rerun produced a complete result.
-- Approved AVD results: focused UI-010 host class 3/3 PASS; affected `SurveyFormScreenTest` class 9/9 PASS; initial full connected suite 64/65 with one existing survey-form focus failure, while the exact method passed in isolation. The full-suite result remains a recorded regression limitation and is not reported as PASS.
+- The UI010-IMP-004 revision has full JVM evidence (51/51) and the focused UI-010 host suite (3/3). The full app connected suite was not rerun on this revision; the historical 64/65 run's SurveyForm root-focus failure remains recorded and its exact method passed in isolation.
+- Runtime screenshots/Figma comparison, physical-device coverage, and API 28 runtime coverage remain unverified; they were not required to exercise this internal state-reset fix. Hosted CI remains deferred for pre-release development.
 - UI010-IMP-001, UI010-IMP-002, UI010-IMP-003, and the isolated UI010-VAL-001 focus incident are resolved as recorded. UI010-VAL-002 records both concurrent-AVD interruptions.
-- Task-scoped developer validation is complete for AC-001–AC-003; JVM unit-test execution and runtime screenshots remain NOT VERIFIED limitations. Code review and Verification remain pending. Hosted CI remains deferred to the release candidate per the approved plan.
-- Existing unrelated UI-008/UI-010 working-tree changes were preserved and left unstaged.
+- Existing unrelated UI-008/UI-010 working-tree changes were preserved; this fix uses its own managed worktree and branch.
 
 ## Code Review Result
-- Reviewed revision: `01a9a10200001ff572bc7a7f89d192a94f58b656` (`feat(ui010): add returned parcel correction flow`) on branch `developer`.
+- Reviewed revision: `60c26c1eb67cbdb8be62b99210da21647522fc2a` (`fix(ui010): clear correction flag on confirmation`) on branch `codex/ui010-correction-state`.
 - Result: `APPROVED`; same-agent review because no independent reviewer was available.
-- Reviewed the shared in-memory return-flow store, stable parcel-key routing, notification overlay semantics and dismissal paths, save-before-confirm status transition, correction confirmation cancel/confirm behavior, dirty-form discard/continue behavior, login-session store generation, read-only behavior after `已修正`, and task-scoped test coverage.
-- Confirmed the change stays within the approved local Android UI scope: no API calls, persistence, permissions, credentials, or unrelated production refactoring were introduced.
-- `git show --check 01a9a10200001ff572bc7a7f89d192a94f58b656` — PASS.
-- Findings: no blocking defects. JVM unit-test execution, runtime screenshots, and a complete full-suite PASS remain documented limitations; they do not replace the focused AC evidence.
+- Reviewed the guard and complete state copy in `confirmCorrection()`; the reset is atomic with `已修正` and return-context removal. Confirmed no change to API, persistence, permissions, or unrelated modules.
+- `git show --check 60c26c1eb67cbdb8be62b99210da21647522fc2a` — PASS.
+- Findings: no blocking issue in the fix. Full-suite connected and visual limitations remain documented separately.
