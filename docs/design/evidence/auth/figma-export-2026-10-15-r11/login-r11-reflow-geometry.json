@@ -1,23 +1,38 @@
 {
-              "reviewedRevision": "9513ac3402ee6950fa3ed10fafd79a52d6e0ea27",
-              "device": "Medium_Phone(AVD) - 16",
-              "api": 36,
-              "density": 2.625,
-              "root": {"widthPx": 1080, "heightPx": 2400},
-              "boundsPx": {
-                "password": {"top": 877.0, "bottom": 1085.0},
-                "remember": {"top": 1127.0, "bottom": 1253.0},
-                "register": {"top": 1127.0, "bottom": 1253.0},
-                "submit": {"top": 1295.0, "bottom": 1421.0}
-              },
-              "derivedDp": {
-                "submitTopMinusRememberBottom": 16.0,
-                "rememberTopMinusPasswordBottom": 16.0
-              },
-              "assertions": [
-                "remember.top >= password.bottom",
-                "register.top >= remember.top",
-                "submit.top >= remember.bottom",
-                "submit.top - remember.bottom == 16dp"
-              ]
-            }
+  "reviewedRevision": "7cc3eabc925385c6962cf3275f848cd52240c6d7",
+  "device": "Medium_Phone(AVD) - 16",
+  "api": 36,
+  "density": 2.625,
+  "root": {
+    "widthPx": 1080,
+    "heightPx": 2400
+  },
+  "boundsPx": {
+    "password": {
+      "top": 877.0,
+      "bottom": 1085.0
+    },
+    "remember": {
+      "top": 1127.0,
+      "bottom": 1253.0
+    },
+    "register": {
+      "top": 1127.0,
+      "bottom": 1253.0
+    },
+    "submit": {
+      "top": 1295.0,
+      "bottom": 1421.0
+    }
+  },
+  "derivedDp": {
+    "submitTopMinusRememberBottom": 16.0,
+    "rememberTopMinusPasswordBottom": 16.0
+  },
+  "assertions": [
+    "remember.top >= password.bottom",
+    "register.top >= remember.top",
+    "submit.top >= remember.bottom",
+    "submit.top - remember.bottom == 16dp"
+  ]
+}

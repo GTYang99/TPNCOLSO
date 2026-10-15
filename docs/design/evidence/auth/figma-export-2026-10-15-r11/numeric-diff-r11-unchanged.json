@@ -1,5 +1,5 @@
 {
-  "reviewedRevision": "9513ac3402ee6950fa3ed10fafd79a52d6e0ea27",
+  "reviewedRevision": "7cc3eabc925385c6962cf3275f848cd52240c6d7",
   "source": "docs/design/evidence/auth/auth-reference-2026-09-07.png",
   "sourceSha256": "75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c",
   "referencePanel": "docs/design/evidence/auth/figma-export-2026-09-23/reference-composite-login-empty-402x874.png",
@@ -45,7 +45,7 @@
         "pixels": 94068,
         "channels": 282204,
         "mae": 2.2231,
-        "rmse": 6.5440,
+        "rmse": 6.544,
         "overThresholdRatio": 0.024546
       },
       "upper_plus_skyline": {
@@ -58,19 +58,97 @@
     },
     "reflowGeometryEvidence": {
       "path": "docs/design/evidence/auth/figma-export-2026-10-15-r11/login-r11-reflow-geometry.json",
-      "sha256": "0dc4b3f27e386bfa8ae96a30a0055fed288817474757526ddf857e83bbaee027",
+      "sha256": "17a62ecc2fd27c1acf4d70c3cdad77fe21df76826842753e5565be40b243c823",
       "device": "emulator-5554",
       "tests": "AuthScreenTest.captureLoginR11ReflowGeometryForEvidence",
       "derivedDp": {
         "rememberTopMinusPasswordBottom": 16.0,
         "submitTopMinusRememberBottom": 16.0
       }
-    }
+    },
+    "stateCoverage": {
+      "login-empty": "archived exact viewport raster",
+      "login-filled": "ephemeral exact viewport raster; numeric result retained without credential image",
+      "login-auth-error": "ephemeral exact viewport raster; numeric result retained without credential image"
+    },
+    "additionalStates": {
+      "login-filled": {
+        "referencePanel": "docs/design/evidence/auth/figma-export-2026-09-23/reference-composite-login-filled-402x874.png",
+        "runtimeCapture": {
+          "test": "AuthScreenTest.captureLoginR11FilledReferenceViewportForVisualEvidence",
+          "output": "app/build/outputs/connected_android_test_additional_output/debugAndroidTest/connected/Medium_Phone(AVD) - 16/login-r11-filled-reference-viewport.png",
+          "rawDimensions": "1055x2294",
+          "rawSha256": "fbc265095885fecef8c0b05acdc0c6530ac8de82618012c181f36b078a31feb2",
+          "normalizedDimensions": "402x874",
+          "normalizedSha256": "71dbdb74a5959f90e0bd18bc6f31973ee11ca20264ffde5acb68584e1e57ecca",
+          "retainedInTaskArtifacts": false
+        },
+        "metrics": {
+          "upper_unchanged": {
+            "pixels": 160800,
+            "channels": 482400,
+            "mae": 6.8996,
+            "rmse": 29.3131,
+            "overThresholdRatio": 0.052104
+          },
+          "skyline": {
+            "pixels": 94068,
+            "channels": 282204,
+            "mae": 2.2234,
+            "rmse": 6.5452,
+            "overThresholdRatio": 0.025496
+          },
+          "upper_plus_skyline": {
+            "pixels": 254868,
+            "channels": 764604,
+            "mae": 5.1737,
+            "rmse": 23.6205,
+            "overThresholdRatio": 0.042283
+          }
+        }
+      },
+      "login-auth-error": {
+        "referencePanel": "docs/design/evidence/auth/figma-export-2026-09-23/reference-composite-login-auth-error-402x874.png",
+        "runtimeCapture": {
+          "test": "AuthScreenTest.captureLoginR11AuthErrorReferenceViewportForVisualEvidence",
+          "output": "app/build/outputs/connected_android_test_additional_output/debugAndroidTest/connected/Medium_Phone(AVD) - 16/login-r11-auth-error-reference-viewport.png",
+          "rawDimensions": "1055x2294",
+          "rawSha256": "b7432d042b5750a4fe3537f0a39603023cce1cfc32dcd0426e5d4272f3e2acc3",
+          "normalizedDimensions": "402x874",
+          "normalizedSha256": "04f558a10f9383a97ff3ad5cb3600ea3af61532ae81be5ede950b9123f86c50f",
+          "retainedInTaskArtifacts": false
+        },
+        "metrics": {
+          "upper_unchanged": {
+            "pixels": 160800,
+            "channels": 482400,
+            "mae": 8.6738,
+            "rmse": 30.2833,
+            "overThresholdRatio": 0.063854
+          },
+          "skyline": {
+            "pixels": 94068,
+            "channels": 282204,
+            "mae": 2.2235,
+            "rmse": 6.545,
+            "overThresholdRatio": 0.025489
+          },
+          "upper_plus_skyline": {
+            "pixels": 254868,
+            "channels": 764604,
+            "mae": 6.2931,
+            "rmse": 24.3805,
+            "overThresholdRatio": 0.049694
+          }
+        }
+      }
+    },
+    "metricMethod": "RGB channels; absolute channel threshold > 20; excluded y=400..639"
   },
   "result": "PASS",
   "resultScope": "unchanged regions only; R11 reflowed controls are validated by the separate geometry artifact",
   "limitations": [
-    "Only the empty-state capture is archived; filled/error screenshots were not retained because task artifacts must not store credential-bearing images.",
+    "The empty-state raster is archived; filled/error captures were processed from exact viewport test output and only their numeric metrics and hashes are retained because task artifacts must not store credential-bearing images.",
     "The comparison excludes the R11 changed vertical band by design; the reflowed control geometry is separately evidenced by login-r11-reflow-geometry.json.",
     "Color metrics are recorded for audit; raster-derived placement is evaluated against the requirement's approximately 3dp tolerance.",
     "Full app regression and hosted CI remain separate NOT VERIFIED/deferred gates."

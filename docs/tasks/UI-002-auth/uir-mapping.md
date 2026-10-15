@@ -1,6 +1,6 @@
 # UI-002 UIR mapping — R11
 
-Reviewed source/test revision: `9513ac3402ee6950fa3ed10fafd79a52d6e0ea27`.
+Reviewed source/test revision: `7cc3eabc925385c6962cf3275f848cd52240c6d7`.
 The mapping is against the active `login-ui-requirement.md`,
 `registration-ui-requirement.md`, and `logout-interface-requirement.md`. A
 local PASS is scoped to the evidence named in the row; it is not a task-level
@@ -15,12 +15,12 @@ acceptance criterion open.
 | UIR-LOGIN-002 | `LoginScreen.kt` renders the shared logo/title header; `runtime-login-r11-reference-viewport-402x874.png` places the header within the approved anchor tolerance in the exact logical viewport. | PASS (local visual scope) |
 | UIR-LOGIN-003 | `LoginScreen.kt` renders account and password fields; the exact logical viewport confirms their order/anchors, while `AuthScreenTest.loginRendersRequiredEntryPoints` and `captureLoginR11ReflowGeometryForEvidence` cover presence and bounds. | PASS (local visual/Compose scope) |
 | UIR-LOGIN-004 | CAPTCHA state, provider, fixture, UI and validation are removed from main/debug surfaces. `AuthScreenTest.loginRendersRequiredEntryPoints` asserts no CAPTCHA text/tags; release APK scan has no `Captcha` or `login_captcha` entries. | PASS (local implementation scope) |
-| UIR-LOGIN-005 | Empty/auth-error/submitting Compose states are exercised by `AuthScreenTest`; the exact empty-state visual comparison and R11 geometry artifact cover the unchanged and reflowed regions. Filled/error images are not retained because they contain credential-bearing fixture values. | NOT VERIFIED (filled/error visual evidence) |
+| UIR-LOGIN-005 | Empty, filled, and auth-error exact viewport tests compare the approved composite panels in unchanged regions; `numeric-diff-r11-unchanged.json` retains the three state metrics and hashes, while credential-bearing filled/error rasters remain ephemeral. Field-error/submitting are covered as derived Compose states. | PASS (local unchanged visual/Compose scope) |
 | UIR-LOGIN-006 | `AuthScreenTest.loginAuthErrorKeepsValuesAndShowsAccessibleGlobalMessage` covers retained account, exact `帳號或密碼錯誤`, and accessible request-error semantics; `AuthViewModelTest.failedLoginRetainsAccountAndRememberMe` covers state retention. | PASS (local behavior/accessibility scope) |
 | UIR-LOGIN-007 | `login-r11-reflow-geometry.json` and `AuthScreenTest.loginActionsReflowAfterPasswordAndUseFoundationSpacing` prove order and 16dp spacing for Remember me, registration, and Login. | PASS (local geometry/Compose scope) |
 | UIR-LOGIN-008 | `AuthScreenTest.loginSubmittingStateDisablesSubmit` covers duplicate-action suppression; the same R11 geometry artifact records the reflowed button bounds. | PASS (local behavior/geometry scope) |
 | UIR-LOGIN-009 | Current composite SHA-256, exact logical runtime capture, reflow artifact, and source/runtime checksums are recorded under `docs/design/evidence/auth/figma-export-2026-10-15-r11/`; the unchanged-region artifact is `PASS` within its explicit scope. | PASS (traceability/local visual scope) |
-| UIR-LOGIN-010 | Current API 36 AuthScreenTest covers Login narrow width, font scale, and IME action reachability; the current emulator-only full connected suite is 68/68 PASS. A complete current-R11 runtime visual matrix is still unavailable. | NOT VERIFIED (device matrix) |
+| UIR-LOGIN-010 | Current API 36 AuthScreenTest covers Login narrow width, font scale, and IME action reachability; the current emulator-only full connected suite is 70/70 PASS. A complete current-R11 runtime visual matrix is still unavailable. | NOT VERIFIED (device matrix) |
 
 ## Registration
 
@@ -59,7 +59,7 @@ remote Token/API behavior remains INT-001-owned.
 ## Overall mapping result
 
 Auth implementation and task-scoped local checks pass, and the current
-emulator-only full connected suite is green. UIR-LOGIN-005 and UIR-LOGIN-010
-remain `NOT VERIFIED` because filled/error visual artifacts are intentionally not
-retained and a complete R11 device visual matrix is unavailable. Formal
-Verification and Code Review therefore remain pending.
+emulator-only full connected suite is green. UIR-LOGIN-010 remains
+`NOT VERIFIED` because a complete R11 device visual matrix is unavailable;
+filled/error unchanged-region metrics are recorded without retaining credential
+images. Formal Verification and Code Review therefore remain pending.
