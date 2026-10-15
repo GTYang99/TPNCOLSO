@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuites tests="65" failures="3" errors="0" skipped="0" time="0.000" timestamp="2026-10-15T01:50:25" hostname="localhost">
+  <testsuite name="com.example.tp_ncolso_android.DebugDirectLoginTest" tests="2" failures="0" errors="0" skipped="0" time="10.613" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="directLoginAndLogoutReturnToSignedOut" classname="com.example.tp_ncolso_android.DebugDirectLoginTest" time="6.315" />
+    <testcase name="initialStateShowsDebugModeAndRoles" classname="com.example.tp_ncolso_android.DebugDirectLoginTest" time="4.298" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.ExampleInstrumentedTest" tests="1" failures="0" errors="0" skipped="0" time="0.000" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="useAppContext" classname="com.example.tp_ncolso_android.ExampleInstrumentedTest" time="0.000" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.PhotoCameraUiFlowTest" tests="1" failures="0" errors="0" skipped="0" time="9.450" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="surveyCameraFlowSurvivesActivityRecreationAndReturnsToSurvey" classname="com.example.tp_ncolso_android.feature.PhotoCameraUiFlowTest" time="9.450" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.StateRestorationHostTest" tests="1" failures="0" errors="0" skipped="0" time="6.704" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="surveyUiFlowKeepsDraftAndRemainsUsableAfterActivityRecreation" classname="com.example.tp_ncolso_android.feature.StateRestorationHostTest" time="6.704" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.StatefulUiFlowRecreationTest" tests="3" failures="0" errors="0" skipped="0" time="15.759" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="parcelSearchUiFlowRestoresQueryAndSummaryAfterActivityRecreation" classname="com.example.tp_ncolso_android.feature.StatefulUiFlowRecreationTest" time="4.837" />
+    <testcase name="parcelDetailHistoryUiFlowRestoresRouteAndSelectionAfterActivityRecreation" classname="com.example.tp_ncolso_android.feature.StatefulUiFlowRecreationTest" time="7.345" />
+    <testcase name="mapBasemapSelectionSurvivesActivityRecreation" classname="com.example.tp_ncolso_android.feature.StatefulUiFlowRecreationTest" time="3.577" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" tests="19" failures="0" errors="0" skipped="0" time="67.506" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="registerRendersSixFieldsAndUnselectedWorkType" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.213" />
+    <testcase name="loginAuthErrorKeepsValuesAndShowsAccessibleGlobalMessage" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.280" />
+    <testcase name="loginRegisterEntryDispatchesEvent" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.495" />
+    <testcase name="loginRendersRequiredEntryPoints" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.784" />
+    <testcase name="loginPasswordVisibilityActionTogglesMaskedState" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="2.895" />
+    <testcase name="captureLoginFilledStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.035" />
+    <testcase name="captureRegisterEmptyStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="2.916" />
+    <testcase name="registerFilledStateUsesPlaintextFieldsWithoutVisibilityAction" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="2.940" />
+    <testcase name="registerSubmittingStateDisablesSubmit" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.032" />
+    <testcase name="captureLoginR11ReflowGeometryForEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="2.933" />
+    <testcase name="registerNarrowWidthKeepsBothWorkTypeLabelsAndTargets" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.969" />
+    <testcase name="captureLoginAuthErrorStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.912" />
+    <testcase name="loginActionsReflowAfterPasswordAndUseFoundationSpacing" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.889" />
+    <testcase name="registerCancelDispatchesBackToLogin" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="4.128" />
+    <testcase name="loginSubmittingStateDisablesSubmit" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.930" />
+    <testcase name="captureRegisterFilledStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="2.861" />
+    <testcase name="captureLoginEmptyStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.823" />
+    <testcase name="captureLoginImeStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="6.702" />
+    <testcase name="registerShowsWorkTypeValidationMessage" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="2.769" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" tests="7" failures="0" errors="0" skipped="0" time="32.314" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="drawerNavigationCallbacksAreForwarded" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="5.474" />
+    <testcase name="permissionDeniedStateShowsReadableRetryAction" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="3.688" />
+    <testcase name="deniedRetryForwardsLocationCallbackThroughRoute" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="3.119" />
+    <testcase name="topAndLocationControlsForwardExplicitCallbacks" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="4.824" />
+    <testcase name="loadingStateUsesCommonLoadingSemantics" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="5.526" />
+    <testcase name="drawerLogoutEmitsOneCallbackAndExposesAccessibleAction" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="4.926" />
+    <testcase name="shellRendersControlsAndExactlyThreeBasemaps" classname="com.example.tp_ncolso_android.feature.mapshell.MapShellScreenTest" time="4.757" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest" tests="3" failures="1" errors="0" skipped="0" time="36.308" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="notificationListShowsSixRowsClosesAndOpensTheMatchingDetail" classname="com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest" time="5.784" />
+    <testcase name="correctionSaveCancelAndConfirmKeepAllSurfacesConsistent" classname="com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest" time="9.173" />
+    <testcase name="dirtyCorrectionCanContinueOrDiscardAndCleanExitSkipsPrompt" classname="com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest" time="21.351">
+      <failure>androidx.test.espresso.base.RootViewPicker$RootViewWithoutFocusException: Waited for the root of the view hierarchy to have window focus and not request layout for 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Root:
+Root{application-window-token=android.view.ViewRootImpl$W@334a55c, window-token=android.view.ViewRootImpl$W@334a55c, has-window-focus=false, layout-params-type=1, layout-params-string={(0,0)(fillxfill) sim={adjust=resize} ty=BASE_APPLICATION wanim=0x103030e
+  fl=LAYOUT_IN_SCREEN LAYOUT_INSET_DECOR SPLIT_TOUCH HARDWARE_ACCELERATED DRAWS_SYSTEM_BAR_BACKGROUNDS
+  pfl=NO_MOVE_ANIMATION EDGE_TO_EDGE_ENFORCED FORCE_DRAW_STATUS_BAR_BACKGROUND FIT_INSETS_CONTROLLED
+  bhv=DEFAULT
+  fitSides=
+  frameRateBoostOnTouch=true
+  dvrrWindowFrameRateHint=true}, decor-view-string=DecorView{id=-1, visibility=VISIBLE, width=1080, height=2400, has-focus=false, has-focusable=true, has-window-focus=false, is-clickable=false, is-enabled=true, is-focused=false, is-focusable=false, is-layout-requested=false, is-selected=false, layout-params={(0,0)(fillxfill) sim={adjust=resize} ty=BASE_APPLICATION wanim=0x103030e
+  fl=LAYOUT_IN_SCREEN LAYOUT_INSET_DECOR SPLIT_TOUCH HARDWARE_ACCELERATED DRAWS_SYSTEM_BAR_BACKGROUNDS
+  pfl=NO_MOVE_ANIMATION EDGE_TO_EDGE_ENFORCED FORCE_DRAW_STATUS_BAR_BACKGROUND FIT_INSETS_CONTROLLED
+  bhv=DEFAULT
+  fitSides=
+  frameRateBoostOnTouch=true
+  dvrrWindowFrameRateHint=true}, tag=null, root-is-layout-requested=false, has-input-connection=false, x=0.0, y=0.0, child-count=1}}
+	at dalvik.system.VMStack.getThreadStackTrace(Native Method)
+	at java.lang.Thread.getStackTrace(Thread.java:1960)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:2)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:1)
+	at androidx.test.espresso.base.DefaultFailureHandler$TypedFailureHandler.handle(DefaultFailureHandler.java:4)
+	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:5)
+	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:8)
+	at androidx.test.espresso.ViewInteraction.desugaredPerform(ViewInteraction.java:11)
+	at androidx.test.espresso.ViewInteraction.perform(ViewInteraction.java:8)
+	at androidx.test.espresso.Espresso.pressBack(Espresso.java:2)
+	at com.example.tp_ncolso_android.feature.notifications.ReturnFlowHostTest.dirtyCorrectionCanContinueOrDiscardAndCleanExitSkipsPrompt(ReturnFlowHostTest.kt:133)
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest" tests="4" failures="0" errors="0" skipped="0" time="31.842" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="closeDetailReturnsToSearchContext" classname="com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest" time="10.495" />
+    <testcase name="matchedSummaryOpensReadOnlyDetailOverMountedMap" classname="com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest" time="5.988" />
+    <testcase name="returnedParcelShowsReasonAndEditOnlyHandsOffToUi006" classname="com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest" time="7.897" />
+    <testcase name="surveyTabShowsLatestAndHistoryAsReadOnly" classname="com.example.tp_ncolso_android.feature.parceldetail.ParcelDetailHostTest" time="7.462" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchHostTest" tests="2" failures="0" errors="0" skipped="0" time="11.369" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="noMatchKeepsQueryAndMapContainerVisible" classname="com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchHostTest" time="5.265" />
+    <testcase name="toolbarSearchSelectsFakeParcelAndShowsSummaryOverMap" classname="com.example.tp_ncolso_android.feature.parcelsearch.ParcelSearchHostTest" time="6.104" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.photocamera.PhotoCameraScreenTest" tests="3" failures="0" errors="0" skipped="0" time="10.229" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="deniedPermissionShowsRetryAction" classname="com.example.tp_ncolso_android.feature.photocamera.PhotoCameraScreenTest" time="3.135" />
+    <testcase name="grantedCameraExposesFourByThreePreviewAndCloseAction" classname="com.example.tp_ncolso_android.feature.photocamera.PhotoCameraScreenTest" time="3.557" />
+    <testcase name="capturingDisablesShutter" classname="com.example.tp_ncolso_android.feature.photocamera.PhotoCameraScreenTest" time="3.537" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" tests="9" failures="1" errors="0" skipped="0" time="64.720" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="invalidPhotoCountBlocksSubmitWithLocalError" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="4.024" />
+    <testcase name="cleanCloseSkipsDiscardDialogAndRouteBackIsDisabledWhenNotForegrounded" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="3.839" />
+    <testcase name="ui005EditCallbackOpensSurveyFormInDebugHost" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="11.535" />
+    <testcase name="noOccupancyHidesOccupationAndSelectingOccupiedShowsIt" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="5.722" />
+    <testcase name="dirtyCloseAndBackUseDiscardDialogAndContinuePreservesEdits" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="17.190">
+      <failure>androidx.test.espresso.base.RootViewPicker$RootViewWithoutFocusException: Waited for the root of the view hierarchy to have window focus and not request layout for 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Root:
+Root{application-window-token=android.view.ViewRootImpl$W@87021c8, window-token=android.view.ViewRootImpl$W@87021c8, has-window-focus=false, layout-params-type=1, layout-params-string={(0,0)(fillxfill) ty=BASE_APPLICATION wanim=0x103030e
+  fl=LAYOUT_IN_SCREEN LAYOUT_INSET_DECOR SPLIT_TOUCH HARDWARE_ACCELERATED DRAWS_SYSTEM_BAR_BACKGROUNDS
+  pfl=NO_MOVE_ANIMATION EDGE_TO_EDGE_ENFORCED FORCE_DRAW_STATUS_BAR_BACKGROUND FIT_INSETS_CONTROLLED
+  bhv=DEFAULT
+  fitSides=
+  frameRateBoostOnTouch=true
+  dvrrWindowFrameRateHint=true}, decor-view-string=DecorView{id=-1, visibility=VISIBLE, width=1080, height=2400, has-focus=false, has-focusable=true, has-window-focus=false, is-clickable=false, is-enabled=true, is-focused=false, is-focusable=false, is-layout-requested=false, is-selected=false, layout-params={(0,0)(fillxfill) ty=BASE_APPLICATION wanim=0x103030e
+  fl=LAYOUT_IN_SCREEN LAYOUT_INSET_DECOR SPLIT_TOUCH HARDWARE_ACCELERATED DRAWS_SYSTEM_BAR_BACKGROUNDS
+  pfl=NO_MOVE_ANIMATION EDGE_TO_EDGE_ENFORCED FORCE_DRAW_STATUS_BAR_BACKGROUND FIT_INSETS_CONTROLLED
+  bhv=DEFAULT
+  fitSides=
+  frameRateBoostOnTouch=true
+  dvrrWindowFrameRateHint=true}, tag=null, root-is-layout-requested=false, has-input-connection=false, x=0.0, y=0.0, child-count=1}}
+	at dalvik.system.VMStack.getThreadStackTrace(Native Method)
+	at java.lang.Thread.getStackTrace(Thread.java:1960)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:2)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:1)
+	at androidx.test.espresso.base.DefaultFailureHandler$TypedFailureHandler.handle(DefaultFailureHandler.java:4)
+	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:5)
+	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:8)
+	at androidx.test.espresso.ViewInteraction.desugaredPerform(ViewInteraction.java:11)
+	at androidx.test.espresso.ViewInteraction.perform(ViewInteraction.java:8)
+	at androidx.test.espresso.Espresso.pressBack(Espresso.java:2)
+	at com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest.dirtyCloseAndBackUseDiscardDialogAndContinuePreservesEdits(SurveyFormScreenTest.kt:185)
+</failure>
+    </testcase>
+    <testcase name="cameraEntryUsesAccessibleCaptureCallbackAndFourPhotoSubmitSucceeds" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="4.023" />
+    <testcase name="invalidRestoredPhotoShowsRecoveryTextAndKeepsFormValues" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="3.451" />
+    <testcase name="cleanSystemBackClosesWithoutDiscardDialog" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="2.971" />
+    <testcase name="deletePhotoRequiresConfirmationAndCancelKeepsPhoto" classname="com.example.tp_ncolso_android.feature.surveyform.SurveyFormScreenTest" time="11.965" />
+  </testsuite>
+  <testsuite name="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" tests="10" failures="1" errors="0" skipped="0" time="58.185" timestamp="2026-10-15T01:50:25" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="passwordVisibilityActionTogglesCallerState" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="3.456" />
+    <testcase name="passwordFieldCanDisableVisibilityAction" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="4.809" />
+    <testcase name="primaryAndSecondaryButtonsMeetMinimumTouchTarget" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="5.477" />
+    <testcase name="checkboxRowUsesFullSelectableRow" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="6.569" />
+    <testcase name="radioGroupAllowsExactlyOneSelectedOption" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="3.929" />
+    <testcase name="loadingButtonSuppressesClick" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="3.787" />
+    <testcase name="iconButtonExposesDescriptionAndClickAction" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="13.190">
+      <failure>java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:157)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AssertionsKt.assert(Assertions.kt:262)
+	at androidx.compose.ui.test.AssertionsKt.assert$default(Assertions.kt:254)
+	at androidx.compose.ui.test.AssertionsKt.assertHasClickAction(Assertions.kt:235)
+	at com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest.iconButtonExposesDescriptionAndClickAction(FoundationComponentTest.kt:183)
+</failure>
+    </testcase>
+    <testcase name="passwordFieldSupportsRequiredDisabledReadonlyAndErrorSemantics" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="4.548" />
+    <testcase name="textFieldShowsRequiredLabelAndErrorText" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="7.822" />
+    <testcase name="selectStatusReadOnlyLoadingAndErrorExposeContent" classname="com.example.tp_ncolso_android.ui.foundation.FoundationComponentTest" time="4.598" />
+  </testsuite>
+</testsuites>
