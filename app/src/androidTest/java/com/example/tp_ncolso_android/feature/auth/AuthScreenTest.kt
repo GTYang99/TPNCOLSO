@@ -171,6 +171,7 @@ class AuthScreenTest {
                 }
             }
         }
+        composeRule.waitForIdle()
         composeRule.onNodeWithTag("login-account").assertIsDisplayed()
         composeRule.onNodeWithTag("login-password").assertIsDisplayed()
         composeRule.onNodeWithTag("login-remember").performScrollTo().assertIsDisplayed()
