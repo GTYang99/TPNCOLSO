@@ -1,7 +1,7 @@
 {
   "reviewedRevision": "9d241994d29057a16aa68c4f4c323ed232158b18",
   "result": "PASS",
-  "resultScope": "local emulator responsive slice only; complete cross-device/API matrix remains unverified",
+  "resultScope": "local API 36 emulator responsive slice across two emulator profiles only; complete cross-device/API matrix remains unverified",
   "runtime": {
     "device": "Medium_Phone(AVD) - 16",
     "serial": "emulator-5554",
@@ -72,6 +72,28 @@
   "limitations": [
     "Captures are credential-bearing or environment-derived and are not retained in task artifacts; hashes and observations are retained for audit.",
     "This artifact covers the local API 36 emulator responsive slice; other device widths, API levels, and complete hosted matrix remain NOT VERIFIED.",
-    "The full connected rerun at revision 9d241994d29057a16aa68c4f4c323ed232158b18 was started on emulator-5554 but stopped after more than five minutes without a result file; no full-suite PASS is claimed."
+    "The full connected rerun at revision 9d241994d29057a16aa68c4f4c323ed232158b18 was started on emulator-5554 but stopped after more than five minutes without a result file; no full-suite PASS is claimed.",
+    "Both recorded emulator profiles are API 36; no Android 9/API 28 system image is installed in the active SDK path."
+  ],
+  "additionalEmulatorProfiles": [
+    {
+      "device": "Feat1015_Test_API36(AVD) - 16",
+      "serial": "emulator-5556",
+      "api": 36,
+      "density": 2.625,
+      "targetedSuite": "AuthScreenTest",
+      "tests": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": "docs/tasks/UI-002-auth/evidence/authscreen-rerun-2026-10-15-r11-emulator-feat1015-api36.xml",
+      "xmlSha256": "f07c46ad7361db99cb1a82fc4dcfc2cea3ac064621cca3bf5525b0df8812d0ec",
+      "profileCaptureHashes": {
+        "narrow": "2b3e20b63001028c6f033201ef4c0fc4aad502c62cefa5a86ff7c618cd55ab42",
+        "fontScale": "c5323194ff3cb65003e98fb0cba63940c97a21733c2fa2eb3514fa2b8830a4d8",
+        "imeRoot": "2bb2cc675ac0c6c08f0da9c4bb239254cca7006b4623e5f7f924ad5a0d5dab02"
+      },
+      "retainedRasters": false
+    }
   ]
 }

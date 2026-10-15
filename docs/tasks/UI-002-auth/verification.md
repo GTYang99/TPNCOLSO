@@ -19,7 +19,7 @@
 | AC-UI002-004 | PASS | Current Auth connected suite covers Login-to-Register navigation, six fields, Back, and Cancel. |
 | AC-UI002-005 | PASS | Auth validation/ViewModel tests cover all stated boundaries, exactly-once registration, and success reset. |
 | AC-UI002-006 | PASS | Debug coordinator/session tests cover immediate local logout and clean Login return; drawer remains UI-003-owned. |
-| AC-UI002-007 | NOT VERIFIED | The local emulator slice covers 320dp, 402dp, font scale 1.3, and IME action reachability in `responsive-matrix-r11.json`, but the complete Android 9+/device/API matrix is not available. |
+| AC-UI002-007 | NOT VERIFIED | The local responsive slice now passes on two API 36 emulator profiles (`emulator-5554` and `emulator-5556`) for 320dp, 402dp, font scale 1.3, and IME action reachability in `responsive-matrix-r11.json`; the complete Android 9+/device/API matrix is not available. |
 | AC-UI002-008 | PASS | Debug Preview state inventory, replaceable fake source, JVM tests, current Auth connected tests, and release source-set checks are recorded in the execution report. |
 | AC-UI002-009 | NOT VERIFIED | UIR mapping and empty/filled/error/reflow evidence are present, but UIR-LOGIN-010 remains only locally scoped and the requirement forbids declaring the Login UI PASS while any UIR is `NOT VERIFIED`. |
 | AC-UI002-010 | PASS (local scope) | All Registration UIR rows have implementation/test mapping and current local Compose evidence; complete cross-device responsive coverage remains a documented limitation. |

@@ -62,6 +62,16 @@
 - Route: `verification`
 - Owner: UI-002 implementation / SurveyForm owner
 
+## VAL-AUTH-030 — Second API 36 emulator profile responsive run
+
+- Category: `validation`
+- Priority: `P2`
+- Status: recorded
+- Evidence: `Feat1015_Test_API36(AVD)` / `emulator-5556` completed the same AuthScreenTest responsive suite with 26 tests, 0 failures, 0 errors, and 0 skips. XML: `docs/tasks/UI-002-auth/evidence/authscreen-rerun-2026-10-15-r11-emulator-feat1015-api36.xml`; SHA-256 `f07c46ad7361db99cb1a82fc4dcfc2cea3ac064621cca3bf5525b0df8812d0ec`.
+- Scope: This strengthens local evidence across two API 36 emulator profiles. It does not provide Android 9/API 28 or other API-level coverage; no physical device was used.
+- Route: `verification`
+- Owner: UI-002 implementation / QA
+
 ## VAL-AUTH-028 — Current JVM classification refresh
 
 - Category: `validation`
