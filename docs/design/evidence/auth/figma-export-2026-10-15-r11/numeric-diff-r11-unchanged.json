@@ -54,12 +54,22 @@
         "rmse": 47.0314,
         "overThresholdRatio": 0.099574
       }
+    },
+    "reflowGeometryEvidence": {
+      "path": "docs/design/evidence/auth/figma-export-2026-10-15-r11/login-r11-reflow-geometry.json",
+      "sha256": "6c1462d3d59c851bc597ccd35db676da4edb860c63b35d7890a80d24b663a64f",
+      "device": "emulator-5554",
+      "tests": "AuthScreenTest.captureLoginR11ReflowGeometryForEvidence",
+      "derivedDp": {
+        "rememberTopMinusPasswordBottom": 16.0,
+        "submitTopMinusRememberBottom": 16.0
+      }
     }
   },
   "result": "PARTIAL",
   "limitations": [
     "Only the empty-state capture is archived; filled/error screenshots were not retained because task artifacts must not store credential-bearing images.",
-    "The comparison excludes the R11 changed vertical band by design; it does not prove the reflowed control geometry.",
+    "The comparison excludes the R11 changed vertical band by design; the reflowed control geometry is separately evidenced by login-r11-reflow-geometry.json.",
     "Metrics are evidence of current visual difference, not a standalone acceptance threshold.",
     "Full app regression and hosted CI remain separate NOT VERIFIED/deferred gates."
   ]

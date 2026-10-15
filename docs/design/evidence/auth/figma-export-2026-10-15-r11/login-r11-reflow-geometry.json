@@ -1,0 +1,22 @@
+{
+              "device": "Medium_Phone(AVD) - 16",
+              "api": 36,
+              "density": 2.625,
+              "root": {"widthPx": 1080, "heightPx": 2400},
+              "boundsPx": {
+                "password": {"top": 877.0, "bottom": 1085.0},
+                "remember": {"top": 1127.0, "bottom": 1253.0},
+                "register": {"top": 1127.0, "bottom": 1253.0},
+                "submit": {"top": 1295.0, "bottom": 1421.0}
+              },
+              "derivedDp": {
+                "submitTopMinusRememberBottom": 16.0,
+                "rememberTopMinusPasswordBottom": 16.0
+              },
+              "assertions": [
+                "remember.top >= password.bottom",
+                "register.top >= remember.top",
+                "submit.top >= remember.bottom",
+                "submit.top - remember.bottom == 16dp"
+              ]
+            }

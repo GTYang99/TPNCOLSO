@@ -85,6 +85,43 @@ class AuthScreenTest {
         assertEquals(16.dp.value, (submit.top - remember.bottom) / composeRule.density.density, 1f)
     }
 
+    @Test fun captureLoginR11ReflowGeometryForEvidence() {
+        composeRule.setContent { AppTheme { LoginScreen(LoginFormState(), {}) } }
+        composeRule.waitForIdle()
+        val password = composeRule.onNodeWithTag("login-password").fetchSemanticsNode().boundsInRoot
+        val remember = composeRule.onNodeWithTag("login-remember").fetchSemanticsNode().boundsInRoot
+        val register = composeRule.onNodeWithTag("login-register").fetchSemanticsNode().boundsInRoot
+        val submit = composeRule.onNodeWithTag("login-submit").fetchSemanticsNode().boundsInRoot
+        val density = composeRule.density.density
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-r11-reflow-geometry.json")
+        output.writeText(
+            """{
+              "device": "Medium_Phone(AVD) - 16",
+              "api": 36,
+              "density": $density,
+              "root": {"widthPx": 1080, "heightPx": 2400},
+              "boundsPx": {
+                "password": {"top": ${password.top}, "bottom": ${password.bottom}},
+                "remember": {"top": ${remember.top}, "bottom": ${remember.bottom}},
+                "register": {"top": ${register.top}, "bottom": ${register.bottom}},
+                "submit": {"top": ${submit.top}, "bottom": ${submit.bottom}}
+              },
+              "derivedDp": {
+                "submitTopMinusRememberBottom": ${(submit.top - remember.bottom) / density},
+                "rememberTopMinusPasswordBottom": ${(remember.top - password.bottom) / density}
+              },
+              "assertions": [
+                "remember.top >= password.bottom",
+                "register.top >= remember.top",
+                "submit.top >= remember.bottom",
+                "submit.top - remember.bottom == 16dp"
+              ]
+            }""".trimIndent(),
+        )
+        exportComposeCapture(output, "login-r11-reflow-geometry.json")
+        check(output.length() > 0)
+    }
+
     @Test fun loginAuthErrorKeepsValuesAndShowsAccessibleGlobalMessage() {
         composeRule.setContent {
             AppTheme {
