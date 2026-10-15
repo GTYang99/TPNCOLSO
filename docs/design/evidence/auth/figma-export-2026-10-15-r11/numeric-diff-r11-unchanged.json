@@ -57,7 +57,7 @@
     },
     "reflowGeometryEvidence": {
       "path": "docs/design/evidence/auth/figma-export-2026-10-15-r11/login-r11-reflow-geometry.json",
-      "sha256": "e3da63fdc686c32b6972223a0c17c68fae56a37a31b6bc33289b35f03f574c68",
+      "sha256": "4a658593b6a9864fe79a72f2e9871f44b7afb8bcb81e6acc33cb7a64073e020a",
       "device": "emulator-5554",
       "tests": "AuthScreenTest.captureLoginR11ReflowGeometryForEvidence",
       "derivedDp": {
