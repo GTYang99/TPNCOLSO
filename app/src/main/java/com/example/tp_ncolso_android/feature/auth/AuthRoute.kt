@@ -1,12 +1,12 @@
 package com.example.tp_ncolso_android.feature.auth
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun AuthRoute(viewModel: AuthViewModel, onLoginSucceeded: () -> Unit = {}, onRegistrationSucceeded: () -> Unit = {}, onLogoutRequested: () -> Unit = {}) {
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
     androidx.compose.runtime.LaunchedEffect(viewModel) {
         viewModel.effect.collect { effect ->
             when (effect) {

@@ -20,6 +20,18 @@
 - Route: `verification`; retain broader task limitations separately.
 - Owner: UI-002 implementation
 
+## IMP-AUTH-023 — AuthRoute collects state without lifecycle awareness
+
+- Category: `implementation_failure`
+- Priority: `P1`
+- Status: resolved
+- Evidence: Approved plan step 4 requires lifecycle-aware state collection, but `AuthRoute.kt` imports `androidx.compose.runtime.collectAsState`; the version catalog/build file has no `lifecycle-runtime-compose` dependency.
+- Impact: Auth state collection is not tied to the host lifecycle, so the MVVM route contract is incomplete during Activity stop/start transitions.
+- Resolution: Added `androidx.lifecycle:lifecycle-runtime-compose` to the version catalog/build and changed `AuthRoute` to `collectAsStateWithLifecycle()`.
+- Evidence: Auth JVM tests and AndroidTest compilation PASS; AuthScreenTest 18/18 PASS on API 36; `lintDebug` and `assembleRelease` PASS; release artifact scan remains clean.
+- Route: `verification`; broader task limitations remain separate.
+- Owner: UI-002 implementation
+
 ## INF-AUTH-011 — Required Gradle JBR path is unavailable on the current host
 
 - Category: `environment`
