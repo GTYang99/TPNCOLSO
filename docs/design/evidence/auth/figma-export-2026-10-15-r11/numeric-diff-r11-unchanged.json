@@ -1,0 +1,46 @@
+{
+  "reviewedRevision": "65daddca4c605dada861a65e3c02fac1978d2572",
+  "source": "docs/design/evidence/auth/auth-reference-2026-09-07.png",
+  "sourceSha256": "75cb578c58f3098c270290f033539ebf06c35c8b322efb71526fa4e53f3d3e9c",
+  "referencePanel": "docs/design/evidence/auth/figma-export-2026-09-23/reference-composite-login-empty-402x874.png",
+  "runtime": {
+    "device": "Medium_Phone(AVD) - 16",
+    "serial": "emulator-5554",
+    "api": 36,
+    "captureKind": "Compose onRoot empty-state capture",
+    "rawDimensions": "1080x2400",
+    "normalizedDimensions": "402x874",
+    "systemChromeExcluded": true,
+    "normalization": "Compose root capture contains app content only; resize with sips --resampleHeightWidth 874 402"
+  },
+  "comparison": {
+    "colorSpace": "RGB",
+    "threshold": 20,
+    "excludedRegion": {
+      "yStart": 400,
+      "yEndExclusive": 640,
+      "reason": "R11 removes the CAPTCHA row and reflows Remember me, registration entry, and Login button"
+    },
+    "includedRegions": [
+      "upper unchanged content and gradient: y < 400",
+      "skyline and bottom gradient: y >= 640"
+    ],
+    "state": "login-empty",
+    "runtimeRaw": "runtime-login-empty-r11.png",
+    "runtimeRawSha256": "d9e6b3d9378ab1394e425ae0ab9f00d650b9a0c665aedb61b7764ef350a4ebc1",
+    "runtimeNormalized": "runtime-login-empty-r11-normalized-402x874.png",
+    "runtimeNormalizedSha256": "c5a23bb23c89f9109728d67bee17aa93e620cb115df8730b6bda2f78b5ff7a42",
+    "metrics": {
+      "upper_unchanged": { "pixels": 160800, "channels": 482400, "mae": 16.4973, "rmse": 52.6482, "overThresholdRatio": 0.106646 },
+      "skyline": { "pixels": 94068, "channels": 282204, "mae": 9.8871, "rmse": 35.4245, "overThresholdRatio": 0.087486 },
+      "upper_plus_skyline": { "pixels": 254868, "channels": 764604, "mae": 14.0575, "rmse": 47.0314, "overThresholdRatio": 0.099574 }
+    }
+  },
+  "result": "PARTIAL",
+  "limitations": [
+    "Only the empty-state capture is archived; filled/error screenshots were not retained because task artifacts must not store credential-bearing images.",
+    "The comparison excludes the R11 changed vertical band by design; it does not prove the reflowed control geometry.",
+    "Metrics are evidence of current visual difference, not a standalone acceptance threshold.",
+    "Full app regression and hosted CI remain separate NOT VERIFIED/deferred gates."
+  ]
+}

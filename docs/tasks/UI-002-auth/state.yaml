@@ -65,7 +65,7 @@ release:
 
 blocking:
   - Full app regression runs exposed failures outside Auth scope: one FakeReturnFlowStore JVM test and one SurveyForm connected test; investigate with owning tasks.
-  - R11 screenshot is captured and Auth layout tests pass, but unchanged-region pixel comparison against the source composite remains not verified.
+  - R11 Compose-root comparison is archived in docs/design/evidence/auth/figma-export-2026-10-15-r11/numeric-diff-r11-unchanged.json, but the included-region result is PARTIAL and the reflowed band is intentionally excluded; visual AC remain not verified.
   - R10 verification and CI evidence do not apply to R11; the hosted run failed during runner/Android SDK setup and connected tests, and no CI has run for R11.
 
 next_action: investigation
