@@ -28,6 +28,7 @@
 - Status: open
 - Evidence: The unfiltered `testDebugUnitTest` run failed `FakeReturnFlowStoreTest.confirmationChangesStatusRemovesReturnContextAndHidesNotification` at test line 76. The unfiltered `connectedDebugAndroidTest` run reported `SurveyFormScreenTest.cleanCloseSkipsDiscardDialogAndRouteBackIsDisabledWhenNotForeground`; it was stopped after that failure. Filtered Auth JVM tests passed 9/9 and `AuthScreenTest` passed 17/17 on API 36.
 - Impact: app-wide regression status is not green; these failures are outside the R11 Auth source diff and their root cause has not been investigated.
+- Follow-up rerun: the owning `SurveyFormScreenTest` class completed 9/9 PASS on `emulator-5554` / API 36 on 2026-10-15; the broad-suite failure is not reproduced in isolation. Full-app regression remains open until the unfiltered suite is green or the order-dependent failure is classified.
 - Route: `investigation` for the owning notification/survey tasks; keep UI-002 Verification NOT VERIFIED until the approved regression scope is reviewed.
 - Owner: Notifications / Survey Form task owners
 
