@@ -10,7 +10,7 @@ Date: 2026-10-15 (Asia/Taipei)
 
 - Task branch: `codex/ui-002-auth-r11`
 - Base commit: `d74bcd8192e6ea6e2d06306867af74f198c20580`
-- R11 implementation source/test/resource changes are committed in the base implementation revision `65daddca4c605dada861a65e3c02fac1978d2572`; the in-scope password-visibility correction is committed in `ed5e448`. Other intervening commits contain only UI-002 validation evidence/state updates. No unrelated task changes are included in this scope.
+- R11 implementation source/test/resource changes are committed in the base implementation revision `65daddca4c605dada861a65e3c02fac1978d2572`; the in-scope password-visibility correction is committed in `ed5e448`, and the lifecycle-aware route correction is committed in `c2e73e7`. Other intervening commits contain only UI-002 validation evidence/state updates. No unrelated task changes are included in this scope.
 - R10 Auth implementation originated at `48670ffe9e33b19aea23709abf2f47cc5ed85ff1` and is the behavior being updated.
 
 ## Changes
