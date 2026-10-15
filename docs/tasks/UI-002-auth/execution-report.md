@@ -84,4 +84,4 @@ On 2026-10-14 the requester authorized `C:\Program Files\Android\Android Studio1
 - R11 verification remains NOT VERIFIED until the outstanding regression and visual comparison evidence are resolved/reviewed.
 - Hosted CI remains the previously recorded R10 failure; no R11 CI has run. The hosted gate is deferred for development scope with reactivation before release-candidate validation.
 - Current action: `investigation`. Classify the app-wide failures and complete the remaining visual comparison before Code Review and Verification.
-- Commit `65daddca4c605dada861a65e3c02fac1978d2572` is the R11 implementation commit on `codex/ui-002-auth-r11`; the current evidence update is based on HEAD `f82710d85a63f2d5704fe8cdbaf3c107192613e5`. Code Review and Verification remain pending.
+- Commit `65daddca4c605dada861a65e3c02fac1978d2572` is the original R11 implementation commit on `codex/ui-002-auth-r11`; the current reviewed source/test revision is `4f6db9b52a88d36f1d4dbb76c400f9e97fdaba7f`, with later commits containing evidence and report updates only. Code Review and Verification remain pending.
