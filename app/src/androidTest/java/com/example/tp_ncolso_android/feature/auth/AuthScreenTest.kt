@@ -19,6 +19,7 @@ import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import org.junit.Rule
 import org.junit.Test
 import org.junit.Assert.assertTrue
@@ -30,11 +31,14 @@ import androidx.test.platform.io.PlatformTestStorageRegistry
 import java.io.File
 import java.io.FileOutputStream
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalDensity
 import org.junit.Assert.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -156,6 +160,46 @@ class AuthScreenTest {
         composeRule.onNodeWithText("隱藏密碼").assertIsDisplayed()
         composeRule.onNodeWithText("隱藏密碼").performClick()
         composeRule.onNodeWithText("顯示密碼").assertIsDisplayed()
+    }
+
+    @Test fun loginNarrowWidthKeepsActionsAccessible() {
+        composeRule.setContent {
+            AppTheme {
+                Box(Modifier.width(320.dp).height(874.dp)) {
+                    LoginScreen(LoginFormState(), {})
+                }
+            }
+        }
+        composeRule.onNodeWithTag("login-account").assertIsDisplayed()
+        composeRule.onNodeWithTag("login-password").assertIsDisplayed()
+        composeRule.onNodeWithTag("login-remember").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("login-register").performScrollTo().assertIsDisplayed().assertHasClickAction()
+        composeRule.onNodeWithTag("login-submit").performScrollTo().assertIsDisplayed().assertHasClickAction()
+    }
+
+    @Test fun loginFontScaleKeepsPrimaryActionsAndErrorReachable() {
+        val baseDensity = composeRule.density
+        composeRule.setContent {
+            CompositionLocalProvider(
+                LocalDensity provides Density(baseDensity.density, fontScale = 1.3f),
+            ) {
+                AppTheme {
+                    LoginScreen(
+                        LoginFormState(
+                            account = "sunrise000",
+                            password = "password",
+                            rememberMe = true,
+                            requestError = "帳號或密碼錯誤",
+                        ),
+                        {},
+                    )
+                }
+            }
+        }
+        composeRule.onNodeWithText("新工處土地占用").assertIsDisplayed()
+        composeRule.onNodeWithTag("login-request-error").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("login-register").performScrollTo().assertIsDisplayed().assertHasClickAction()
+        composeRule.onNodeWithTag("login-submit").performScrollTo().assertIsDisplayed().assertHasClickAction()
     }
 
     @Test fun registerRendersSixFieldsAndUnselectedWorkType() {
@@ -321,6 +365,8 @@ class AuthScreenTest {
         }
         composeRule.onNodeWithTag("login-account").performClick()
         composeRule.waitForIdle()
+        composeRule.onNodeWithTag("login-register").performScrollTo().assertIsDisplayed().assertHasClickAction()
+        composeRule.onNodeWithTag("login-submit").performScrollTo().assertIsDisplayed().assertHasClickAction()
         val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-ime-compose.png")
         FileOutputStream(output).use { stream ->
             composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)

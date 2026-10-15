@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuites tests="21" failures="0" errors="0" skipped="0" time="0.000" timestamp="2026-10-15T02:00:13" hostname="localhost">
+  <testsuite name="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" tests="21" failures="0" errors="0" skipped="0" time="125.265" timestamp="2026-10-15T02:00:13" hostname="localhost">
+    <properties>
+      <property name="device" value="emulator-5554" />
+    </properties>
+    <testcase name="registerRendersSixFieldsAndUnselectedWorkType" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="4.764" />
+    <testcase name="loginAuthErrorKeepsValuesAndShowsAccessibleGlobalMessage" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="4.243" />
+    <testcase name="loginRegisterEntryDispatchesEvent" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="4.571" />
+    <testcase name="loginFontScaleKeepsPrimaryActionsAndErrorReachable" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.748" />
+    <testcase name="loginRendersRequiredEntryPoints" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="4.892" />
+    <testcase name="loginPasswordVisibilityActionTogglesMaskedState" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="5.191" />
+    <testcase name="captureLoginFilledStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="4.068" />
+    <testcase name="captureRegisterEmptyStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="8.318" />
+    <testcase name="registerFilledStateUsesPlaintextFieldsWithoutVisibilityAction" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="4.269" />
+    <testcase name="registerSubmittingStateDisablesSubmit" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="4.646" />
+    <testcase name="captureLoginR11ReflowGeometryForEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="3.673" />
+    <testcase name="registerNarrowWidthKeepsBothWorkTypeLabelsAndTargets" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="5.922" />
+    <testcase name="captureLoginAuthErrorStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="5.962" />
+    <testcase name="loginActionsReflowAfterPasswordAndUseFoundationSpacing" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="6.615" />
+    <testcase name="registerCancelDispatchesBackToLogin" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="4.073" />
+    <testcase name="loginSubmittingStateDisablesSubmit" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="4.393" />
+    <testcase name="captureRegisterFilledStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="11.169" />
+    <testcase name="loginNarrowWidthKeepsActionsAccessible" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="7.138" />
+    <testcase name="captureLoginEmptyStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="4.598" />
+    <testcase name="captureLoginImeStateForVisualEvidence" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="15.955" />
+    <testcase name="registerShowsWorkTypeValidationMessage" classname="com.example.tp_ncolso_android.feature.auth.AuthScreenTest" time="7.057" />
+  </testsuite>
+</testsuites>
