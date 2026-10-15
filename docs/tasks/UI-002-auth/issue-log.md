@@ -4,7 +4,7 @@
 - Requester decisions: remove Login CAPTCHA; keep brand/account/password positions; remove the CAPTCHA row and adjacent spacing; reflow Remember me, registration entry, and Login button upward using UI-001 spacing tokens. Auth failure copy is `帳號或密碼錯誤`.
 - Impact: R10 code/evidence did not establish R11 compliance. Plan Review iteration 19 approved plan revision 18 on isolated branch `codex/ui-002-auth-r11`, base `d74bcd8192e6ea6e2d06306867af74f198c20580`.
 - Implementation: main/debug contracts, Login layout, fake source, previews and tests updated; CAPTCHA fixture removed. Static source scan finds only negative absence assertions.
-- Validation: Auth JVM tests 9/9, Auth connected tests 17/17, lint and debug/release/androidTest builds pass. R11 runtime capture is recorded; source-composite pixel comparison remains NOT VERIFIED. A broad app JVM and connected run each exposed a failure in other feature modules; see `execution-report.md`.
+- Validation: Auth JVM tests 9/9, Auth connected tests 17/17, lint and debug/release/androidTest builds pass. R11 runtime capture and a safe empty-state unchanged-region comparison are recorded in `docs/design/evidence/auth/figma-export-2026-10-15-r11/`; the comparison result is PARTIAL, so source-composite visual acceptance remains NOT VERIFIED. A broad app JVM and connected run each exposed a failure in other feature modules; see `execution-report.md`.
 - Route: `investigation`; classify the broad-suite failures and finish visual comparison before Verification.
 - Status: Auth-scoped checks pass; task completion remains in progress until the open regression and visual evidence items are resolved.
 
