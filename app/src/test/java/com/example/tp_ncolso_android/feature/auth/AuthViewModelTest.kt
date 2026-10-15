@@ -54,6 +54,36 @@ class AuthViewModelTest {
         assertEquals("帳號或密碼錯誤", viewModel.state.value.login.requestError)
     }
 
+    @Test fun invalidRegisterDoesNotCallSource() = runTest {
+        val source = RecordingAuthSource()
+        val viewModel = AuthViewModel(source)
+        viewModel.onEvent(AuthEvent.SubmitRegister)
+        advanceUntilIdle()
+        assertEquals(0, source.registerCalls)
+        assertTrue(viewModel.state.value.register.fieldErrors.isNotEmpty())
+    }
+
+    @Test fun successfulRegisterEmitsOneEffectAndReturnsToEmptyLogin() = runTest(StandardTestDispatcher()) {
+        val source = RecordingAuthSource()
+        val viewModel = AuthViewModel(source)
+        viewModel.onEvent(AuthEvent.OpenRegister)
+        viewModel.onEvent(AuthEvent.RegisterAccountChanged("abc123"))
+        viewModel.onEvent(AuthEvent.RegisterPasswordChanged("password"))
+        viewModel.onEvent(AuthEvent.RegisterConfirmChanged("password"))
+        viewModel.onEvent(AuthEvent.VendorSelected(VendorOption("v", "廠商")))
+        viewModel.onEvent(AuthEvent.WorkTypeSelected(WorkType.FIELD))
+        viewModel.onEvent(AuthEvent.RegisterNameChanged("王小明"))
+        viewModel.onEvent(AuthEvent.SubmitRegister)
+        viewModel.onEvent(AuthEvent.SubmitRegister)
+        advanceUntilIdle()
+        assertEquals(1, source.registerCalls)
+        assertEquals(AuthEffect.RegistrationSucceeded, viewModel.effect.first())
+        assertEquals(AuthScreen.Login, viewModel.state.value.screen)
+        assertEquals("", viewModel.state.value.register.password)
+        assertEquals("", viewModel.state.value.register.confirmPassword)
+        assertEquals("", viewModel.state.value.login.account)
+    }
+
     @Test fun logoutResetsAuthStateAndEmitsEffect() = runTest {
         val viewModel = AuthViewModel(RecordingAuthSource())
         viewModel.onEvent(AuthEvent.LoginAccountChanged("account"))
@@ -69,8 +99,9 @@ class AuthViewModelTest {
 
     private class RecordingAuthSource(private val loginResult: Boolean = true) : AuthDataSource {
         var loginCalls = 0
+        var registerCalls = 0
         override suspend fun login(account: String, password: String): Boolean { loginCalls++; return loginResult }
-        override suspend fun register(input: RegistrationInput) = true
+        override suspend fun register(input: RegistrationInput): Boolean { registerCalls++; return true }
         override suspend fun vendors() = emptyList<VendorOption>()
     }
 }
