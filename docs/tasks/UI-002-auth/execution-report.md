@@ -10,7 +10,7 @@ Date: 2026-10-15 (Asia/Taipei)
 
 - Task branch: `codex/ui-002-auth-r11`
 - Base commit: `d74bcd8192e6ea6e2d06306867af74f198c20580`
-- Working tree: uncommitted; only UI-002 auth source/test/resource changes are included in this execution scope. Other task documentation changes remain unstaged and are excluded from any future UI-002 commit.
+- Implementation source/test/resource changes are committed in the R11 implementation revision; subsequent commits contain only UI-002 validation evidence/state updates. No unrelated task changes are included in this scope.
 - R10 Auth implementation originated at `48670ffe9e33b19aea23709abf2f47cc5ed85ff1` and is the behavior being updated.
 
 ## Changes
