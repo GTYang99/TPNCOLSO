@@ -30,6 +30,7 @@
 - Investigation finding: `FakeReturnFlowStore.confirmCorrection()` changes status and clears return metadata but leaves `correctionSaved = true`, while the owning test requires it to reset to `false`. This is a Notifications/Parcel correction defect outside the UI-002 Auth diff; no fix is applied in this task.
 - Impact: app-wide regression status is not green; these failures are outside the R11 Auth source diff and their root cause has not been investigated.
 - Follow-up rerun: the owning `SurveyFormScreenTest` class completed 9/9 PASS on `emulator-5554` / API 36 on 2026-10-15; the broad-suite failure is not reproduced in isolation. Full-app regression remains open until the unfiltered suite is green or the order-dependent failure is classified.
+- Owning JVM rerun: `:app:testDebugUnitTest --tests com.example.tp_ncolso_android.feature.notifications.data.FakeReturnFlowStoreTest` reproduced the same single failure at line 76 (2/3 passing). The failure is deterministic in the Notifications/Parcel fixture and remains outside the UI-002 Auth diff.
 - Route: `investigation` for the owning notification/survey tasks; keep UI-002 Verification NOT VERIFIED until the approved regression scope is reviewed.
 - Owner: Notifications / Survey Form task owners
 
