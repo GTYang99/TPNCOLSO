@@ -64,7 +64,7 @@ release:
   status: pending
 
 blocking:
-  - Full app regression runs exposed failures outside Auth scope: FakeReturnFlowStoreTest deterministically fails at correctionSaved state, and the latest full connected run has two ReturnFlowHostTest plus four SurveyFormScreenTest RootViewWithoutFocusException failures; investigate with owning tasks.
+  - Full app regression runs exposed failures outside Auth scope: FakeReturnFlowStoreTest deterministically fails at correctionSaved state, and the latest emulator-only API 36 connected run has two ReturnFlowHostTest/SurveyFormScreenTest RootViewWithoutFocusException failures plus one Foundation no-hierarchy failure; investigate with owning tasks.
   - R11 Compose-root comparison is archived in docs/design/evidence/auth/figma-export-2026-10-15-r11/numeric-diff-r11-unchanged.json, but the included-region result is PARTIAL and the reflowed band is intentionally excluded; visual AC remain not verified.
   - R10 verification and CI evidence do not apply to R11; the hosted run failed during runner/Android SDK setup and connected tests, and no CI has run for R11.
 
