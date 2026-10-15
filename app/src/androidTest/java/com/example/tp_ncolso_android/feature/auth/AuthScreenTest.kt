@@ -39,6 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import org.junit.Assert.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -333,6 +334,30 @@ class AuthScreenTest {
             composeRule.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
         }
         exportComposeCapture(output, "login-empty-compose-root.png")
+        check(output.length() > 0)
+    }
+
+    @Test fun captureLoginR11ReferenceViewportForVisualEvidence() {
+        composeRule.setContent {
+            AppTheme {
+                Box(Modifier.width(402.dp).height(874.dp)) {
+                    LoginScreen(
+                        LoginFormState(),
+                        {},
+                        modifier = Modifier.testTag("login-r11-reference-viewport"),
+                    )
+                }
+            }
+        }
+        composeRule.waitForIdle()
+        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.cacheDir, "login-r11-reference-viewport.png")
+        FileOutputStream(output).use { stream ->
+            composeRule.onNodeWithTag("login-r11-reference-viewport")
+                .captureToImage()
+                .asAndroidBitmap()
+                .compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        }
+        exportComposeCapture(output, "login-r11-reference-viewport.png")
         check(output.length() > 0)
     }
 
